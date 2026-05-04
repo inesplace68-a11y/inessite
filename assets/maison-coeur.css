@@ -12,7 +12,7 @@
   --mc-mid:         #8C8882;    /* texte secondaire, labels */
   --mc-bar-bg:      #0F0E0C;    /* announcement bar — quasi-noir chaud */
   --mc-bar-text:    #E8E4DD;    /* texte announcement bar */
-  --mc-footer-bg:   #2B201A;    /* footer — brun foncé chaud */
+  --mc-footer-bg:   #332821;    /* footer — brun chaud profond */
   --mc-footer-text: #E8E4DD;    /* texte footer */
   --mc-border:      rgba(26, 22, 20, 0.14);
 
@@ -612,11 +612,11 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
-   FOOTER — fond brun foncé chaud #3B2F26, texte blanc
+   FOOTER — fond brun chaud profond var(--mc-footer-bg), texte blanc
    ============================================================ */
 
 .mc-footer {
-  background-color: #3B2F26;
+  background-color: var(--mc-footer-bg);
   color: #fff;
   border-top: none;
 }
@@ -781,7 +781,7 @@ h1, h2, h3, h4,
 .mc-fz-nl__btn {
   background: #fff;
   border: none;
-  color: #3B2F26;
+  color: var(--mc-footer-bg);
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
   font-size: 1.35rem;
