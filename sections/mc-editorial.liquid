@@ -1,0 +1,78 @@
+<section class="mc-section mc-editorial">
+  <div class="mc-container">
+    <div class="mc-editorial__grid">
+
+      <div class="mc-editorial__col-left">
+        {%- if section.settings.brand_name != blank -%}
+          <p class="mc-editorial__brand">{{ section.settings.brand_name }}</p>
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}
+          <p class="mc-editorial__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            href="{{ section.settings.cta_link | default: '#' }}"
+            class="mc-editorial__cta"
+            {% if section.settings.cta_link == blank %}aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="mc-editorial__col-right">
+        {%- if section.settings.text != blank -%}
+          <div class="mc-editorial__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bloc éditorial",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Nom de marque",
+      "default": "MAISON COEUR"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline (sous le nom)",
+      "default": "GALERIE D'ART — PARIS"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texte éditorial",
+      "default": "<p>Nous sélectionnons avec soin des objets chargés d'histoire, des meubles d'exception et des œuvres d'art qui transforment un intérieur en un espace de vie unique. Chaque pièce raconte une histoire, chaque objet porte une intention.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Libellé du bouton",
+      "default": "Notre histoire"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Lien du bouton"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloc éditorial"
+    }
+  ]
+}
+{% endschema %}

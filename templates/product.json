@@ -1,0 +1,114 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
+          }
+        },
+        "tab-livraison": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livraison & Retours",
+            "icon": "truck",
+            "content": "<p>Livraison offerte en France métropolitaine dès 150 €. Délai estimé : 3 à 7 jours ouvrés. Retours acceptés sous 14 jours.</p>",
+            "page": ""
+          }
+        },
+        "tab-paiement": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Paiement sécurisé",
+            "icon": "credit_card",
+            "content": "<p>Règlement sécurisé par SSL — Visa, Mastercard, PayPal, virement bancaire. Paiement en 3 fois disponible.</p>",
+            "page": ""
+          }
+        },
+        "tab-aide": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Besoin d'aide ?",
+            "icon": "chat_bubble",
+            "content": "<p>Notre équipe est disponible du lundi au vendredi, 9h–18h. Contactez-nous à <a href=\"mailto:bonjour@maisoncoeur.fr\">bonjour@maisoncoeur.fr</a></p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "description",
+        "buy_buttons",
+        "tab-livraison",
+        "tab-paiement",
+        "tab-aide"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "VOUS AIMEREZ AUSSI",
+        "heading_size": "h2",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 60,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}

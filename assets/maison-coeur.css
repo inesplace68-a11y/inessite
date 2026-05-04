@@ -1,0 +1,910 @@
+/* ============================================================
+   MAISON COEUR — Design tokens & surcharges visuelles
+   Source de vérité : design/mockup.PNG
+   ============================================================ */
+
+/* ============================================================
+   VARIABLES — extraites pixel par pixel du mockup
+   ============================================================ */
+:root {
+  --mc-bg:          #F7F5F1;    /* fond principal, toutes pages */
+  --mc-dark:        #1A1614;    /* texte principal, boutons, bordures */
+  --mc-mid:         #8C8882;    /* texte secondaire, labels */
+  --mc-bar-bg:      #0F0E0C;    /* announcement bar — quasi-noir chaud */
+  --mc-bar-text:    #E8E4DD;    /* texte announcement bar */
+  --mc-footer-bg:   #2B201A;    /* footer — brun foncé chaud */
+  --mc-footer-text: #E8E4DD;    /* texte footer */
+  --mc-border:      rgba(26, 22, 20, 0.14);
+
+  --mc-font-serif: 'Cormorant Garamond', Georgia, serif;
+  --mc-font-sans:  'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  --mc-transition: 0.25s ease;
+}
+
+/* ============================================================
+   RESET GLOBAL
+   ============================================================ */
+body {
+  background-color: var(--mc-bg);
+  color: var(--mc-dark);
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4,
+.h0, .h1, .h2, .h3, .h4 {
+  font-family: var(--mc-font-serif);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Color scheme Dawn override */
+.color-scheme-1,
+.color-background-1 {
+  background-color: var(--mc-bg);
+}
+
+/* Utilitaires */
+.mc-section { padding: 80px 0; }
+@media (max-width: 749px) { .mc-section { padding: 48px 0; } }
+
+.mc-container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+@media (max-width: 749px) { .mc-container { padding: 0 20px; } }
+
+.mc-section-heading {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--mc-dark);
+  text-align: center;
+  margin: 0 0 48px;
+}
+
+/* ============================================================
+   ANNOUNCEMENT BAR — fond quasi-noir, texte crème centré
+   ============================================================ */
+.utility-bar,
+.utility-bar.color-scheme-1 {
+  background-color: var(--mc-bar-bg) !important;
+  color: var(--mc-bar-text) !important;
+  min-height: 36px;
+}
+
+.utility-bar .announcement-bar__message,
+.utility-bar .announcement-bar__message * {
+  color: var(--mc-bar-text) !important;
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.13em !important;
+  text-transform: uppercase !important;
+}
+
+.utility-bar .announcement-bar__link,
+.utility-bar .link { color: var(--mc-bar-text) !important; }
+
+.utility-bar--bottom-border,
+.utility-bar--bottom-border-social-only {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ============================================================
+   HEADER — fond #F7F5F1, wordmark centré, nav 1 seule ligne
+   ============================================================ */
+.header-wrapper,
+.header-wrapper.color-scheme-1 {
+  background-color: var(--mc-bg) !important;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: 1px solid var(--mc-border) !important;
+  box-shadow: none !important;
+}
+
+.header { background-color: var(--mc-bg) !important; }
+
+/* --- Wordmark : monogramme + MAISON COEUR + tagline --------- */
+.mc-wordmark {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.mc-wordmark__monogram {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  color: var(--mc-dark);
+}
+
+.mc-wordmark__monogram svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mc-wordmark__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.mc-wordmark__name {
+  font-family: var(--mc-font-serif);
+  font-weight: 400;
+  font-size: 1.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mc-dark);
+}
+
+.mc-wordmark__sub {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mc-mid);
+  margin-top: 5px;
+}
+
+/* --- Navigation desktop : 1 seule ligne, sans wrap ---------- */
+.header__inline-menu .list-menu--inline {
+  flex-wrap: nowrap !important;
+  white-space: nowrap;
+  gap: 0;
+}
+
+.header__inline-menu .header__menu-item,
+.header__inline-menu .list-menu__item--link {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.8rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  color: var(--mc-dark) !important;
+  opacity: 1 !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  white-space: nowrap;
+  transition: opacity var(--mc-transition) !important;
+}
+
+.header__inline-menu .header__menu-item:hover,
+.header__inline-menu .list-menu__item--link:hover {
+  opacity: 0.5 !important;
+}
+
+/* Sous-menus dropdown */
+.header__submenu .header__menu-item,
+.header__submenu .list-menu__item--link {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.82rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  color: var(--mc-dark) !important;
+}
+
+/* Icons */
+.header__icon { color: var(--mc-dark) !important; }
+
+/* Localization */
+.desktop-localization-wrapper .disclosure__button,
+.localization-form .disclosure__button {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--mc-dark);
+  background: transparent;
+  border: none;
+}
+
+/* ============================================================
+   HERO — placeholder sombre, texte Cormorant Italic large
+   ============================================================ */
+
+/* Fond sombre sur le placeholder Dawn (quand pas d'image) */
+.banner .banner__media.placeholder {
+  background-color: #1E1A16 !important;
+}
+
+.banner .banner__media.placeholder .placeholder-svg {
+  opacity: 0.04 !important;
+  color: #fff;
+}
+
+/* Overlay sombre même sur placeholder */
+.banner::after {
+  background-color: var(--mc-dark) !important;
+}
+
+/* Titre hero : Cormorant Garamond Italic */
+.banner__heading,
+.banner__heading.inline-richtext {
+  font-family: var(--mc-font-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: #fff !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.015em !important;
+}
+
+/* Sous-titre hero : Jost Light, lettrages espacés */
+.banner__text,
+.banner__text.body,
+.banner__text.subtitle {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  font-size: 1.1rem !important;
+}
+
+/* CTA hero : outline fin blanc */
+.banner__buttons .button,
+.banner__buttons .button--primary,
+.banner__buttons .button--secondary {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.16em !important;
+  border-radius: 0 !important;
+  padding: 13px 36px !important;
+  transition: all var(--mc-transition) !important;
+}
+
+.banner__buttons .button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ============================================================
+   GRILLE NOTRE SÉLECTION (mc-collection-grid)
+   ============================================================ */
+.mc-collection-grid__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 989px) {
+  .mc-collection-grid__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+
+.mc-collection-grid__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--mc-dark);
+}
+
+/* Image carrée — ratio 1:1 comme le mockup */
+.mc-collection-grid__image-wrap {
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: #E8E5E0;
+  margin-bottom: 14px;
+}
+
+.mc-collection-grid__image-wrap img,
+.mc-collection-grid__image-wrap svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s ease;
+}
+
+.mc-collection-grid__link:hover .mc-collection-grid__image-wrap img {
+  transform: scale(1.04);
+}
+
+/* Nom de catégorie — small caps espacés */
+.mc-collection-grid__label {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--mc-dark);
+  margin: 0 0 6px;
+  text-align: center;
+}
+
+/* Lien DÉCOUVRIR sous chaque catégorie */
+.mc-collection-grid__discover {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mc-mid);
+  margin: 0;
+  text-align: center;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: color var(--mc-transition);
+}
+
+.mc-collection-grid__link:hover .mc-collection-grid__discover {
+  color: var(--mc-dark);
+}
+
+/* ============================================================
+   BLOC ÉDITORIAL (mc-editorial) — 2 colonnes
+   ============================================================ */
+.mc-editorial {
+  background-color: var(--mc-bg);
+}
+
+/* Grille 2 colonnes : wordmark gauche, texte droite */
+.mc-editorial__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+@media (max-width: 749px) {
+  .mc-editorial__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  .mc-editorial__col-left { align-items: center; }
+}
+
+.mc-editorial__col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mc-editorial__brand {
+  font-family: var(--mc-font-serif);
+  font-weight: 400;
+  font-size: 3rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mc-dark);
+  margin: 0 0 8px;
+  line-height: 1;
+}
+
+@media (max-width: 749px) {
+  .mc-editorial__brand { font-size: 2.2rem; }
+}
+
+.mc-editorial__tagline {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mc-mid);
+  margin: 0 0 36px;
+}
+
+.mc-editorial__cta {
+  display: inline-block;
+  padding: 12px 32px;
+  background: transparent;
+  color: var(--mc-dark);
+  border: 1px solid var(--mc-dark);
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  transition: all var(--mc-transition);
+}
+
+.mc-editorial__cta:hover {
+  background: var(--mc-dark);
+  color: var(--mc-bg);
+}
+
+.mc-editorial__text {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 1.45rem;
+  line-height: 1.85;
+  color: var(--mc-mid);
+}
+
+.mc-editorial__text p { margin: 0; }
+
+/* ============================================================
+   RÉASSURANCE (mc-reassurance) — icônes line-art fines
+   ============================================================ */
+.mc-reassurance {
+  border-top: 1px solid var(--mc-border);
+  border-bottom: 1px solid var(--mc-border);
+  background-color: var(--mc-bg);
+}
+
+.mc-reassurance__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 749px) {
+  .mc-reassurance__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.mc-reassurance__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 44px 28px;
+  border-right: 1px solid var(--mc-border);
+}
+
+.mc-reassurance__item:last-child { border-right: none; }
+
+@media (max-width: 749px) {
+  .mc-reassurance__item:nth-child(2) { border-right: none; }
+  .mc-reassurance__item:nth-child(1),
+  .mc-reassurance__item:nth-child(2) { border-bottom: 1px solid var(--mc-border); }
+}
+
+/* Icônes SVG — trait FIN (stroke-width: 1) */
+.mc-reassurance__icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 18px;
+  color: var(--mc-dark);
+}
+
+.mc-reassurance__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1;           /* trait fin comme le mockup */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mc-reassurance__title {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mc-dark);
+  margin: 0 0 8px;
+}
+
+.mc-reassurance__text {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.65;
+  color: var(--mc-mid);
+  margin: 0;
+}
+
+/* ============================================================
+   PAGE PRODUIT
+   ============================================================ */
+.product__title h1,
+.product__title .h1 {
+  font-family: var(--mc-font-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: 3rem !important;
+  line-height: 1.12 !important;
+  color: var(--mc-dark) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.product__text.caption-with-letter-spacing {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.8rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  color: var(--mc-mid) !important;
+}
+
+.price--large .price__regular .price-item--regular,
+.price--large .price-item {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 2rem !important;
+  color: var(--mc-dark) !important;
+}
+
+.product__description {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 1.4rem !important;
+  line-height: 1.8 !important;
+  color: var(--mc-dark) !important;
+}
+
+/* Bouton AJOUTER AU PANIER */
+.product-form__cart-submit {
+  background-color: var(--mc-dark) !important;
+  color: var(--mc-bg) !important;
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.18em !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--mc-dark) !important;
+  padding: 18px 0 !important;
+  transition: background var(--mc-transition), color var(--mc-transition) !important;
+}
+
+.product-form__cart-submit:hover:not([disabled]) {
+  background-color: transparent !important;
+  color: var(--mc-dark) !important;
+}
+
+/* Accordéons produit */
+.product__accordion.accordion details summary .accordion__title {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.85rem !important;
+  color: var(--mc-dark) !important;
+}
+
+.product__accordion.accordion .accordion__content {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 1.3rem !important;
+  line-height: 1.75 !important;
+  color: var(--mc-mid) !important;
+}
+
+/* Cartes produit */
+.card__heading {
+  font-family: var(--mc-font-serif) !important;
+  font-weight: 400 !important;
+}
+
+.card .price {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+}
+
+/* ============================================================
+   VOUS AIMEREZ AUSSI (related-products)
+   ============================================================ */
+.related-products .title,
+.related-products h2.title,
+.related-products .related-products__heading {
+  font-family: var(--mc-font-sans) !important;
+  font-weight: 300 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.18em !important;
+  color: var(--mc-dark) !important;
+}
+
+/* ============================================================
+   FOOTER — fond brun foncé chaud #3B2F26, texte blanc
+   ============================================================ */
+
+.mc-footer {
+  background-color: #3B2F26;
+  color: #fff;
+  border-top: none;
+}
+
+/* Layout principal : 5 zones flex horizontales */
+.mc-footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 80px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 100px 100px 80px;
+}
+
+/* Base zone */
+.mc-fz {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ------- ZONE 1 : Logo ------- */
+.mc-fz--logo {
+  flex: 0 0 14%;
+  min-width: 110px;
+}
+
+.mc-fz-logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+}
+
+.mc-fz-logo-img {
+  display: block;
+  height: auto;
+  max-width: 200px;
+}
+
+.mc-fz-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mc-fz-brand__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1;
+}
+
+.mc-fz-brand__tagline {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+}
+
+/* ------- ZONES 2-4 : Colonnes de liens ------- */
+.mc-fz--col {
+  flex: 1;
+  min-width: 0;
+}
+
+.mc-fz-col__heading {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 32px;
+}
+
+.mc-fz-col__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mc-fz-col__links li + li {
+  margin-top: 18px;
+}
+
+.mc-fz-col__link {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+
+.mc-fz-col__link:hover,
+.mc-fz-col__link.is-active {
+  opacity: 0.65;
+}
+
+/* ------- ZONE 5 : Newsletter ------- */
+.mc-fz--nl {
+  flex: 0 0 26%;
+  min-width: 220px;
+}
+
+.mc-fz-nl__heading {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+.mc-fz-nl__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.mc-fz-nl__field {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.mc-fz-nl__input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  padding: 0 0 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease;
+}
+
+.mc-fz-nl__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mc-fz-nl__input:focus {
+  border-bottom-color: #fff;
+}
+
+.mc-fz-nl__btn {
+  background: #fff;
+  border: none;
+  color: #3B2F26;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  cursor: pointer;
+  margin-bottom: 40px;
+  transition: opacity 0.25s ease;
+}
+
+.mc-fz-nl__btn:hover {
+  opacity: 0.85;
+}
+
+.mc-fz-nl__error {
+  display: block;
+  color: rgba(255, 140, 110, 0.9);
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+.mc-fz-nl__success {
+  color: rgba(255, 255, 255, 0.65);
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 16px;
+}
+
+/* Réseaux sociaux */
+.mc-fz-nl__social {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.mc-fz-nl__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.mc-fz-nl__social-link:hover {
+  opacity: 0.65;
+}
+
+.mc-fz-nl__social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+/* ------- BARRE DU BAS ------- */
+.mc-footer-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mc-footer-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 100px;
+}
+
+.mc-footer-bar-copy {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+.mc-footer-bar-inner .list-payment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mc-footer-bar-inner .list-payment__item {
+  opacity: 0.4;
+}
+
+/* ------- RESPONSIVE < 768px ------- */
+@media (max-width: 767px) {
+  .mc-footer-inner {
+    flex-direction: column;
+    gap: 40px;
+    padding: 60px 24px;
+  }
+
+  .mc-fz--logo,
+  .mc-fz--col,
+  .mc-fz--nl {
+    flex: none;
+    width: 100%;
+  }
+
+  .mc-footer-bar-inner {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 24px;
+  }
+}
+
+/* ============================================================
+   RICH-TEXT (sections standard Dawn)
+   ============================================================ */
+.rich-text__heading { font-family: var(--mc-font-serif) !important; }
+.rich-text__text { font-family: var(--mc-font-sans) !important; font-weight: 300 !important; }

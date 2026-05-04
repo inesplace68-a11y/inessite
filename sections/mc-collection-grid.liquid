@@ -1,0 +1,116 @@
+<section class="mc-section mc-collection-grid">
+  <div class="mc-container">
+    {%- if section.settings.title != blank -%}
+      <h2 class="mc-section-heading">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="mc-collection-grid__grid">
+        {%- for block in section.blocks -%}
+          <div class="mc-collection-grid__item" {{ block.shopify_attributes }}>
+            <a
+              href="{{ block.settings.collection_link | default: '#' }}"
+              class="mc-collection-grid__link"
+              {% if block.settings.collection_link == blank %}aria-disabled="true"{% endif %}
+            >
+              <div class="mc-collection-grid__image-wrap">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'mc-collection-grid__image',
+                      widths: '400, 600, 800',
+                      sizes: '(min-width: 990px) 25vw, 50vw'
+                  }}
+                {%- else -%}
+                  {{ 'collection-1' | placeholder_svg_tag: 'mc-collection-grid__image placeholder-svg' }}
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.title != blank -%}
+                <p class="mc-collection-grid__label">{{ block.settings.title }}</p>
+              {%- endif -%}
+
+              <p class="mc-collection-grid__discover">{{ block.settings.discover_label | default: 'Découvrir' }}</p>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Grille collections",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de section",
+      "default": "NOTRE SÉLECTION"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre catégorie",
+          "default": "Catégorie"
+        },
+        {
+          "type": "text",
+          "id": "discover_label",
+          "label": "Libellé lien",
+          "default": "Découvrir"
+        },
+        {
+          "type": "url",
+          "id": "collection_link",
+          "label": "Lien vers la collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grille collections",
+      "blocks": [
+        {
+          "type": "collection_item",
+          "settings": { "title": "Art vintage", "discover_label": "Découvrir" }
+        },
+        {
+          "type": "collection_item",
+          "settings": { "title": "Mobilier vintage", "discover_label": "Découvrir" }
+        },
+        {
+          "type": "collection_item",
+          "settings": { "title": "Pièces de design", "discover_label": "Découvrir" }
+        },
+        {
+          "type": "collection_item",
+          "settings": { "title": "Collectibles", "discover_label": "Découvrir" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

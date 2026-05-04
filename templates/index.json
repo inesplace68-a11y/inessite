@@ -1,0 +1,167 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "MIROIRS<em> ANTIQUES</em>",
+            "heading_size": "hxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Objets rares, mobilier vintage et art singulier — sélectionnés à Paris pour votre intérieur.",
+            "text_style": "subtitle"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Découvrir la sélection",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/188188F6-5F76-4B13-B3A5-AD6E09CA91B8.png",
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-1",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "mc_collection_grid": {
+      "type": "mc-collection-grid",
+      "blocks": {
+        "col-1": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Art vintage",
+            "discover_label": "Découvrir",
+            "collection_link": "shopify://collections/art-vintage"
+          }
+        },
+        "col-2": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Mobilier vintage",
+            "discover_label": "Découvrir",
+            "collection_link": "shopify://collections/mobilier-vintage"
+          }
+        },
+        "col-3": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Pièces de design",
+            "discover_label": "Découvrir",
+            "collection_link": "shopify://collections/design"
+          }
+        },
+        "col-4": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Collectibles",
+            "discover_label": "Découvrir",
+            "collection_link": "shopify://collections/collectibles"
+          }
+        }
+      },
+      "block_order": [
+        "col-1",
+        "col-2",
+        "col-3",
+        "col-4"
+      ],
+      "settings": {
+        "title": "NOTRE SÉLECTION"
+      }
+    },
+    "mc_editorial": {
+      "type": "mc-editorial",
+      "settings": {
+        "brand_name": "MAISON COEUR",
+        "tagline": "GALERIE D'ART — PARIS",
+        "text": "<p>Nous sélectionnons avec soin des objets chargés d'histoire, des meubles d'exception et des œuvres d'art qui transforment un intérieur en un espace de vie unique. Chaque pièce raconte une histoire, chaque objet porte une intention.</p>",
+        "cta_label": "Notre histoire",
+        "cta_link": "shopify://pages/a-propos"
+      }
+    },
+    "mc_reassurance": {
+      "type": "mc-reassurance",
+      "blocks": {
+        "reas-1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Livraison offerte",
+            "text": "Dès 150 € d'achat en France métropolitaine"
+          }
+        },
+        "reas-2": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Paiement sécurisé",
+            "text": "Transactions chiffrées SSL — Visa, Mastercard, PayPal"
+          }
+        },
+        "reas-3": {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "title": "Retours faciles",
+            "text": "14 jours pour changer d'avis, sans justification"
+          }
+        },
+        "reas-4": {
+          "type": "item",
+          "settings": {
+            "icon": "award",
+            "title": "Pièces authentifiées",
+            "text": "Chaque objet est sélectionné et expertisé par notre équipe"
+          }
+        }
+      },
+      "block_order": [
+        "reas-1",
+        "reas-2",
+        "reas-3",
+        "reas-4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "image_banner",
+    "mc_collection_grid",
+    "mc_editorial",
+    "mc_reassurance"
+  ]
+}

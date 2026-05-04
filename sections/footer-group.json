@@ -1,0 +1,55 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_6GhWC9": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Liens",
+            "menu": "footer"
+          }
+        },
+        "footer-categories": {
+          "type": "link_list",
+          "settings": {
+            "heading": "CATÉGORIES",
+            "menu": "main-menu"
+          }
+        },
+        "footer-service": {
+          "type": "link_list",
+          "settings": {
+            "heading": "SERVICE CLIENT",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_6GhWC9",
+        "footer-categories",
+        "footer-service"
+      ],
+      "settings": {
+        "footer_logo": "shopify://shop_images/4AE77CCE-1D48-4604-9100-4E380732B06D.png",
+        "footer_logo_width": 140,
+        "newsletter_heading": "ENTOUREZ-VOUS D'OBJETS QUI VOUS INSPIRENT.",
+        "payment_enable": true
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
