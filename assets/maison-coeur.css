@@ -31,12 +31,8 @@ body {
   font-family: var(--mc-font-sans);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
-  font-size: 1.6rem;            /* override Dawn — corps 16px mobile */
+  font-size: 1.5rem;            /* corps 15px — calibration audit Oblist */
   letter-spacing: normal;       /* override Dawn — supprime 0.06rem global */
-}
-
-@media screen and (min-width: 750px) {
-  body { font-size: 1.7rem; }   /* corps 17px desktop */
 }
 
 a { color: inherit; text-decoration: none; }
@@ -173,7 +169,7 @@ h1, h2, h3, h4,
 .header__inline-menu .list-menu__item--link {
   font-family: var(--mc-font-sans) !important;
   font-weight: 300 !important;
-  font-size: 1.35rem !important;
+  font-size: 1.3rem !important;
   text-transform: uppercase !important;
   letter-spacing: 0.07em !important;
   color: var(--mc-dark) !important;
@@ -194,7 +190,7 @@ h1, h2, h3, h4,
 .header__submenu .list-menu__item--link {
   font-family: var(--mc-font-sans) !important;
   font-weight: 300 !important;
-  font-size: 1.35rem !important;
+  font-size: 1.3rem !important;
   text-transform: uppercase !important;
   letter-spacing: 0.07em !important;
   color: var(--mc-dark) !important;
@@ -208,7 +204,7 @@ h1, h2, h3, h4,
 .localization-form .disclosure__button {
   font-family: var(--mc-font-sans);
   font-weight: 300;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--mc-dark);
@@ -675,7 +671,7 @@ h1, h2, h3, h4,
 .mc-fz-brand__tagline {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.55);
@@ -690,8 +686,8 @@ h1, h2, h3, h4,
 .mc-fz-col__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.1rem;
-  letter-spacing: 0.2em;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #E8E4DD;
   margin: 0 0 18px;
@@ -711,7 +707,7 @@ h1, h2, h3, h4,
   position: relative;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.55rem;
+  font-size: 1.3rem;
   line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -746,7 +742,7 @@ h1, h2, h3, h4,
 .mc-fz-nl__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
@@ -757,7 +753,7 @@ h1, h2, h3, h4,
 .mc-fz-nl__sub {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.6;
@@ -784,7 +780,7 @@ h1, h2, h3, h4,
   color: #fff;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* 16px — exception anti-zoom Safari iOS sur input */
   letter-spacing: 0.05em;
   padding: 0 0 8px;
   outline: none;
@@ -806,7 +802,7 @@ h1, h2, h3, h4,
   color: var(--mc-footer-bg);
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 14px 40px;
@@ -824,7 +820,7 @@ h1, h2, h3, h4,
   color: rgba(255, 140, 110, 0.9);
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   letter-spacing: 0.06em;
   margin-top: 6px;
 }
@@ -851,7 +847,7 @@ h1, h2, h3, h4,
   gap: 10px;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #fff;
@@ -889,7 +885,7 @@ h1, h2, h3, h4,
 .mc-footer-bar-copy {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.45);
   margin: 0;
@@ -924,7 +920,7 @@ h1, h2, h3, h4,
 .mc-footer-bar-legal a {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.45);
   text-decoration: none;
