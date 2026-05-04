@@ -685,9 +685,9 @@ h1, h2, h3, h4,
 
 .mc-fz-col__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.2rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #E8E4DD;
   margin: 0 0 18px;
@@ -706,10 +706,10 @@ h1, h2, h3, h4,
 .mc-fz-col__link {
   position: relative;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1.3rem;
-  line-height: 1.5;
-  letter-spacing: 0.1em;
+  line-height: 2;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
   text-decoration: none;
