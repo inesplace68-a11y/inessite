@@ -629,7 +629,7 @@ h1, h2, h3, h4,
   gap: 60px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 100px 100px 80px;
+  padding: 70px 100px 60px;
 }
 
 /* Base zone */
@@ -654,7 +654,7 @@ h1, h2, h3, h4,
 .mc-fz-logo-img {
   display: block;
   height: auto;
-  max-width: 200px;
+  max-width: 100px;
 }
 
 .mc-fz-brand {
@@ -690,11 +690,11 @@ h1, h2, h3, h4,
 .mc-fz-col__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #E8E4DD;
-  margin: 0 0 32px;
+  margin: 0 0 18px;
 }
 
 .mc-fz-col__links {
@@ -704,7 +704,7 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-col__links li + li {
-  margin-top: 18px;
+  margin-top: 7px;
 }
 
 .mc-fz-col__link {
@@ -712,6 +712,7 @@ h1, h2, h3, h4,
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
   font-size: 1.55rem;
+  line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
