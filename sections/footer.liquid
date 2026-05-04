@@ -3,7 +3,7 @@
 <footer class="mc-footer">
   <div class="mc-footer-inner">
 
-    <!-- ZONE 1 : Logo -->
+    {%- comment -%} ZONE 1 : Logo {%- endcomment -%}
     <div class="mc-fz mc-fz--logo">
       <a href="{{ routes.root_url }}" class="mc-fz-logo-link" aria-label="{{ shop.name }}">
         {%- if section.settings.footer_logo != blank -%}
@@ -23,33 +23,53 @@
       </a>
     </div>
 
-    <!-- ZONES 2-4 : Colonnes de liens -->
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'link_list' -%}
-        <div class="mc-fz mc-fz--col" {{ block.shopify_attributes }}>
-          {%- if block.settings.heading != blank -%}
-            <h2 class="mc-fz-col__heading">{{ block.settings.heading }}</h2>
-          {%- endif -%}
-          {%- if block.settings.menu != blank -%}
-            <ul class="mc-fz-col__links">
-              {%- for link in block.settings.menu.links -%}
-                <li>
-                  <a href="{{ link.url }}" class="mc-fz-col__link{% if link.active %} is-active{% endif %}">
-                    {{- link.title | escape -}}
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+    {%- comment -%} ZONE 2 : À PROPOS {%- endcomment -%}
+    <div class="mc-fz mc-fz--col">
+      <h2 class="mc-fz-col__heading">À PROPOS</h2>
+      <ul class="mc-fz-col__links">
+        <li><a href="#" class="mc-fz-col__link">LA MAISON</a></li>
+        <li><a href="#" class="mc-fz-col__link">CONCIERGERIE</a></li>
+        <li><a href="#" class="mc-fz-col__link">AUTHENTICITÉ</a></li>
+        <li><a href="#" class="mc-fz-col__link">PRESSE</a></li>
+        <li><a href="#" class="mc-fz-col__link">PROGRAMME PRO</a></li>
+        <li><a href="#" class="mc-fz-col__link">AVIS</a></li>
+      </ul>
+    </div>
 
-    <!-- ZONE 5 : Newsletter + réseaux sociaux -->
+    {%- comment -%} ZONE 3 : CATÉGORIES {%- endcomment -%}
+    <div class="mc-fz mc-fz--col">
+      <h2 class="mc-fz-col__heading">CATÉGORIES</h2>
+      <ul class="mc-fz-col__links">
+        <li><a href="#" class="mc-fz-col__link">NOUVEAUTÉS</a></li>
+        <li><a href="#" class="mc-fz-col__link">OBJETS</a></li>
+        <li><a href="#" class="mc-fz-col__link">MIROIRS</a></li>
+        <li><a href="#" class="mc-fz-col__link">MOBILIER</a></li>
+        <li><a href="#" class="mc-fz-col__link">LUMINAIRES</a></li>
+        <li><a href="#" class="mc-fz-col__link">ART</a></li>
+      </ul>
+    </div>
+
+    {%- comment -%} ZONE 4 : SERVICE CLIENT {%- endcomment -%}
+    <div class="mc-fz mc-fz--col">
+      <h2 class="mc-fz-col__heading">SERVICE CLIENT</h2>
+      <ul class="mc-fz-col__links">
+        <li><a href="#" class="mc-fz-col__link">CONTACT</a></li>
+        <li><a href="#" class="mc-fz-col__link">LIVRAISONS</a></li>
+        <li><a href="#" class="mc-fz-col__link">RETOURS</a></li>
+        <li><a href="#" class="mc-fz-col__link">FAQ</a></li>
+        <li><a href="#" class="mc-fz-col__link">PROTECTION ACHETEUR</a></li>
+      </ul>
+    </div>
+
+    {%- comment -%} ZONE 5 : Newsletter + réseaux sociaux {%- endcomment -%}
     <div class="mc-fz mc-fz--nl">
 
       {%- if section.settings.newsletter_heading != blank -%}
         <p class="mc-fz-nl__heading">{{ section.settings.newsletter_heading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.newsletter_subtext != blank -%}
+        <p class="mc-fz-nl__sub">{{ section.settings.newsletter_subtext }}</p>
       {%- endif -%}
 
       {%- form 'customer', id: 'ContactFooter', class: 'mc-fz-nl__form' -%}
@@ -89,7 +109,6 @@
         {%- endif -%}
       {%- endform -%}
 
-      <!-- Réseaux sociaux -->
       {%- liquid
         assign has_ig = false
         assign has_pi = false
@@ -132,19 +151,15 @@
     </div>
   </div>
 
-  <!-- BARRE DU BAS -->
+  {%- comment -%} BARRE DU BAS {%- endcomment -%}
   <div class="mc-footer-bar">
     <div class="mc-footer-bar-inner">
-      <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} MAISON COEUR — PARIS</p>
-      {%- if section.settings.payment_enable -%}
-        <ul class="list list-payment" role="list">
-          {%- for type in shop.enabled_payment_types -%}
-            <li class="list-payment__item">
-              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
+      <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
+      <ul class="mc-footer-bar-legal" role="list">
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">CGU</a></li>
+        <li><a href="#">Mentions Légales</a></li>
+      </ul>
     </div>
   </div>
 
@@ -153,26 +168,6 @@
 {% schema %}
 {
   "name": "Footer",
-  "blocks": [
-    {
-      "type": "link_list",
-      "name": "Colonne de liens",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Titre de la colonne",
-          "default": "Liens"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "default": "footer",
-          "label": "Menu"
-        }
-      ]
-    }
-  ],
   "settings": [
     {
       "type": "header",
@@ -204,40 +199,11 @@
       "label": "Titre newsletter"
     },
     {
-      "type": "header",
-      "content": "Bas de page"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": true,
-      "label": "Afficher les moyens de paiement"
+      "type": "text",
+      "id": "newsletter_subtext",
+      "default": "Une sélection rare, livrée une fois par mois.",
+      "label": "Sous-texte newsletter"
     }
-  ],
-  "default": {
-    "blocks": [
-      {
-        "type": "link_list",
-        "settings": {
-          "heading": "À PROPOS",
-          "menu": "footer-a-propos"
-        }
-      },
-      {
-        "type": "link_list",
-        "settings": {
-          "heading": "CATÉGORIES",
-          "menu": "footer-categories"
-        }
-      },
-      {
-        "type": "link_list",
-        "settings": {
-          "heading": "SERVICE CLIENT",
-          "menu": "footer-service-client"
-        }
-      }
-    ]
-  }
+  ]
 }
 {% endschema %}

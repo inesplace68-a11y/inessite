@@ -13,39 +13,11 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "blocks": {
-        "link_list_6GhWC9": {
-          "type": "link_list",
-          "settings": {
-            "heading": "Liens",
-            "menu": "footer"
-          }
-        },
-        "footer-categories": {
-          "type": "link_list",
-          "settings": {
-            "heading": "CATÉGORIES",
-            "menu": "main-menu"
-          }
-        },
-        "footer-service": {
-          "type": "link_list",
-          "settings": {
-            "heading": "SERVICE CLIENT",
-            "menu": "footer"
-          }
-        }
-      },
-      "block_order": [
-        "link_list_6GhWC9",
-        "footer-categories",
-        "footer-service"
-      ],
       "settings": {
         "footer_logo": "shopify://shop_images/4AE77CCE-1D48-4604-9100-4E380732B06D.png",
         "footer_logo_width": 140,
         "newsletter_heading": "ENTOUREZ-VOUS D'OBJETS QUI VOUS INSPIRENT.",
-        "payment_enable": true
+        "newsletter_subtext": "Une sélection rare, livrée une fois par mois."
       }
     }
   },
