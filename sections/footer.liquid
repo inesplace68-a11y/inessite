@@ -153,6 +153,33 @@
 
   {%- comment -%} BARRE DU BAS {%- endcomment -%}
   <div class="mc-footer-bar">
+
+    {%- comment -%} Sélecteurs pays/devise + langue (natif Shopify) {%- endcomment -%}
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      <div class="mc-footer-bar-localization">
+        {%- if localization.available_countries.size > 1 -%}
+          <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
+            {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                {%- render 'country-localization', localPosition: 'FooterCountry' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+        {%- if localization.available_languages.size > 1 -%}
+          <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
+            {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="FooterLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
     <div class="mc-footer-bar-inner">
       <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
       <ul class="mc-footer-bar-legal" role="list">

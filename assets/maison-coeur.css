@@ -622,10 +622,10 @@ h1, h2, h3, h4,
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr 1fr 1.4fr;
   align-items: flex-start;
-  gap: 60px;
+  gap: 72px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 70px 100px 60px;
+  padding: 80px 100px 40px;
 }
 
 /* Base zone */
@@ -686,11 +686,12 @@ h1, h2, h3, h4,
 .mc-fz-col__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.2rem;
-  letter-spacing: 0.18em;
+  font-size: 1.0rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #E8E4DD;
-  margin: 0 0 18px;
+  opacity: 0.75;
+  margin: 0 0 24px;
 }
 
 .mc-fz-col__links {
@@ -708,7 +709,7 @@ h1, h2, h3, h4,
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
   font-size: 1.3rem;
-  line-height: 2;
+  line-height: 2.4;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
@@ -870,6 +871,47 @@ h1, h2, h3, h4,
 /* ------- BARRE DU BAS ------- */
 .mc-footer-bar {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Zone sélecteurs pays/devise + langue */
+.mc-footer-bar-localization {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 100px 0;
+}
+
+.mc-footer-bar-localization .disclosure {
+  position: relative;
+}
+
+.mc-footer-bar-localization .disclosure__button,
+.mc-footer-bar-localization .localization-form__select {
+  background: transparent;
+  border: none;
+  padding: 6px 0;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 1.3rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: color var(--mc-transition);
+}
+
+.mc-footer-bar-localization .disclosure__button:hover,
+.mc-footer-bar-localization .localization-form__select:hover {
+  color: #fff;
+}
+
+.mc-footer-bar-localization .disclosure__button svg,
+.mc-footer-bar-localization .localization-form__select svg {
+  width: 10px;
+  height: 10px;
+  margin-left: 6px;
 }
 
 .mc-footer-bar-inner {
