@@ -117,7 +117,7 @@
       {
         "type": "range",
         "id": "heading_scale",
-        "min": 100,
+        "min": 80,
         "max": 150,
         "step": 5,
         "unit": "%",
@@ -137,8 +137,8 @@
       {
         "type": "range",
         "id": "body_scale",
-        "min": 100,
-        "max": 130,
+        "min": 80,
+        "max": 150,
         "step": 5,
         "unit": "%",
         "label": "t:settings_schema.typography.settings.body_scale.label",
