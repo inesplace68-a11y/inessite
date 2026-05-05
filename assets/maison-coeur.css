@@ -625,7 +625,7 @@ h1, h2, h3, h4,
   gap: 72px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 52px 100px 26px;
+  padding: 40px 100px 20px;
 }
 
 /* Base zone */
@@ -701,7 +701,7 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-col__links li + li {
-  margin-top: 7px;
+  margin-top: 5px;
 }
 
 .mc-fz-col__link {
@@ -709,7 +709,7 @@ h1, h2, h3, h4,
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
   font-size: 1.1rem;
-  line-height: 2.4;
+  line-height: 1.8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
@@ -781,7 +781,7 @@ h1, h2, h3, h4,
   color: #fff;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 16px; /* exception anti-zoom Safari iOS — px littéral, immune au body_scale */
+  font-size: 1.2rem;
   letter-spacing: 0.05em;
   padding: 0 0 8px;
   outline: none;
@@ -790,7 +790,10 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-nl__input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: none;
+  color: rgba(232, 228, 221, 0.75);
 }
 
 .mc-fz-nl__input:focus {
@@ -977,6 +980,10 @@ h1, h2, h3, h4,
 
 /* ------- RESPONSIVE < 768px ------- */
 @media (max-width: 767px) {
+  .mc-fz-nl__input {
+    font-size: 16px; /* exception anti-zoom Safari iOS */
+  }
+
   .mc-footer-inner {
     grid-template-columns: 1fr;
     gap: 40px;
