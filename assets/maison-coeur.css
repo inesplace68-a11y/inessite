@@ -708,7 +708,7 @@ h1, h2, h3, h4,
   position: relative;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 2.4;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -848,7 +848,7 @@ h1, h2, h3, h4,
   gap: 10px;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #fff;
@@ -870,7 +870,7 @@ h1, h2, h3, h4,
 
 /* ------- BARRE DU BAS ------- */
 .mc-footer-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Zone sélecteurs pays/devise + langue */
@@ -926,10 +926,11 @@ h1, h2, h3, h4,
 
 .mc-footer-bar-copy {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
 
@@ -961,16 +962,17 @@ h1, h2, h3, h4,
 
 .mc-footer-bar-legal a {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.25s ease;
 }
 
 .mc-footer-bar-legal a:hover {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 1);
 }
 
 /* ------- RESPONSIVE < 768px ------- */
