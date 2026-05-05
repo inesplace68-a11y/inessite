@@ -620,12 +620,12 @@ h1, h2, h3, h4,
 /* Layout principal : 5 colonnes en grille rigide */
 .mc-footer-inner {
   display: grid;
-  grid-template-columns: 0.8fr 1fr 1fr 1fr 1.4fr;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1.4fr;
   align-items: flex-start;
   gap: 72px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 40px 100px 20px;
+  padding: 28px 100px 14px;
 }
 
 /* Base zone */
@@ -712,7 +712,7 @@ h1, h2, h3, h4,
   line-height: 1.8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
+  color: #E8E4DD;
   text-decoration: none;
   display: inline-block;
 }
@@ -748,7 +748,7 @@ h1, h2, h3, h4,
   text-transform: uppercase;
   color: #fff;
   line-height: 1.7;
-  margin: 0 0 12px;
+  margin: 0 0 8px;
 }
 
 .mc-fz-nl__sub {
@@ -801,6 +801,8 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-nl__btn {
+  align-self: flex-start;
+  width: auto;
   background: #fff;
   border: none;
   color: var(--mc-footer-bg);
@@ -809,7 +811,7 @@ h1, h2, h3, h4,
   font-size: 1.3rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 14px 40px;
+  padding: 14px 32px;
   cursor: pointer;
   margin-bottom: 40px;
   transition: opacity 0.25s ease;
@@ -854,7 +856,7 @@ h1, h2, h3, h4,
   font-size: 1.1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #fff;
+  color: #E8E4DD;
   text-decoration: none;
   transition: opacity 0.25s ease;
 }
