@@ -27,12 +27,9 @@
     <div class="mc-fz mc-fz--col">
       <h2 class="mc-fz-col__heading">À PROPOS</h2>
       <ul class="mc-fz-col__links">
-        <li><a href="#" class="mc-fz-col__link">LA MAISON</a></li>
-        <li><a href="#" class="mc-fz-col__link">CONCIERGERIE</a></li>
-        <li><a href="#" class="mc-fz-col__link">AUTHENTICITÉ</a></li>
-        <li><a href="#" class="mc-fz-col__link">PRESSE</a></li>
-        <li><a href="#" class="mc-fz-col__link">PROGRAMME PRO</a></li>
-        <li><a href="#" class="mc-fz-col__link">AVIS</a></li>
+        {%- for link in linklists['footer-a-propos'].links -%}
+          <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
+        {%- endfor -%}
       </ul>
     </div>
 
@@ -40,12 +37,9 @@
     <div class="mc-fz mc-fz--col">
       <h2 class="mc-fz-col__heading">CATÉGORIES</h2>
       <ul class="mc-fz-col__links">
-        <li><a href="#" class="mc-fz-col__link">NOUVEAUTÉS</a></li>
-        <li><a href="#" class="mc-fz-col__link">OBJETS</a></li>
-        <li><a href="#" class="mc-fz-col__link">MIROIRS</a></li>
-        <li><a href="#" class="mc-fz-col__link">MOBILIER</a></li>
-        <li><a href="#" class="mc-fz-col__link">LUMINAIRES</a></li>
-        <li><a href="#" class="mc-fz-col__link">ART</a></li>
+        {%- for link in linklists['footer-categories'].links -%}
+          <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
+        {%- endfor -%}
       </ul>
     </div>
 
@@ -53,11 +47,9 @@
     <div class="mc-fz mc-fz--col">
       <h2 class="mc-fz-col__heading">SERVICE CLIENT</h2>
       <ul class="mc-fz-col__links">
-        <li><a href="#" class="mc-fz-col__link">CONTACT</a></li>
-        <li><a href="#" class="mc-fz-col__link">LIVRAISONS</a></li>
-        <li><a href="#" class="mc-fz-col__link">RETOURS</a></li>
-        <li><a href="#" class="mc-fz-col__link">FAQ</a></li>
-        <li><a href="#" class="mc-fz-col__link">PROTECTION ACHETEUR</a></li>
+        {%- for link in linklists['footer-service-client'].links -%}
+          <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
+        {%- endfor -%}
       </ul>
     </div>
 
