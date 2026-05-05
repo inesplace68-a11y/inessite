@@ -638,6 +638,7 @@ h1, h2, h3, h4,
 
 /* ------- ZONE 1 : Logo ------- */
 .mc-fz--logo {
+  align-self: center;
   min-width: 110px;
 }
 
@@ -811,7 +812,7 @@ h1, h2, h3, h4,
   font-size: 1.3rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 14px 32px;
+  padding: 14px 18px;
   cursor: pointer;
   margin-bottom: 40px;
   transition: opacity 0.25s ease;
