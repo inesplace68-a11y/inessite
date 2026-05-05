@@ -111,53 +111,6 @@ h1, h2, h3, h4,
 
 .header { background-color: var(--mc-bg) !important; }
 
-/* --- Wordmark : monogramme + MAISON COEUR + tagline --------- */
-.mc-wordmark {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-}
-
-.mc-wordmark__monogram {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  color: var(--mc-dark);
-}
-
-.mc-wordmark__monogram svg {
-  width: 100%;
-  height: 100%;
-}
-
-.mc-wordmark__text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1;
-}
-
-.mc-wordmark__name {
-  font-family: var(--mc-font-serif);
-  font-weight: 400;
-  font-size: 1.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--mc-dark);
-}
-
-.mc-wordmark__sub {
-  font-family: var(--mc-font-sans);
-  font-weight: 300;
-  font-size: 1.1rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--mc-mid);
-  margin-top: 5px;
-}
-
 /* --- Navigation desktop : 1 seule ligne, sans wrap ---------- */
 .header__inline-menu .list-menu--inline {
   flex-wrap: nowrap !important;
@@ -1016,8 +969,6 @@ h1, h2, h3, h4,
    Garantit lisibilité min sur les zones qui tomberaient < 10px
    à cause du compactage proportionnel global.
    ============================================================ */
-.mc-wordmark__sub { font-size: 10px; }
-
 .caption-with-letter-spacing { font-size: 10px !important; }
 
 .field__input:not(:placeholder-shown) ~ .field__label,
@@ -1032,3 +983,145 @@ h1, h2, h3, h4,
 .active-facets__button-wrapper * { font-size: 10px !important; }
 
 .predictive-search__item-vendor { font-size: 10px !important; }
+
+/* ============================================
+   HEADER MAISON COEUR
+   ============================================ */
+
+/* Wrapper fixé en haut */
+.mc-hd-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #F5F0E8;
+  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mc-hd-wrap--hidden {
+  transform: translateY(-100%);
+}
+
+/* ZONE 1 : Bande noire fine */
+.mc-hd-topbar {
+  height: 6px;
+  background: #1A1814;
+  width: 100%;
+}
+
+/* ZONE 2 : Bandeau principal */
+.mc-hd-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  background: #F5F0E8;
+}
+
+/* Logo monogramme MC */
+.mc-hd-logo {
+  text-decoration: none;
+  color: #1A1814;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mc-hd-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0.5px solid #1A1814;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -1.5px;
+  padding-right: 1px;
+  color: #1A1814;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.mc-hd-logo:hover .mc-hd-monogram {
+  color: #8C6D3F;
+  border-color: #8C6D3F;
+}
+
+/* Icônes à droite */
+.mc-hd-icons {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.mc-hd-icon {
+  color: #1A1814;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mc-hd-icon:hover {
+  color: #8C6D3F;
+}
+
+/* ZONE 3 : Menu de navigation */
+.mc-hd-nav {
+  background: #F5F0E8;
+  padding: 14px 48px 18px;
+  border-bottom: 0.5px solid rgba(26, 24, 20, 0.08);
+}
+
+.mc-hd-nav__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mc-hd-nav__item {
+  list-style: none;
+}
+
+.mc-hd-nav__link {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: #1A1814;
+  text-decoration: none;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.mc-hd-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0.5px;
+  background: #8C6D3F;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mc-hd-nav__link:hover {
+  color: #8C6D3F;
+}
+
+.mc-hd-nav__link:hover::after {
+  width: 100%;
+}
+
+/* Décalage du contenu pour ne pas être caché sous le header fixé */
+.mc-hd-spacer {
+  height: 130px;
+}

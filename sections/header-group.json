@@ -56,7 +56,6 @@
     }
   },
   "order": [
-    "announcement-bar",
     "header"
   ]
 }
