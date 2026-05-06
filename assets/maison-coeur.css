@@ -1004,7 +1004,7 @@ h1, h2, h3, h4,
 
 /* ZONE 1 : Bande noire hairline (signature éditoriale premium) */
 .mc-hd-topbar {
-  height: 3px;
+  height: 1px;
   background: #1A1814;
   width: 100%;
 }
@@ -1030,7 +1030,7 @@ h1, h2, h3, h4,
 /* Monogramme MC en image */
 .mc-hd-monogram-img {
   display: block;
-  height: 44px;
+  height: 28px;
   width: auto;
   object-fit: contain;
   transition: opacity 0.3s ease;
@@ -1061,7 +1061,7 @@ h1, h2, h3, h4,
 
 .mc-hd-wordmark-img {
   display: block;
-  height: 40px;
+  height: 60px;
   width: auto;
   object-fit: contain;
 }
