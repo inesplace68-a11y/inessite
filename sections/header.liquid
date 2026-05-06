@@ -1,3 +1,19 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .mc-hd-monogram-img {
+    height: {{ section.settings.monogram_height }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-wordmark-img {
+    height: {{ section.settings.wordmark_height }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-main {
+    padding: {{ section.settings.bandeau_padding }}px 48px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-topbar {
+    height: {{ section.settings.topbar_height }}px;
+    background: {{ section.settings.topbar_color }};
+  }
+{%- endstyle -%}
+
 <div class="mc-hd-wrap">
 
   <!-- ZONE 1 : Bande noire fine vide -->
@@ -56,6 +72,70 @@
 {% schema %}
 {
   "name": "Header Maison Coeur",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "monogram_height",
+      "label": "Hauteur du monogramme MC",
+      "info": "Logo carré à gauche du bandeau",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "wordmark_height",
+      "label": "Hauteur du wordmark MAISON COEUR",
+      "info": "Logo texte centré dans le bandeau",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Bandeau crème"
+    },
+    {
+      "type": "range",
+      "id": "bandeau_padding",
+      "label": "Marge verticale (haut et bas)",
+      "info": "Plus de marge = bandeau plus aéré",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Barre du haut (topbar)"
+    },
+    {
+      "type": "range",
+      "id": "topbar_height",
+      "label": "Hauteur de la barre",
+      "info": "Mettre 0 pour la masquer complètement",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "topbar_color",
+      "label": "Couleur de la barre",
+      "info": "Pur noir #1A1814, gris doux #5C5853, ou personnalisé",
+      "default": "#1A1814"
+    }
+  ]
 }
 {% endschema %}
