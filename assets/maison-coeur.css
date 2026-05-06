@@ -1142,3 +1142,12 @@ h1, h2, h3, h4,
 .mc-hd-spacer {
   height: 0;
 }
+
+.mc-hd-topbar {
+  display: block !important;
+  height: 30px !important;
+  background: red !important;
+  width: 100% !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
