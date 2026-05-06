@@ -41,8 +41,8 @@
       "settings": {
         "monogram_height": 28,
         "wordmark_height": 16,
-        "bandeau_padding": 32,
-        "topbar_height": 9,
+        "bandeau_padding": 42,
+        "topbar_height": 0,
         "topbar_color": "#1a1814"
       }
     }
