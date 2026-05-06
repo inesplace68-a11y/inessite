@@ -1098,7 +1098,8 @@ h1, h2, h3, h4,
 
 .mc-hd-nav__list {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 48px;
   align-items: center;
   list-style: none;
   margin: 0;
