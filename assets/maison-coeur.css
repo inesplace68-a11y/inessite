@@ -1006,13 +1006,14 @@ h1, h2, h3, h4,
 
 /* ZONE 1 : Bande noire fine */
 .mc-hd-topbar {
-  height: 6px;
+  height: 8px;
   background: #1A1814;
   width: 100%;
 }
 
 /* ZONE 2 : Bandeau principal */
 .mc-hd-main {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1028,26 +1029,43 @@ h1, h2, h3, h4,
   align-items: center;
 }
 
-.mc-hd-monogram {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 0.5px solid #1A1814;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 18px;
-  letter-spacing: -1.5px;
-  padding-right: 1px;
-  color: #1A1814;
-  transition: color 0.3s ease, border-color 0.3s ease;
+/* Monogramme MC en image */
+.mc-hd-monogram-img {
+  display: block;
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
 }
 
-.mc-hd-logo:hover .mc-hd-monogram {
-  color: #8C6D3F;
-  border-color: #8C6D3F;
+.mc-hd-logo:hover .mc-hd-monogram-img {
+  opacity: 0.7;
+}
+
+/* Wordmark Maison Coeur centré absolu */
+.mc-hd-wordmark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.mc-hd-wordmark a {
+  pointer-events: auto;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.mc-hd-wordmark a:hover {
+  opacity: 0.7;
+}
+
+.mc-hd-wordmark-img {
+  display: block;
+  height: 26px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Icônes à droite */
@@ -1123,5 +1141,5 @@ h1, h2, h3, h4,
 
 /* Décalage du contenu pour ne pas être caché sous le header fixé */
 .mc-hd-spacer {
-  height: 130px;
+  height: 170px;
 }
