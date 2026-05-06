@@ -988,28 +988,24 @@ h1, h2, h3, h4,
    HEADER MAISON COEUR
    ============================================ */
 
-/* Wrapper fixé en haut — DIAGNOSTIC : passé temporairement en position: relative */
+/* Wrapper sticky en haut (sticky contourne l'ancêtre Shopify qui casse position: fixed) */
 .mc-hd-wrap {
-  /* position: fixed; */
-  /* top: 0; */
-  /* left: 0; */
-  /* right: 0; */
-  /* z-index: 100; */
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: #F5F0E8;
-  /* transform: translateY(0); */
-  /* transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); */
+  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mc-hd-wrap--hidden {
   transform: translateY(-100%);
 }
 
-/* ZONE 1 : Bande noire fine — DIAGNOSTIC NUCLÉAIRE : lime 60px + outline magenta (à restaurer après) */
+/* ZONE 1 : Bande noire fine */
 .mc-hd-topbar {
-  height: 60px !important;
-  background: lime !important;
-  outline: 5px solid magenta !important;
+  height: 8px;
+  background: #1A1814;
   width: 100%;
 }
 
@@ -1139,9 +1135,4 @@ h1, h2, h3, h4,
 
 .mc-hd-nav__link:hover::after {
   width: 100%;
-}
-
-/* Décalage du contenu pour ne pas être caché sous le header fixé */
-.mc-hd-spacer {
-  height: 170px;
 }
