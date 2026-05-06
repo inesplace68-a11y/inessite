@@ -25,6 +25,7 @@
       "block_order": [
         "announcement-bar-0"
       ],
+      "disabled": true,
       "settings": {
         "auto_rotate": true,
         "change_slides_speed": 5,
@@ -41,7 +42,7 @@
         "monogram_height": 28,
         "wordmark_height": 16,
         "bandeau_padding": 32,
-        "topbar_height": 0,
+        "topbar_height": 9,
         "topbar_color": "#1a1814"
       }
     }
