@@ -1004,10 +1004,10 @@ h1, h2, h3, h4,
   transform: translateY(-100%);
 }
 
-/* ZONE 1 : Bande noire fine */
+/* ZONE 1 : Bande noire fine — TEST DIAGNOSTIC ROUGE 30px (à restaurer après) */
 .mc-hd-topbar {
-  height: 8px;
-  background: #1A1814;
+  height: 30px !important;
+  background: red !important;
   width: 100%;
 }
 
@@ -1063,7 +1063,7 @@ h1, h2, h3, h4,
 
 .mc-hd-wordmark-img {
   display: block;
-  height: 26px;
+  height: 40px;
   width: auto;
   object-fit: contain;
 }
