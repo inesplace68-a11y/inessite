@@ -1004,10 +1004,13 @@ h1, h2, h3, h4,
 }
 
 /* ZONE 1 : Bande noire hairline (signature éditoriale premium) */
-/* height + background pilotés par le {% style %} block de header.liquid (slider topbar_height/topbar_color) */
 .mc-hd-topbar {
-  background: #1A1814;
+  display: block;
   width: 100%;
+  height: 2px;
+  background: #1A1814;
+  position: relative;
+  z-index: 5;
 }
 
 /* ZONE 2 : Bandeau principal */
