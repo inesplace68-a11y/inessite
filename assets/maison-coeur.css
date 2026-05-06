@@ -988,26 +988,28 @@ h1, h2, h3, h4,
    HEADER MAISON COEUR
    ============================================ */
 
-/* Wrapper fixé en haut */
+/* Wrapper fixé en haut — DIAGNOSTIC : passé temporairement en position: relative */
 .mc-hd-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  /* position: fixed; */
+  /* top: 0; */
+  /* left: 0; */
+  /* right: 0; */
+  /* z-index: 100; */
+  position: relative;
   background: #F5F0E8;
-  transform: translateY(0);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  /* transform: translateY(0); */
+  /* transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); */
 }
 
 .mc-hd-wrap--hidden {
   transform: translateY(-100%);
 }
 
-/* ZONE 1 : Bande noire fine — TEST DIAGNOSTIC ROUGE 30px (à restaurer après) */
+/* ZONE 1 : Bande noire fine — DIAGNOSTIC NUCLÉAIRE : lime 60px + outline magenta (à restaurer après) */
 .mc-hd-topbar {
-  height: 30px !important;
-  background: red !important;
+  height: 60px !important;
+  background: lime !important;
+  outline: 5px solid magenta !important;
   width: 100%;
 }
 
