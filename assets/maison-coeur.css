@@ -1002,9 +1002,9 @@ h1, h2, h3, h4,
   transform: translateY(-100%);
 }
 
-/* ZONE 1 : Bande noire fine */
+/* ZONE 1 : Bande noire hairline (signature éditoriale premium) */
 .mc-hd-topbar {
-  height: 8px;
+  height: 3px;
   background: #1A1814;
   width: 100%;
 }
@@ -1135,4 +1135,9 @@ h1, h2, h3, h4,
 
 .mc-hd-nav__link:hover::after {
   width: 100%;
+}
+
+/* Spacer placeholder : sticky prend sa place naturelle, gardé à 0 pour réajustement éventuel */
+.mc-hd-spacer {
+  height: 0;
 }
