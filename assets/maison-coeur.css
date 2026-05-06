@@ -570,10 +570,11 @@ h1, h2, h3, h4,
   border-top: none;
 }
 
-/* Layout principal : 5 colonnes en grille rigide */
+/* Layout principal : 5 colonnes en grille rigide
+   Répartition desktop : LOGO 20% / À PROPOS 14% / CATÉGORIES 14% / SERVICE CLIENT 16% / NEWSLETTER 36% */
 .mc-footer-inner {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1.4fr;
+  grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr 1.8fr;
   align-items: flex-start;
   gap: 72px;
   max-width: 1600px;
@@ -604,7 +605,7 @@ h1, h2, h3, h4,
 .mc-fz-logo-img {
   display: block;
   height: auto;
-  max-width: 100px;
+  max-width: 100%;
 }
 
 .mc-fz-brand {
