@@ -179,11 +179,23 @@
     }
 
     renderContents(parsedState) {
-      const html = parsedState && parsedState.sections && parsedState.sections['cart-drawer'];
-      if (html) this._replaceFromSectionHTML(html);
-      this._updateBadge(parsedState.item_count);
-      this.classList.toggle('is-empty', parsedState.item_count === 0);
+      const sectionHtml = parsedState && parsedState.sections && parsedState.sections['cart-drawer'];
+      if (sectionHtml) this._replaceFromSectionHTML(sectionHtml);
+      this._refreshCartState();
       this.open();
+    }
+
+    _refreshCartState() {
+      return fetch(`${window.routes.cart_url}.js`, {
+        headers: { Accept: 'application/json' },
+      })
+        .then((response) => response.json())
+        .then((cart) => {
+          this._updateBadge(cart.item_count);
+          this.classList.toggle('is-empty', cart.item_count === 0);
+          window.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart: cart } }));
+        })
+        .catch(() => { /* noop — état du badge restera celui rendu côté serveur */ });
     }
 
     /* ----------------------------------------------------------
