@@ -7,6 +7,7 @@
   }
   #shopify-section-{{ section.id }} .mc-hd-main {
     padding: {{ section.settings.bandeau_padding }}px 48px;
+    border-top: {{ section.settings.topbar_height }}px solid {{ section.settings.topbar_color }};
   }
 {%- endstyle -%}
 
@@ -126,6 +127,23 @@
       "step": 2,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "topbar_height",
+      "label": "Hauteur de la barre noire (topbar)",
+      "info": "Mettre 0 pour masquer complètement",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "topbar_color",
+      "label": "Couleur de la barre noire",
+      "default": "#1A1814"
     }
   ]
 }

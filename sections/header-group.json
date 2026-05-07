@@ -42,7 +42,9 @@
         "wordmark_image": "shopify://shop_images/Capture_d_ecran_2026-04-29_a_20.57.54.png",
         "monogram_height": 24,
         "wordmark_height": 52,
-        "bandeau_padding": 42
+        "bandeau_padding": 42,
+        "topbar_height": 10,
+        "topbar_color": "#1A1814"
       }
     }
   },
