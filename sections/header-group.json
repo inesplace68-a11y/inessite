@@ -39,8 +39,9 @@
     "header": {
       "type": "header",
       "settings": {
+        "wordmark_image": "shopify://shop_images/Capture_d_ecran_2026-04-29_a_20.57.54.png",
         "monogram_height": 24,
-        "wordmark_height": 12,
+        "wordmark_height": 52,
         "bandeau_padding": 42
       }
     }
