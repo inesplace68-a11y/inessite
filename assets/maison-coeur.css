@@ -576,10 +576,8 @@ h1, h2, h3, h4,
   display: grid;
   grid-template-columns: 1fr 0.7fr 0.7fr 0.8fr 1.8fr;
   align-items: flex-start;
-  gap: 72px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 28px 100px 14px;
 }
 
 /* Base zone */
@@ -617,7 +615,6 @@ h1, h2, h3, h4,
 .mc-fz-brand__name {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 400;
-  font-size: 1.75rem;
   letter-spacing: 0.04em;
   color: #fff;
   line-height: 1;
@@ -641,12 +638,10 @@ h1, h2, h3, h4,
 .mc-fz-col__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.0rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #E8E4DD;
   opacity: 0.75;
-  margin: 0 0 24px;
+  margin: 0;
 }
 
 .mc-fz-col__links {
@@ -656,18 +651,16 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-col__links li + li {
-  margin-top: 5px;
+  /* margin-top dynamique via {% style %} */
 }
 
 .mc-fz-col__link {
   position: relative;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.1rem;
   line-height: 1.8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #E8E4DD;
   text-decoration: none;
   display: inline-block;
 }
@@ -698,7 +691,6 @@ h1, h2, h3, h4,
 .mc-fz-nl__heading {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.4rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
@@ -709,7 +701,6 @@ h1, h2, h3, h4,
 .mc-fz-nl__sub {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.3rem;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.6;
@@ -758,12 +749,9 @@ h1, h2, h3, h4,
 .mc-fz-nl__btn {
   align-self: flex-start;
   width: auto;
-  background: #fff;
   border: none;
-  color: var(--mc-footer-bg);
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.3rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   padding: 10px 32px;
@@ -808,10 +796,8 @@ h1, h2, h3, h4,
   gap: 10px;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #E8E4DD;
   text-decoration: none;
   transition: opacity 0.25s ease;
 }
@@ -830,7 +816,7 @@ h1, h2, h3, h4,
 
 /* ------- BARRE DU BAS ------- */
 .mc-footer-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  /* border-top dynamique via {% style %} */
 }
 
 /* Zone sélecteurs pays/devise + langue */
@@ -840,7 +826,6 @@ h1, h2, h3, h4,
   gap: 32px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 24px 100px 0;
 }
 
 .mc-footer-bar-localization .disclosure {
@@ -881,16 +866,13 @@ h1, h2, h3, h4,
   gap: 32px;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 24px 100px;
 }
 
 .mc-footer-bar-copy {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
 
@@ -917,16 +899,13 @@ h1, h2, h3, h4,
   transform: translateY(-50%);
   width: 1px;
   height: 10px;
-  background: rgba(255, 255, 255, 0.2);
 }
 
 .mc-footer-bar-legal a {
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
-  font-size: 1.1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.25s ease;
 }
