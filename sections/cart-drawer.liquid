@@ -10,9 +10,9 @@
 
 {%- liquid
   assign s = section.settings
-  assign empty = false
+  assign is_empty = false
   if cart == empty
-    assign empty = true
+    assign is_empty = true
   endif
 -%}
 
@@ -105,8 +105,8 @@
 {%- endstyle -%}
 
 <cart-drawer
-  class="mc-cd{% if empty %} is-empty{% endif %}"
-  data-empty="{{ empty }}"
+  class="mc-cd{% if is_empty %} is-empty{% endif %}"
+  data-empty="{{ is_empty }}"
   data-shipping-threshold-enabled="{{ s.shipping_threshold_enabled }}"
   data-shipping-threshold-amount="{{ s.shipping_threshold_amount | times: 100 }}"
   data-shipping-text-below="{{ s.shipping_threshold_text_below | escape }}"
@@ -125,7 +125,7 @@
   >
     <header class="mc-cd__header">
       <p class="mc-cd__eyebrow" data-mc-cd-title>
-        {%- if empty -%}
+        {%- if is_empty -%}
           {{ s.title_text_empty }}
         {%- else -%}
           {{ s.title_text }}
@@ -149,7 +149,7 @@
     </header>
 
     <div class="mc-cd__body" data-mc-cd-body>
-      {%- if empty -%}
+      {%- if is_empty -%}
         <div class="mc-cd__empty" data-mc-cd-empty>
           <p class="mc-cd__empty-subtitle">
             {{ s.empty_subtitle }}
@@ -247,7 +247,7 @@
       {%- endif -%}
     </div>
 
-    {%- unless empty -%}
+    {%- unless is_empty -%}
       <footer class="mc-cd__footer" data-mc-cd-footer>
         <div class="mc-cd__subtotal">
           <span class="mc-cd__subtotal-label">{{ s.subtotal_label_text }}</span>

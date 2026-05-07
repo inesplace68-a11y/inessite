@@ -179,25 +179,13 @@
     }
 
     renderContents(parsedState) {
-      console.log('[cart-drawer:render] renderContents() appelé — type:', typeof parsedState, '| clés:', parsedState && typeof parsedState === 'object' ? Object.keys(parsedState) : '(non-objet)');
-      if (parsedState && parsedState.sections) {
-        console.log('[cart-drawer:render] sections présentes :', Object.keys(parsedState.sections));
-      } else {
-        console.warn('[cart-drawer:render] parsedState.sections ABSENT');
-      }
       const sectionHtml = parsedState && parsedState.sections && parsedState.sections['cart-drawer'];
-      if (sectionHtml) {
-        console.log('[cart-drawer:render] sections["cart-drawer"] trouvé — longueur:', sectionHtml.length, '| extrait:', sectionHtml.substring(0, 200));
-        this._replaceFromSectionHTML(sectionHtml);
-      } else {
-        console.warn('[cart-drawer:render] sections["cart-drawer"] ABSENT — pas de remplacement HTML');
-      }
+      if (sectionHtml) this._replaceFromSectionHTML(sectionHtml);
       this._refreshCartState();
       this.open();
     }
 
     _refreshCartState() {
-      console.log('[cart-drawer:render] _refreshCartState() appelé (doit etre apres renderContents)');
       return fetch(`${window.routes.cart_url}.js`, {
         headers: { Accept: 'application/json' },
       })
@@ -259,19 +247,13 @@
     _replaceFromSectionHTML(htmlString) {
       const doc = new DOMParser().parseFromString(htmlString, 'text/html');
       const incoming = doc.querySelector('cart-drawer');
-      console.log('[cart-drawer:render] _replaceFromSectionHTML — selecteur "cart-drawer" sur HTML parsé:', incoming ? 'TROUVÉ ('+incoming.innerHTML.length+' chars)' : 'NULL');
-      if (!incoming) {
-        console.warn('[cart-drawer:render] tags racine du HTML reçu :', Array.from(doc.body.children).map((el) => el.tagName));
-        return;
-      }
+      if (!incoming) return;
 
       // Conserver l'état d'ouverture (classe is-active) pendant la mise à jour.
       const wasActive = this.classList.contains('is-active');
 
-      console.log('[cart-drawer:render] about to replace — innerHTML actuel:', this.innerHTML.length, 'chars | nouveau:', incoming.innerHTML.length, 'chars');
       // Remplacer le contenu interne (overlay + panel + style).
       this.innerHTML = incoming.innerHTML;
-      console.log('[cart-drawer:render] replaced — innerHTML après:', this.innerHTML.length, 'chars');
 
       // Re-synchroniser les attributs (data-empty, etc.) depuis le markup serveur.
       ['data-empty', 'data-shipping-threshold-enabled', 'data-shipping-threshold-amount']
