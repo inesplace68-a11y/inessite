@@ -1,0 +1,424 @@
+/* ============================================================
+   Maison Coeur — Tiroir panier (cart drawer)
+   Calibration éditoriale Hermès, valeurs pilotées par les
+   variables CSS injectées par sections/cart-drawer.liquid.
+   ============================================================ */
+
+cart-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: block;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+cart-drawer.is-ready {
+  visibility: visible;
+}
+
+cart-drawer.is-active {
+  pointer-events: auto;
+}
+
+/* Voile */
+.mc-cd__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--mc-cd-overlay-color);
+  opacity: 0;
+  transition: opacity var(--mc-cd-anim-duration) ease-out;
+}
+
+cart-drawer.is-active .mc-cd__overlay {
+  opacity: 1;
+}
+
+/* Panneau */
+.mc-cd__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--mc-cd-width-mobile);
+  max-width: 100vw;
+  background: var(--mc-cd-bg);
+  box-shadow: var(--mc-cd-left-shadow);
+  transform: translateX(100%);
+  transition: transform var(--mc-cd-anim-duration) ease-out;
+  display: flex;
+  flex-direction: column;
+  padding: var(--mc-cd-pad-top) var(--mc-cd-pad-right) var(--mc-cd-pad-bottom) var(--mc-cd-pad-left);
+  outline: none;
+}
+
+@media (min-width: 750px) {
+  .mc-cd__panel {
+    width: var(--mc-cd-width-desktop);
+  }
+}
+
+cart-drawer.is-active .mc-cd__panel {
+  transform: translateX(0);
+}
+
+/* En-tête */
+.mc-cd__header {
+  position: relative;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.mc-cd__eyebrow {
+  margin: 0 0 var(--mc-cd-title-mb);
+  font-family: 'Jost', sans-serif;
+  font-size: var(--mc-cd-title-fs);
+  letter-spacing: var(--mc-cd-title-ls);
+  font-weight: var(--mc-cd-title-fw);
+  color: var(--mc-cd-title-color);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.mc-cd__rule {
+  display: block;
+  margin: var(--mc-cd-title-rule-mt) auto var(--mc-cd-title-rule-mb);
+  width: var(--mc-cd-title-rule-w);
+  height: var(--mc-cd-title-rule-h);
+  background: var(--mc-cd-title-rule-bg);
+}
+
+.mc-cd__close {
+  position: absolute;
+  top: var(--mc-cd-close-top);
+  right: var(--mc-cd-close-right);
+  width: calc(var(--mc-cd-close-size) + 16px);
+  height: calc(var(--mc-cd-close-size) + 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--mc-cd-close-color);
+  padding: 0;
+}
+
+.mc-cd__close svg {
+  width: var(--mc-cd-close-size);
+  height: var(--mc-cd-close-size);
+  display: block;
+}
+
+.mc-cd__close:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Corps scrollable */
+.mc-cd__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mc-cd__shipping {
+  margin: 0 0 var(--mc-cd-ship-mb);
+  text-align: center;
+  font-family: 'Jost', sans-serif;
+  font-size: var(--mc-cd-ship-fs);
+  font-weight: 300;
+  color: var(--mc-cd-ship-color);
+  letter-spacing: 0.05em;
+}
+
+/* Lignes produit */
+.mc-cd__lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mc-cd__line {
+  display: grid;
+  grid-template-columns: var(--mc-cd-line-img-size) 1fr;
+  column-gap: var(--mc-cd-line-gap);
+  padding: var(--mc-cd-line-pad-y) 0;
+  align-items: start;
+}
+
+.mc-cd__line + .mc-cd__line {
+  border-top: var(--mc-cd-line-sep-thickness) solid var(--mc-cd-line-sep-color);
+}
+
+.mc-cd__line-media {
+  width: var(--mc-cd-line-img-size);
+  height: var(--mc-cd-line-img-size);
+  background: var(--mc-cd-line-img-bg);
+  border-radius: var(--mc-cd-line-img-radius);
+  display: block;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.mc-cd__line-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mc-cd__line-info {
+  min-width: 0;
+}
+
+.mc-cd__line-name {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--mc-cd-name-fs);
+  line-height: var(--mc-cd-name-lh);
+  color: var(--mc-cd-name-color);
+  text-decoration: none;
+  margin-bottom: 6px;
+}
+
+.mc-cd__line-variant {
+  margin: 0 0 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(26, 24, 20, 0.55);
+  font-weight: 300;
+}
+
+.mc-cd__line-price {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--mc-cd-price-fs);
+  letter-spacing: var(--mc-cd-price-ls);
+  color: var(--mc-cd-price-color);
+}
+
+/* Sélecteur quantité "− 1 +" */
+.mc-cd__qty {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--mc-cd-qty-mt);
+  font-family: 'Jost', sans-serif;
+  font-size: var(--mc-cd-qty-fs);
+  letter-spacing: var(--mc-cd-qty-ls);
+  color: var(--mc-cd-qty-color);
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.mc-cd__qty-btn {
+  background: transparent;
+  border: 0;
+  padding: 4px 6px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.mc-cd__qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mc-cd__qty-btn:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+
+.mc-cd__qty-value {
+  padding: 0 8px;
+  min-width: 1ch;
+  text-align: center;
+}
+
+.mc-cd__remove {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: rgba(26, 24, 20, 0.55);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mc-cd__remove:hover,
+.mc-cd__remove:focus-visible {
+  color: rgba(26, 24, 20, 0.9);
+}
+
+/* Animations de retrait/insertion d'une ligne */
+.mc-cd__line {
+  transition: opacity 220ms ease-out, transform 220ms ease-out;
+}
+.mc-cd__line.is-removing {
+  opacity: 0;
+  transform: translateX(12px);
+  pointer-events: none;
+}
+
+/* Pied */
+.mc-cd__footer {
+  flex: 0 0 auto;
+}
+
+.mc-cd__subtotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--mc-cd-sub-pad-top) 0 var(--mc-cd-sub-pad-bottom);
+  border-top: var(--mc-cd-sub-border-thickness) solid var(--mc-cd-sub-border-color);
+}
+
+.mc-cd__subtotal-label {
+  font-family: 'Jost', sans-serif;
+  font-size: var(--mc-cd-sub-label-fs);
+  letter-spacing: var(--mc-cd-sub-label-ls);
+  font-weight: var(--mc-cd-sub-label-fw);
+  text-transform: uppercase;
+  color: #1A1814;
+}
+
+.mc-cd__subtotal-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--mc-cd-sub-amount-fs);
+  color: var(--mc-cd-sub-amount-color);
+  letter-spacing: 0;
+}
+
+.mc-cd__cta {
+  width: 100%;
+  display: block;
+  background: var(--mc-cd-cta-bg);
+  color: var(--mc-cd-cta-text);
+  padding: var(--mc-cd-cta-pad-y) 0;
+  font-family: 'Jost', sans-serif;
+  font-size: var(--mc-cd-cta-fs);
+  letter-spacing: var(--mc-cd-cta-ls);
+  font-weight: var(--mc-cd-cta-fw);
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--mc-cd-cta-radius);
+  transition: background-color 200ms ease-out;
+}
+
+.mc-cd__cta:hover,
+.mc-cd__cta:focus-visible {
+  background: var(--mc-cd-cta-bg-hover);
+  outline: none;
+}
+
+/* État vide */
+.mc-cd__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1 1 auto;
+  min-height: 60vh;
+  gap: 18px;
+  padding: 40px 0;
+}
+
+.mc-cd__empty-subtitle {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--mc-cd-empty-sub-fs);
+  color: rgba(26, 24, 20, 0.78);
+}
+
+.mc-cd__empty-link {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: #1A1814;
+}
+
+/* SR-only */
+.mc-cd__sr {
+  position: absolute;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Verrouillage du scroll body */
+body.mc-cd-open {
+  overflow: hidden;
+}
+
+/* Icône panier dans le header — bouton + badge */
+.mc-hd-icon[data-mc-cart-trigger] {
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.mc-hd-icon[data-mc-cart-trigger] svg {
+  display: block;
+}
+
+.mc-hd-cart-badge {
+  position: absolute;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  background: var(--mc-cart-badge-bg, #1A1814);
+  color: var(--mc-cart-badge-text, #F7F5F1);
+  width: var(--mc-cart-badge-size, 16px);
+  height: var(--mc-cart-badge-size, 16px);
+  font-size: var(--mc-cart-badge-fs, 10px);
+  top: var(--mc-cart-badge-top, -4px);
+  right: var(--mc-cart-badge-right, -4px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.mc-hd-cart-badge[data-empty="true"] {
+  display: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mc-cd__panel,
+  .mc-cd__overlay,
+  .mc-cd__line,
+  .mc-cd__cta {
+    transition-duration: 0ms !important;
+  }
+}

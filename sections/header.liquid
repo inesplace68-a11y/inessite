@@ -9,6 +9,21 @@
     padding: {{ section.settings.bandeau_padding }}px 48px;
     border-top: {{ section.settings.topbar_height }}px solid {{ section.settings.topbar_color }};
   }
+  #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] {
+    color: {{ section.settings.cart_icon_color }};
+  }
+  #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] svg {
+    width: {{ section.settings.cart_icon_size }}px;
+    height: {{ section.settings.cart_icon_size }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-cart-badge {
+    --mc-cart-badge-bg: {{ section.settings.badge_bg_color }};
+    --mc-cart-badge-text: {{ section.settings.badge_text_color }};
+    --mc-cart-badge-size: {{ section.settings.badge_size }}px;
+    --mc-cart-badge-fs: {{ section.settings.badge_font_size }}px;
+    --mc-cart-badge-top: {{ section.settings.badge_offset_top }}px;
+    --mc-cart-badge-right: {{ section.settings.badge_offset_right }}px;
+  }
 {%- endstyle -%}
 
 <div class="mc-hd-wrap">
@@ -56,12 +71,26 @@
           <path d="M12 20.5s-7.5-4.8-9.5-10C1 6 5.5 2.5 9 4.5c1.3.7 2.4 1.8 3 3 .6-1.2 1.7-2.3 3-3 3.5-2 8 1.5 6.5 6-2 5.2-9.5 10-9.5 10z"/>
         </svg>
       </a>
-      <a href="/cart" class="mc-hd-icon" aria-label="Panier">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+      <button
+        type="button"
+        class="mc-hd-icon"
+        data-mc-cart-trigger
+        aria-label="Panier"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="M5.5 8h13l-1.2 12.5H6.7L5.5 8z"/>
           <path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
         </svg>
-      </a>
+        {%- if section.settings.badge_visible -%}
+          <span
+            class="mc-hd-cart-badge"
+            data-mc-cart-count
+            data-empty="{% if cart.item_count == 0 %}true{% else %}false{% endif %}"
+            aria-hidden="true"
+          >{%- if cart.item_count > 0 -%}{{ cart.item_count }}{%- endif -%}</span>
+        {%- endif -%}
+        <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+      </button>
     </div>
   </div>
 
@@ -191,6 +220,84 @@
       "id": "topbar_color",
       "label": "Couleur de la barre noire",
       "default": "#1A1814"
+    },
+    {
+      "type": "header",
+      "content": "Icône panier"
+    },
+    {
+      "type": "range",
+      "id": "cart_icon_size",
+      "label": "Taille de l'icône panier",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "cart_icon_color",
+      "label": "Couleur de l'icône panier",
+      "default": "#1A1814"
+    },
+    {
+      "type": "checkbox",
+      "id": "badge_visible",
+      "label": "Afficher le compteur (badge)",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Couleur de fond du badge",
+      "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Couleur du texte du badge",
+      "default": "#F7F5F1"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Taille du badge",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Taille du texte du badge",
+      "min": 8,
+      "max": 14,
+      "step": 0.5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_offset_top",
+      "label": "Décalage vertical du badge",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "badge_offset_right",
+      "label": "Décalage horizontal du badge",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": -4
     }
   ]
 }

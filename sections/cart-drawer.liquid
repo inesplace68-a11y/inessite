@@ -1,1 +1,379 @@
-{%- render 'cart-drawer' -%}
+{%- comment -%}
+  Maison Coeur — Tiroir panier (cart drawer)
+
+  Tiroir latéral droit, calibration éditoriale Hermès.
+  - Markup Liquid rendu côté serveur pour fonctionner sans JS.
+  - Le web component <cart-drawer> (assets/cart-drawer.js) prend ensuite la main.
+  - Toutes les valeurs visuelles sont pilotées par les variables CSS injectées
+    ci-dessous depuis les settings du thème.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign empty = false
+  if cart == empty
+    assign empty = true
+  endif
+-%}
+
+{%- capture drawer_overlay_rgb -%}{{ s.drawer_overlay_color | color_extract: 'red' }},{{ s.drawer_overlay_color | color_extract: 'green' }},{{ s.drawer_overlay_color | color_extract: 'blue' }}{%- endcapture -%}
+{%- capture left_shadow_rgb -%}{{ s.drawer_left_shadow_color | color_extract: 'red' }},{{ s.drawer_left_shadow_color | color_extract: 'green' }},{{ s.drawer_left_shadow_color | color_extract: 'blue' }}{%- endcapture -%}
+{%- capture separator_rgb -%}{{ s.line_separator_color | color_extract: 'red' }},{{ s.line_separator_color | color_extract: 'green' }},{{ s.line_separator_color | color_extract: 'blue' }}{%- endcapture -%}
+{%- capture title_rule_rgb -%}{{ s.title_rule_color | color_extract: 'red' }},{{ s.title_rule_color | color_extract: 'green' }},{{ s.title_rule_color | color_extract: 'blue' }}{%- endcapture -%}
+
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  cart-drawer {
+    --mc-cd-bg: {{ s.drawer_bg_color }};
+    --mc-cd-width-desktop: {{ s.drawer_width_desktop }}%;
+    --mc-cd-width-mobile: {{ s.drawer_width_mobile }}%;
+    --mc-cd-pad-top: {{ s.drawer_padding_top }}px;
+    --mc-cd-pad-right: {{ s.drawer_padding_right }}px;
+    --mc-cd-pad-bottom: {{ s.drawer_padding_bottom }}px;
+    --mc-cd-pad-left: {{ s.drawer_padding_left }}px;
+    --mc-cd-anim-duration: {{ s.drawer_animation_duration }}ms;
+    --mc-cd-overlay-color: rgba({{ drawer_overlay_rgb }}, {{ s.drawer_overlay_opacity | divided_by: 100.0 }});
+    --mc-cd-left-shadow: -1px 0 0 rgba({{ left_shadow_rgb }}, {{ s.drawer_left_shadow_opacity | divided_by: 100.0 }});
+
+    /* Titre */
+    --mc-cd-title-fs: {{ s.title_font_size }}px;
+    --mc-cd-title-ls: {{ s.title_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-title-fw: {{ s.title_font_weight }};
+    --mc-cd-title-color: {{ s.title_color }};
+    --mc-cd-title-mb: {{ s.title_margin_bottom }}px;
+    --mc-cd-title-rule-w: {{ s.title_rule_width }}px;
+    --mc-cd-title-rule-h: {{ s.title_rule_thickness }}px;
+    --mc-cd-title-rule-bg: rgba({{ title_rule_rgb }}, {{ s.title_rule_opacity | divided_by: 100.0 }});
+    --mc-cd-title-rule-mt: {{ s.title_rule_margin_top }}px;
+    --mc-cd-title-rule-mb: {{ s.title_rule_margin_bottom }}px;
+
+    /* Croix */
+    --mc-cd-close-size: {{ s.close_icon_size }}px;
+    --mc-cd-close-color: {{ s.close_icon_color }};
+    --mc-cd-close-top: {{ s.close_icon_top_offset }}px;
+    --mc-cd-close-right: {{ s.close_icon_right_offset }}px;
+
+    /* Lignes produit */
+    --mc-cd-line-pad-y: {{ s.line_padding_vertical }}px;
+    --mc-cd-line-img-size: {{ s.line_image_size }}px;
+    --mc-cd-line-img-bg: {{ s.line_image_bg_color }};
+    --mc-cd-line-img-radius: {{ s.line_image_radius }}px;
+    --mc-cd-line-gap: {{ s.line_gap }}px;
+    --mc-cd-line-sep-color: rgba({{ separator_rgb }}, {{ s.line_separator_opacity | divided_by: 100.0 }});
+    --mc-cd-line-sep-thickness: {{ s.line_separator_thickness }}px;
+
+    --mc-cd-name-fs: {{ s.product_name_font_size }}px;
+    --mc-cd-name-color: {{ s.product_name_color }};
+    --mc-cd-name-lh: {{ s.product_name_line_height }};
+
+    --mc-cd-price-fs: {{ s.product_price_font_size }}px;
+    --mc-cd-price-color: {{ s.product_price_color }};
+    --mc-cd-price-ls: {{ s.product_price_letter_spacing | divided_by: 100.0 }}em;
+
+    --mc-cd-qty-fs: {{ s.qty_font_size }}px;
+    --mc-cd-qty-ls: {{ s.qty_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-qty-color: {{ s.qty_color }};
+    --mc-cd-qty-mt: {{ s.qty_margin_top }}px;
+
+    /* Pied */
+    --mc-cd-sub-label-fs: {{ s.subtotal_label_font_size }}px;
+    --mc-cd-sub-label-ls: {{ s.subtotal_label_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-sub-label-fw: {{ s.subtotal_label_font_weight }};
+    --mc-cd-sub-amount-fs: {{ s.subtotal_amount_font_size }}px;
+    --mc-cd-sub-amount-color: {{ s.subtotal_amount_color }};
+    --mc-cd-sub-pad-top: {{ s.subtotal_padding_top }}px;
+    --mc-cd-sub-pad-bottom: {{ s.subtotal_padding_bottom }}px;
+    --mc-cd-sub-border-color: {{ s.subtotal_top_border_color }};
+    --mc-cd-sub-border-thickness: {{ s.subtotal_top_border_thickness }}px;
+
+    --mc-cd-cta-fs: {{ s.cta_font_size }}px;
+    --mc-cd-cta-ls: {{ s.cta_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-cta-fw: {{ s.cta_font_weight }};
+    --mc-cd-cta-pad-y: {{ s.cta_padding_vertical }}px;
+    --mc-cd-cta-bg: {{ s.cta_bg_color }};
+    --mc-cd-cta-text: {{ s.cta_text_color }};
+    --mc-cd-cta-radius: {{ s.cta_radius }}px;
+    --mc-cd-cta-bg-hover: {{ s.cta_hover_bg_color }};
+
+    /* Seuil livraison */
+    --mc-cd-ship-fs: {{ s.shipping_threshold_font_size }}px;
+    --mc-cd-ship-color: {{ s.shipping_threshold_color }};
+    --mc-cd-ship-mb: {{ s.shipping_threshold_margin_bottom }}px;
+
+    /* Etat vide */
+    --mc-cd-empty-sub-fs: {{ s.empty_subtitle_font_size }}px;
+  }
+{%- endstyle -%}
+
+<cart-drawer
+  class="mc-cd{% if empty %} is-empty{% endif %}"
+  hidden
+  data-empty="{{ empty }}"
+  data-shipping-threshold-enabled="{{ s.shipping_threshold_enabled }}"
+  data-shipping-threshold-amount="{{ s.shipping_threshold_amount | times: 100 }}"
+  data-shipping-text-below="{{ s.shipping_threshold_text_below | escape }}"
+  data-shipping-text-reached="{{ s.shipping_threshold_text_reached | escape }}"
+  data-currency="{{ cart.currency.iso_code }}"
+>
+  <div class="mc-cd__overlay" data-mc-cd-overlay aria-hidden="true"></div>
+
+  <aside
+    id="CartDrawer"
+    class="mc-cd__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ s.title_text | escape | default: 'PANIER' }}"
+    tabindex="-1"
+  >
+    <header class="mc-cd__header">
+      <p class="mc-cd__eyebrow" data-mc-cd-title>
+        {%- if empty -%}
+          {{ s.title_text_empty }}
+        {%- else -%}
+          {{ s.title_text }}
+        {%- endif -%}
+      </p>
+      {%- if s.title_rule_visible -%}
+        <span class="mc-cd__rule" aria-hidden="true"></span>
+      {%- endif -%}
+
+      <button
+        type="button"
+        class="mc-cd__close"
+        data-mc-cd-close
+        aria-label="{{ 'accessibility.close' | t | default: 'Fermer' }}"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="mc-cd__body" data-mc-cd-body>
+      {%- if empty -%}
+        <div class="mc-cd__empty" data-mc-cd-empty>
+          <p class="mc-cd__empty-subtitle">
+            {{ s.empty_subtitle }}
+          </p>
+          <a
+            href="{{ s.empty_link_url | default: '/' }}"
+            class="mc-cd__empty-link"
+          >
+            {{ s.empty_link_text }}
+          </a>
+        </div>
+      {%- else -%}
+        {%- if s.shipping_threshold_enabled -%}
+          {%- assign threshold_cents = s.shipping_threshold_amount | times: 100 -%}
+          {%- assign remaining_cents = threshold_cents | minus: cart.total_price -%}
+          <p class="mc-cd__shipping" data-mc-cd-shipping>
+            {%- if remaining_cents > 0 -%}
+              {%- assign remaining_amount = remaining_cents | money_without_trailing_zeros -%}
+              {{ s.shipping_threshold_text_below | replace: '{{amount}}', remaining_amount }}
+            {%- else -%}
+              {{ s.shipping_threshold_text_reached }}
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        <ul class="mc-cd__lines" role="list" data-mc-cd-lines>
+          {%- for item in cart.items -%}
+            <li
+              class="mc-cd__line"
+              data-mc-cd-line
+              data-line-index="{{ forloop.index }}"
+              data-line-key="{{ item.key }}"
+            >
+              <a href="{{ item.url }}" class="mc-cd__line-media" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 200 }}"
+                    alt="{{ item.image.alt | escape }}"
+                    loading="lazy"
+                    width="100"
+                    height="{{ 100 | divided_by: item.image.aspect_ratio | ceil }}"
+                  >
+                {%- endif -%}
+              </a>
+
+              <div class="mc-cd__line-info">
+                <a href="{{ item.url }}" class="mc-cd__line-name">
+                  {{- item.product.title | escape -}}
+                </a>
+
+                {%- if item.product.has_only_default_variant == false -%}
+                  <p class="mc-cd__line-variant">
+                    {%- for option in item.options_with_values -%}
+                      {{ option.value }}{%- unless forloop.last -%} · {%- endunless -%}
+                    {%- endfor -%}
+                  </p>
+                {%- endif -%}
+
+                <p class="mc-cd__line-price">
+                  {{- item.final_line_price | money -}}
+                </p>
+
+                <div class="mc-cd__qty" role="group" aria-label="Quantité">
+                  <button
+                    type="button"
+                    class="mc-cd__qty-btn"
+                    data-mc-cd-qty="decrement"
+                    data-line-index="{{ forloop.index }}"
+                    aria-label="Diminuer la quantité"
+                  >−</button>
+                  <span class="mc-cd__qty-value" data-mc-cd-qty-value>{{ item.quantity }}</span>
+                  <button
+                    type="button"
+                    class="mc-cd__qty-btn"
+                    data-mc-cd-qty="increment"
+                    data-line-index="{{ forloop.index }}"
+                    aria-label="Augmenter la quantité"
+                  >+</button>
+                </div>
+
+                {%- if s.show_remove_link -%}
+                  <button
+                    type="button"
+                    class="mc-cd__remove"
+                    data-mc-cd-remove
+                    data-line-index="{{ forloop.index }}"
+                  >
+                    {{ s.remove_link_text }}
+                  </button>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- unless empty -%}
+      <footer class="mc-cd__footer" data-mc-cd-footer>
+        <div class="mc-cd__subtotal">
+          <span class="mc-cd__subtotal-label">{{ s.subtotal_label_text }}</span>
+          <span class="mc-cd__subtotal-amount" data-mc-cd-subtotal>
+            {{- cart.total_price | money -}}
+          </span>
+        </div>
+
+        <form action="{{ routes.cart_url }}" method="post" novalidate>
+          <button
+            type="submit"
+            name="checkout"
+            class="mc-cd__cta"
+            data-mc-cd-checkout
+          >
+            {{ s.cta_text }}
+          </button>
+        </form>
+      </footer>
+    {%- endunless -%}
+
+    <p class="mc-cd__sr" data-mc-cd-live aria-live="polite" role="status"></p>
+  </aside>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Tiroir panier",
+  "settings": [
+    { "type": "header", "content": "Apparence générale" },
+    { "type": "color", "id": "drawer_bg_color", "label": "Couleur de fond du tiroir", "default": "#F7F5F1" },
+    { "type": "range", "id": "drawer_width_desktop", "label": "Largeur — desktop", "min": 25, "max": 55, "step": 1, "unit": "%", "default": 38 },
+    { "type": "range", "id": "drawer_width_mobile", "label": "Largeur — mobile", "min": 70, "max": 100, "step": 1, "unit": "%", "default": 100 },
+    { "type": "range", "id": "drawer_padding_top", "label": "Padding intérieur — haut", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 28 },
+    { "type": "range", "id": "drawer_padding_right", "label": "Padding intérieur — droite", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 28 },
+    { "type": "range", "id": "drawer_padding_bottom", "label": "Padding intérieur — bas", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "drawer_padding_left", "label": "Padding intérieur — gauche", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 28 },
+    { "type": "range", "id": "drawer_animation_duration", "label": "Durée de l'animation d'ouverture", "min": 100, "max": 800, "step": 50, "unit": "ms", "default": 400 },
+    { "type": "color", "id": "drawer_overlay_color", "label": "Couleur du voile (page derrière)", "default": "#1A1814" },
+    { "type": "range", "id": "drawer_overlay_opacity", "label": "Opacité du voile", "min": 0, "max": 80, "step": 1, "unit": "%", "default": 28 },
+    { "type": "color", "id": "drawer_left_shadow_color", "label": "Couleur du liseré gauche", "default": "#C4B8A4" },
+    { "type": "range", "id": "drawer_left_shadow_opacity", "label": "Opacité du liseré gauche", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 35 },
+
+    { "type": "header", "content": "Titre et croix" },
+    { "type": "text", "id": "title_text", "label": "Texte du titre (panier rempli)", "default": "PANIER" },
+    { "type": "text", "id": "title_text_empty", "label": "Texte du titre (panier vide)", "default": "VOTRE PANIER EST VIDE" },
+    { "type": "range", "id": "title_font_size", "label": "Taille du titre", "min": 8, "max": 24, "step": 0.5, "unit": "px", "default": 11 },
+    { "type": "range", "id": "title_letter_spacing", "label": "Letter-spacing du titre", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 50 },
+    { "type": "select", "id": "title_font_weight", "label": "Graisse du titre", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
+    { "type": "color", "id": "title_color", "label": "Couleur du titre", "default": "#1A1814" },
+    { "type": "range", "id": "title_margin_bottom", "label": "Marge bas du titre", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 8 },
+    { "type": "checkbox", "id": "title_rule_visible", "label": "Afficher le trait fin sous le titre", "default": true },
+    { "type": "range", "id": "title_rule_width", "label": "Largeur du trait", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "title_rule_thickness", "label": "Épaisseur du trait", "min": 0.5, "max": 4, "step": 0.5, "unit": "px", "default": 0.5 },
+    { "type": "color", "id": "title_rule_color", "label": "Couleur du trait", "default": "#1A1814" },
+    { "type": "range", "id": "title_rule_opacity", "label": "Opacité du trait", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "title_rule_margin_top", "label": "Marge haut du trait", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "title_rule_margin_bottom", "label": "Marge bas du trait", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 36 },
+    { "type": "range", "id": "close_icon_size", "label": "Taille de la croix", "min": 8, "max": 24, "step": 1, "unit": "px", "default": 13 },
+    { "type": "color", "id": "close_icon_color", "label": "Couleur de la croix", "default": "#1A1814" },
+    { "type": "range", "id": "close_icon_top_offset", "label": "Décalage de la croix — haut", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "close_icon_right_offset", "label": "Décalage de la croix — droite", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Lignes produit" },
+    { "type": "range", "id": "line_padding_vertical", "label": "Padding vertical d'une ligne", "min": 4, "max": 60, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "line_image_size", "label": "Taille de l'image", "min": 32, "max": 120, "step": 1, "unit": "px", "default": 56 },
+    { "type": "color", "id": "line_image_bg_color", "label": "Fond placeholder image", "default": "#EFEAE2" },
+    { "type": "range", "id": "line_image_radius", "label": "Arrondi de l'image", "min": 0, "max": 10, "step": 0.5, "unit": "px", "default": 0 },
+    { "type": "range", "id": "line_gap", "label": "Espace image / texte", "min": 4, "max": 40, "step": 1, "unit": "px", "default": 14 },
+    { "type": "color", "id": "line_separator_color", "label": "Couleur séparateur", "default": "#C4B8A4" },
+    { "type": "range", "id": "line_separator_opacity", "label": "Opacité séparateur", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 35 },
+    { "type": "range", "id": "line_separator_thickness", "label": "Épaisseur séparateur", "min": 0, "max": 2, "step": 0.5, "unit": "px", "default": 0.5 },
+    { "type": "range", "id": "product_name_font_size", "label": "Taille nom produit", "min": 8, "max": 22, "step": 0.5, "unit": "px", "default": 12 },
+    { "type": "color", "id": "product_name_color", "label": "Couleur nom produit", "default": "#1A1814" },
+    { "type": "range", "id": "product_name_line_height", "label": "Line-height nom produit", "min": 1.0, "max": 2.0, "step": 0.05, "default": 1.3 },
+    { "type": "range", "id": "product_price_font_size", "label": "Taille prix", "min": 7, "max": 18, "step": 0.5, "unit": "px", "default": 10 },
+    { "type": "color", "id": "product_price_color", "label": "Couleur prix", "default": "#1A1814" },
+    { "type": "range", "id": "product_price_letter_spacing", "label": "Letter-spacing prix", "min": 0, "max": 30, "step": 1, "unit": "/100em", "default": 12 },
+    { "type": "range", "id": "qty_font_size", "label": "Taille quantité", "min": 6, "max": 16, "step": 0.5, "unit": "px", "default": 8.5 },
+    { "type": "range", "id": "qty_letter_spacing", "label": "Letter-spacing quantité", "min": 0, "max": 50, "step": 1, "unit": "/100em", "default": 28 },
+    { "type": "color", "id": "qty_color", "label": "Couleur quantité", "default": "#8C8378" },
+    { "type": "range", "id": "qty_margin_top", "label": "Marge haut du sélecteur quantité", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 8 },
+    { "type": "checkbox", "id": "show_remove_link", "label": "Afficher le lien Retirer", "default": true },
+    { "type": "text", "id": "remove_link_text", "label": "Texte du lien Retirer", "default": "Retirer" },
+
+    { "type": "header", "content": "Pied (sous-total + bouton)" },
+    { "type": "text", "id": "subtotal_label_text", "label": "Label sous-total", "default": "SOUS-TOTAL" },
+    { "type": "range", "id": "subtotal_label_font_size", "label": "Taille label sous-total", "min": 7, "max": 16, "step": 0.5, "unit": "px", "default": 9.5 },
+    { "type": "range", "id": "subtotal_label_letter_spacing", "label": "Letter-spacing label sous-total", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 42 },
+    { "type": "select", "id": "subtotal_label_font_weight", "label": "Graisse label sous-total", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
+    { "type": "range", "id": "subtotal_amount_font_size", "label": "Taille montant sous-total", "min": 12, "max": 32, "step": 0.5, "unit": "px", "default": 17 },
+    { "type": "color", "id": "subtotal_amount_color", "label": "Couleur montant sous-total", "default": "#1A1814" },
+    { "type": "range", "id": "subtotal_padding_top", "label": "Padding haut", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "subtotal_padding_bottom", "label": "Padding bas", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 18 },
+    { "type": "color", "id": "subtotal_top_border_color", "label": "Couleur trait au-dessus", "default": "#1A1814" },
+    { "type": "range", "id": "subtotal_top_border_thickness", "label": "Épaisseur trait au-dessus", "min": 0.5, "max": 3, "step": 0.5, "unit": "px", "default": 0.5 },
+    { "type": "text", "id": "cta_text", "label": "Texte du bouton", "default": "RÉGLER" },
+    { "type": "range", "id": "cta_font_size", "label": "Taille texte bouton", "min": 8, "max": 18, "step": 0.5, "unit": "px", "default": 10 },
+    { "type": "range", "id": "cta_letter_spacing", "label": "Letter-spacing bouton", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 42 },
+    { "type": "select", "id": "cta_font_weight", "label": "Graisse bouton", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
+    { "type": "range", "id": "cta_padding_vertical", "label": "Padding vertical bouton", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14 },
+    { "type": "color", "id": "cta_bg_color", "label": "Couleur de fond bouton", "default": "#1A1814" },
+    { "type": "color", "id": "cta_text_color", "label": "Couleur texte bouton", "default": "#F7F5F1" },
+    { "type": "range", "id": "cta_radius", "label": "Arrondi bouton", "min": 0, "max": 10, "step": 0.5, "unit": "px", "default": 0 },
+    { "type": "color", "id": "cta_hover_bg_color", "label": "Couleur de fond bouton (hover)", "default": "#000000" },
+
+    { "type": "header", "content": "Seuil livraison offerte" },
+    { "type": "checkbox", "id": "shipping_threshold_enabled", "label": "Activer le seuil livraison offerte", "default": false },
+    { "type": "number", "id": "shipping_threshold_amount", "label": "Montant du seuil (en €)", "default": 800 },
+    { "type": "text", "id": "shipping_threshold_text_below", "label": "Texte sous le seuil", "info": "Utilisez {{amount}} pour le montant restant.", "default": "Plus que {{amount}} pour la livraison offerte" },
+    { "type": "text", "id": "shipping_threshold_text_reached", "label": "Texte au-dessus du seuil", "default": "Livraison offerte" },
+    { "type": "range", "id": "shipping_threshold_font_size", "label": "Taille texte seuil", "min": 8, "max": 16, "step": 0.5, "unit": "px", "default": 10 },
+    { "type": "color", "id": "shipping_threshold_color", "label": "Couleur texte seuil", "default": "#6B655C" },
+    { "type": "range", "id": "shipping_threshold_margin_bottom", "label": "Marge bas du seuil", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12 },
+
+    { "type": "header", "content": "État panier vide" },
+    { "type": "text", "id": "empty_subtitle", "label": "Sous-titre", "default": "Découvrir notre sélection" },
+    { "type": "range", "id": "empty_subtitle_font_size", "label": "Taille du sous-titre", "min": 9, "max": 20, "step": 0.5, "unit": "px", "default": 13 },
+    { "type": "url", "id": "empty_link_url", "label": "URL du lien", "default": "/" },
+    { "type": "text", "id": "empty_link_text", "label": "Texte du lien", "default": "Découvrir la sélection" }
+  ],
+  "presets": [
+    { "name": "Tiroir panier" }
+  ]
+}
+{% endschema %}

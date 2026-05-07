@@ -309,10 +309,6 @@
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
-    {%- if settings.cart_type == 'drawer' -%}
-      {%- render 'cart-drawer' -%}
-    {%- endif -%}
-
     {% sections 'header-group' %}
 
     <div class="mc-hd-spacer" aria-hidden="true"></div>
@@ -322,6 +318,8 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {% section 'cart-drawer' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
@@ -377,9 +375,7 @@
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
 
     <script src="{{ 'mc-header.js' | asset_url }}" defer></script>
     <script src="{{ 'mc-globe-modal.js' | asset_url }}" defer></script>
