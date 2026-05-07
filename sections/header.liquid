@@ -32,6 +32,13 @@
       </a>
     </div>
     <div class="mc-hd-icons">
+      <button type="button" class="mc-hd-icon" aria-label="Pays / Devise" data-mc-globe-trigger>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18"/>
+          <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>
+        </svg>
+      </button>
       <a href="/search" class="mc-hd-icon" aria-label="Rechercher">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"/>
@@ -69,6 +76,46 @@
     </ul>
   </nav>
 
+</div>
+
+<div class="mc-globe-modal" id="mc-globe-modal" hidden role="dialog" aria-modal="true" aria-labelledby="mc-globe-title">
+  <div class="mc-globe-overlay" data-mc-globe-close></div>
+  <div class="mc-globe-content">
+    <button type="button" class="mc-globe-close" aria-label="Fermer" data-mc-globe-close>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+
+    <h2 id="mc-globe-title" class="mc-globe-title">Pays &amp; Langue</h2>
+
+    {% form 'localization', class: 'mc-globe-form' %}
+      <div class="mc-globe-field">
+        <label for="mc-globe-country">Pays / Devise</label>
+        <select id="mc-globe-country" name="country_code">
+          {% for country in localization.available_countries %}
+            <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+              {{ country.name }} — {{ country.currency.iso_code }} {{ country.currency.symbol }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mc-globe-field">
+        <label for="mc-globe-language">Langue</label>
+        <select id="mc-globe-language" name="locale_code">
+          {% for language in localization.available_languages %}
+            <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+              {{ language.endonym_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit" class="mc-globe-confirm">Confirmer</button>
+    {% endform %}
+  </div>
 </div>
 
 {% schema %}
