@@ -21,8 +21,6 @@
 {%- capture separator_rgb -%}{{ s.line_separator_color | color_extract: 'red' }},{{ s.line_separator_color | color_extract: 'green' }},{{ s.line_separator_color | color_extract: 'blue' }}{%- endcapture -%}
 {%- capture title_rule_rgb -%}{{ s.title_rule_color | color_extract: 'red' }},{{ s.title_rule_color | color_extract: 'green' }},{{ s.title_rule_color | color_extract: 'blue' }}{%- endcapture -%}
 
-{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
-
 {%- style -%}
   cart-drawer {
     --mc-cd-bg: {{ s.drawer_bg_color }};
