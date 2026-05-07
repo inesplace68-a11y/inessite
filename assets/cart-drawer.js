@@ -51,15 +51,11 @@
 
     connectedCallback() {
       this.removeAttribute('hidden');
-      // Activation des transitions seulement après le premier paint pour éviter le flash.
-      requestAnimationFrame(() => this.classList.add('is-ready'));
 
       this.addEventListener('click', this._onClick);
       document.addEventListener('keydown', this._onKeydown);
       window.addEventListener('cart:open', this._onCartOpen);
       window.addEventListener('cart:close', this._onCartClose);
-
-      this._bindHeaderTriggers();
     }
 
     disconnectedCallback() {
@@ -67,23 +63,6 @@
       document.removeEventListener('keydown', this._onKeydown);
       window.removeEventListener('cart:open', this._onCartOpen);
       window.removeEventListener('cart:close', this._onCartClose);
-    }
-
-    /* ----------------------------------------------------------
-       Bindings
-       ---------------------------------------------------------- */
-
-    _bindHeaderTriggers() {
-      document.querySelectorAll(SELECTORS.trigger).forEach((trigger) => {
-        if (trigger.dataset.mcCdBound === '1') return;
-        trigger.dataset.mcCdBound = '1';
-        trigger.setAttribute('aria-haspopup', 'dialog');
-        trigger.setAttribute('aria-controls', 'CartDrawer');
-        trigger.addEventListener('click', (event) => {
-          event.preventDefault();
-          this.open(trigger);
-        });
-      });
     }
 
     _onClick(event) {
@@ -307,4 +286,29 @@
   if (!customElements.get('cart-drawer')) {
     customElements.define('cart-drawer', CartDrawer);
   }
+
+  /* ============================================================
+     Délégation d'événement globale.
+     Gère l'ouverture du tiroir indépendamment de l'upgrade du
+     custom element : le clic sur n'importe quel [data-mc-cart-trigger]
+     déclenche cart:open, peu importe le timing de connectedCallback.
+     ============================================================ */
+  function openDrawer(trigger) {
+    const drawer = document.querySelector('cart-drawer');
+    if (!drawer) return;
+    if (typeof drawer.open === 'function') {
+      drawer.open(trigger);
+    } else {
+      // Fallback si le custom element n'est pas encore upgradé.
+      drawer.classList.add('is-active');
+      document.body.classList.add('mc-cd-open');
+    }
+  }
+
+  document.addEventListener('click', function (event) {
+    const trigger = event.target.closest('[data-mc-cart-trigger]');
+    if (!trigger) return;
+    event.preventDefault();
+    openDrawer(trigger);
+  });
 })();

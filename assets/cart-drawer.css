@@ -10,11 +10,10 @@ cart-drawer {
   z-index: 100;
   display: block;
   pointer-events: none;
-  visibility: hidden;
 }
 
-cart-drawer.is-ready {
-  visibility: visible;
+cart-drawer[hidden] {
+  display: none;
 }
 
 cart-drawer.is-active {
