@@ -7,6 +7,10 @@
 (function () {
   'use strict';
 
+  // ---- DEBUG TEMPORAIRE — à retirer une fois le drawer fonctionnel ----
+  console.log('[cart-drawer] script chargé à', new Date().toISOString(), '— readyState:', document.readyState);
+  // ----------------------------------------------------------------------
+
   const SELECTORS = {
     overlay: '[data-mc-cd-overlay]',
     close: '[data-mc-cd-close]',
@@ -283,9 +287,24 @@
     }
   }
 
-  if (!customElements.get('cart-drawer')) {
-    customElements.define('cart-drawer', CartDrawer);
+  try {
+    if (!customElements.get('cart-drawer')) {
+      customElements.define('cart-drawer', CartDrawer);
+      console.log('[cart-drawer] custom element défini ✓');
+    } else {
+      console.warn('[cart-drawer] custom element DÉJÀ défini — conflit possible');
+    }
+  } catch (err) {
+    console.error('[cart-drawer] customElements.define a throw:', err);
   }
+
+  // ---- DEBUG TEMPORAIRE ----
+  console.log(
+    '[cart-drawer] inventaire DOM au chargement —',
+    'cart-drawer présent ?', !!document.querySelector('cart-drawer'),
+    '| triggers trouvés :', document.querySelectorAll('[data-mc-cart-trigger]').length
+  );
+  // --------------------------
 
   /* ============================================================
      Délégation d'événement globale.
@@ -295,6 +314,7 @@
      ============================================================ */
   function openDrawer(trigger) {
     const drawer = document.querySelector('cart-drawer');
+    console.log('[cart-drawer] openDrawer appelé — drawer trouvé ?', !!drawer, '| open() dispo ?', drawer && typeof drawer.open === 'function');
     if (!drawer) return;
     if (typeof drawer.open === 'function') {
       drawer.open(trigger);
@@ -307,8 +327,14 @@
 
   document.addEventListener('click', function (event) {
     const trigger = event.target.closest('[data-mc-cart-trigger]');
-    if (!trigger) return;
+    if (!trigger) {
+      // Log uniquement les clics où on cherchait le trigger (limité)
+      return;
+    }
+    console.log('[cart-drawer] CLIC sur trigger détecté ✓', { target: event.target, trigger: trigger });
     event.preventDefault();
     openDrawer(trigger);
   });
+
+  console.log('[cart-drawer] listener click document attaché ✓');
 })();
