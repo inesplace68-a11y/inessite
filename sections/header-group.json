@@ -39,10 +39,11 @@
     "header": {
       "type": "header",
       "settings": {
-        "wordmark_image": "shopify://shop_images/Capture_d_ecran_2026-04-29_a_20.57.54.png",
+        "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC.png",
+        "wordmark_image": "shopify://shop_images/maison-coeur-logo-tagline-clean.png",
         "monogram_height": 24,
-        "wordmark_height": 52,
-        "bandeau_padding": 42,
+        "wordmark_height": 150,
+        "bandeau_padding": 48,
         "topbar_height": 10,
         "topbar_color": "#242833"
       }
