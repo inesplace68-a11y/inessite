@@ -377,11 +377,6 @@ body.mc-cd-open {
 /* Icône panier dans le header — bouton + badge */
 .mc-hd-icon[data-mc-cart-trigger] {
   position: relative;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  color: inherit;
 }
 
 .mc-hd-icon[data-mc-cart-trigger] svg {

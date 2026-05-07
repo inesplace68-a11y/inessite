@@ -12,6 +12,10 @@
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] {
     color: {{ section.settings.cart_icon_color }};
   }
+  #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger]:hover,
+  #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger]:focus-visible {
+    color: #8C6D3F;
+  }
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] svg {
     width: {{ section.settings.cart_icon_size }}px;
     height: {{ section.settings.cart_icon_size }}px;
