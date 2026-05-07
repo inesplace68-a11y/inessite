@@ -54,7 +54,8 @@
 
     /* Lignes produit */
     --mc-cd-line-pad-y: {{ s.line_padding_vertical }}px;
-    --mc-cd-line-img-size: {{ s.line_image_size }}px;
+    --mc-cd-line-img-w: {{ s.line_image_width }}px;
+    --mc-cd-line-img-h: {{ s.line_image_height }}px;
     --mc-cd-line-img-bg: {{ s.line_image_bg_color }};
     --mc-cd-line-img-radius: {{ s.line_image_radius }}px;
     --mc-cd-line-gap: {{ s.line_gap }}px;
@@ -84,6 +85,8 @@
     --mc-cd-sub-pad-bottom: {{ s.subtotal_padding_bottom }}px;
     --mc-cd-sub-border-color: {{ s.subtotal_top_border_color }};
     --mc-cd-sub-border-thickness: {{ s.subtotal_top_border_thickness }}px;
+    --mc-cd-sub-tax-fs: {{ s.subtotal_taxes_font_size }}px;
+    --mc-cd-sub-tax-color: {{ s.subtotal_taxes_color }};
 
     --mc-cd-cta-fs: {{ s.cta_font_size }}px;
     --mc-cd-cta-ls: {{ s.cta_letter_spacing }}em;
@@ -94,6 +97,12 @@
     --mc-cd-cta-radius: {{ s.cta_radius }}px;
     --mc-cd-cta-bg-hover: {{ s.cta_hover_bg_color }};
 
+    /* Lien Poursuivre la visite */
+    --mc-cd-cont-fs: {{ s.continue_link_font_size }}px;
+    --mc-cd-cont-ls: {{ s.continue_link_letter_spacing }}em;
+    --mc-cd-cont-color: {{ s.continue_link_color }};
+    --mc-cd-cont-mt: {{ s.continue_link_margin_top }}px;
+
     /* Seuil livraison */
     --mc-cd-ship-fs: {{ s.shipping_threshold_font_size }}px;
     --mc-cd-ship-color: {{ s.shipping_threshold_color }};
@@ -101,6 +110,13 @@
 
     /* Etat vide */
     --mc-cd-empty-sub-fs: {{ s.empty_subtitle_font_size }}px;
+    --mc-cd-empty-sub-ls: {{ s.empty_subtitle_letter_spacing }}em;
+    --mc-cd-empty-sub-ff: {%- if s.empty_subtitle_font_family == 'sans' -%}'Jost', sans-serif{%- else -%}'Cormorant Garamond', serif{%- endif -%};
+    --mc-cd-empty-sub-fstyle: {%- if s.empty_subtitle_font_family == 'sans' -%}normal{%- else -%}italic{%- endif -%};
+    --mc-cd-empty-sub-tt: {%- if s.empty_subtitle_font_family == 'sans' -%}uppercase{%- else -%}none{%- endif -%};
+    --mc-cd-empty-rule-mt: {{ s.empty_rule_margin_top }}px;
+    --mc-cd-empty-rule-mb: {{ s.empty_rule_margin_bottom }}px;
+    --mc-cd-empty-link-ls: {{ s.empty_link_letter_spacing }}em;
   }
 {%- endstyle -%}
 
@@ -124,13 +140,7 @@
     tabindex="-1"
   >
     <header class="mc-cd__header">
-      <p class="mc-cd__eyebrow" data-mc-cd-title>
-        {%- if is_empty -%}
-          {{ s.title_text_empty }}
-        {%- else -%}
-          {{ s.title_text }}
-        {%- endif -%}
-      </p>
+      <p class="mc-cd__eyebrow" data-mc-cd-title>{{ s.title_text }}</p>
       {%- if s.title_rule_visible -%}
         <span class="mc-cd__rule" aria-hidden="true"></span>
       {%- endif -%}
@@ -154,6 +164,9 @@
           <p class="mc-cd__empty-subtitle">
             {{ s.empty_subtitle }}
           </p>
+          {%- if s.empty_rule_visible -%}
+            <span class="mc-cd__empty-rule" aria-hidden="true"></span>
+          {%- endif -%}
           <a
             href="{{ s.empty_link_url | default: '/' }}"
             class="mc-cd__empty-link"
@@ -251,8 +264,13 @@
       <footer class="mc-cd__footer" data-mc-cd-footer>
         <div class="mc-cd__subtotal">
           <span class="mc-cd__subtotal-label">{{ s.subtotal_label_text }}</span>
-          <span class="mc-cd__subtotal-amount" data-mc-cd-subtotal>
-            {{- cart.total_price | money -}}
+          <span class="mc-cd__subtotal-right">
+            <span class="mc-cd__subtotal-amount" data-mc-cd-subtotal>
+              {{- cart.total_price | money -}}
+            </span>
+            {%- if s.subtotal_taxes_visible and s.subtotal_taxes_text != blank -%}
+              <span class="mc-cd__subtotal-taxes">{{ s.subtotal_taxes_text }}</span>
+            {%- endif -%}
           </span>
         </div>
 
@@ -266,6 +284,16 @@
             {{ s.cta_text }}
           </button>
         </form>
+
+        {%- if s.continue_link_visible and s.continue_link_text != blank -%}
+          <a
+            href="{{ s.continue_link_url | default: '/' }}"
+            class="mc-cd__continue-link"
+            data-mc-cd-continue
+          >
+            {{ s.continue_link_text }}
+          </a>
+        {%- endif -%}
       </footer>
     {%- endunless -%}
 
@@ -292,15 +320,14 @@
     { "type": "range", "id": "drawer_left_shadow_opacity", "label": "Opacité du liseré gauche", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 35 },
 
     { "type": "header", "content": "Titre et croix" },
-    { "type": "text", "id": "title_text", "label": "Texte du titre (panier rempli)", "default": "PANIER" },
-    { "type": "text", "id": "title_text_empty", "label": "Texte du titre (panier vide)", "default": "VOTRE PANIER EST VIDE" },
+    { "type": "text", "id": "title_text", "label": "Texte du titre", "default": "PANIER" },
     { "type": "range", "id": "title_font_size", "label": "Taille du titre", "min": 8, "max": 24, "step": 0.5, "unit": "px", "default": 11 },
-    { "type": "range", "id": "title_letter_spacing", "label": "Letter-spacing du titre", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.5 },
+    { "type": "range", "id": "title_letter_spacing", "label": "Letter-spacing du titre", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.3 },
     { "type": "select", "id": "title_font_weight", "label": "Graisse du titre", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "color", "id": "title_color", "label": "Couleur du titre", "default": "#1A1814" },
     { "type": "range", "id": "title_margin_bottom", "label": "Marge bas du titre", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 8 },
     { "type": "checkbox", "id": "title_rule_visible", "label": "Afficher le trait fin sous le titre", "default": true },
-    { "type": "range", "id": "title_rule_width", "label": "Largeur du trait", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "title_rule_width", "label": "Largeur du trait", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 32 },
     { "type": "range", "id": "title_rule_thickness", "label": "Épaisseur du trait", "min": 0.5, "max": 4, "step": 0.5, "unit": "px", "default": 0.5 },
     { "type": "color", "id": "title_rule_color", "label": "Couleur du trait", "default": "#1A1814" },
     { "type": "range", "id": "title_rule_opacity", "label": "Opacité du trait", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
@@ -313,7 +340,8 @@
 
     { "type": "header", "content": "Lignes produit" },
     { "type": "range", "id": "line_padding_vertical", "label": "Padding vertical d'une ligne", "min": 4, "max": 60, "step": 1, "unit": "px", "default": 18 },
-    { "type": "range", "id": "line_image_size", "label": "Taille de l'image", "min": 32, "max": 120, "step": 1, "unit": "px", "default": 56 },
+    { "type": "range", "id": "line_image_width", "label": "Largeur de la vignette", "min": 32, "max": 150, "step": 1, "unit": "px", "default": 88 },
+    { "type": "range", "id": "line_image_height", "label": "Hauteur de la vignette", "min": 32, "max": 200, "step": 1, "unit": "px", "default": 110 },
     { "type": "color", "id": "line_image_bg_color", "label": "Fond placeholder image", "default": "#EFEAE2" },
     { "type": "range", "id": "line_image_radius", "label": "Arrondi de l'image", "min": 0, "max": 10, "step": 0.5, "unit": "px", "default": 0 },
     { "type": "range", "id": "line_gap", "label": "Espace image / texte", "min": 4, "max": 40, "step": 1, "unit": "px", "default": 14 },
@@ -336,7 +364,7 @@
     { "type": "header", "content": "Pied (sous-total + bouton)" },
     { "type": "text", "id": "subtotal_label_text", "label": "Label sous-total", "default": "SOUS-TOTAL" },
     { "type": "range", "id": "subtotal_label_font_size", "label": "Taille label sous-total", "min": 7, "max": 16, "step": 0.5, "unit": "px", "default": 9.5 },
-    { "type": "range", "id": "subtotal_label_letter_spacing", "label": "Letter-spacing label sous-total", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.4 },
+    { "type": "range", "id": "subtotal_label_letter_spacing", "label": "Letter-spacing label sous-total", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.3 },
     { "type": "select", "id": "subtotal_label_font_weight", "label": "Graisse label sous-total", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "range", "id": "subtotal_amount_font_size", "label": "Taille montant sous-total", "min": 12, "max": 32, "step": 0.5, "unit": "px", "default": 17 },
     { "type": "color", "id": "subtotal_amount_color", "label": "Couleur montant sous-total", "default": "#1A1814" },
@@ -344,15 +372,26 @@
     { "type": "range", "id": "subtotal_padding_bottom", "label": "Padding bas", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 18 },
     { "type": "color", "id": "subtotal_top_border_color", "label": "Couleur trait au-dessus", "default": "#1A1814" },
     { "type": "range", "id": "subtotal_top_border_thickness", "label": "Épaisseur trait au-dessus", "min": 0.5, "max": 3, "step": 0.5, "unit": "px", "default": 0.5 },
-    { "type": "text", "id": "cta_text", "label": "Texte du bouton", "default": "RÉGLER" },
+    { "type": "checkbox", "id": "subtotal_taxes_visible", "label": "Afficher la mention TTC à droite du montant", "default": true },
+    { "type": "text", "id": "subtotal_taxes_text", "label": "Mention fiscale", "default": "TTC" },
+    { "type": "range", "id": "subtotal_taxes_font_size", "label": "Taille de la mention fiscale", "min": 7, "max": 14, "step": 0.5, "unit": "px", "default": 9 },
+    { "type": "color", "id": "subtotal_taxes_color", "label": "Couleur de la mention fiscale", "default": "#8C8378" },
+    { "type": "text", "id": "cta_text", "label": "Texte du bouton", "default": "FINALISER MA COMMANDE" },
     { "type": "range", "id": "cta_font_size", "label": "Taille texte bouton", "min": 8, "max": 18, "step": 0.5, "unit": "px", "default": 10 },
-    { "type": "range", "id": "cta_letter_spacing", "label": "Letter-spacing bouton", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.4 },
+    { "type": "range", "id": "cta_letter_spacing", "label": "Letter-spacing bouton", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.3 },
     { "type": "select", "id": "cta_font_weight", "label": "Graisse bouton", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "range", "id": "cta_padding_vertical", "label": "Padding vertical bouton", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14 },
     { "type": "color", "id": "cta_bg_color", "label": "Couleur de fond bouton", "default": "#1A1814" },
     { "type": "color", "id": "cta_text_color", "label": "Couleur texte bouton", "default": "#F7F5F1" },
     { "type": "range", "id": "cta_radius", "label": "Arrondi bouton", "min": 0, "max": 10, "step": 0.5, "unit": "px", "default": 0 },
     { "type": "color", "id": "cta_hover_bg_color", "label": "Couleur de fond bouton (hover)", "default": "#000000" },
+    { "type": "checkbox", "id": "continue_link_visible", "label": "Afficher le lien Poursuivre la visite sous le bouton", "default": true },
+    { "type": "text", "id": "continue_link_text", "label": "Texte du lien Poursuivre la visite", "default": "POURSUIVRE LA VISITE" },
+    { "type": "url", "id": "continue_link_url", "label": "URL du lien Poursuivre la visite", "default": "/" },
+    { "type": "range", "id": "continue_link_font_size", "label": "Taille du lien Poursuivre", "min": 8, "max": 14, "step": 0.5, "unit": "px", "default": 10 },
+    { "type": "range", "id": "continue_link_letter_spacing", "label": "Letter-spacing du lien Poursuivre", "min": 0, "max": 0.5, "step": 0.1, "unit": "em", "default": 0.2 },
+    { "type": "color", "id": "continue_link_color", "label": "Couleur du lien Poursuivre", "default": "#1A1814" },
+    { "type": "range", "id": "continue_link_margin_top", "label": "Marge haut du lien Poursuivre", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 14 },
 
     { "type": "header", "content": "Seuil livraison offerte" },
     { "type": "checkbox", "id": "shipping_threshold_enabled", "label": "Activer le seuil livraison offerte", "default": false },
@@ -364,10 +403,16 @@
     { "type": "range", "id": "shipping_threshold_margin_bottom", "label": "Marge bas du seuil", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12 },
 
     { "type": "header", "content": "État panier vide" },
-    { "type": "text", "id": "empty_subtitle", "label": "Sous-titre", "default": "Découvrir notre sélection" },
+    { "type": "text", "id": "empty_subtitle", "label": "Sous-titre", "default": "Votre panier est vide." },
+    { "type": "select", "id": "empty_subtitle_font_family", "label": "Famille de police du sous-titre", "options": [{"value":"serif","label":"Cormorant italique"},{"value":"sans","label":"Sans-serif Jost"}], "default": "serif" },
     { "type": "range", "id": "empty_subtitle_font_size", "label": "Taille du sous-titre", "min": 9, "max": 20, "step": 0.5, "unit": "px", "default": 13 },
+    { "type": "range", "id": "empty_subtitle_letter_spacing", "label": "Letter-spacing du sous-titre", "min": 0, "max": 0.5, "step": 0.1, "unit": "em", "default": 0 },
+    { "type": "checkbox", "id": "empty_rule_visible", "label": "Afficher le trait fin sous le sous-titre", "default": true },
+    { "type": "range", "id": "empty_rule_margin_top", "label": "Marge haut du trait", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "empty_rule_margin_bottom", "label": "Marge bas du trait", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 24 },
     { "type": "url", "id": "empty_link_url", "label": "URL du lien", "default": "/" },
-    { "type": "text", "id": "empty_link_text", "label": "Texte du lien", "default": "Découvrir la sélection" }
+    { "type": "text", "id": "empty_link_text", "label": "Texte du lien", "default": "DÉCOUVRIR LA COLLECTION" },
+    { "type": "range", "id": "empty_link_letter_spacing", "label": "Letter-spacing du lien", "min": 0, "max": 0.5, "step": 0.1, "unit": "em", "default": 0.2 }
   ],
   "presets": [
     { "name": "Tiroir panier" }
