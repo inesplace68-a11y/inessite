@@ -15,11 +15,19 @@
   <!-- ZONE 2 : Bandeau principal -->
   <div class="mc-hd-main">
     <a href="/" class="mc-hd-logo" aria-label="Maison Coeur — Accueil">
-      <img src="{{ 'mc-monogram.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-monogram-img" width="32" height="44" loading="eager">
+      {% if section.settings.monogram_image != blank %}
+        <img src="{{ section.settings.monogram_image | image_url: width: 400 }}" alt="Maison Coeur" class="mc-hd-monogram-img" loading="eager">
+      {% else %}
+        <img src="{{ 'mc-monogram.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-monogram-img" width="32" height="44" loading="eager">
+      {% endif %}
     </a>
     <div class="mc-hd-wordmark">
       <a href="/">
-        <img src="{{ 'mc-wordmark.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-wordmark-img" loading="eager">
+        {% if section.settings.wordmark_image != blank %}
+          <img src="{{ section.settings.wordmark_image | image_url: width: 2400 }}" alt="MAISON COEUR" class="mc-hd-wordmark-img" loading="eager">
+        {% else %}
+          <img src="{{ 'mc-wordmark.png' | asset_url }}" alt="MAISON COEUR" class="mc-hd-wordmark-img" loading="eager">
+        {% endif %}
       </a>
     </div>
     <div class="mc-hd-icons">
@@ -69,6 +77,18 @@
     {
       "type": "header",
       "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "monogram_image",
+      "label": "Logo monogramme MC",
+      "info": "PNG transparent, format carré 400×400 px minimum, noir sur fond transparent. Si vide, le PNG par défaut s'affiche."
+    },
+    {
+      "type": "image_picker",
+      "id": "wordmark_image",
+      "label": "Logo wordmark MAISON COEUR",
+      "info": "PNG transparent, format horizontal 2400×600 px minimum (ratio ~4:1), noir sur fond transparent. Si vide, le PNG par défaut s'affiche."
     },
     {
       "type": "range",
