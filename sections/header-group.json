@@ -41,11 +41,20 @@
       "settings": {
         "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC.png",
         "wordmark_image": "shopify://shop_images/maison-coeur-logo-tagline-clean.png",
-        "monogram_height": 24,
+        "monogram_height": 26,
         "wordmark_height": 150,
         "bandeau_padding": 48,
         "topbar_height": 10,
-        "topbar_color": "#242833"
+        "topbar_color": "#242833",
+        "cart_icon_size": 20,
+        "cart_icon_color": "#1a1814",
+        "badge_visible": true,
+        "badge_bg_color": "#1a1814",
+        "badge_text_color": "#f7f5f1",
+        "badge_size": 16,
+        "badge_font_size": 10,
+        "badge_offset_top": -4,
+        "badge_offset_right": -4
       }
     }
   },
