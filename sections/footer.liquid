@@ -1,74 +1,5 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 
-{%- liquid
-  assign sep_alpha = section.settings.footer_separator_opacity | divided_by: 100.0
-  assign sep_rgba = section.settings.footer_separator_color | color_modify: 'alpha', sep_alpha
-  assign legal_alpha = section.settings.footer_legal_opacity | divided_by: 100.0
-  assign legal_rgba = section.settings.footer_legal_color | color_modify: 'alpha', legal_alpha
-  assign legal_sep_alpha = section.settings.footer_legal_separator_opacity | divided_by: 100.0
-  assign legal_sep_rgba = section.settings.footer_legal_separator_color | color_modify: 'alpha', legal_sep_alpha
-  assign pad_v = section.settings.footer_padding_vertical
-  assign pad_h = section.settings.footer_padding_horizontal
-  assign pad_v_bottom = pad_v | divided_by: 2
--%}
-{%- style -%}
-  #shopify-section-{{ section.id }} {
-    --mc-footer-bg: {{ section.settings.footer_bg }};
-  }
-  #shopify-section-{{ section.id }} .mc-footer-inner {
-    gap: {{ section.settings.footer_columns_gap }}px;
-    padding: {{ pad_v }}px {{ pad_h }}px {{ pad_v_bottom }}px;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-brand__name {
-    font-size: {{ section.settings.footer_brand_name_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-col__heading {
-    color: {{ section.settings.footer_heading_color }};
-    font-size: {{ section.settings.footer_heading_size | divided_by: 10.0 }}rem;
-    margin-bottom: {{ section.settings.footer_heading_to_links }}px;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-col__links li + li {
-    margin-top: {{ section.settings.footer_link_spacing }}px;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-col__link,
-  #shopify-section-{{ section.id }} .mc-fz-nl__social-link {
-    color: {{ section.settings.footer_text_color }};
-    font-size: {{ section.settings.footer_link_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-col__link:hover,
-  #shopify-section-{{ section.id }} .mc-fz-nl__social-link:hover {
-    color: {{ section.settings.footer_link_hover_color }};
-  }
-  #shopify-section-{{ section.id }} .mc-fz-nl__heading {
-    font-size: {{ section.settings.footer_newsletter_heading_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-nl__sub {
-    font-size: {{ section.settings.footer_newsletter_subtext_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-fz-nl__btn {
-    background: {{ section.settings.footer_newsletter_btn_bg }};
-    color: {{ section.settings.footer_newsletter_btn_text }};
-    font-size: {{ section.settings.footer_newsletter_btn_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-footer-bar {
-    border-top: 1px solid {{ sep_rgba }};
-  }
-  #shopify-section-{{ section.id }} .mc-footer-bar-inner {
-    padding: {{ section.settings.footer_bar_padding_v }}px {{ pad_h }}px;
-  }
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization {
-    padding: {{ section.settings.footer_bar_padding_v }}px {{ pad_h }}px 0;
-  }
-  #shopify-section-{{ section.id }} .mc-footer-bar-copy,
-  #shopify-section-{{ section.id }} .mc-footer-bar-legal a {
-    color: {{ legal_rgba }};
-    font-size: {{ section.settings.footer_legal_size | divided_by: 10.0 }}rem;
-  }
-  #shopify-section-{{ section.id }} .mc-footer-bar-legal li + li::before {
-    background: {{ legal_sep_rgba }};
-  }
-{%- endstyle -%}
-
 <footer class="mc-footer">
   <div class="mc-footer-inner">
 
@@ -85,38 +16,38 @@
           >
         {%- else -%}
           <span class="mc-fz-brand">
-            <span class="mc-fz-brand__name">{{ section.settings.brand_fallback_name }}</span>
-            <span class="mc-fz-brand__tagline">{{ section.settings.brand_fallback_tagline }}</span>
+            <span class="mc-fz-brand__name">MAISON COEUR</span>
+            <span class="mc-fz-brand__tagline">GALERIE D'ART — PARIS</span>
           </span>
         {%- endif -%}
       </a>
     </div>
 
-    {%- comment -%} ZONE 2 : Colonne 1 {%- endcomment -%}
+    {%- comment -%} ZONE 2 : À PROPOS {%- endcomment -%}
     <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">{{ section.settings.col1_heading }}</h2>
+      <h2 class="mc-fz-col__heading">À PROPOS</h2>
       <ul class="mc-fz-col__links">
-        {%- for link in section.settings.col1_linklist.links -%}
+        {%- for link in linklists['footer-a-propos'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
       </ul>
     </div>
 
-    {%- comment -%} ZONE 3 : Colonne 2 {%- endcomment -%}
+    {%- comment -%} ZONE 3 : CATÉGORIES {%- endcomment -%}
     <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">{{ section.settings.col2_heading }}</h2>
+      <h2 class="mc-fz-col__heading">CATÉGORIES</h2>
       <ul class="mc-fz-col__links">
-        {%- for link in section.settings.col2_linklist.links -%}
+        {%- for link in linklists['footer-categories'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
       </ul>
     </div>
 
-    {%- comment -%} ZONE 4 : Colonne 3 {%- endcomment -%}
+    {%- comment -%} ZONE 4 : SERVICE CLIENT {%- endcomment -%}
     <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">{{ section.settings.col3_heading }}</h2>
+      <h2 class="mc-fz-col__heading">SERVICE CLIENT</h2>
       <ul class="mc-fz-col__links">
-        {%- for link in section.settings.col3_linklist.links -%}
+        {%- for link in linklists['footer-service-client'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
       </ul>
@@ -153,7 +84,7 @@
             {% elsif form.posted_successfully? %}
               aria-describedby="ContactFooter-success"
             {% endif %}
-            placeholder="{{ section.settings.newsletter_placeholder }}"
+            placeholder="Votre adresse email"
             required
           >
           {%- if form.errors -%}
@@ -162,7 +93,7 @@
             </small>
           {%- endif -%}
         </div>
-        <button type="submit" class="mc-fz-nl__btn" name="commit">{{ section.settings.newsletter_button_label }}</button>
+        <button type="submit" class="mc-fz-nl__btn" name="commit">S'ABONNER</button>
         {%- if form.posted_successfully? -%}
           <p class="mc-fz-nl__success" id="ContactFooter-success" tabindex="-1" autofocus>
             {{- 'newsletter.success' | t }}
@@ -192,7 +123,7 @@
                   <circle cx="15.5" cy="8.5" r="0.7" fill="currentColor"/>
                 </svg>
               </span>
-              <span>{{ section.settings.social_instagram_label }}</span>
+              <span>INSTAGRAM</span>
             </a>
           {%- endif -%}
           {%- if has_pi -%}
@@ -203,7 +134,7 @@
                   <path d="M12 6.5c-3.03 0-5.5 2.47-5.5 5.5 0 2.33 1.42 4.33 3.45 5.18-.05-.43-.09-1.08.02-1.55.1-.42.68-2.9.68-2.9s-.17-.35-.17-.87c0-.81.47-1.42 1.06-1.42.5 0 .74.37.74.82 0 .5-.32 1.25-.48 1.94-.14.58.29 1.05.86 1.05 1.03 0 1.72-1.32 1.72-2.88 0-1.18-.8-2.01-1.93-2.01-1.32 0-2.09.99-2.09 2.01 0 .4.15.82.34 1.05.04.04.04.08.03.13-.03.13-.11.43-.12.5-.02.08-.07.1-.15.06-.68-.31-1.1-1.3-1.1-2.09 0-1.71 1.24-3.27 3.58-3.27 1.88 0 3.34 1.34 3.34 3.12 0 1.86-1.17 3.36-2.8 3.36-.55 0-1.06-.28-1.24-.62l-.33 1.27c-.12.47-.45 1.06-.68 1.41.51.16 1.04.24 1.6.24 3.04 0 5.5-2.47 5.5-5.5s-2.46-5.5-5.5-5.5z" fill="currentColor"/>
                 </svg>
               </span>
-              <span>{{ section.settings.social_pinterest_label }}</span>
+              <span>PINTEREST</span>
             </a>
           {%- endif -%}
         </div>
@@ -242,7 +173,7 @@
     {%- endif -%}
 
     <div class="mc-footer-bar-inner">
-      <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text }}</p>
+      <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
       <ul class="mc-footer-bar-legal" role="list">
         <li><a href="/policies/privacy-policy">POLITIQUE DE CONFIDENTIALITÉ</a></li>
         <li><a href="/policies/terms-of-service">CGU</a></li>
@@ -278,233 +209,6 @@
     },
     {
       "type": "header",
-      "content": "Couleurs"
-    },
-    {
-      "type": "color",
-      "id": "footer_bg",
-      "label": "Couleur de fond",
-      "default": "#332821"
-    },
-    {
-      "type": "color",
-      "id": "footer_text_color",
-      "label": "Couleur texte principal (liens, sociaux)",
-      "default": "#E8E4DD"
-    },
-    {
-      "type": "color",
-      "id": "footer_heading_color",
-      "label": "Couleur titres colonnes",
-      "default": "#E8E4DD"
-    },
-    {
-      "type": "color",
-      "id": "footer_link_hover_color",
-      "label": "Couleur liens au survol",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "footer_newsletter_btn_bg",
-      "label": "Fond bouton newsletter",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "footer_newsletter_btn_text",
-      "label": "Texte bouton newsletter",
-      "default": "#332821"
-    },
-    {
-      "type": "color",
-      "id": "footer_separator_color",
-      "label": "Couleur fine ligne barre du bas",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "range",
-      "id": "footer_separator_opacity",
-      "label": "Opacité fine ligne barre du bas",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 15
-    },
-    {
-      "type": "color",
-      "id": "footer_legal_color",
-      "label": "Couleur copyright et liens légaux",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "range",
-      "id": "footer_legal_opacity",
-      "label": "Opacité copyright et liens légaux",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 70
-    },
-    {
-      "type": "color",
-      "id": "footer_legal_separator_color",
-      "label": "Couleur séparateur vertical liens légaux",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "range",
-      "id": "footer_legal_separator_opacity",
-      "label": "Opacité séparateur vertical liens légaux",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 20
-    },
-    {
-      "type": "header",
-      "content": "Typographie (tailles en px)"
-    },
-    {
-      "type": "range",
-      "id": "footer_brand_name_size",
-      "label": "Taille nom marque (fallback sans logo)",
-      "min": 12,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 18
-    },
-    {
-      "type": "range",
-      "id": "footer_heading_size",
-      "label": "Taille titres colonnes",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 10
-    },
-    {
-      "type": "range",
-      "id": "footer_link_size",
-      "label": "Taille liens colonnes",
-      "min": 9,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "default": 11
-    },
-    {
-      "type": "range",
-      "id": "footer_newsletter_heading_size",
-      "label": "Taille titre newsletter",
-      "min": 10,
-      "max": 22,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "footer_newsletter_subtext_size",
-      "label": "Taille sous-texte newsletter",
-      "min": 9,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "range",
-      "id": "footer_newsletter_btn_size",
-      "label": "Taille bouton newsletter",
-      "min": 10,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "default": 13
-    },
-    {
-      "type": "range",
-      "id": "footer_legal_size",
-      "label": "Taille copyright et liens légaux",
-      "min": 9,
-      "max": 14,
-      "step": 1,
-      "unit": "px",
-      "default": 11
-    },
-    {
-      "type": "header",
-      "content": "Espacements"
-    },
-    {
-      "type": "range",
-      "id": "footer_padding_vertical",
-      "label": "Marge verticale haut/bas",
-      "info": "Le bas est automatiquement la moitié du haut",
-      "min": 0,
-      "max": 80,
-      "step": 2,
-      "unit": "px",
-      "default": 28
-    },
-    {
-      "type": "range",
-      "id": "footer_padding_horizontal",
-      "label": "Marge horizontale (gauche/droite)",
-      "min": 24,
-      "max": 160,
-      "step": 4,
-      "unit": "px",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "footer_columns_gap",
-      "label": "Espace entre colonnes",
-      "min": 24,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 72
-    },
-    {
-      "type": "range",
-      "id": "footer_heading_to_links",
-      "label": "Marge sous titre colonne",
-      "min": 8,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "footer_link_spacing",
-      "label": "Espace entre liens d'une colonne",
-      "min": 0,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 5
-    },
-    {
-      "type": "range",
-      "id": "footer_bar_padding_v",
-      "label": "Marge verticale barre du bas",
-      "min": 8,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "header",
       "content": "Newsletter"
     },
     {
@@ -518,100 +222,6 @@
       "id": "newsletter_subtext",
       "default": "Une sélection rare, livrée une fois par mois.",
       "label": "Sous-texte newsletter"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_placeholder",
-      "default": "Votre adresse email",
-      "label": "Placeholder champ email"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_button_label",
-      "default": "S'ABONNER",
-      "label": "Texte bouton newsletter"
-    },
-    {
-      "type": "header",
-      "content": "Colonnes de liens"
-    },
-    {
-      "type": "text",
-      "id": "col1_heading",
-      "default": "À PROPOS",
-      "label": "Titre colonne 1"
-    },
-    {
-      "type": "link_list",
-      "id": "col1_linklist",
-      "default": "footer-a-propos",
-      "label": "Menu colonne 1"
-    },
-    {
-      "type": "text",
-      "id": "col2_heading",
-      "default": "CATÉGORIES",
-      "label": "Titre colonne 2"
-    },
-    {
-      "type": "link_list",
-      "id": "col2_linklist",
-      "default": "footer-categories",
-      "label": "Menu colonne 2"
-    },
-    {
-      "type": "text",
-      "id": "col3_heading",
-      "default": "SERVICE CLIENT",
-      "label": "Titre colonne 3"
-    },
-    {
-      "type": "link_list",
-      "id": "col3_linklist",
-      "default": "footer-service-client",
-      "label": "Menu colonne 3"
-    },
-    {
-      "type": "header",
-      "content": "Réseaux sociaux"
-    },
-    {
-      "type": "text",
-      "id": "social_instagram_label",
-      "default": "INSTAGRAM",
-      "label": "Label Instagram"
-    },
-    {
-      "type": "text",
-      "id": "social_pinterest_label",
-      "default": "PINTEREST",
-      "label": "Label Pinterest"
-    },
-    {
-      "type": "header",
-      "content": "Marque (fallback sans logo)"
-    },
-    {
-      "type": "text",
-      "id": "brand_fallback_name",
-      "default": "MAISON COEUR",
-      "label": "Nom de la marque"
-    },
-    {
-      "type": "text",
-      "id": "brand_fallback_tagline",
-      "default": "GALERIE D'ART — PARIS",
-      "label": "Tagline marque"
-    },
-    {
-      "type": "header",
-      "content": "Copyright"
-    },
-    {
-      "type": "text",
-      "id": "copyright_text",
-      "default": "Maison Coeur — Tous droits réservés.",
-      "label": "Texte copyright (l'année est ajoutée automatiquement)"
     }
   ]
 }
