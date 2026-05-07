@@ -1137,3 +1137,15 @@ h1, h2, h3, h4,
 .mc-hd-spacer {
   height: 0;
 }
+
+/* === VIDÉO HERO (rendu identique à l'image) === */
+.hero-video,
+.banner video,
+.image-banner video {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}

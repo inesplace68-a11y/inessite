@@ -70,17 +70,30 @@
           assign sizes = full_width
         endif
       -%}
-      {{
-        section.settings.image
-        | image_url: width: 3840
-        | image_tag:
-          width: section.settings.image.width,
-          height: image_height,
-          class: image_class,
-          sizes: sizes,
-          widths: widths,
-          fetchpriority: fetch_priority
-      }}
+      {% if section.settings.hero_video != blank %}
+        {{
+          section.settings.hero_video
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            playsinline: true,
+            controls: false,
+            class: 'hero-video'
+        }}
+      {% else %}
+        {{
+          section.settings.image
+          | image_url: width: 3840
+          | image_tag:
+            width: section.settings.image.width,
+            height: image_height,
+            class: image_class,
+            sizes: sizes,
+            widths: widths,
+            fetchpriority: fetch_priority
+        }}
+      {% endif %}
     </div>
   {%- elsif section.settings.image_2 == blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -175,6 +188,12 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Vidéo (optionnelle, remplace l'image)",
+      "info": "MP4 H.264, ratio 2.4:1, 8-12s, max 5 Mo, sans son. Lecture auto, muet, boucle."
+    },
     {
       "type": "image_picker",
       "id": "image",
