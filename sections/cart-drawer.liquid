@@ -168,7 +168,7 @@
           <p class="mc-cd__shipping" data-mc-cd-shipping>
             {%- if remaining_cents > 0 -%}
               {%- assign remaining_amount = remaining_cents | money_without_trailing_zeros -%}
-              {{ s.shipping_threshold_text_below | replace: '{{amount}}', remaining_amount }}
+              {{ s.shipping_threshold_text_below | replace: '[amount]', remaining_amount }}
             {%- else -%}
               {{ s.shipping_threshold_text_reached }}
             {%- endif -%}
@@ -357,7 +357,7 @@
     { "type": "header", "content": "Seuil livraison offerte" },
     { "type": "checkbox", "id": "shipping_threshold_enabled", "label": "Activer le seuil livraison offerte", "default": false },
     { "type": "number", "id": "shipping_threshold_amount", "label": "Montant du seuil (en €)", "default": 800 },
-    { "type": "text", "id": "shipping_threshold_text_below", "label": "Texte sous le seuil", "info": "Utilisez {{amount}} pour le montant restant.", "default": "Plus que {{amount}} pour la livraison offerte" },
+    { "type": "text", "id": "shipping_threshold_text_below", "label": "Texte sous le seuil", "info": "Utilisez [amount] pour insérer le montant restant.", "default": "Plus que [amount] pour la livraison offerte" },
     { "type": "text", "id": "shipping_threshold_text_reached", "label": "Texte au-dessus du seuil", "default": "Livraison offerte" },
     { "type": "range", "id": "shipping_threshold_font_size", "label": "Taille texte seuil", "min": 8, "max": 16, "step": 0.5, "unit": "px", "default": 10 },
     { "type": "color", "id": "shipping_threshold_color", "label": "Couleur texte seuil", "default": "#6B655C" },
