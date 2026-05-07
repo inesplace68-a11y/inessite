@@ -36,7 +36,7 @@
 
     /* Titre */
     --mc-cd-title-fs: {{ s.title_font_size }}px;
-    --mc-cd-title-ls: {{ s.title_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-title-ls: {{ s.title_letter_spacing }}em;
     --mc-cd-title-fw: {{ s.title_font_weight }};
     --mc-cd-title-color: {{ s.title_color }};
     --mc-cd-title-mb: {{ s.title_margin_bottom }}px;
@@ -67,16 +67,16 @@
 
     --mc-cd-price-fs: {{ s.product_price_font_size }}px;
     --mc-cd-price-color: {{ s.product_price_color }};
-    --mc-cd-price-ls: {{ s.product_price_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-price-ls: {{ s.product_price_letter_spacing }}em;
 
     --mc-cd-qty-fs: {{ s.qty_font_size }}px;
-    --mc-cd-qty-ls: {{ s.qty_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-qty-ls: {{ s.qty_letter_spacing }}em;
     --mc-cd-qty-color: {{ s.qty_color }};
     --mc-cd-qty-mt: {{ s.qty_margin_top }}px;
 
     /* Pied */
     --mc-cd-sub-label-fs: {{ s.subtotal_label_font_size }}px;
-    --mc-cd-sub-label-ls: {{ s.subtotal_label_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-sub-label-ls: {{ s.subtotal_label_letter_spacing }}em;
     --mc-cd-sub-label-fw: {{ s.subtotal_label_font_weight }};
     --mc-cd-sub-amount-fs: {{ s.subtotal_amount_font_size }}px;
     --mc-cd-sub-amount-color: {{ s.subtotal_amount_color }};
@@ -86,7 +86,7 @@
     --mc-cd-sub-border-thickness: {{ s.subtotal_top_border_thickness }}px;
 
     --mc-cd-cta-fs: {{ s.cta_font_size }}px;
-    --mc-cd-cta-ls: {{ s.cta_letter_spacing | divided_by: 100.0 }}em;
+    --mc-cd-cta-ls: {{ s.cta_letter_spacing }}em;
     --mc-cd-cta-fw: {{ s.cta_font_weight }};
     --mc-cd-cta-pad-y: {{ s.cta_padding_vertical }}px;
     --mc-cd-cta-bg: {{ s.cta_bg_color }};
@@ -295,7 +295,7 @@
     { "type": "text", "id": "title_text", "label": "Texte du titre (panier rempli)", "default": "PANIER" },
     { "type": "text", "id": "title_text_empty", "label": "Texte du titre (panier vide)", "default": "VOTRE PANIER EST VIDE" },
     { "type": "range", "id": "title_font_size", "label": "Taille du titre", "min": 8, "max": 24, "step": 0.5, "unit": "px", "default": 11 },
-    { "type": "range", "id": "title_letter_spacing", "label": "Letter-spacing du titre", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 50 },
+    { "type": "range", "id": "title_letter_spacing", "label": "Letter-spacing du titre", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.5 },
     { "type": "select", "id": "title_font_weight", "label": "Graisse du titre", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "color", "id": "title_color", "label": "Couleur du titre", "default": "#1A1814" },
     { "type": "range", "id": "title_margin_bottom", "label": "Marge bas du titre", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 8 },
@@ -322,12 +322,12 @@
     { "type": "range", "id": "line_separator_thickness", "label": "Épaisseur séparateur", "min": 0, "max": 2, "step": 0.5, "unit": "px", "default": 0.5 },
     { "type": "range", "id": "product_name_font_size", "label": "Taille nom produit", "min": 8, "max": 22, "step": 0.5, "unit": "px", "default": 12 },
     { "type": "color", "id": "product_name_color", "label": "Couleur nom produit", "default": "#1A1814" },
-    { "type": "range", "id": "product_name_line_height", "label": "Line-height nom produit", "min": 1.0, "max": 2.0, "step": 0.05, "default": 1.3 },
+    { "type": "range", "id": "product_name_line_height", "label": "Line-height nom produit", "min": 1.0, "max": 2.0, "step": 0.1, "default": 1.3 },
     { "type": "range", "id": "product_price_font_size", "label": "Taille prix", "min": 7, "max": 18, "step": 0.5, "unit": "px", "default": 10 },
     { "type": "color", "id": "product_price_color", "label": "Couleur prix", "default": "#1A1814" },
-    { "type": "range", "id": "product_price_letter_spacing", "label": "Letter-spacing prix", "min": 0, "max": 30, "step": 1, "unit": "/100em", "default": 12 },
+    { "type": "range", "id": "product_price_letter_spacing", "label": "Letter-spacing prix", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.1 },
     { "type": "range", "id": "qty_font_size", "label": "Taille quantité", "min": 6, "max": 16, "step": 0.5, "unit": "px", "default": 8.5 },
-    { "type": "range", "id": "qty_letter_spacing", "label": "Letter-spacing quantité", "min": 0, "max": 50, "step": 1, "unit": "/100em", "default": 28 },
+    { "type": "range", "id": "qty_letter_spacing", "label": "Letter-spacing quantité", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.3 },
     { "type": "color", "id": "qty_color", "label": "Couleur quantité", "default": "#8C8378" },
     { "type": "range", "id": "qty_margin_top", "label": "Marge haut du sélecteur quantité", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 8 },
     { "type": "checkbox", "id": "show_remove_link", "label": "Afficher le lien Retirer", "default": true },
@@ -336,7 +336,7 @@
     { "type": "header", "content": "Pied (sous-total + bouton)" },
     { "type": "text", "id": "subtotal_label_text", "label": "Label sous-total", "default": "SOUS-TOTAL" },
     { "type": "range", "id": "subtotal_label_font_size", "label": "Taille label sous-total", "min": 7, "max": 16, "step": 0.5, "unit": "px", "default": 9.5 },
-    { "type": "range", "id": "subtotal_label_letter_spacing", "label": "Letter-spacing label sous-total", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 42 },
+    { "type": "range", "id": "subtotal_label_letter_spacing", "label": "Letter-spacing label sous-total", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.4 },
     { "type": "select", "id": "subtotal_label_font_weight", "label": "Graisse label sous-total", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "range", "id": "subtotal_amount_font_size", "label": "Taille montant sous-total", "min": 12, "max": 32, "step": 0.5, "unit": "px", "default": 17 },
     { "type": "color", "id": "subtotal_amount_color", "label": "Couleur montant sous-total", "default": "#1A1814" },
@@ -346,7 +346,7 @@
     { "type": "range", "id": "subtotal_top_border_thickness", "label": "Épaisseur trait au-dessus", "min": 0.5, "max": 3, "step": 0.5, "unit": "px", "default": 0.5 },
     { "type": "text", "id": "cta_text", "label": "Texte du bouton", "default": "RÉGLER" },
     { "type": "range", "id": "cta_font_size", "label": "Taille texte bouton", "min": 8, "max": 18, "step": 0.5, "unit": "px", "default": 10 },
-    { "type": "range", "id": "cta_letter_spacing", "label": "Letter-spacing bouton", "min": 0, "max": 80, "step": 1, "unit": "/100em", "default": 42 },
+    { "type": "range", "id": "cta_letter_spacing", "label": "Letter-spacing bouton", "min": 0, "max": 0.8, "step": 0.1, "unit": "em", "default": 0.4 },
     { "type": "select", "id": "cta_font_weight", "label": "Graisse bouton", "options": [{"value":"300","label":"Light"},{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"700","label":"Bold"}], "default": "500" },
     { "type": "range", "id": "cta_padding_vertical", "label": "Padding vertical bouton", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14 },
     { "type": "color", "id": "cta_bg_color", "label": "Couleur de fond bouton", "default": "#1A1814" },
