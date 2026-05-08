@@ -4,20 +4,26 @@
    ============================================================ */
 
 /* ============================================================
-   VARIABLES — extraites pixel par pixel du mockup
+   VARIABLES — alias des tokens injectés depuis settings_data.json
+   via layout/theme.liquid (settings.mc_color_*, settings.type_*_font).
+   Modification du look & feel : Theme Editor > Maison Coeur.
    ============================================================ */
 :root {
-  --mc-bg:          #F7F5F1;    /* fond principal, toutes pages */
-  --mc-dark:        #1A1614;    /* texte principal, boutons, bordures */
-  --mc-mid:         #8C8882;    /* texte secondaire, labels */
-  --mc-bar-bg:      #0F0E0C;    /* announcement bar — quasi-noir chaud */
-  --mc-bar-text:    #E8E4DD;    /* texte announcement bar */
-  --mc-footer-bg:   #332821;    /* footer — brun chaud profond */
-  --mc-footer-text: #E8E4DD;    /* texte footer */
-  --mc-border:      rgba(26, 22, 20, 0.14);
+  --mc-bg:          var(--mc-color-bg);
+  --mc-bg-secondary: var(--mc-color-bg-secondary);
+  --mc-dark:        var(--mc-color-text);
+  --mc-mid:         var(--mc-color-text-muted);
+  --mc-stone:       var(--mc-color-stone);
+  --mc-bronze:      var(--mc-color-bronze);
+  --mc-error:       var(--mc-color-error);
+  --mc-bar-bg:      var(--mc-color-announcement-bg);
+  --mc-bar-text:    var(--mc-color-announcement-text);
+  --mc-footer-bg:   var(--mc-color-footer-bg);
+  --mc-footer-text: var(--mc-color-footer-text);
+  --mc-border:      var(--mc-color-border);
 
-  --mc-font-serif: 'Cormorant Garamond', Georgia, serif;
-  --mc-font-sans:  'Jost', 'Helvetica Neue', Arial, sans-serif;
+  --mc-font-serif: var(--font-heading-family);
+  --mc-font-sans:  var(--font-body-family);
 
   --mc-transition: 0.25s ease;
 }
@@ -97,7 +103,7 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
-   HEADER — fond #F7F5F1, wordmark centré, nav 1 seule ligne
+   HEADER — fond var(--mc-bg), wordmark centré, nav 1 seule ligne
    ============================================================ */
 .header-wrapper,
 .header-wrapper.color-scheme-1 {
@@ -171,12 +177,12 @@ h1, h2, h3, h4,
 
 /* Fond sombre sur le placeholder Dawn (quand pas d'image) */
 .banner .banner__media.placeholder {
-  background-color: #1E1A16 !important;
+  background-color: var(--mc-dark) !important;
 }
 
 .banner .banner__media.placeholder .placeholder-svg {
   opacity: 0.04 !important;
-  color: #fff;
+  color: var(--mc-bg);
 }
 
 /* Overlay sombre même sur placeholder */
@@ -190,7 +196,7 @@ h1, h2, h3, h4,
   font-family: var(--mc-font-serif) !important;
   font-style: italic !important;
   font-weight: 400 !important;
-  color: #fff !important;
+  color: var(--mc-bg) !important;
   line-height: 1.05 !important;
   letter-spacing: 0.015em !important;
 }
@@ -212,7 +218,7 @@ h1, h2, h3, h4,
 .banner__buttons .button--primary,
 .banner__buttons .button--secondary {
   background: transparent !important;
-  color: #fff !important;
+  color: var(--mc-bg) !important;
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
   font-family: var(--mc-font-sans) !important;
   font-weight: 300 !important;
@@ -254,7 +260,7 @@ h1, h2, h3, h4,
   overflow: hidden;
   aspect-ratio: 1 / 1;
   width: 100%;
-  background: #E8E5E0;
+  background: var(--mc-bg-secondary);
   margin-bottom: 14px;
 }
 
@@ -566,7 +572,7 @@ h1, h2, h3, h4,
 
 .mc-footer {
   background-color: var(--mc-footer-bg);
-  color: #fff;
+  color: var(--mc-footer-text);
   border-top: none;
 }
 
@@ -599,7 +605,7 @@ h1, h2, h3, h4,
 .mc-fz-logo-link {
   display: inline-block;
   text-decoration: none;
-  color: #fff;
+  color: var(--mc-footer-text);
 }
 
 .mc-fz-logo-img {
@@ -615,16 +621,16 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-brand__name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--mc-font-serif);
   font-weight: 400;
   font-size: 1.75rem;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: var(--mc-footer-text);
   line-height: 1;
 }
 
 .mc-fz-brand__tagline {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.3rem;
   letter-spacing: 0.2em;
@@ -639,12 +645,12 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-col__heading {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 400;
   font-size: 1.0rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #E8E4DD;
+  color: var(--mc-footer-text);
   opacity: 0.75;
   margin: 0 0 24px;
 }
@@ -661,13 +667,13 @@ h1, h2, h3, h4,
 
 .mc-fz-col__link {
   position: relative;
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 500;
   font-size: 1.1rem;
   line-height: 1.8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #E8E4DD;
+  color: var(--mc-footer-text);
   text-decoration: none;
   display: inline-block;
 }
@@ -696,18 +702,18 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-nl__heading {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 400;
   font-size: 1.4rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--mc-footer-text);
   line-height: 1.7;
   margin: 0 0 8px;
 }
 
 .mc-fz-nl__sub {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.3rem;
   letter-spacing: 0.04em;
@@ -733,8 +739,8 @@ h1, h2, h3, h4,
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  color: #fff;
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--mc-footer-text);
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
@@ -752,16 +758,16 @@ h1, h2, h3, h4,
 }
 
 .mc-fz-nl__input:focus {
-  border-bottom-color: #fff;
+  border-bottom-color: var(--mc-footer-text);
 }
 
 .mc-fz-nl__btn {
   align-self: flex-start;
   width: auto;
-  background: #fff;
+  background: var(--mc-footer-text);
   border: none;
   color: var(--mc-footer-bg);
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 400;
   font-size: 1.3rem;
   letter-spacing: 0.22em;
@@ -778,8 +784,8 @@ h1, h2, h3, h4,
 
 .mc-fz-nl__error {
   display: block;
-  color: rgba(255, 140, 110, 0.9);
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--mc-color-error);
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.3rem;
   letter-spacing: 0.06em;
@@ -788,7 +794,7 @@ h1, h2, h3, h4,
 
 .mc-fz-nl__success {
   color: rgba(255, 255, 255, 0.65);
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.3rem;
   letter-spacing: 0.08em;
@@ -806,12 +812,12 @@ h1, h2, h3, h4,
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #E8E4DD;
+  color: var(--mc-footer-text);
   text-decoration: none;
   transition: opacity 0.25s ease;
 }
@@ -852,7 +858,7 @@ h1, h2, h3, h4,
   background: transparent;
   border: none;
   padding: 6px 0;
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.3rem;
   letter-spacing: 0.07em;
@@ -864,7 +870,7 @@ h1, h2, h3, h4,
 
 .mc-footer-bar-localization .disclosure__button:hover,
 .mc-footer-bar-localization .localization-form__select:hover {
-  color: #fff;
+  color: var(--mc-footer-text);
 }
 
 .mc-footer-bar-localization .disclosure__button svg,
@@ -885,7 +891,7 @@ h1, h2, h3, h4,
 }
 
 .mc-footer-bar-copy {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 400;
   font-size: 1.1rem;
   letter-spacing: 0.1em;
@@ -921,7 +927,7 @@ h1, h2, h3, h4,
 }
 
 .mc-footer-bar-legal a {
-  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 400;
   font-size: 1.1rem;
   letter-spacing: 0.1em;
@@ -994,7 +1000,7 @@ h1, h2, h3, h4,
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #F5F0E8;
+  background: var(--mc-bg);
   transform: translateY(0);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1010,13 +1016,13 @@ h1, h2, h3, h4,
   align-items: center;
   justify-content: space-between;
   padding: 24px 48px;
-  background: #F5F0E8;
+  background: var(--mc-bg);
 }
 
 /* Logo monogramme MC */
 .mc-hd-logo {
   text-decoration: none;
-  color: #1A1814;
+  color: var(--mc-dark);
   display: inline-flex;
   align-items: center;
 }
@@ -1068,7 +1074,7 @@ h1, h2, h3, h4,
 }
 
 .mc-hd-icon {
-  color: #1A1814;
+  color: var(--mc-dark);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1083,12 +1089,12 @@ button.mc-hd-icon {
 }
 
 .mc-hd-icon:hover {
-  color: #8C6D3F;
+  color: var(--mc-bronze);
 }
 
 /* ZONE 3 : Menu de navigation */
 .mc-hd-nav {
-  background: #F5F0E8;
+  background: var(--mc-bg);
   padding: 14px 48px 18px;
   border-bottom: 0.5px solid rgba(26, 24, 20, 0.08);
 }
@@ -1108,11 +1114,11 @@ button.mc-hd-icon {
 }
 
 .mc-hd-nav__link {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.22em;
-  color: #1A1814;
+  color: var(--mc-dark);
   text-decoration: none;
   position: relative;
   padding: 6px 0;
@@ -1127,12 +1133,12 @@ button.mc-hd-icon {
   transform: translateX(-50%);
   width: 0;
   height: 0.5px;
-  background: #8C6D3F;
+  background: var(--mc-bronze);
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mc-hd-nav__link:hover {
-  color: #8C6D3F;
+  color: var(--mc-bronze);
 }
 
 .mc-hd-nav__link:hover::after {
@@ -1172,7 +1178,7 @@ button.mc-hd-icon {
 
 .mc-globe-content {
   position: relative;
-  background: #F5F0E8;
+  background: var(--mc-bg);
   padding: 56px 48px 48px;
   width: 100%; max-width: 440px; margin: 24px;
   box-shadow: 0 24px 64px rgba(26, 24, 20, 0.18);
@@ -1187,15 +1193,15 @@ button.mc-hd-icon {
 .mc-globe-close {
   position: absolute; top: 16px; right: 16px;
   background: none; border: none; padding: 8px;
-  cursor: pointer; color: #1A1814; display: flex;
+  cursor: pointer; color: var(--mc-dark); display: flex;
 }
 .mc-globe-close:hover { opacity: 0.6; }
 
 .mc-globe-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--mc-font-serif);
   font-style: italic; font-weight: 400;
   font-size: 28px; letter-spacing: 0.01em;
-  color: #1A1814; margin: 0 0 28px; text-align: center;
+  color: var(--mc-dark); margin: 0 0 28px; text-align: center;
 }
 
 .mc-globe-form {
@@ -1207,17 +1213,17 @@ button.mc-hd-icon {
 }
 
 .mc-globe-field label {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--mc-font-sans);
   font-size: 11px; font-weight: 400;
   letter-spacing: 0.22em; text-transform: uppercase;
-  color: #1A1814;
+  color: var(--mc-dark);
 }
 
 .mc-globe-field select {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--mc-font-sans);
   font-size: 14px; font-weight: 300;
-  color: #1A1814; background: transparent;
-  border: none; border-bottom: 1px solid #1A1814;
+  color: var(--mc-dark); background: transparent;
+  border: none; border-bottom: 1px solid var(--mc-dark);
   padding: 8px 24px 8px 0; cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%231A1814' stroke-width='1.4'><polyline points='1,1 6,7 11,1'/></svg>");
@@ -1226,14 +1232,14 @@ button.mc-hd-icon {
   background-size: 12px 8px;
 }
 .mc-globe-field select:focus {
-  outline: none; border-bottom-color: #8C6D3F;
+  outline: none; border-bottom-color: var(--mc-bronze);
 }
 
 .mc-globe-confirm {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--mc-font-sans);
   font-size: 12px; font-weight: 400;
   letter-spacing: 0.28em; text-transform: uppercase;
-  color: white; background: #1A1814;
+  color: var(--mc-bg); background: var(--mc-dark);
   border: none; padding: 14px 20px;
   cursor: pointer; margin-top: 12px;
   transition: opacity 0.2s ease;

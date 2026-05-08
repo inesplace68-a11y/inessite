@@ -114,6 +114,20 @@
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
 
+        /* Maison Coeur — palette identitaire pilotée depuis le Theme Editor */
+        --mc-color-bg: {{ settings.mc_color_bg }};
+        --mc-color-bg-secondary: {{ settings.mc_color_bg_secondary }};
+        --mc-color-text: {{ settings.mc_color_text }};
+        --mc-color-text-muted: {{ settings.mc_color_text_muted }};
+        --mc-color-stone: {{ settings.mc_color_stone }};
+        --mc-color-bronze: {{ settings.mc_color_bronze }};
+        --mc-color-error: {{ settings.mc_color_error }};
+        --mc-color-announcement-bg: {{ settings.mc_color_announcement_bg }};
+        --mc-color-announcement-text: {{ settings.mc_color_announcement_text }};
+        --mc-color-footer-bg: {{ settings.mc_color_footer_bg }};
+        --mc-color-footer-text: {{ settings.mc_color_footer_text }};
+        --mc-color-border: {{ settings.mc_color_text }}24;
+
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
 

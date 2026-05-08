@@ -8,6 +8,104 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Maison Coeur — Identité visuelle",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Palette identitaire pilotant l'ensemble du thème. Synchronisée avec le Checkout Editor Shopify."
+      },
+      {
+        "type": "header",
+        "content": "Fonds"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_bg",
+        "label": "Fond principal",
+        "info": "Crème clair — fond global, header, sections",
+        "default": "#F5F0E8"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_bg_secondary",
+        "label": "Fond secondaire",
+        "info": "Crème grisé — cartes, blocs annexes",
+        "default": "#E8E4DD"
+      },
+      {
+        "type": "header",
+        "content": "Texte & accents"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_text",
+        "label": "Texte / accent / boutons",
+        "info": "Quasi-noir chaud — texte courant, CTA, bordures",
+        "default": "#1A1814"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_text_muted",
+        "label": "Texte secondaire",
+        "info": "Gris taupe — labels, sous-titres, captions",
+        "default": "#8C8882"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_stone",
+        "label": "Pierre (accents)",
+        "info": "Pierre claire — séparateurs, liserés, fonds discrets",
+        "default": "#C4B8A4"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_bronze",
+        "label": "Bronze (hover / CTA)",
+        "info": "Réservé aux états hover, focus et CTA premium",
+        "default": "#8C6D3F"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_error",
+        "label": "Erreur",
+        "default": "#DD1D1D"
+      },
+      {
+        "type": "header",
+        "content": "Announcement bar (barre du haut)"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_announcement_bg",
+        "label": "Fond de la barre d'annonce",
+        "default": "#0F0E0C"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_announcement_text",
+        "label": "Texte de la barre d'annonce",
+        "default": "#E8E4DD"
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_footer_bg",
+        "label": "Fond du footer",
+        "info": "Brun chaud profond",
+        "default": "#332821"
+      },
+      {
+        "type": "color",
+        "id": "mc_color_footer_text",
+        "label": "Texte du footer",
+        "default": "#E8E4DD"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {
@@ -44,7 +142,7 @@
             "type": "color",
             "id": "background",
             "label": "t:settings_schema.colors.settings.background.label",
-            "default": "#FFFFFF"
+            "default": "#F5F0E8"
           },
           {
             "type": "color_background",
@@ -56,31 +154,31 @@
             "type": "color",
             "id": "text",
             "label": "t:settings_schema.colors.settings.text.label",
-            "default": "#121212"
+            "default": "#1A1814"
           },
           {
             "type": "color",
             "id": "button",
             "label": "t:settings_schema.colors.settings.button_background.label",
-            "default": "#121212"
+            "default": "#1A1814"
           },
           {
             "type": "color",
             "id": "button_label",
             "label": "t:settings_schema.colors.settings.button_label.label",
-            "default": "#FFFFFF"
+            "default": "#F5F0E8"
           },
           {
             "type": "color",
             "id": "secondary_button_label",
             "label": "t:settings_schema.colors.settings.secondary_button_label.label",
-            "default": "#121212"
+            "default": "#1A1814"
           },
           {
             "type": "color",
             "id": "shadow",
             "label": "t:settings_schema.colors.settings.shadow.label",
-            "default": "#121212"
+            "default": "#1A1814"
           }
         ],
         "role": {
@@ -111,7 +209,7 @@
       {
         "type": "font_picker",
         "id": "type_header_font",
-        "default": "assistant_n4",
+        "default": "cormorant_garamond_n4",
         "label": "t:settings_schema.typography.settings.type_header_font.label"
       },
       {
@@ -131,7 +229,7 @@
       {
         "type": "font_picker",
         "id": "type_body_font",
-        "default": "assistant_n4",
+        "default": "jost_n3",
         "label": "t:settings_schema.typography.settings.type_body_font.label"
       },
       {
