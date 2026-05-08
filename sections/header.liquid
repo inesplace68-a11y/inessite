@@ -14,7 +14,7 @@
   }
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger]:hover,
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger]:focus-visible {
-    color: {{ section.settings.cart_icon_hover_color }};
+    color: #8C6D3F;
   }
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] svg {
     width: {{ section.settings.cart_icon_size }}px;
@@ -244,13 +244,6 @@
       "id": "cart_icon_color",
       "label": "Couleur de l'icône panier",
       "default": "#1A1814"
-    },
-    {
-      "type": "color",
-      "id": "cart_icon_hover_color",
-      "label": "Couleur de l'icône panier (hover)",
-      "info": "Bronze par défaut, à harmoniser avec l'accent global",
-      "default": "#8C6D3F"
     },
     {
       "type": "checkbox",

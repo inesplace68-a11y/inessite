@@ -70,7 +70,7 @@ cart-drawer.is-active .mc-cd__panel {
 
 .mc-cd__eyebrow {
   margin: 0 0 var(--mc-cd-title-mb);
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-title-fs);
   letter-spacing: var(--mc-cd-title-ls);
   font-weight: var(--mc-cd-title-fw);
@@ -124,7 +124,7 @@ cart-drawer.is-active .mc-cd__panel {
 .mc-cd__shipping {
   margin: 0 0 var(--mc-cd-ship-mb);
   text-align: center;
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-ship-fs);
   font-weight: 300;
   color: var(--mc-cd-ship-color);
@@ -173,7 +173,7 @@ cart-drawer.is-active .mc-cd__panel {
 
 .mc-cd__line-name {
   display: block;
-  font-family: var(--mc-font-serif);
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 400;
   font-size: var(--mc-cd-name-fs);
@@ -185,7 +185,7 @@ cart-drawer.is-active .mc-cd__panel {
 
 .mc-cd__line-variant {
   margin: 0 0 4px;
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -195,7 +195,7 @@ cart-drawer.is-active .mc-cd__panel {
 
 .mc-cd__line-price {
   margin: 0;
-  font-family: var(--mc-font-serif);
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 400;
   font-size: var(--mc-cd-price-fs);
@@ -208,7 +208,7 @@ cart-drawer.is-active .mc-cd__panel {
   display: inline-flex;
   align-items: center;
   margin-top: var(--mc-cd-qty-mt);
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-qty-fs);
   letter-spacing: var(--mc-cd-qty-ls);
   color: var(--mc-cd-qty-color);
@@ -246,7 +246,7 @@ cart-drawer.is-active .mc-cd__panel {
 .mc-cd__remove {
   display: inline-block;
   margin-top: 6px;
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: 9px;
   letter-spacing: 0.16em;
   font-weight: 300;
@@ -289,12 +289,12 @@ cart-drawer.is-active .mc-cd__panel {
 }
 
 .mc-cd__subtotal-label {
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-sub-label-fs);
   letter-spacing: var(--mc-cd-sub-label-ls);
   font-weight: var(--mc-cd-sub-label-fw);
   text-transform: uppercase;
-  color: var(--mc-dark);
+  color: #1A1814;
 }
 
 .mc-cd__subtotal-right {
@@ -304,7 +304,7 @@ cart-drawer.is-active .mc-cd__panel {
 }
 
 .mc-cd__subtotal-amount {
-  font-family: var(--mc-font-serif);
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 400;
   font-size: var(--mc-cd-sub-amount-fs);
@@ -313,7 +313,7 @@ cart-drawer.is-active .mc-cd__panel {
 }
 
 .mc-cd__subtotal-taxes {
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-sub-tax-fs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -327,7 +327,7 @@ cart-drawer.is-active .mc-cd__panel {
   background: var(--mc-cd-cta-bg);
   color: var(--mc-cd-cta-text);
   padding: var(--mc-cd-cta-pad-y) 0;
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-cta-fs);
   letter-spacing: var(--mc-cd-cta-ls);
   font-weight: var(--mc-cd-cta-fw);
@@ -349,7 +349,7 @@ cart-drawer.is-active .mc-cd__panel {
   display: block;
   text-align: center;
   margin-top: var(--mc-cd-cont-mt);
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: var(--mc-cd-cont-fs);
   letter-spacing: var(--mc-cd-cont-ls);
   font-weight: 300;
@@ -361,7 +361,7 @@ cart-drawer.is-active .mc-cd__panel {
 
 .mc-cd__continue-link:hover,
 .mc-cd__continue-link:focus-visible {
-  color: var(--mc-bronze);
+  color: #8C6D3F;
 }
 
 /* État vide */
@@ -396,19 +396,19 @@ cart-drawer.is-active .mc-cd__panel {
 }
 
 .mc-cd__empty-link {
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-size: 11px;
   letter-spacing: var(--mc-cd-empty-link-ls);
   font-weight: 300;
   text-transform: uppercase;
   text-decoration: underline;
   text-underline-offset: 4px;
-  color: var(--mc-dark);
+  color: #1A1814;
 }
 
 .mc-cd__empty-link:hover,
 .mc-cd__empty-link:focus-visible {
-  color: var(--mc-bronze);
+  color: #8C6D3F;
 }
 
 /* SR-only */
@@ -434,10 +434,10 @@ body.mc-cd-open {
 
 .mc-hd-cart-badge {
   position: absolute;
-  font-family: var(--mc-font-sans);
+  font-family: 'Jost', sans-serif;
   font-weight: 400;
   background: var(--mc-cart-badge-bg, #1A1814);
-  color: var(--mc-cart-badge-text, #F5F0E8);
+  color: var(--mc-cart-badge-text, #F7F5F1);
   width: var(--mc-cart-badge-size, 16px);
   height: var(--mc-cart-badge-size, 16px);
   font-size: var(--mc-cart-badge-fs, 10px);
