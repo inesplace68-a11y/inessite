@@ -6,9 +6,17 @@
     height: {{ section.settings.wordmark_height }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-main {
-    padding: {{ section.settings.bandeau_padding }}px 48px;
+    padding: {{ section.settings.bandeau_padding_top }}px 48px {{ section.settings.bandeau_padding_bottom }}px;
     border-top: {{ section.settings.topbar_height }}px solid {{ section.settings.topbar_color }};
   }
+  #shopify-section-{{ section.id }} .mc-hd-icons {
+    gap: {{ section.settings.icons_gap }}px;
+  }
+  {%- if section.settings.nav_separator_visible -%}
+  #shopify-section-{{ section.id }} .mc-hd-nav {
+    border-top: {{ section.settings.nav_separator_thickness }}px solid {{ section.settings.nav_separator_color }};
+  }
+  {%- endif -%}
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] {
     color: {{ section.settings.cart_icon_color }};
   }
@@ -199,12 +207,23 @@
     },
     {
       "type": "range",
-      "id": "bandeau_padding",
-      "label": "Marge verticale (haut et bas)",
-      "info": "Plus de marge = bandeau plus aéré",
-      "min": 8,
-      "max": 60,
-      "step": 2,
+      "id": "bandeau_padding_top",
+      "label": "Marge verticale haut",
+      "info": "Espace au-dessus du bandeau crème",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "bandeau_padding_bottom",
+      "label": "Marge verticale bas",
+      "info": "Espace en dessous du bandeau crème",
+      "min": 0,
+      "max": 80,
+      "step": 1,
       "unit": "px",
       "default": 24
     },
@@ -224,6 +243,47 @@
       "id": "topbar_color",
       "label": "Couleur de la barre noire",
       "default": "#1A1814"
+    },
+    {
+      "type": "header",
+      "content": "Icônes — espacement"
+    },
+    {
+      "type": "range",
+      "id": "icons_gap",
+      "label": "Espacement entre icônes",
+      "info": "Distance entre les icônes du bandeau (globe, recherche, compte, favoris, panier)",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Trait au-dessus du menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "nav_separator_visible",
+      "label": "Afficher le trait au-dessus du menu",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "nav_separator_color",
+      "label": "Couleur du trait",
+      "default": "#C4B8A4"
+    },
+    {
+      "type": "range",
+      "id": "nav_separator_thickness",
+      "label": "Épaisseur du trait",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0.5
     },
     {
       "type": "header",

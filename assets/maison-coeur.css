@@ -1060,11 +1060,10 @@ h1, h2, h3, h4,
   object-fit: contain;
 }
 
-/* Icônes à droite */
+/* Icônes à droite — gap piloté par section.settings.icons_gap */
 .mc-hd-icons {
   display: flex;
   align-items: center;
-  gap: 26px;
 }
 
 .mc-hd-icon {
