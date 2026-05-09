@@ -1324,14 +1324,14 @@ button.mc-hd-icon {
   border: none;
   outline: none;
   padding: 0;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 26px;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
   line-height: 1.2;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
   text-transform: none;
-  color: inherit;
+  color: #1A1814;
 }
 /* Masque la croix native WebKit/Edge (on utilise la nôtre) */
 .mc-search-form__input::-webkit-search-cancel-button,
@@ -1357,11 +1357,11 @@ button.mc-hd-icon {
 
 .mc-search-form__input::placeholder {
   color: rgba(26, 24, 20, 0.4);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 26px;
-  letter-spacing: -0.005em;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0;
   text-transform: none;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1552,7 +1552,7 @@ button.mc-hd-icon {
   .mc-search-panel { padding: 32px 20px 24px; }
   .mc-search-form { padding-right: 32px; gap: 10px; }
   .mc-search-form__input,
-  .mc-search-form__input::placeholder { font-size: 20px; }
+  .mc-search-form__input::placeholder { font-size: 12px; }
   .mc-search-results { max-height: 60vh; }
   .mc-search-suggestion { font-size: 16px; }
   .mc-search-concierge__text { font-size: 17px; }
