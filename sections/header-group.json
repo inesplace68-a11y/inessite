@@ -40,9 +40,9 @@
       "type": "header",
       "settings": {
         "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC.png",
-        "wordmark_image": "shopify://shop_images/maison-coeur-logo-tagline-clean.png",
+        "wordmark_image": "shopify://shop_images/maison-coeur-logo-horizontal-net-sans-filet_1.png",
         "monogram_height": 26,
-        "wordmark_height": 150,
+        "wordmark_height": 42,
         "bandeau_padding": 48,
         "topbar_height": 10,
         "topbar_color": "#242833",
