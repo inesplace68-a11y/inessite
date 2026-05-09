@@ -6,7 +6,10 @@
     height: {{ section.settings.wordmark_height }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-main {
-    padding: {{ section.settings.bandeau_padding_top }}px 48px {{ section.settings.bandeau_padding_bottom }}px;
+    padding-top: {{ section.settings.bandeau_padding_top }}px;
+    padding-right: 48px;
+    padding-bottom: {{ section.settings.bandeau_padding_bottom }}px;
+    padding-left: 48px;
     border-top: {{ section.settings.topbar_height }}px solid {{ section.settings.topbar_color }};
   }
   #shopify-section-{{ section.id }} .mc-hd-icons {
