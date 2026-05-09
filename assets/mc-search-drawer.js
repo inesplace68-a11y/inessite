@@ -197,49 +197,87 @@
   async function runSearch(query) {
     if (abortCtrl) abortCtrl.abort();
     abortCtrl = new AbortController();
-    const url = PREDICTIVE_BASE + '.json'
+    const signal = abortCtrl.signal;
+
+    const productsUrl = PREDICTIVE_BASE + '.json'
       + '?q=' + encodeURIComponent(query)
-      + '&resources[type]=product,query'
+      + '&resources[type]=product'
       + '&resources[limit]=' + MAX_PRODUCTS
       + '&resources[options][unavailable_products]=last'
       + '&resources[options][fields]=title,product_type,vendor,tags';
-    console.info('[mc-search] fetch', { q: query, url: url });
+
+    const queriesUrl = PREDICTIVE_BASE + '.json'
+      + '?q=' + encodeURIComponent(query)
+      + '&resources[type]=query'
+      + '&resources[limit]=' + MAX_QUERIES;
+
+    console.info('[mc-search] fetch', { q: query, productsUrl: productsUrl, queriesUrl: queriesUrl });
+
+    const fetchResource = (url) => fetch(url, { signal: signal, headers: { 'Accept': 'application/json' } })
+      .then(res => {
+        if (!res.ok) {
+          console.warn('[mc-search] HTTP error', { status: res.status, url: url });
+          return null;
+        }
+        return res.json();
+      })
+      .catch(err => {
+        if (err && err.name === 'AbortError') throw err;
+        console.warn('[mc-search] fetch failed', { err: err, url: url });
+        return null;
+      });
+
+    let productsData, queriesData;
     try {
-      const res = await fetch(url, { signal: abortCtrl.signal, headers: { 'Accept': 'application/json' } });
-      if (!res.ok) {
-        console.warn('[mc-search] HTTP error', { status: res.status, url: url });
-        throw new Error('HTTP ' + res.status);
-      }
-      const data = await res.json();
-      if (query !== lastQuery) return;
-      const r = (data && data.resources && data.resources.results) || {};
-      const queries = r.queries || [];
-      const products = r.products || [];
-      console.info('[mc-search] ok', { q: query, products: products.length, queries: queries.length });
-
-      renderQueries(queries, query);
-      renderProducts(products);
-
-      if (queries.length === 0 && products.length === 0) {
-        console.info('[mc-search] empty index — vérifier que Search & Discovery est installée et l\'index reconstruit', { q: query });
-        showNoResults();
-      } else if (conciergeBlock) {
-        conciergeBlock.hidden = true;
-      }
-
-      if (results) {
-        const anyVisible = (queries.length > 0) || (products.length > 0) || (showConcierge && queries.length === 0 && products.length === 0);
-        results.hidden = !anyVisible;
-      }
+      [productsData, queriesData] = await Promise.all([
+        fetchResource(productsUrl),
+        fetchResource(queriesUrl),
+      ]);
     } catch (err) {
       if (err && err.name === 'AbortError') return;
-      console.warn('[mc-search] suggest error', { err: err, url: url });
+      console.warn('[mc-search] suggest error', { err: err });
       if (showConcierge && conciergeBlock && results) {
         if (queriesBlock) queriesBlock.hidden = true;
         if (productsBlock) productsBlock.hidden = true;
         conciergeBlock.hidden = false;
         results.hidden = false;
       }
+      return;
+    }
+
+    if (query !== lastQuery) return;
+
+    const productsRes = (productsData && productsData.resources && productsData.resources.results) || {};
+    const queriesRes = (queriesData && queriesData.resources && queriesData.resources.results) || {};
+    const products = productsRes.products || [];
+    const queries = queriesRes.queries || [];
+
+    console.info('[mc-search] ok', { q: query, products: products.length, queries: queries.length });
+
+    renderQueries(queries, query);
+    renderProducts(products);
+
+    if (queries.length === 0 && products.length === 0) {
+      const bothFailed = productsData === null && queriesData === null;
+      if (bothFailed) {
+        console.warn('[mc-search] both endpoints failed', { q: query });
+        if (showConcierge && conciergeBlock && results) {
+          if (queriesBlock) queriesBlock.hidden = true;
+          if (productsBlock) productsBlock.hidden = true;
+          conciergeBlock.hidden = false;
+          results.hidden = false;
+        }
+      } else {
+        console.info('[mc-search] empty index — vérifier que Search & Discovery est installée et l\'index reconstruit', { q: query });
+        showNoResults();
+      }
+    } else if (conciergeBlock) {
+      conciergeBlock.hidden = true;
+    }
+
+    if (results) {
+      const anyVisible = (queries.length > 0) || (products.length > 0) || (showConcierge && queries.length === 0 && products.length === 0);
+      results.hidden = !anyVisible;
     }
   }
 
