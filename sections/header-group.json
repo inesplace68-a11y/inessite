@@ -47,7 +47,7 @@
         "bandeau_padding_bottom": 63,
         "topbar_height": 10,
         "topbar_color": "#242833",
-        "icons_gap": 20,
+        "icons_gap": 10,
         "nav_separator_visible": false,
         "nav_separator_color": "#c4b8a4",
         "nav_separator_thickness": 0.5,
