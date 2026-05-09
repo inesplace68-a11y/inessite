@@ -1333,6 +1333,28 @@ button.mc-hd-icon {
   text-transform: none;
   color: inherit;
 }
+/* Masque la croix native WebKit/Edge (on utilise la nôtre) */
+.mc-search-form__input::-webkit-search-cancel-button,
+.mc-search-form__input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+
+.mc-search-form__clear {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(26, 24, 20, 0.5);
+  transition: color 0.18s ease;
+}
+.mc-search-form__clear[hidden] { display: none; }
+.mc-search-form__clear:hover,
+.mc-search-form__clear:focus-visible { color: #1A1814; outline: none; }
+
 .mc-search-form__input::placeholder {
   color: rgba(26, 24, 20, 0.4);
   font-family: 'Cormorant Garamond', Georgia, serif;

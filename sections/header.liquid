@@ -171,7 +171,13 @@
   </div>
 </div>
 
-<div class="mc-search-drawer" id="mc-search-drawer" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+<div class="mc-search-drawer"
+     id="mc-search-drawer"
+     hidden
+     role="dialog"
+     aria-modal="true"
+     aria-label="Recherche"
+     data-predictive-search-url="{{ routes.predictive_search_url }}">
   <div class="mc-search-overlay" data-mc-search-close></div>
   <div class="mc-search-panel">
     <button type="button" class="mc-search-close" aria-label="Fermer" data-mc-search-close>
@@ -200,6 +206,18 @@
         autocapitalize="off"
         spellcheck="false"
       >
+      <button
+        type="button"
+        class="mc-search-form__clear"
+        aria-label="Effacer la recherche"
+        data-mc-search-clear
+        hidden
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="18" y1="6" x2="6" y2="18"/>
+        </svg>
+      </button>
       <input type="hidden" name="options[prefix]" value="last">
     </form>
 
