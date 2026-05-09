@@ -27,6 +27,12 @@
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
+
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}:not(.banner--adapt) {
+      min-height: {{ section.settings.image_height_desktop_custom }}rem;
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -237,6 +243,17 @@
       ],
       "default": "medium",
       "label": "t:sections.image-banner.settings.image_height.label"
+    },
+    {
+      "type": "range",
+      "id": "image_height_desktop_custom",
+      "min": 30,
+      "max": 80,
+      "step": 1,
+      "unit": "rem",
+      "label": "Hauteur desktop personnalisée",
+      "info": "Surcharge la hauteur du sélecteur ci-dessus sur desktop uniquement (≥750px). 50rem ≈ format panoramique large. Mobile non impacté.",
+      "default": 50
     },
     {
       "type": "select",
