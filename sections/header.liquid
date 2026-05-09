@@ -41,6 +41,8 @@
   }
   #shopify-section-{{ section.id }} .mc-search-drawer {
     --mc-search-anim: {{ section.settings.search_anim_duration }}ms;
+    {%- assign mc_overlay_alpha = section.settings.search_overlay_opacity | divided_by: 100.0 -%}
+    --mc-search-overlay: {{ section.settings.search_overlay_color | color_modify: 'alpha', mc_overlay_alpha }};
   }
   #shopify-section-{{ section.id }} .mc-search-panel {
     background: {{ section.settings.search_drawer_bg }};
@@ -194,20 +196,43 @@
         class="mc-search-form__input"
         placeholder="{{ section.settings.search_placeholder }}"
         autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
       >
       <input type="hidden" name="options[prefix]" value="last">
     </form>
 
-    {%- if section.settings.search_categories_visible -%}
-      <div class="mc-search-cats">
-        {%- if section.settings.search_categories_label != blank -%}
-          <span class="mc-search-cats__label">{{ section.settings.search_categories_label }}</span>
-        {%- endif -%}
-        {%- for link in linklists[section.settings.search_categories_menu].links -%}
-          <a href="{{ link.url }}" class="mc-search-cats__link">{{ link.title }}</a>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+    <div class="mc-search-results"
+         data-mc-search-results
+         data-show-concierge="{{ section.settings.search_show_concierge }}"
+         hidden>
+      <section class="mc-search-block mc-search-block--queries" data-mc-search-block="queries" hidden>
+        <span class="mc-search-eyebrow">SUGGESTIONS</span>
+        <ul class="mc-search-suggestions" data-mc-search-queries></ul>
+      </section>
+
+      <section class="mc-search-block mc-search-block--products" data-mc-search-block="products" hidden>
+        <span class="mc-search-eyebrow">RÉSULTATS</span>
+        <ul class="mc-search-products" data-mc-search-products></ul>
+      </section>
+
+      {%- if section.settings.search_show_concierge -%}
+        <section class="mc-search-block mc-search-block--concierge" data-mc-search-block="concierge" hidden>
+          {%- if section.settings.search_concierge_eyebrow != blank -%}
+            <span class="mc-search-eyebrow">{{ section.settings.search_concierge_eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.search_concierge_text != blank -%}
+            <p class="mc-search-concierge__text">{{ section.settings.search_concierge_text }}</p>
+          {%- endif -%}
+          {%- if section.settings.search_concierge_cta_text != blank and section.settings.search_concierge_cta_url != blank -%}
+            <a class="mc-search-concierge__cta" href="{{ section.settings.search_concierge_cta_url }}">
+              {{ section.settings.search_concierge_cta_text }}
+            </a>
+          {%- endif -%}
+        </section>
+      {%- endif -%}
+    </div>
   </div>
 </div>
 
@@ -428,33 +453,76 @@
     {
       "type": "color",
       "id": "search_drawer_text",
-      "label": "Couleur du texte (champ + catégories)",
+      "label": "Couleur du texte du drawer",
       "default": "#1A1814"
+    },
+    {
+      "type": "color",
+      "id": "search_overlay_color",
+      "label": "Couleur de l'overlay derrière le drawer",
+      "default": "#1A1814"
+    },
+    {
+      "type": "range",
+      "id": "search_overlay_opacity",
+      "label": "Opacité de l'overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 45
     },
     {
       "type": "text",
       "id": "search_placeholder",
       "label": "Texte du placeholder",
-      "default": "RECHERCHER UNE PIÈCE, UNE MATIÈRE, UNE ÉPOQUE…"
-    },
-    {
-      "type": "checkbox",
-      "id": "search_categories_visible",
-      "label": "Afficher la ligne catégories",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "search_categories_label",
-      "label": "Label de la ligne catégories",
-      "default": "Parcourir :"
+      "default": "Rechercher une pièce, une matière, une époque…"
     },
     {
       "type": "link_list",
       "id": "search_categories_menu",
       "label": "Menu des catégories de recherche",
-      "info": "Crée un menu dédié dans Boutique → Navigation, puis sélectionne-le ici. Chaque entrée doit pointer vers une collection.",
+      "info": "Réservé aux résultats live (filtrage). Crée un menu dans Boutique → Navigation et sélectionne-le ici.",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Module conciergerie (aucun résultat)"
+    },
+    {
+      "type": "checkbox",
+      "id": "search_show_concierge",
+      "label": "Afficher le module conciergerie quand aucun résultat",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_concierge_eyebrow",
+      "label": "Eyebrow",
+      "default": "CONCIERGERIE"
+    },
+    {
+      "type": "textarea",
+      "id": "search_concierge_text",
+      "label": "Texte central",
+      "default": "Une pièce particulière que vous ne trouvez pas ici ? Notre conciergerie la cherche pour vous, partout dans le monde."
+    },
+    {
+      "type": "text",
+      "id": "search_concierge_cta_text",
+      "label": "Texte du bouton",
+      "default": "CONFIER UNE RECHERCHE"
+    },
+    {
+      "type": "text",
+      "id": "search_concierge_cta_url",
+      "label": "Lien du bouton",
+      "info": "Chemin ou URL complète. Default : /pages/conciergerie",
+      "default": "/pages/conciergerie"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
     },
     {
       "type": "range",

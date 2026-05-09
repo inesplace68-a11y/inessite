@@ -1251,12 +1251,13 @@ button.mc-hd-icon {
   z-index: 90;
   --mc-search-anim: 250ms;
   --mc-header-height: 0px;
+  --mc-search-overlay: rgba(26, 24, 20, 0.45);
 }
 
 .mc-search-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(26, 24, 20, 0.45);
+  background: var(--mc-search-overlay);
   cursor: pointer;
   opacity: 0;
   transition: opacity var(--mc-search-anim) cubic-bezier(0.4, 0, 0.2, 1);
@@ -1304,7 +1305,7 @@ button.mc-hd-icon {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 0 36px 12px 0;
+  padding: 0 36px 14px 0;
   border-bottom: 0.5px solid #1A1814;
 }
 
@@ -1313,66 +1314,224 @@ button.mc-hd-icon {
   align-items: center;
   color: inherit;
   flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .mc-search-form__input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
   padding: 0;
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  text-transform: none;
   color: inherit;
 }
 .mc-search-form__input::placeholder {
   color: rgba(26, 24, 20, 0.4);
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   opacity: 1;
 }
 
-.mc-search-cats {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 18px;
-  margin-top: 18px;
+/* Bloc résultats live */
+.mc-search-results {
+  margin-top: 22px;
+  max-height: min(70vh, 540px);
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
+.mc-search-results[hidden] { display: none; }
 
-.mc-search-cats__label {
-  font-family: 'Jost', sans-serif;
+.mc-search-block { margin-top: 18px; }
+.mc-search-block:first-child { margin-top: 0; }
+.mc-search-block[hidden] { display: none; }
+
+.mc-search-eyebrow {
+  display: block;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: rgba(26, 24, 20, 0.55);
+  margin-bottom: 10px;
 }
 
-.mc-search-cats__link {
-  font-family: 'Jost', sans-serif;
+/* Suggestions textuelles */
+.mc-search-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mc-search-suggestion {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  color: #1A1814;
+  text-decoration: none;
+  border-bottom: 0.5px solid transparent;
+  padding-bottom: 1px;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.18s ease;
+}
+.mc-search-suggestion:hover,
+.mc-search-suggestion:focus-visible {
+  border-bottom-color: currentColor;
+  outline: none;
+}
+.mc-search-suggestion mark {
+  background: transparent;
+  color: inherit;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Résultats produits */
+.mc-search-products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mc-search-product {
+  display: block;
+  border-bottom: 0.5px solid rgba(26, 24, 20, 0.08);
+}
+.mc-search-product:last-child { border-bottom: none; }
+
+.mc-search-product__link {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 8px;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background-color 0.18s ease;
+}
+.mc-search-product__link:hover,
+.mc-search-product__link:focus-visible {
+  background: rgba(26, 24, 20, 0.04);
+  outline: none;
+}
+
+.mc-search-product__image {
+  width: 56px;
+  height: 56px;
+  background: rgba(26, 24, 20, 0.06);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.mc-search-product__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mc-search-product__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mc-search-product__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: #1A1814;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mc-search-product__meta {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(26, 24, 20, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mc-search-product__price {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #1A1814;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Module conciergerie */
+.mc-search-block--concierge {
+  padding: 22px 0 6px;
+  text-align: left;
+}
+.mc-search-concierge__text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  color: #1A1814;
+  margin: 0 0 16px;
+  max-width: 56ch;
+}
+.mc-search-concierge__cta {
+  display: inline-block;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: inherit;
+  color: #1A1814;
   text-decoration: none;
-  border-bottom: 0.5px solid transparent;
-  padding-bottom: 2px;
-  transition: border-color 0.2s ease;
+  border: 0.5px solid #1A1814;
+  padding: 12px 22px;
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
-.mc-search-cats__link:hover {
-  border-bottom-color: currentColor;
+.mc-search-concierge__cta:hover,
+.mc-search-concierge__cta:focus-visible {
+  background: #1A1814;
+  color: #F5F0E8;
+  outline: none;
 }
 
 @media (max-width: 749px) {
   .mc-search-panel { padding: 32px 20px 24px; }
-  .mc-search-form { padding-right: 32px; }
-  .mc-search-cats { gap: 14px; }
+  .mc-search-form { padding-right: 32px; gap: 10px; }
+  .mc-search-form__input,
+  .mc-search-form__input::placeholder { font-size: 20px; }
+  .mc-search-results { max-height: 60vh; }
+  .mc-search-suggestion { font-size: 16px; }
+  .mc-search-concierge__text { font-size: 17px; }
 }
