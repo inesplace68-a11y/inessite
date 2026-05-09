@@ -203,8 +203,7 @@
       + '?q=' + encodeURIComponent(query)
       + '&resources[type]=product'
       + '&resources[limit]=' + MAX_PRODUCTS
-      + '&resources[options][unavailable_products]=last'
-      + '&resources[options][fields]=title,product_type,vendor,tags';
+      + '&resources[options][unavailable_products]=last';
 
     const queriesUrl = PREDICTIVE_BASE + '.json'
       + '?q=' + encodeURIComponent(query)
