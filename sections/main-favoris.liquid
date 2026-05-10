@@ -51,6 +51,8 @@
     ></p>
   </div>
 
+  {% section 'votre-espace-bar' %}
+
   {%- comment -%} État vide {%- endcomment -%}
   <div class="template-favoris__empty page-width center" data-mc-favoris-empty>
     <h2 class="template-favoris__empty-title title title--primary" role="status">
@@ -62,27 +64,6 @@
       </a>
     {%- endif -%}
   </div>
-
-  {%- comment -%} Bandeau anonyme (visible si ≥1 pièce ET customer == nil) {%- endcomment -%}
-  {%- if customer == nil -%}
-    <section
-      class="template-favoris__signin-banner mc-search-block mc-search-block--concierge page-width"
-      data-mc-favoris-signin
-      hidden
-    >
-      {%- if section.settings.banner_eyebrow != blank -%}
-        <span class="mc-search-eyebrow">{{ section.settings.banner_eyebrow }}</span>
-      {%- endif -%}
-      {%- if section.settings.banner_text != blank -%}
-        <p class="mc-search-concierge__text">{{ section.settings.banner_text | newline_to_br }}</p>
-      {%- endif -%}
-      {%- if section.settings.banner_cta_text != blank and section.settings.banner_cta_url != blank -%}
-        <a class="mc-search-concierge__cta" href="{{ section.settings.banner_cta_url }}">
-          {{ section.settings.banner_cta_text }}
-        </a>
-      {%- endif -%}
-    </section>
-  {%- endif -%}
 
   {%- comment -%} Grille (rendue côté JS depuis localStorage) {%- endcomment -%}
   <div
@@ -139,34 +120,6 @@
       "type": "url",
       "id": "empty_cta_url",
       "label": "CTA état vide — lien"
-    },
-    {
-      "type": "header",
-      "content": "Bandeau anonyme (visiteur non connecté)",
-      "info": "Visible uniquement si ≥1 pièce dans la sélection ET visiteur non connecté."
-    },
-    {
-      "type": "text",
-      "id": "banner_eyebrow",
-      "label": "Bandeau — eyebrow",
-      "default": "VOTRE ESPACE"
-    },
-    {
-      "type": "textarea",
-      "id": "banner_text",
-      "label": "Bandeau — texte",
-      "default": "Connectez-vous pour retrouver votre sélection sur tous vos appareils."
-    },
-    {
-      "type": "text",
-      "id": "banner_cta_text",
-      "label": "Bandeau — CTA texte",
-      "default": "SE CONNECTER"
-    },
-    {
-      "type": "url",
-      "id": "banner_cta_url",
-      "label": "Bandeau — CTA lien"
     },
     {
       "type": "header",

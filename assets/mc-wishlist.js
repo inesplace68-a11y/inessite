@@ -160,13 +160,11 @@
     var gridWrap = root.querySelector('[data-mc-favoris-grid-wrap]');
     var gridEl = root.querySelector('[data-mc-favoris-grid]');
     var countEl = root.querySelector('[data-mc-favoris-count]');
-    var signinEl = root.querySelector('[data-mc-favoris-signin]');
 
     if (list.length === 0) {
       if (emptyEl) emptyEl.hidden = false;
       if (gridWrap) gridWrap.hidden = true;
       if (countEl) { countEl.hidden = true; countEl.textContent = ''; }
-      if (signinEl) signinEl.hidden = true;
       return;
     }
 
@@ -176,7 +174,6 @@
       countEl.hidden = false;
       countEl.textContent = list.length + (list.length > 1 ? ' pièces' : ' pièce');
     }
-    if (signinEl) signinEl.hidden = false;
 
     if (gridEl) {
       var html = '';
