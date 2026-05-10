@@ -14,34 +14,7 @@
 
 <script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
 
-<style>
-  .template-search__header {
-    margin-bottom: 3rem;
-  }
-
-  .template-search__search {
-    margin: 0 auto 3.5rem;
-    max-width: 74.1rem;
-  }
-
-  .template-search__search .search {
-    margin-top: 3rem;
-  }
-
-  .template-search--empty {
-    padding-bottom: 18rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-search__header {
-      margin-bottom: 5rem;
-    }
-  }
-
-  .search__button .icon {
-    height: 1.8rem;
-  }
-</style>
+{%- comment -%} Styles déplacés dans assets/maison-coeur.css (bloc « PAGE /search ») {%- endcomment -%}
 
 {%- liquid
   assign sort_by = search.sort_by | default: search.default_sort_by
@@ -66,14 +39,17 @@
 {% paginate search.results by 24 %}
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
     <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      <h1 class="h2 center">
+      {%- if section.settings.eyebrow_text != blank -%}
+        <span class="template-search__eyebrow mc-search-eyebrow">{{ section.settings.eyebrow_text }}</span>
+      {%- endif -%}
+      <h1 class="template-search__title">
         {%- if search.performed -%}
           {{- 'templates.search.title' | t -}}
         {%- else -%}
           {{- 'general.search.search' | t -}}
         {%- endif -%}
       </h1>
-      <div class="template-search__search">
+      <div class="template-search__form-wrap">
         {%- if settings.predictive_search_enabled -%}
           <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
         {%- endif -%}
@@ -132,19 +108,38 @@
           </predictive-search>
         {%- endif -%}
       </div>
-      {%- if search.performed -%}
+      {%- if search.performed and search.results_count > 0 -%}
         {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
-          {%- if search.results_count > 0 -%}
-            <p role="status">
-              {{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
-            </p>
-          {%- endif -%}
+          <p class="template-search__count" role="status">
+            {{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
+          </p>
         {%- endunless -%}
-        {%- if search.results_count == 0 and search.filters == empty -%}
-          <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
-        {%- endif -%}
       {%- endif -%}
     </div>
+
+    {%- if search.performed and search.results_count == 0 and search.filters == empty -%}
+      {%- assign hd = sections['header'].settings -%}
+      <div class="template-search__empty page-width center">
+        <h2 class="template-search__empty-title title title--primary" role="status">
+          {{ 'templates.search.no_results' | t: terms: search.terms }}
+        </h2>
+        {%- if section.settings.show_concierge_on_empty
+          and hd.search_concierge_text != blank
+          and hd.search_concierge_cta_text != blank
+          and hd.search_concierge_cta_url != blank
+        -%}
+          <section class="template-search__concierge mc-search-block mc-search-block--concierge">
+            {%- if hd.search_concierge_eyebrow != blank -%}
+              <span class="mc-search-eyebrow">{{ hd.search_concierge_eyebrow }}</span>
+            {%- endif -%}
+            <p class="mc-search-concierge__text">{{ hd.search_concierge_text }}</p>
+            <a class="mc-search-concierge__cta" href="{{ hd.search_concierge_cta_url }}">
+              {{ hd.search_concierge_cta_text }}
+            </a>
+          </section>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
     {%- if search.performed -%}
       {%- if section.settings.enable_sorting
         and section.settings.filter_type == 'vertical'
@@ -339,6 +334,23 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Personnalisation Maison Coeur"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow au-dessus du titre",
+      "default": "RECHERCHE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_concierge_on_empty",
+      "label": "Afficher le module conciergerie quand aucun résultat",
+      "info": "Wordings et lien CTA repris du drawer recherche (paramétrés dans le header).",
+      "default": true
+    },
     {
       "type": "range",
       "id": "columns_desktop",
