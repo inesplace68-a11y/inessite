@@ -51,7 +51,25 @@
     ></p>
   </div>
 
-  {% section 'votre-espace-bar' %}
+  {%- render 'votre-espace-bar',
+    bar_bg: section.settings.bar_bg,
+    bar_padding_y: section.settings.bar_padding_y,
+    spacing_top: section.settings.spacing_top,
+    spacing_bottom: section.settings.spacing_bottom,
+    bullet_color: section.settings.bullet_color,
+    eyebrow_text: section.settings.eyebrow_bar_text,
+    eyebrow_size: section.settings.eyebrow_size,
+    eyebrow_ls: section.settings.eyebrow_ls,
+    eyebrow_color: section.settings.eyebrow_color,
+    body_text: section.settings.body_text,
+    body_size: section.settings.body_size,
+    body_color: section.settings.body_color,
+    cta_label: section.settings.cta_label,
+    cta_url: section.settings.cta_url,
+    cta_size: section.settings.cta_size,
+    cta_ls: section.settings.cta_ls,
+    cta_color: section.settings.cta_color
+  -%}
 
   {%- comment -%} État vide {%- endcomment -%}
   <div class="template-favoris__empty page-width center" data-mc-favoris-empty>
@@ -167,6 +185,144 @@
       "unit": "px",
       "label": "Padding bottom",
       "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Bande Votre Espace"
+    },
+    {
+      "type": "color",
+      "id": "bar_bg",
+      "label": "Couleur de fond",
+      "default": "#E8E4DD"
+    },
+    {
+      "type": "range",
+      "id": "bar_padding_y",
+      "label": "Padding vertical (haut/bas)",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Espace au-dessus de la bande",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Espace en-dessous de la bande",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Couleur des bullets séparateurs",
+      "default": "#B8AC9C"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_bar_text",
+      "label": "Bande — eyebrow",
+      "default": "VOTRE ESPACE"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Bande — taille eyebrow",
+      "min": 8,
+      "max": 16,
+      "step": 0.5,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_ls",
+      "label": "Bande — letter-spacing eyebrow",
+      "min": 0,
+      "max": 0.4,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0.2
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Bande — couleur eyebrow",
+      "default": "#6B645C"
+    },
+    {
+      "type": "text",
+      "id": "body_text",
+      "label": "Bande — texte central",
+      "default": "Connectez-vous pour retrouver votre sélection à tout moment."
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Bande — taille texte",
+      "min": 10,
+      "max": 18,
+      "step": 0.5,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Bande — couleur texte",
+      "default": "#1A1814"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Bande — libellé CTA",
+      "default": "SE CONNECTER"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Bande — lien CTA",
+      "default": "/account/login"
+    },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "label": "Bande — taille CTA",
+      "min": 8,
+      "max": 16,
+      "step": 0.5,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_ls",
+      "label": "Bande — letter-spacing CTA",
+      "min": 0,
+      "max": 0.4,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0.2
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "Bande — couleur CTA",
+      "default": "#1A1814"
     }
   ],
   "presets": [

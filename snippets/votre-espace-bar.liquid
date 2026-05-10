@@ -1,0 +1,112 @@
+{% comment %}
+  Bande VOTRE ESPACE — pleine largeur en pierre, visiteur anonyme uniquement.
+  Snippet rendu via {% render 'votre-espace-bar', ... %} dans main-favoris.liquid.
+  Tous les paramètres visuels sont passés depuis le schema de la section parente.
+{% endcomment %}
+
+{%- unless customer -%}
+  {%- style -%}
+    .votre-espace-bar {
+      width: 100%;
+      background-color: {{ bar_bg }};
+      padding-top: {{ bar_padding_y }}px;
+      padding-bottom: {{ bar_padding_y }}px;
+      margin-top: {{ spacing_top }}px;
+      margin-bottom: {{ spacing_bottom }}px;
+    }
+
+    .votre-espace-bar__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .votre-espace-bar__eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: {{ eyebrow_size }}px;
+      letter-spacing: {{ eyebrow_ls }}em;
+      color: {{ eyebrow_color }};
+      line-height: 1;
+    }
+
+    .votre-espace-bar__bullet {
+      color: {{ bullet_color }};
+      font-size: {{ body_size }}px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .votre-espace-bar__body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: {{ body_size }}px;
+      color: {{ body_color }};
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .votre-espace-bar__cta {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: {{ cta_size }}px;
+      letter-spacing: {{ cta_ls }}em;
+      color: {{ cta_color }};
+      text-decoration: underline;
+      text-decoration-thickness: 0.5px;
+      text-decoration-color: {{ cta_color }};
+      text-underline-offset: 3px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      line-height: 1;
+      transition: opacity 200ms ease;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.4em;
+    }
+
+    .votre-espace-bar__cta:hover,
+    .votre-espace-bar__cta:focus-visible {
+      opacity: 0.7;
+    }
+
+    .votre-espace-bar__cta-arrow {
+      text-decoration: none;
+      display: inline-block;
+    }
+  {%- endstyle -%}
+
+  <div class="votre-espace-bar">
+    <div class="votre-espace-bar__inner">
+      {%- if eyebrow_text != blank -%}
+        <span class="votre-espace-bar__eyebrow">
+          {{- eyebrow_text -}}
+        </span>
+        <span class="votre-espace-bar__bullet" aria-hidden="true">&bull;</span>
+      {%- endif -%}
+
+      {%- if body_text != blank -%}
+        <p class="votre-espace-bar__body">
+          {{- body_text -}}
+        </p>
+        <span class="votre-espace-bar__bullet" aria-hidden="true">&bull;</span>
+      {%- endif -%}
+
+      {%- if cta_label != blank and cta_url != blank -%}
+        <a
+          class="votre-espace-bar__cta"
+          href="{{ cta_url }}"
+        >
+          <span>{{ cta_label }}</span>
+          <span class="votre-espace-bar__cta-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endunless -%}
