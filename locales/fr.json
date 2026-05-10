@@ -117,6 +117,8 @@
   "products": {
     "product": {
       "add_to_cart": "Ajouter au panier",
+      "add_to_favoris": "Ajouter aux favoris",
+      "remove_from_favoris": "Retirer des favoris",
       "description": "Description",
       "on_sale": "Promotion",
       "product_variants": "Variantes de produits",

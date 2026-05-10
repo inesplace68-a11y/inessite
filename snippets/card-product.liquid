@@ -40,7 +40,8 @@
       assign ratio = 1
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ card_product.id }}">
+    {%- render 'heart-button', product: card_product, context: 'card' -%}
     <div
       class="
         card card--{{ settings.card_style }}
@@ -576,7 +577,7 @@
       assign ratio = 0.8
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="">
     <div
       class="
         card card--{{ settings.card_style }}

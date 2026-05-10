@@ -1,0 +1,50 @@
+{% comment %}
+  Bouton coeur wishlist Maison Coeur
+  SVG reproduit à l'identique du header (sections/header.liquid:94-96).
+
+  Accepte :
+  - product:    {Object} Product Liquid (requis)
+  - size:       {Number} Largeur/hauteur du SVG en px (default 18)
+  - context:    {String} 'card' ou 'product' — pour scope CSS (optional)
+
+  Snapshot localStorage (Option A validée) :
+  data-product-id, data-product-handle, data-product-title,
+  data-product-image, data-product-price, data-product-url
+{% endcomment %}
+
+{%- liquid
+  assign heart_size = size | default: 18
+  assign heart_context = context | default: 'card'
+  assign heart_image = ''
+  if product.featured_image
+    assign heart_image = product.featured_image | image_url: width: 533
+  endif
+-%}
+<button
+  type="button"
+  class="mc-product-heart mc-product-heart--{{ heart_context }}"
+  data-mc-heart
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-image="{{ heart_image }}"
+  data-product-price="{{ product.price | money_without_trailing_zeros }}"
+  data-product-url="{{ product.url }}"
+  aria-label="{{ 'products.product.add_to_favoris' | t }}"
+  aria-pressed="false"
+>
+  <svg
+    width="{{ heart_size }}"
+    height="{{ heart_size }}"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="0.85"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M12 20.5s-7.5-4.8-9.5-10C1 6 5.5 2.5 9 4.5c1.3.7 2.4 1.8 3 3 .6-1.2 1.7-2.3 3-3 3.5-2 8 1.5 6.5 6-2 5.2-9.5 10-9.5 10z"/>
+  </svg>
+</button>

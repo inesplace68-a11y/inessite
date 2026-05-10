@@ -1769,3 +1769,169 @@ button.mc-hd-icon {
     margin-bottom: 6rem;
   }
 }
+
+/* ============================================================
+   PAGE /pages/favoris — MA SÉLECTION (Phase 1 MVP)
+   Patterns réutilisés (audit Phase 1) :
+   - .template-search__title (Cormorant italic 28px)
+   - .mc-search-eyebrow (Jost 300 10px letter-spacing 0.32em)
+   - .template-search__count (Jost 300 14px)
+   - .template-search__empty (margin 4rem/8rem)
+   - .mc-search-concierge__cta + .mc-search-concierge__text
+   - .mc-search-block--concierge
+   ============================================================ */
+.template-favoris__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+@media screen and (min-width: 750px) {
+  .template-favoris__header { margin-bottom: 5rem; }
+}
+
+.template-favoris__eyebrow {
+  margin-bottom: 14px;
+}
+
+.template-favoris__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: #1A1814;
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+.template-favoris__count {
+  margin: 0 0 3rem;
+  text-align: center;
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: rgba(26, 24, 20, 0.55);
+}
+
+.template-favoris__empty {
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+}
+
+.template-favoris__empty .title--primary {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #1A1814;
+  text-transform: none;
+}
+
+.template-favoris__empty-title {
+  margin: 0 0 2rem;
+}
+
+.template-favoris__signin-banner {
+  text-align: center;
+  max-width: 56ch;
+  margin: 2rem auto 4rem;
+  padding: 22px 0 6px;
+}
+.template-favoris__signin-banner .mc-search-concierge__text {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.template-favoris__grid-wrap {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 749px) {
+  .template-favoris__empty {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+}
+
+/* ============================================================
+   BOUTON COEUR PRODUIT — .mc-product-heart
+   Pattern position : aligne sur .card__badge { margin: 1.3rem }
+   (assets/component-card.css:289), inversé en top-right.
+   Couleur fill active : #1A1814 (palette dominante theme).
+   ============================================================ */
+.mc-product-heart {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.3rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #1A1814;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.mc-product-heart:hover,
+.mc-product-heart:focus-visible {
+  opacity: 0.7;
+  outline: none;
+}
+.mc-product-heart svg {
+  display: block;
+  pointer-events: none;
+  transition: fill 0.18s ease;
+}
+.mc-product-heart[data-active="true"] svg path {
+  fill: #1A1814;
+}
+.mc-product-heart.is-pulsing {
+  animation: mcHeartPulse 0.4s ease;
+}
+
+/* Coeur dans la fiche produit : a cote du H1, pas en absolute */
+.product__title--with-heart {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.product__title--with-heart > h1 {
+  margin: 0;
+  flex: 1 1 auto;
+}
+.product__title--with-heart .mc-product-heart--product {
+  position: static;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+}
+
+/* Coeur header : fill noir si wishlist non vide */
+.mc-hd-icon[data-mc-header-heart][data-active="true"] svg path {
+  fill: #1A1814;
+}
+.mc-hd-icon[data-mc-header-heart].is-pulsing {
+  animation: mcHeartPulse 0.4s ease;
+  display: inline-flex;
+  transform-origin: center;
+}
+
+@keyframes mcHeartPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Carte produit : assure que .card-wrapper est positionne pour le coeur en absolute */
+.card-wrapper {
+  position: relative;
+}
+

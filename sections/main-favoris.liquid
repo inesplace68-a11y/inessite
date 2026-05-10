@@ -1,0 +1,228 @@
+{% comment %}
+  Page MA SÉLECTION (wishlist) — Phase 1 MVP localStorage
+  Patterns réutilisés (audit Phase 1) :
+  - .template-search__eyebrow + .mc-search-eyebrow → eyebrow
+  - .template-search__title (Cormorant italic 28px) → H1
+  - .template-search__count → compteur "X pieces"
+  - .template-search__empty + .title--primary → état vide
+  - .mc-search-block--concierge + .mc-search-concierge__cta → bandeau anonyme
+  - <ul class="grid product-grid grid--X-col-tablet-down grid--Y-col-desktop"> → grille
+{% endcomment %}
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="template-favoris section-{{ section.id }}-padding"
+  data-template="favoris"
+  data-mc-favoris-root
+>
+  <div class="template-favoris__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <span class="template-favoris__eyebrow mc-search-eyebrow">
+        {{- section.settings.eyebrow_text -}}
+      </span>
+    {%- endif -%}
+
+    {%- if section.settings.title != blank -%}
+      <h1 class="template-favoris__title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+
+    <p
+      class="template-favoris__count"
+      role="status"
+      data-mc-favoris-count
+      hidden
+    ></p>
+  </div>
+
+  {%- comment -%} État vide {%- endcomment -%}
+  <div class="template-favoris__empty page-width center" data-mc-favoris-empty>
+    <h2 class="template-favoris__empty-title title title--primary" role="status">
+      {{ section.settings.empty_text }}
+    </h2>
+    {%- if section.settings.empty_cta_text != blank and section.settings.empty_cta_url != blank -%}
+      <a class="mc-search-concierge__cta" href="{{ section.settings.empty_cta_url }}">
+        {{ section.settings.empty_cta_text }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Bandeau anonyme (visible si ≥1 pièce ET customer == nil) {%- endcomment -%}
+  {%- if customer == nil -%}
+    <section
+      class="template-favoris__signin-banner mc-search-block mc-search-block--concierge page-width"
+      data-mc-favoris-signin
+      hidden
+    >
+      {%- if section.settings.banner_eyebrow != blank -%}
+        <span class="mc-search-eyebrow">{{ section.settings.banner_eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.banner_text != blank -%}
+        <p class="mc-search-concierge__text">{{ section.settings.banner_text | newline_to_br }}</p>
+      {%- endif -%}
+      {%- if section.settings.banner_cta_text != blank and section.settings.banner_cta_url != blank -%}
+        <a class="mc-search-concierge__cta" href="{{ section.settings.banner_cta_url }}">
+          {{ section.settings.banner_cta_text }}
+        </a>
+      {%- endif -%}
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} Grille (rendue côté JS depuis localStorage) {%- endcomment -%}
+  <div
+    class="template-favoris__grid-wrap page-width"
+    data-mc-favoris-grid-wrap
+    hidden
+  >
+    <ul
+      class="grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
+      data-mc-favoris-grid
+    ></ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page Favoris",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow (suprà-titre)",
+      "default": "MA SÉLECTION"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre H1",
+      "default": "Vos favoris"
+    },
+    {
+      "type": "header",
+      "content": "État vide"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Message état vide",
+      "default": "Aucune pièce ajoutée pour le moment. Parcourez la collection et ajoutez vos favoris en cliquant sur le coeur."
+    },
+    {
+      "type": "text",
+      "id": "empty_cta_text",
+      "label": "CTA état vide — texte",
+      "default": "DÉCOUVRIR LA COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "empty_cta_url",
+      "label": "CTA état vide — lien"
+    },
+    {
+      "type": "header",
+      "content": "Bandeau anonyme (visiteur non connecté)",
+      "info": "Visible uniquement si ≥1 pièce dans la sélection ET visiteur non connecté."
+    },
+    {
+      "type": "text",
+      "id": "banner_eyebrow",
+      "label": "Bandeau — eyebrow",
+      "default": "VOTRE ESPACE"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_text",
+      "label": "Bandeau — texte",
+      "default": "Connectez-vous pour retrouver votre sélection sur tous vos appareils."
+    },
+    {
+      "type": "text",
+      "id": "banner_cta_text",
+      "label": "Bandeau — CTA texte",
+      "default": "SE CONNECTER"
+    },
+    {
+      "type": "url",
+      "id": "banner_cta_url",
+      "label": "Bandeau — CTA lien"
+    },
+    {
+      "type": "header",
+      "content": "Grille produits"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Colonnes desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Colonnes mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Espacements section"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Favoris"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}
