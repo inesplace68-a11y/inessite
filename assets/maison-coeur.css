@@ -1730,18 +1730,29 @@ button.mc-hd-icon {
 }
 
 .template-search__empty {
-  margin-top: 10rem;
-  margin-bottom: 15rem;
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+}
+
+.template-search__empty .title--primary {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #1A1814;
+  text-transform: none;
 }
 
 .template-search__empty-title {
-  margin: 0 0 4rem;
+  margin: 0 0 2rem;
 }
 
 .template-search__concierge {
   text-align: center;
   max-width: 56ch;
-  margin: 4rem auto 0;
+  margin: 2rem auto 0;
   padding: 0;
 }
 .template-search__concierge .mc-search-concierge__text {
@@ -1754,7 +1765,7 @@ button.mc-hd-icon {
   .template-search__form-wrap .search__input.field__input,
   .template-search__form-wrap .field__input::placeholder { font-size: 12px; }
   .template-search__empty {
-    margin-top: 6rem;
-    margin-bottom: 10rem;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
   }
 }
