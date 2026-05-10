@@ -118,23 +118,22 @@
     </div>
 
     {%- if search.performed and search.results_count == 0 and search.filters == empty -%}
-      {%- assign hd = sections['header'].settings -%}
       <div class="template-search__empty page-width center">
         <h2 class="template-search__empty-title title title--primary" role="status">
           {{ 'templates.search.no_results' | t: terms: search.terms }}
         </h2>
         {%- if section.settings.show_concierge_on_empty
-          and hd.search_concierge_text != blank
-          and hd.search_concierge_cta_text != blank
-          and hd.search_concierge_cta_url != blank
+          and settings.search_concierge_text != blank
+          and settings.search_concierge_cta_text != blank
+          and settings.search_concierge_cta_url != blank
         -%}
           <section class="template-search__concierge mc-search-block mc-search-block--concierge">
-            {%- if hd.search_concierge_eyebrow != blank -%}
-              <span class="mc-search-eyebrow">{{ hd.search_concierge_eyebrow }}</span>
+            {%- if settings.search_concierge_eyebrow != blank -%}
+              <span class="mc-search-eyebrow">{{ settings.search_concierge_eyebrow }}</span>
             {%- endif -%}
-            <p class="mc-search-concierge__text">{{ hd.search_concierge_text }}</p>
-            <a class="mc-search-concierge__cta" href="{{ hd.search_concierge_cta_url }}">
-              {{ hd.search_concierge_cta_text }}
+            <p class="mc-search-concierge__text">{{ settings.search_concierge_text | newline_to_br }}</p>
+            <a class="mc-search-concierge__cta" href="{{ settings.search_concierge_cta_url }}">
+              {{ settings.search_concierge_cta_text }}
             </a>
           </section>
         {%- endif -%}

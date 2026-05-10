@@ -237,15 +237,15 @@
 
       {%- if section.settings.search_show_concierge -%}
         <section class="mc-search-block mc-search-block--concierge" data-mc-search-block="concierge" hidden>
-          {%- if section.settings.search_concierge_eyebrow != blank -%}
-            <span class="mc-search-eyebrow">{{ section.settings.search_concierge_eyebrow }}</span>
+          {%- if settings.search_concierge_eyebrow != blank -%}
+            <span class="mc-search-eyebrow">{{ settings.search_concierge_eyebrow }}</span>
           {%- endif -%}
-          {%- if section.settings.search_concierge_text != blank -%}
-            <p class="mc-search-concierge__text">{{ section.settings.search_concierge_text }}</p>
+          {%- if settings.search_concierge_text != blank -%}
+            <p class="mc-search-concierge__text">{{ settings.search_concierge_text | newline_to_br }}</p>
           {%- endif -%}
-          {%- if section.settings.search_concierge_cta_text != blank and section.settings.search_concierge_cta_url != blank -%}
-            <a class="mc-search-concierge__cta" href="{{ section.settings.search_concierge_cta_url }}">
-              {{ section.settings.search_concierge_cta_text }}
+          {%- if settings.search_concierge_cta_text != blank and settings.search_concierge_cta_url != blank -%}
+            <a class="mc-search-concierge__cta" href="{{ settings.search_concierge_cta_url }}">
+              {{ settings.search_concierge_cta_text }}
             </a>
           {%- endif -%}
         </section>
@@ -508,35 +508,14 @@
       "content": "Module conciergerie (aucun résultat)"
     },
     {
+      "type": "paragraph",
+      "content": "Wordings et lien CTA partagés (settings théme → « Conciergerie (recherche) »)."
+    },
+    {
       "type": "checkbox",
       "id": "search_show_concierge",
       "label": "Afficher le module conciergerie quand aucun résultat",
       "default": true
-    },
-    {
-      "type": "text",
-      "id": "search_concierge_eyebrow",
-      "label": "Eyebrow",
-      "default": "CONCIERGERIE"
-    },
-    {
-      "type": "textarea",
-      "id": "search_concierge_text",
-      "label": "Texte central",
-      "default": "Une pièce particulière que vous ne trouvez pas ici ? Notre conciergerie la cherche pour vous, partout dans le monde."
-    },
-    {
-      "type": "text",
-      "id": "search_concierge_cta_text",
-      "label": "Texte du bouton",
-      "default": "CONFIER UNE RECHERCHE"
-    },
-    {
-      "type": "text",
-      "id": "search_concierge_cta_url",
-      "label": "Lien du bouton",
-      "info": "Chemin ou URL complète. Default : /pages/conciergerie",
-      "default": "/pages/conciergerie"
     },
     {
       "type": "header",

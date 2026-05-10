@@ -1592,7 +1592,14 @@ button.mc-hd-icon {
 }
 
 .template-search__title {
-  margin: 0 0 1.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: #1A1814;
+  margin: 0 0 28px;
   text-align: center;
 }
 

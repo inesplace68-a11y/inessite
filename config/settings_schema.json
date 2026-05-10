@@ -1451,5 +1451,40 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Conciergerie (recherche)",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Wordings et lien CTA partagés par le drawer recherche (header) et le bloc « aucun résultat » de la page /search. Source unique."
+      },
+      {
+        "type": "text",
+        "id": "search_concierge_eyebrow",
+        "label": "Eyebrow",
+        "default": "CONCIERGERIE"
+      },
+      {
+        "type": "textarea",
+        "id": "search_concierge_text",
+        "label": "Texte central",
+        "info": "Les sauts de ligne sont préservés.",
+        "default": "Une pièce particulière que vous ne trouvez pas ici ?\nNotre conciergerie la cherche pour vous, partout dans le monde."
+      },
+      {
+        "type": "text",
+        "id": "search_concierge_cta_text",
+        "label": "Texte du bouton",
+        "default": "CONFIER UNE RECHERCHE"
+      },
+      {
+        "type": "text",
+        "id": "search_concierge_cta_url",
+        "label": "Lien du bouton",
+        "info": "Chemin ou URL complète. Default : /pages/conciergerie",
+        "default": "/pages/conciergerie"
+      }
+    ]
   }
 ]
