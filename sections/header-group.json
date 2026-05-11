@@ -39,10 +39,13 @@
     "header": {
       "type": "header",
       "settings": {
-        "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC.png",
+        "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC_bc97b0cf-1fa5-4ee5-896b-eb5b6a9a7fed.png",
         "wordmark_image": "shopify://shop_images/maison-coeur-logo-jost-regular-v4.png",
-        "monogram_height": 26,
+        "monogram_height": 30,
         "wordmark_height": 62,
+        "mono_globe_gap": 16,
+        "nav_font_size": 12,
+        "nav_letter_spacing": 0.2,
         "bandeau_padding_top": 30,
         "bandeau_padding_bottom": 74,
         "topbar_height": 10,
