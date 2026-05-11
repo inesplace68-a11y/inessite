@@ -143,11 +143,8 @@
     </div>
   </div>
 
-  {%- comment -%} BARRE DU BAS {%- endcomment -%}
+  {%- comment -%} BARRE DU BAS — 3 blocs sur une seule ligne {%- endcomment -%}
   <div class="mc-footer-bar">
-
-    <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
-
     <div class="mc-footer-bar-inner">
 
       {%- comment -%} Sélecteurs pays/devise + langue (natif Shopify) — gauche {%- endcomment -%}
@@ -175,6 +172,8 @@
           {%- endif -%}
         </div>
       {%- endif -%}
+
+      <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
 
       <ul class="mc-footer-bar-legal" role="list">
         <li><a href="/policies/privacy-policy">POLITIQUE DE CONFIDENTIALITÉ</a></li>
