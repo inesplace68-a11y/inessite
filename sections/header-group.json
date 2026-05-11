@@ -40,9 +40,9 @@
       "type": "header",
       "settings": {
         "monogram_image": "shopify://shop_images/maison-coeur-monogramme-MC.png",
-        "wordmark_image": "shopify://shop_images/maison-coeur-logo-horizontal-net-sans-filet.png",
+        "wordmark_image": "shopify://shop_images/maison-coeur-logo-jost-regular.png",
         "monogram_height": 26,
-        "wordmark_height": 50,
+        "wordmark_height": 62,
         "bandeau_padding_top": 52,
         "bandeau_padding_bottom": 74,
         "topbar_height": 10,
@@ -59,7 +59,15 @@
         "badge_size": 16,
         "badge_font_size": 10,
         "badge_offset_top": -4,
-        "badge_offset_right": -4
+        "badge_offset_right": -4,
+        "search_drawer_bg": "#f5f0e8",
+        "search_drawer_text": "#1a1814",
+        "search_overlay_color": "#1a1814",
+        "search_overlay_opacity": 45,
+        "search_placeholder": "Rechercher une pièce, une matière, une époque…",
+        "search_categories_menu": "main-menu",
+        "search_show_concierge": true,
+        "search_anim_duration": 250
       }
     }
   },
