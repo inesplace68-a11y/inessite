@@ -5,6 +5,9 @@
   #shopify-section-{{ section.id }} .mc-hd-wordmark-img {
     height: {{ section.settings.wordmark_height }}px;
   }
+  #shopify-section-{{ section.id }} .mc-hd-wordmark {
+    margin-top: {{ section.settings.wordmark_offset_y }}px;
+  }
   #shopify-section-{{ section.id }} .mc-hd-main {
     padding-top: {{ section.settings.bandeau_padding_top }}px;
     padding-right: 48px;
@@ -320,6 +323,17 @@
       "step": 2,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "wordmark_offset_y",
+      "label": "Décalage vertical du wordmark",
+      "info": "Remonte (négatif) ou descend (positif) le wordmark pour aligner le haut du M avec les icônes droite",
+      "min": -20,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": -8
     },
     {
       "type": "range",

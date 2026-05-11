@@ -43,6 +43,7 @@
         "wordmark_image": "shopify://shop_images/maison-coeur-logo-jost-regular-v5.png",
         "monogram_height": 30,
         "wordmark_height": 62,
+        "wordmark_offset_y": -8,
         "mono_globe_gap": 16,
         "nav_font_size": 12,
         "nav_letter_spacing": 0.2,
