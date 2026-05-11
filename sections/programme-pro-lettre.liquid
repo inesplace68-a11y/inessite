@@ -1,0 +1,81 @@
+{{ 'section-programme-pro-lettre.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pp-lettre-padding-top: {{ section.settings.padding_top }}px;
+    --pp-lettre-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pp-lettre-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --pp-lettre-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --pp-lettre-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --pp-lettre-body-size: {{ section.settings.body_size }}px;
+    --pp-lettre-body-max-width: {{ section.settings.body_max_width }}px;
+    --pp-lettre-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --pp-lettre-paragraph-gap: {{ section.settings.paragraph_gap }}px;
+    --pp-lettre-signature-size: {{ section.settings.signature_size }}px;
+    --pp-lettre-signature-subtext-size: {{ section.settings.signature_subtext_size }}px;
+    --pp-lettre-signature-margin-top: {{ section.settings.signature_margin_top }}px;
+  }
+{%- endstyle -%}
+
+<section class="programme-pro-lettre">
+  <div class="programme-pro-lettre__inner">
+
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="programme-pro-lettre__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    <div class="programme-pro-lettre__body">
+      {%- if section.settings.paragraph_1 != blank -%}
+        <div class="programme-pro-lettre__paragraph">{{ section.settings.paragraph_1 }}</div>
+      {%- endif -%}
+      {%- if section.settings.paragraph_2 != blank -%}
+        <div class="programme-pro-lettre__paragraph">{{ section.settings.paragraph_2 }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="programme-pro-lettre__signature">
+      {%- if section.settings.signature_text != blank -%}
+        <p class="programme-pro-lettre__signature-line">{{ section.settings.signature_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.signature_subtext != blank -%}
+        <p class="programme-pro-lettre__signature-subtext">{{ section.settings.signature_subtext | escape }}</p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Programme Pro – Lettre",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "LETTRE DE LA FONDATRICE" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 100 },
+
+    { "type": "header", "content": "Corps de la lettre" },
+    { "type": "richtext", "id": "paragraph_1", "label": "Paragraphe 1", "default": "<p>J'ai créé le Programme Pro pour accompagner sereinement les professionnels qui me confient leurs projets — sans compromettre les délais, sans diluer l'exigence, sans renoncer à l'attention personnelle.</p>" },
+    { "type": "richtext", "id": "paragraph_2", "label": "Paragraphe 2", "default": "<p>Je serai votre interlocutrice directe tout au long du projet.</p>" },
+    { "type": "range", "id": "body_size", "min": 18, "max": 42, "step": 1, "unit": "px", "label": "Taille du corps", "default": 28 },
+    { "type": "range", "id": "body_max_width", "min": 500, "max": 1100, "step": 20, "unit": "px", "label": "Largeur max du corps", "default": 820 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 200, "step": 5, "unit": "%", "label": "Interligne corps", "default": 155 },
+    { "type": "range", "id": "paragraph_gap", "min": 10, "max": 80, "step": 2, "unit": "px", "label": "Espace entre paragraphes", "default": 36 },
+
+    { "type": "header", "content": "Signature" },
+    { "type": "text", "id": "signature_text", "label": "Signature", "default": "— Ines Belhaj" },
+    { "type": "range", "id": "signature_size", "min": 18, "max": 40, "step": 1, "unit": "px", "label": "Taille signature", "default": 26 },
+    { "type": "text", "id": "signature_subtext", "label": "Sous-signature", "default": "Fondatrice de Maison Coeur" },
+    { "type": "range", "id": "signature_subtext_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Taille sous-signature", "default": 13 },
+    { "type": "range", "id": "signature_margin_top", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "Marge au-dessus signature", "default": 60 },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 160 }
+  ],
+  "presets": [
+    { "name": "Programme Pro – Lettre" }
+  ]
+}
+{% endschema %}
