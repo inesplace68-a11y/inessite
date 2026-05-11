@@ -18,6 +18,9 @@
   #shopify-section-{{ section.id }} .mc-hd-left {
     gap: {{ section.settings.mono_globe_gap }}px;
   }
+  #shopify-section-{{ section.id }} .mc-hd-left-stack {
+    height: {{ section.settings.monogram_height }}px;
+  }
   #shopify-section-{{ section.id }} .mc-hd-pro {
     font-size: {{ section.settings.pro_font_size }}px;
     letter-spacing: {{ section.settings.pro_letter_spacing }}em;
@@ -27,11 +30,12 @@
     font-size: {{ section.settings.nav_font_size }}px;
     letter-spacing: {{ section.settings.nav_letter_spacing }}em;
   }
-  {%- if section.settings.nav_separator_visible -%}
   #shopify-section-{{ section.id }} .mc-hd-nav {
+    padding-top: {{ section.settings.nav_top_spacing }}px;
+    {%- if section.settings.nav_separator_visible %}
     border-top: {{ section.settings.nav_separator_thickness }}px solid {{ section.settings.nav_separator_color }};
+    {%- endif %}
   }
-  {%- endif -%}
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] {
     color: {{ section.settings.cart_icon_color }};
   }
@@ -416,12 +420,12 @@
       "type": "range",
       "id": "bandeau_padding_bottom",
       "label": "Marge verticale bas",
-      "info": "Espace en dessous du bandeau crème",
+      "info": "Espace en dessous du bandeau crème (avant le menu nav)",
       "min": 0,
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 24
+      "default": 8
     },
     {
       "type": "range",
@@ -454,6 +458,17 @@
       "step": 1,
       "unit": "px",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "nav_top_spacing",
+      "label": "Espace bandeau ↔ menu nav",
+      "info": "Marge entre la fin du bandeau crème et le premier texte du menu nav.",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 8
     },
     {
       "type": "header",

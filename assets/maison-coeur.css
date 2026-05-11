@@ -1066,9 +1066,14 @@ h1, h2, h3, h4,
   cursor: pointer;
   color: #1A1814;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  line-height: 0;
   transition: color 0.3s ease, opacity 0.2s ease;
+}
+
+.mc-hd-globe svg {
+  display: block;
 }
 
 .mc-hd-globe:hover {
@@ -1090,10 +1095,12 @@ h1, h2, h3, h4,
 /* Wordmark Maison Coeur — en flow normal, aligné par le haut */
 .mc-hd-wordmark {
   justify-self: center;
+  line-height: 0;
 }
 
 .mc-hd-wordmark a {
   display: block;
+  line-height: 0;
   transition: opacity 0.3s ease;
 }
 
@@ -1119,9 +1126,14 @@ h1, h2, h3, h4,
 .mc-hd-icon {
   color: #1A1814;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  line-height: 0;
   transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mc-hd-icon svg {
+  display: block;
 }
 button.mc-hd-icon {
   background: none;
@@ -1141,6 +1153,8 @@ button.mc-hd-icon {
   padding: 14px 48px 18px;
   border-bottom: 0.5px solid rgba(26, 24, 20, 0.08);
 }
+
+/* padding-top piloté par section.settings.nav_top_spacing — override la valeur ci-dessus */
 
 .mc-hd-nav__list {
   display: flex;
