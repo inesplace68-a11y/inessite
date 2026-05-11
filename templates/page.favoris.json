@@ -1,9 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-favoris",
-      "settings": {}
+      "settings": {
+        "eyebrow_text": "MA SÉLECTION",
+        "title": "Vos favoris",
+        "empty_text": "Aucune pièce ajoutée pour le moment. Parcourez la collection et ajoutez vos favoris en cliquant sur le coeur.",
+        "empty_cta_text": "DÉCOUVRIR LA COLLECTION",
+        "empty_cta_url": "",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "padding_top": 60,
+        "padding_bottom": 80,
+        "bar_bg": "#e8e4dd",
+        "bar_padding_y": 22,
+        "spacing_top": 20,
+        "spacing_bottom": 32,
+        "bullet_color": "#b8ac9c",
+        "eyebrow_bar_text": "VOTRE ESPACE",
+        "eyebrow_size": 11,
+        "eyebrow_ls": 0.2,
+        "eyebrow_color": "#6b645c",
+        "body_text": "Connectez-vous pour retrouver votre sélection à tout moment.",
+        "body_size": 13,
+        "body_color": "#1a1814",
+        "cta_label": "SE CONNECTER",
+        "cta_url": "/account/login",
+        "cta_size": 12,
+        "cta_ls": 0.2,
+        "cta_color": "#1a1814"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
