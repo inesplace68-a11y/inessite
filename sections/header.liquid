@@ -15,6 +15,13 @@
   #shopify-section-{{ section.id }} .mc-hd-icons {
     gap: {{ section.settings.icons_gap }}px;
   }
+  #shopify-section-{{ section.id }} .mc-hd-left {
+    gap: {{ section.settings.mono_globe_gap }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-nav__link {
+    font-size: {{ section.settings.nav_font_size }}px;
+    letter-spacing: {{ section.settings.nav_letter_spacing }}em;
+  }
   {%- if section.settings.nav_separator_visible -%}
   #shopify-section-{{ section.id }} .mc-hd-nav {
     border-top: {{ section.settings.nav_separator_thickness }}px solid {{ section.settings.nav_separator_color }};
@@ -54,13 +61,22 @@
 
   <!-- ZONE 2 : Bandeau principal -->
   <div class="mc-hd-main">
-    <a href="/" class="mc-hd-logo" aria-label="Maison Coeur — Accueil">
-      {% if section.settings.monogram_image != blank %}
-        <img src="{{ section.settings.monogram_image | image_url: width: 400 }}" alt="Maison Coeur" class="mc-hd-monogram-img" loading="eager">
-      {% else %}
-        <img src="{{ 'mc-monogram.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-monogram-img" width="32" height="44" loading="eager">
-      {% endif %}
-    </a>
+    <div class="mc-hd-left">
+      <a href="/" class="mc-hd-logo" aria-label="Maison Coeur — Accueil">
+        {% if section.settings.monogram_image != blank %}
+          <img src="{{ section.settings.monogram_image | image_url: width: 400 }}" alt="Maison Coeur" class="mc-hd-monogram-img" loading="eager">
+        {% else %}
+          <img src="{{ 'mc-monogram.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-monogram-img" width="32" height="44" loading="eager">
+        {% endif %}
+      </a>
+      <button type="button" class="mc-hd-icon mc-hd-icon--globe" aria-label="Pays / Devise" data-mc-globe-trigger>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18"/>
+          <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>
+        </svg>
+      </button>
+    </div>
     <div class="mc-hd-wordmark">
       <a href="/">
         {% if section.settings.wordmark_image != blank %}
@@ -71,13 +87,6 @@
       </a>
     </div>
     <div class="mc-hd-icons">
-      <button type="button" class="mc-hd-icon" aria-label="Pays / Devise" data-mc-globe-trigger>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M3 12h18"/>
-          <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>
-        </svg>
-      </button>
       <button type="button" class="mc-hd-icon" aria-label="Rechercher" data-mc-search-trigger>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"/>
@@ -295,6 +304,43 @@
       "step": 2,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mono_globe_gap",
+      "label": "Espacement monogramme ↔ globe",
+      "info": "Distance entre le monogramme MC et l'icône globe (bloc gauche du header)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Menu navigation"
+    },
+    {
+      "type": "range",
+      "id": "nav_font_size",
+      "label": "Taille du texte du menu",
+      "info": "Pattern luxe : 12px par défaut (discret, laisse dominer le wordmark)",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "nav_letter_spacing",
+      "label": "Espacement des lettres (menu)",
+      "info": "Registre éditorial luxe : 0.2em par défaut. Pas de demi-pas (Shopify limite à 1 décimale).",
+      "min": 0,
+      "max": 0.4,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0.2
     },
     {
       "type": "header",

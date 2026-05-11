@@ -15,14 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "MIROIRS<em> ANTIQUES</em>",
+            "heading": "La main du temps.",
             "heading_size": "hxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Objets rares, mobilier vintage et art singulier — sélectionnés à Paris pour votre intérieur.",
+            "text": "Miroirs anciens.",
             "text_style": "subtitle"
           }
         },

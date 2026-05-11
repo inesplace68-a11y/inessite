@@ -184,7 +184,7 @@ h1, h2, h3, h4,
   background-color: var(--mc-dark) !important;
 }
 
-/* Titre hero : Cormorant Garamond Italic */
+/* Titre hero : Cormorant Garamond Italic — casse normale (strict hero scope) */
 .banner__heading,
 .banner__heading.inline-richtext {
   font-family: var(--mc-font-serif) !important;
@@ -193,17 +193,18 @@ h1, h2, h3, h4,
   color: #fff !important;
   line-height: 1.05 !important;
   letter-spacing: 0.015em !important;
+  text-transform: none !important;
 }
 
-/* Sous-titre hero : Jost Light, lettrages espacés */
+/* Sous-titre hero : Jost Light, casse normale (registre poétique) — strict hero scope */
 .banner__text,
 .banner__text.body,
 .banner__text.subtitle {
   font-family: var(--mc-font-sans) !important;
   font-weight: 300 !important;
   color: rgba(255, 255, 255, 0.82) !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  text-transform: none !important;
   font-size: 1.5rem !important;
 }
 
@@ -1014,6 +1015,17 @@ h1, h2, h3, h4,
   padding-bottom: 24px;
   padding-left: 48px;
   background: #F5F0E8;
+  line-height: 0;
+}
+
+.mc-hd-main > * {
+  line-height: 1;
+}
+
+/* Bloc gauche : monogramme + globe — gap piloté par section.settings.mono_globe_gap */
+.mc-hd-left {
+  display: flex;
+  align-items: center;
 }
 
 /* Logo monogramme MC */
@@ -1030,6 +1042,7 @@ h1, h2, h3, h4,
   height: 28px;
   width: auto;
   object-fit: contain;
+  vertical-align: middle;
   transition: opacity 0.3s ease;
 }
 
@@ -1061,6 +1074,7 @@ h1, h2, h3, h4,
   height: 24px;
   width: auto;
   object-fit: contain;
+  vertical-align: middle;
 }
 
 /* Icônes à droite — gap piloté par section.settings.icons_gap */
