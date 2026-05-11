@@ -16,10 +16,7 @@
     gap: {{ section.settings.icons_gap }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-left {
-    gap: {{ section.settings.mono_globe_gap }}px;
-  }
-  #shopify-section-{{ section.id }} .mc-hd-left-stack {
-    height: {{ section.settings.monogram_height }}px;
+    gap: {{ section.settings.monogram_globe_pro_gap }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-pro {
     font-size: {{ section.settings.pro_font_size }}px;
@@ -71,6 +68,13 @@
   <!-- ZONE 2 : Bandeau principal -->
   <div class="mc-hd-main">
     <div class="mc-hd-left">
+      <button type="button" class="mc-hd-globe" aria-label="Pays / Devise" data-mc-globe-trigger>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18"/>
+          <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>
+        </svg>
+      </button>
       <a href="/" class="mc-hd-logo" aria-label="Maison Coeur — Accueil">
         {% if section.settings.monogram_image != blank %}
           <img src="{{ section.settings.monogram_image | image_url: width: 400 }}" alt="Maison Coeur" class="mc-hd-monogram-img" loading="eager">
@@ -78,20 +82,11 @@
           <img src="{{ 'mc-monogram.png' | asset_url }}" alt="Maison Coeur" class="mc-hd-monogram-img" width="32" height="44" loading="eager">
         {% endif %}
       </a>
-      <div class="mc-hd-left-stack">
-        <button type="button" class="mc-hd-globe" aria-label="Pays / Devise" data-mc-globe-trigger>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M3 12h18"/>
-            <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>
-          </svg>
-        </button>
-        {%- assign mc_pro_url = section.settings.pro_url -%}
-        {%- if mc_pro_url == blank -%}{%- assign mc_pro_url = '/pages/programme-pro' -%}{%- endif -%}
-        {%- assign mc_pro_text = section.settings.pro_text -%}
-        {%- if mc_pro_text == blank -%}{%- assign mc_pro_text = 'PRO' -%}{%- endif -%}
-        <a href="{{ mc_pro_url }}" class="mc-hd-pro">{{ mc_pro_text }}</a>
-      </div>
+      {%- assign mc_pro_url = section.settings.pro_url -%}
+      {%- if mc_pro_url == blank -%}{%- assign mc_pro_url = '/pages/programme-pro' -%}{%- endif -%}
+      {%- assign mc_pro_text = section.settings.pro_text -%}
+      {%- if mc_pro_text == blank -%}{%- assign mc_pro_text = 'PRO' -%}{%- endif -%}
+      <a href="{{ mc_pro_url }}" class="mc-hd-pro">{{ mc_pro_text }}</a>
     </div>
     <div class="mc-hd-wordmark">
       <a href="/">
@@ -323,14 +318,14 @@
     },
     {
       "type": "range",
-      "id": "mono_globe_gap",
-      "label": "Espacement monogramme ↔ stack (globe / PRO)",
-      "info": "Distance entre le monogramme MC et la colonne globe + PRO (bloc gauche du header)",
-      "min": 0,
-      "max": 40,
+      "id": "monogram_globe_pro_gap",
+      "label": "Espacement entre globe / monogramme / PRO",
+      "info": "Distance horizontale entre les trois éléments du bloc gauche du header",
+      "min": 4,
+      "max": 32,
       "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 12
     },
     {
       "type": "header",
