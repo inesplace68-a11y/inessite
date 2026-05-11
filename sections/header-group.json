@@ -43,7 +43,7 @@
         "wordmark_image": "shopify://shop_images/maison-coeur-logo-jost-regular.png",
         "monogram_height": 26,
         "wordmark_height": 62,
-        "bandeau_padding_top": 52,
+        "bandeau_padding_top": 30,
         "bandeau_padding_bottom": 74,
         "topbar_height": 10,
         "topbar_color": "#242833",
