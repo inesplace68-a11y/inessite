@@ -1492,3 +1492,253 @@ a.product__text {
     border: none;
   }
 }
+
+/* =====================================================================
+   Galerie produit — Mode "Vignettes verticales à gauche"
+   Pattern Sotheby's / Chez Pluie Provence
+   ===================================================================== */
+
+@media screen and (min-width: 750px) {
+  .product--vertical_thumbnails .product__media-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product--vertical_thumbnails media-gallery {
+    display: grid;
+    grid-template-columns: var(--vt-thumbs-width, 80px) minmax(0, 1fr);
+    column-gap: var(--vt-gap-main, 16px);
+    align-items: start;
+  }
+
+  .product--vertical_thumbnails [id^='GalleryThumbnails'] {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .product--vertical_thumbnails [id^='GalleryViewer'] {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .product--vertical_thumbnails [id^='GalleryThumbnails'] .thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vt-gap-thumbs, 8px);
+    grid-gap: var(--vt-gap-thumbs, 8px);
+    padding: 0;
+  }
+
+  .product--vertical_thumbnails .thumbnail-list__item {
+    width: 100%;
+    aspect-ratio: var(--vt-thumb-ratio, 3 / 4);
+  }
+
+  .product--vertical_thumbnails .thumbnail-list__item::before {
+    content: none;
+  }
+
+  /* La colonne ne doit pas slider en vertical : on neutralise les boutons et le scroll */
+  .product--vertical_thumbnails [id^='GalleryThumbnails'] .slider-button {
+    display: none !important;
+  }
+
+  .product--vertical_thumbnails [id^='GalleryThumbnails'] {
+    overflow: visible;
+  }
+
+  /* Image principale : on cache toutes les médias sauf l'active (style "thumbnail") */
+  .product--vertical_thumbnails .product__media-item:not(.is-active) {
+    display: none;
+  }
+
+  .product--vertical_thumbnails .product__media-item {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Suppression des flèches < > sur l'image principale */
+  .product--vertical_thumbnails [id^='GalleryViewer'] .slider-buttons {
+    display: none !important;
+  }
+
+  /* Indicateur d'état actif — Bordure complète fine (défaut) */
+  .product--vertical_thumbnails .thumbnail {
+    border: var(--vt-active-width, 1px) solid transparent;
+    box-shadow: none;
+    transition: border-color 200ms ease;
+  }
+
+  .product--vertical_thumbnails.product--vt-active-border .thumbnail[aria-current='true'] {
+    border-color: var(--vt-active-color, #000);
+    box-shadow: none;
+  }
+
+  /* Indicateur d'état actif — Trait sous la vignette */
+  .product--vertical_thumbnails.product--vt-active-line .thumbnail {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .product--vertical_thumbnails.product--vt-active-line .thumbnail[aria-current='true'] {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .product--vertical_thumbnails.product--vt-active-line .thumbnail-list__item {
+    position: relative;
+    padding-bottom: 6px;
+  }
+
+  .product--vertical_thumbnails.product--vt-active-line .thumbnail-list__item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    background-color: var(--vt-active-color, #000);
+    transition: height 150ms ease;
+  }
+
+  .product--vertical_thumbnails.product--vt-active-line .thumbnail-list__item:has(.thumbnail[aria-current='true'])::after {
+    height: var(--vt-active-width, 1px);
+  }
+
+  /* Hover discret */
+  .product--vertical_thumbnails .thumbnail:hover {
+    opacity: 1;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .product--vertical_thumbnails.product--vt-active-border .thumbnail:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Neutralise les icônes de zoom Shopify par défaut (le curseur custom les remplace) */
+  .product--vertical_thumbnails .product__media-icon {
+    display: none !important;
+  }
+
+  /* Empêche l'image principale d'avoir un effet visuel cliquable autre que le curseur */
+  .product--vertical_thumbnails .product__modal-opener--image .product__media-toggle:hover {
+    cursor: inherit;
+  }
+
+  /* Désactive le clic-modal si vt_modal_enabled = false */
+  .product--vertical_thumbnails[data-vt-modal-enabled='false'] .product__media-toggle {
+    pointer-events: none;
+  }
+}
+
+/* Modal zoom plein écran — Pattern Sotheby's
+   Le custom element <product-modal> est déplacé vers <body> par JS :
+   on cible donc directement .product-media-modal--vt (et NON via .product--vertical_thumbnails) */
+.product-media-modal--vt {
+  background-color: rgba(0, 0, 0, var(--vt-modal-alpha, 0.9));
+}
+
+.product-media-modal--vt .product-media-modal__dialog {
+  background-color: transparent;
+  color: #ffffff;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 4rem 2rem;
+}
+
+.product-media-modal--vt .product-media-modal__content {
+  padding: 0;
+  max-height: calc(100vh - 18rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.product-media-modal--vt .product-media-modal__content > * {
+  display: none;
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.product-media-modal--vt .product-media-modal__content > .active {
+  display: block;
+}
+
+.product-media-modal--vt .product-media-modal__content > * + * {
+  margin-top: 0;
+}
+
+.product-media-modal--vt .product-media-modal__content img,
+.product-media-modal--vt .product-media-modal__content .product-media-modal__model,
+.product-media-modal--vt .product-media-modal__content .deferred-media {
+  max-width: calc(100vw - 8rem);
+  max-height: calc(100vh - 18rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+.product-media-modal--vt .product-media-modal__toggle {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  top: 2rem;
+  right: 2rem;
+}
+
+.product-media-modal--vt .product-media-modal__toggle:hover {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.product-media-modal--vt .product-media-modal__toggle svg {
+  color: inherit;
+  fill: currentColor;
+}
+
+/* Mini-thumbnails en bas du modal */
+.product-media-modal--vt .product-media-modal__thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.5rem 4rem 2rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.product-media-modal--vt .product-media-modal__thumb {
+  width: 56px;
+  aspect-ratio: var(--vt-thumb-ratio, 3 / 4);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 200ms ease, opacity 200ms ease;
+  opacity: 0.7;
+}
+
+.product-media-modal--vt .product-media-modal__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-media-modal--vt .product-media-modal__thumb:hover {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.product-media-modal--vt .product-media-modal__thumb[aria-current='true'] {
+  opacity: 1;
+  border-color: #ffffff;
+}

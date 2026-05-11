@@ -9,7 +9,18 @@
   {% render 'product-media-modal' %}
 {% endcomment %}
 
-<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+{%- liquid
+  assign is_vt = false
+  if section.settings.gallery_layout == 'vertical_thumbnails'
+    assign is_vt = true
+  endif
+-%}
+
+<product-modal
+  id="ProductModal-{{ section.id }}"
+  class="product-media-modal media-modal{% if is_vt %} product-media-modal--vt{% endif %}"
+  {% if is_vt %}data-vt="true"{% endif %}
+>
   <div
     class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
     role="dialog"
@@ -53,5 +64,48 @@
         -%}
       {%- endfor -%}
     </div>
+
+    {%- if is_vt -%}
+      <div class="product-media-modal__thumbs" role="tablist" aria-label="Vignettes du modal">
+        {%- if product.selected_or_first_available_variant.featured_media != null -%}
+          {%- assign vt_featured = product.selected_or_first_available_variant.featured_media -%}
+          <button
+            type="button"
+            class="product-media-modal__thumb"
+            data-modal-thumb-target="{{ vt_featured.id }}"
+            aria-current="true"
+            aria-label="Image 1"
+          >
+            <img
+              src="{{ vt_featured.preview_image | image_url: width: 160 }}"
+              alt="{{ vt_featured.alt | escape }}"
+              loading="lazy"
+              width="80"
+              height="107"
+            >
+          </button>
+        {%- endif -%}
+        {%- assign vt_pos = 1 -%}
+        {%- for media in product.media -%}
+          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+            {%- assign vt_pos = vt_pos | plus: 1 -%}
+            <button
+              type="button"
+              class="product-media-modal__thumb"
+              data-modal-thumb-target="{{ media.id }}"
+              aria-label="Image {{ vt_pos }}"
+            >
+              <img
+                src="{{ media.preview_image | image_url: width: 160 }}"
+                alt="{{ media.alt | escape }}"
+                loading="lazy"
+                width="80"
+                height="107"
+              >
+            </button>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </product-modal>

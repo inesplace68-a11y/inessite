@@ -81,7 +81,7 @@
         "color_scheme": "scheme-1",
         "media_size": "large",
         "constrain_to_viewport": true,
-        "gallery_layout": "thumbnail_slider",
+        "gallery_layout": "vertical_thumbnails",
         "mobile_thumbnails": "show",
         "media_position": "left",
         "hide_variants": true,

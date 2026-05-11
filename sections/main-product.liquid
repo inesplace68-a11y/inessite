@@ -25,6 +25,26 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
+  {%- liquid
+    case section.settings.vt_thumb_ratio
+      when '3-4'
+        assign vt_ratio_css = '3 / 4'
+      when '4-5'
+        assign vt_ratio_css = '4 / 5'
+      when '1-1'
+        assign vt_ratio_css = '1 / 1'
+      else
+        assign vt_ratio_css = '3 / 4'
+    endcase
+    assign vt_cursor_size = section.settings.vt_cursor_size | default: 32
+    assign vt_cursor_half = vt_cursor_size | divided_by: 2
+    assign vt_cursor_radius = vt_cursor_size | minus: 2 | divided_by: 2
+    assign vt_cursor_arm = vt_cursor_size | divided_by: 4
+    assign vt_cursor_arm_start = vt_cursor_half | minus: vt_cursor_arm
+    assign vt_cursor_arm_end = vt_cursor_half | plus: vt_cursor_arm
+    assign vt_cursor_color_encoded = section.settings.vt_cursor_color | default: '#000000' | replace: '#', '%23'
+    assign vt_modal_alpha = section.settings.vt_modal_opacity | default: 90 | divided_by: 100.0
+  -%}
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -37,6 +57,25 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    #MainProduct-{{ section.id }},
+    .product-media-modal--vt[data-section='{{ section.id }}'] {
+      --vt-thumbs-width: {{ section.settings.vt_thumbs_width | default: 80 }}px;
+      --vt-gap-thumbs: {{ section.settings.vt_gap_thumbs | default: 8 }}px;
+      --vt-gap-main: {{ section.settings.vt_gap_main | default: 16 }}px;
+      --vt-thumb-ratio: {{ vt_ratio_css }};
+      --vt-active-color: {{ section.settings.vt_active_color | default: '#000000' }};
+      --vt-active-width: {{ section.settings.vt_active_width | default: 1 }}px;
+      --vt-cursor-size: {{ vt_cursor_size }}px;
+      --vt-modal-alpha: {{ vt_modal_alpha }};
+    }
+
+    {%- if section.settings.vt_cursor_enabled -%}
+      #MainProduct-{{ section.id }} .product--vertical_thumbnails .product__modal-opener--image,
+      #MainProduct-{{ section.id }} .product--vertical_thumbnails .product__modal-opener--image .product__media-toggle {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{{ vt_cursor_size }}' height='{{ vt_cursor_size }}' viewBox='0 0 {{ vt_cursor_size }} {{ vt_cursor_size }}'><circle cx='{{ vt_cursor_half }}' cy='{{ vt_cursor_half }}' r='{{ vt_cursor_radius }}' fill='none' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/><line x1='{{ vt_cursor_half }}' y1='{{ vt_cursor_arm_start }}' x2='{{ vt_cursor_half }}' y2='{{ vt_cursor_arm_end }}' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/><line x1='{{ vt_cursor_arm_start }}' y1='{{ vt_cursor_half }}' x2='{{ vt_cursor_arm_end }}' y2='{{ vt_cursor_half }}' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/></svg>") {{ vt_cursor_half }} {{ vt_cursor_half }}, zoom-in;
+      }
+    {%- endif -%}
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -74,7 +113,12 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
-    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+    <div
+      class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'vertical_thumbnails' %} product--vt-active-{{ section.settings.vt_active_style }}{% endif %}"
+      {% if section.settings.gallery_layout == 'vertical_thumbnails' %}
+        data-vt-modal-enabled="{% if section.settings.vt_modal_enabled %}true{% else %}false{% endif %}"
+      {% endif %}
+    >
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
@@ -2167,6 +2211,10 @@
         {
           "value": "thumbnail_slider",
           "label": "t:sections.main-product.settings.gallery_layout.options__4.label"
+        },
+        {
+          "value": "vertical_thumbnails",
+          "label": "Vignettes verticales à gauche"
         }
       ],
       "default": "stacked",
@@ -2239,6 +2287,116 @@
       "id": "enable_video_looping",
       "default": false,
       "label": "t:sections.main-product.settings.enable_video_looping.label"
+    },
+    {
+      "type": "header",
+      "content": "Galerie — vignettes verticales (pattern Sotheby's)",
+      "info": "Réglages appliqués uniquement quand la « Mise en page » est sur « Vignettes verticales à gauche »."
+    },
+    {
+      "type": "range",
+      "id": "vt_thumbs_width",
+      "min": 60,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Largeur colonne vignettes",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "vt_gap_thumbs",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espace entre vignettes (vertical)",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "vt_gap_main",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Espace vignettes / image principale",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "vt_thumb_ratio",
+      "options": [
+        { "value": "3-4", "label": "3:4 (portrait)" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "1-1", "label": "1:1 (carré)" }
+      ],
+      "default": "3-4",
+      "label": "Ratio des vignettes"
+    },
+    {
+      "type": "select",
+      "id": "vt_active_style",
+      "options": [
+        { "value": "border", "label": "Bordure complète fine" },
+        { "value": "line", "label": "Trait sous la vignette" }
+      ],
+      "default": "border",
+      "label": "Indicateur de vignette active"
+    },
+    {
+      "type": "color",
+      "id": "vt_active_color",
+      "default": "#000000",
+      "label": "Couleur de l'indicateur"
+    },
+    {
+      "type": "range",
+      "id": "vt_active_width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Épaisseur de l'indicateur",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "vt_cursor_enabled",
+      "default": true,
+      "label": "Curseur custom (cercle +) au survol de l'image principale"
+    },
+    {
+      "type": "range",
+      "id": "vt_cursor_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Taille du curseur custom",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "vt_cursor_color",
+      "default": "#000000",
+      "label": "Couleur du curseur custom"
+    },
+    {
+      "type": "checkbox",
+      "id": "vt_modal_enabled",
+      "default": true,
+      "label": "Modal zoom plein écran au clic"
+    },
+    {
+      "type": "range",
+      "id": "vt_modal_opacity",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacité du fond noir du modal",
+      "default": 90
     },
     {
       "type": "header",
