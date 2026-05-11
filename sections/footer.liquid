@@ -1,5 +1,21 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 
+{%- style -%}
+  #shopify-section-{{ section.id }} .mc-footer-bar-inner {
+    padding-top: {{ section.settings.footer_bottom_padding_y }}px;
+    padding-bottom: {{ section.settings.footer_bottom_padding_y }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-footer-bar-copy,
+  #shopify-section-{{ section.id }} .mc-footer-bar-legal a {
+    font-size: {{ section.settings.footer_bottom_font_size }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select {
+    font-size: {{ section.settings.footer_bottom_font_size }}px;
+    padding: {{ section.settings.footer_bottom_selector_padding_y }}px {{ section.settings.footer_bottom_selector_padding_x }}px;
+  }
+{%- endstyle -%}
+
 <footer class="mc-footer">
   <div class="mc-footer-inner">
 
@@ -223,6 +239,52 @@
       "id": "newsletter_subtext",
       "default": "Une sélection rare, livrée une fois par mois.",
       "label": "Sous-texte newsletter"
+    },
+    {
+      "type": "header",
+      "content": "Ligne du bas (sélecteur / copyright / mentions)"
+    },
+    {
+      "type": "range",
+      "id": "footer_bottom_padding_y",
+      "label": "Marge verticale de la dernière ligne",
+      "info": "Espace au-dessus et en dessous du sélecteur pays/devise et des mentions légales",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "footer_bottom_font_size",
+      "label": "Taille typo dernière ligne",
+      "info": "Taille du texte pour le sélecteur, le copyright et les mentions légales",
+      "min": 9,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "footer_bottom_selector_padding_y",
+      "label": "Padding vertical du sélecteur pays/devise",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "footer_bottom_selector_padding_x",
+      "label": "Padding horizontal du sélecteur pays/devise",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
     }
   ]
 }
