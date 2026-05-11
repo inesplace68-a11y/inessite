@@ -1,0 +1,97 @@
+{{ 'section-programme-pro-projets.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pp-proj-padding-top: {{ section.settings.padding_top }}px;
+    --pp-proj-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pp-proj-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --pp-proj-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --pp-proj-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --pp-proj-content-max-width: {{ section.settings.content_max_width }}px;
+    --pp-proj-columns-desktop: {{ section.settings.columns_desktop }};
+    --pp-proj-column-gap: {{ section.settings.column_gap }}px;
+    --pp-proj-row-gap: {{ section.settings.row_gap }}px;
+    --pp-proj-title-size: {{ section.settings.title_size }}px;
+    --pp-proj-body-size: {{ section.settings.body_size }}px;
+    --pp-proj-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
+
+<section class="programme-pro-projets">
+  <div class="programme-pro-projets__inner">
+
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="programme-pro-projets__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="programme-pro-projets__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'projet' -%}
+            <li class="programme-pro-projets__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="programme-pro-projets__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="programme-pro-projets__description">{{ block.settings.description | escape }}</p>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Programme Pro – Projets",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "PROJETS ACCOMPAGNÉS" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 90 },
+
+    { "type": "header", "content": "Grille" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max du contenu", "default": 1080 },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 4, "step": 1, "unit": "col", "label": "Colonnes desktop", "default": 2 },
+    { "type": "range", "id": "column_gap", "min": 30, "max": 200, "step": 4, "unit": "px", "label": "Espace entre colonnes", "default": 100 },
+    { "type": "range", "id": "row_gap", "min": 30, "max": 200, "step": 4, "unit": "px", "label": "Espace entre rangées", "default": 70 },
+
+    { "type": "header", "content": "Typo des blocs" },
+    { "type": "range", "id": "title_size", "min": 18, "max": 40, "step": 1, "unit": "px", "label": "Taille des titres", "default": 26 },
+    { "type": "range", "id": "body_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Taille des descriptions", "default": 15 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne descriptions", "default": 165 },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 140 }
+  ],
+  "blocks": [
+    {
+      "type": "projet",
+      "name": "Projet",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre du projet", "default": "Hôtellerie de luxe" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Propriétés sur la Côte d'Azur, résidences hôtelières en région." }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Programme Pro – Projets",
+      "blocks": [
+        { "type": "projet", "settings": { "title": "Hôtellerie de luxe", "description": "Propriétés sur la Côte d'Azur, résidences hôtelières en région." } },
+        { "type": "projet", "settings": { "title": "Architecture intérieure et décoration", "description": "Cabinets parisiens et internationaux." } },
+        { "type": "projet", "settings": { "title": "Restauration gastronomique", "description": "Projets à Paris et en région." } },
+        { "type": "projet", "settings": { "title": "Sièges et bureaux d'entreprise", "description": "Projets parisiens haut de gamme." } },
+        { "type": "projet", "settings": { "title": "Résidences privées", "description": "Collectionneurs en France et à l'international." } },
+        { "type": "projet", "settings": { "title": "Acquisitions et conseil en art", "description": "Pour collectionneurs et galeries partenaires." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
