@@ -47,7 +47,7 @@
         "nav_font_size": 12,
         "nav_letter_spacing": 0.2,
         "bandeau_padding_top": 30,
-        "bandeau_padding_bottom": 74,
+        "header_nav_gap": 24,
         "topbar_height": 10,
         "topbar_color": "#1a1814",
         "icons_gap": 10,

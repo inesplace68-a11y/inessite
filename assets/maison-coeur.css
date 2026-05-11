@@ -1009,7 +1009,7 @@ h1, h2, h3, h4,
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: flex-start;
+  align-items: center;
   padding-top: 24px;
   padding-right: 48px;
   padding-bottom: 24px;
@@ -1025,7 +1025,7 @@ h1, h2, h3, h4,
 /* Bloc gauche : monogramme + stack (globe haut / PRO bas) */
 .mc-hd-left {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-self: start;
 }
 
@@ -1054,8 +1054,9 @@ h1, h2, h3, h4,
 .mc-hd-left-stack {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-start;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
 .mc-hd-globe {
@@ -1119,7 +1120,7 @@ h1, h2, h3, h4,
 /* Icônes à droite — gap piloté par section.settings.icons_gap */
 .mc-hd-icons {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-self: end;
 }
 
