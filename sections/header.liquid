@@ -8,7 +8,7 @@
   #shopify-section-{{ section.id }} .mc-hd-main {
     padding-top: {{ section.settings.bandeau_padding_top }}px;
     padding-right: 48px;
-    padding-bottom: {{ section.settings.header_nav_gap }}px;
+    padding-bottom: {{ section.settings.bandeau_padding_bottom }}px;
     padding-left: 48px;
     border-top: {{ section.settings.topbar_height }}px solid {{ section.settings.topbar_color }};
   }
@@ -17,6 +17,9 @@
   }
   #shopify-section-{{ section.id }} .mc-hd-left {
     gap: {{ section.settings.mono_globe_gap }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-hd-left-stack {
+    height: {{ section.settings.monogram_height }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-pro {
     font-size: {{ section.settings.pro_font_size }}px;
@@ -415,14 +418,14 @@
     },
     {
       "type": "range",
-      "id": "header_nav_gap",
-      "label": "Espace bandeau ↔ menu nav",
-      "info": "Marge sous le bandeau crème, avant le menu de navigation",
+      "id": "bandeau_padding_bottom",
+      "label": "Marge verticale bas",
+      "info": "Espace en dessous du bandeau crème (avant le menu nav)",
       "min": 0,
       "max": 80,
-      "step": 4,
+      "step": 1,
       "unit": "px",
-      "default": 24
+      "default": 8
     },
     {
       "type": "range",
