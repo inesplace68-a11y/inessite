@@ -1,0 +1,144 @@
+{{ 'section-programme-pro-rejoindre.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pp-rej-padding-top: {{ section.settings.padding_top }}px;
+    --pp-rej-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pp-rej-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --pp-rej-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --pp-rej-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --pp-rej-intro-size: {{ section.settings.intro_size }}px;
+    --pp-rej-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --pp-rej-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --pp-rej-form-max-width: {{ section.settings.form_max_width }}px;
+    --pp-rej-form-margin-top: {{ section.settings.form_margin_top }}px;
+    --pp-rej-cta-size: {{ section.settings.cta_size }}px;
+    --pp-rej-cta-tracking: {{ section.settings.cta_tracking | divided_by: 100.0 }}em;
+  }
+{%- endstyle -%}
+
+<section class="programme-pro-rejoindre">
+  <div class="programme-pro-rejoindre__inner">
+
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="programme-pro-rejoindre__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="programme-pro-rejoindre__intro">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    <div class="programme-pro-rejoindre__form-wrap">
+      {% form 'contact', class: 'programme-pro-rejoindre__form', id: 'programme-pro-form' %}
+        {%- if form.posted_successfully? -%}
+          <div class="programme-pro-rejoindre__success" role="status">
+            {{ section.settings.success_message }}
+          </div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="programme-pro-rejoindre__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactName">NOM COMPLET *</label>
+            <input type="text" id="ContactName" name="contact[name]" autocomplete="name" required>
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactEntreprise">ENTREPRISE / CABINET / STRUCTURE *</label>
+            <input type="text" id="ContactEntreprise" name="contact[entreprise]" autocomplete="organization" required>
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactSiret">NUMÉRO SIRET / VAT / ÉQUIVALENT INTERNATIONAL *</label>
+            <input type="text" id="ContactSiret" name="contact[siret]" required>
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactSecteur">SECTEUR D'ACTIVITÉ *</label>
+            <select id="ContactSecteur" name="contact[secteur]" required>
+              <option value="">— Sélectionner —</option>
+              <option>Architecture intérieure</option>
+              <option>Décoration</option>
+              <option>Hôtellerie</option>
+              <option>Restauration</option>
+              <option>Bureau d'études</option>
+              <option>Galerie d'art</option>
+              <option>Autre</option>
+            </select>
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactSiteWeb">SITE WEB</label>
+            <input type="url" id="ContactSiteWeb" name="contact[site_web]" autocomplete="url" placeholder="https://">
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactEmail">EMAIL PROFESSIONNEL *</label>
+            <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required>
+          </div>
+
+          <div class="programme-pro-rejoindre__field">
+            <label for="ContactPhone">TÉLÉPHONE</label>
+            <input type="tel" id="ContactPhone" name="contact[phone]" autocomplete="tel">
+          </div>
+
+          <div class="programme-pro-rejoindre__field programme-pro-rejoindre__field--textarea">
+            <label for="ContactBody">PROJET OU BESOIN ACTUEL</label>
+            <textarea id="ContactBody" name="contact[body]" rows="3" placeholder="(optionnel — votre projet en quelques lignes)"></textarea>
+          </div>
+
+          <div class="programme-pro-rejoindre__submit">
+            <button type="submit">{{ section.settings.cta_label | escape }}</button>
+          </div>
+
+          {%- if section.settings.mandatory_note != blank -%}
+            <p class="programme-pro-rejoindre__mandatory">{{ section.settings.mandatory_note | escape }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {% endform %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Programme Pro – Rejoindre",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "REJOINDRE LE PROGRAMME" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 70 },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>L'inscription au Programme Pro se fait via le formulaire ci-dessous. Indiquez les coordonnées de votre structure, votre numéro SIRET (ou équivalent international), et une présentation succincte de votre activité. La galerie revient vers vous sous 48 heures ouvrées avec les conditions du programme et une mise en relation avec votre interlocuteur curatorial dédié.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 17 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 780 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+
+    { "type": "header", "content": "Formulaire" },
+    { "type": "range", "id": "form_max_width", "min": 400, "max": 800, "step": 10, "unit": "px", "label": "Largeur max formulaire", "default": 600 },
+    { "type": "range", "id": "form_margin_top", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge au-dessus du formulaire", "default": 100 },
+
+    { "type": "header", "content": "Bouton submit" },
+    { "type": "text", "id": "cta_label", "label": "Libellé du bouton", "default": "ENVOYER MA CANDIDATURE  →" },
+    { "type": "range", "id": "cta_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Taille bouton", "default": 13 },
+    { "type": "range", "id": "cta_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking bouton", "default": 28 },
+
+    { "type": "header", "content": "Messages" },
+    { "type": "richtext", "id": "success_message", "label": "Message de succès", "default": "<p>Votre candidature a bien été reçue. La galerie revient vers vous sous 48 heures ouvrées.</p>" },
+    { "type": "text", "id": "mandatory_note", "label": "Note champs obligatoires", "default": "Les champs marqués d'un astérisque sont obligatoires." },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 150 }
+  ],
+  "presets": [
+    { "name": "Programme Pro – Rejoindre" }
+  ]
+}
+{% endschema %}
