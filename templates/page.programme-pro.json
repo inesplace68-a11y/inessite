@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "hero": {
+      "type": "programme-pro-hero",
+      "settings": {}
+    },
+    "manifeste": {
+      "type": "programme-pro-manifeste",
+      "settings": {}
+    },
+    "privileges": {
+      "type": "programme-pro-privileges",
+      "blocks": {
+        "p1": {
+          "type": "privilege",
+          "settings": {
+            "numeral": "I",
+            "title": "Sourcing curatorial prioritaire",
+            "body": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>"
+          }
+        },
+        "p2": {
+          "type": "privilege",
+          "settings": {
+            "numeral": "II",
+            "title": "Tarification professionnelle",
+            "body": "<p>Une tarification professionnelle s'applique à l'ensemble du catalogue ainsi qu'aux pièces sourcées via la Conciergerie, calibrée selon la pièce et le projet. Les conditions précises sont communiquées à la suite de l'inscription au programme.</p>"
+          }
+        },
+        "p3": {
+          "type": "privilege",
+          "settings": {
+            "numeral": "III",
+            "title": "Réservation sur les nouvelles acquisitions",
+            "body": "<p>Les pièces fraîchement entrées dans la sélection sont signalées en avant-première aux membres du programme, qui peuvent les réserver avant publication sur le site.</p>"
+          }
+        },
+        "p4": {
+          "type": "privilege",
+          "settings": {
+            "numeral": "IV",
+            "title": "Conseil curatorial en amont de projet",
+            "body": "<p>Pour les projets d'ensemble — agencement complet d'un espace, d'un restaurant ou d'un appartement — la galerie propose un échange curatorial préalable, destiné à calibrer l'esthétique et la cohérence des pièces choisies.</p>"
+          }
+        },
+        "p5": {
+          "type": "privilege",
+          "settings": {
+            "numeral": "V",
+            "title": "Documentation enrichie pour le client final",
+            "body": "<p>Chaque pièce livrée est accompagnée de ses justificatifs de provenance, de ses certificats d'expertise tiers lorsqu'ils existent, et d'une note de présentation rédigée à l'attention de votre client final.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"],
+      "settings": {}
+    },
+    "lettre": {
+      "type": "programme-pro-lettre",
+      "settings": {}
+    },
+    "projets": {
+      "type": "programme-pro-projets",
+      "blocks": {
+        "j1": {
+          "type": "projet",
+          "settings": {
+            "title": "Hôtellerie de luxe",
+            "description": "Propriétés sur la Côte d'Azur, résidences hôtelières en région."
+          }
+        },
+        "j2": {
+          "type": "projet",
+          "settings": {
+            "title": "Architecture intérieure et décoration",
+            "description": "Cabinets parisiens et internationaux."
+          }
+        },
+        "j3": {
+          "type": "projet",
+          "settings": {
+            "title": "Restauration gastronomique",
+            "description": "Projets à Paris et en région."
+          }
+        },
+        "j4": {
+          "type": "projet",
+          "settings": {
+            "title": "Sièges et bureaux d'entreprise",
+            "description": "Projets parisiens haut de gamme."
+          }
+        },
+        "j5": {
+          "type": "projet",
+          "settings": {
+            "title": "Résidences privées",
+            "description": "Collectionneurs en France et à l'international."
+          }
+        },
+        "j6": {
+          "type": "projet",
+          "settings": {
+            "title": "Acquisitions et conseil en art",
+            "description": "Pour collectionneurs et galeries partenaires."
+          }
+        }
+      },
+      "block_order": ["j1", "j2", "j3", "j4", "j5", "j6"],
+      "settings": {}
+    },
+    "rejoindre": {
+      "type": "programme-pro-rejoindre",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "manifeste", "privileges", "lettre", "projets", "rejoindre"]
+}

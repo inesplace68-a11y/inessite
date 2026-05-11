@@ -1,0 +1,46 @@
+/* ============================================================
+   PROGRAMME PRO — Section MANIFESTE
+   Statement Cormorant Italic monumental, centré
+   ============================================================ */
+
+.programme-pro-manifeste {
+  background-color: var(--mc-bg);
+  padding-top: var(--pp-manifeste-padding-top, 0);
+  padding-bottom: var(--pp-manifeste-padding-bottom, 200px);
+}
+
+.programme-pro-manifeste__inner {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.programme-pro-manifeste__text {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--pp-manifeste-size, 52px);
+  line-height: var(--pp-manifeste-line-height, 1.30);
+  letter-spacing: 0.005em;
+  color: var(--pp-manifeste-color, #1A1A1A);
+  max-width: var(--pp-manifeste-max-width, 1100px);
+  margin: 0 auto;
+}
+
+.programme-pro-manifeste__text p {
+  margin: 0;
+}
+
+.programme-pro-manifeste__text p + p {
+  margin-top: 0.6em;
+}
+
+/* ------- RESPONSIVE < 768px ------- */
+@media (max-width: 767px) {
+  .programme-pro-manifeste {
+    padding-bottom: calc(var(--pp-manifeste-padding-bottom, 200px) * 0.5);
+  }
+
+  .programme-pro-manifeste__text {
+    font-size: clamp(28px, 7.5vw, var(--pp-manifeste-size, 52px));
+  }
+}

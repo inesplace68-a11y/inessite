@@ -1,0 +1,86 @@
+/* ============================================================
+   PROGRAMME PRO — Section PROJETS ACCOMPAGNÉS
+   Grille configurable (default 2 colonnes desktop)
+   ============================================================ */
+
+.programme-pro-projets {
+  background-color: var(--mc-bg);
+  padding-top: var(--pp-proj-padding-top, 0);
+  padding-bottom: var(--pp-proj-padding-bottom, 140px);
+}
+
+.programme-pro-projets__inner {
+  text-align: center;
+  max-width: var(--pp-proj-content-max-width, 1080px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.programme-pro-projets__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--pp-proj-eyebrow-size, 13px);
+  letter-spacing: var(--pp-proj-eyebrow-tracking, 0.3em);
+  text-transform: uppercase;
+  color: #1A1A1A;
+  margin: 0 0 var(--pp-proj-eyebrow-margin-bottom, 90px);
+}
+
+.programme-pro-projets__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--pp-proj-columns-desktop, 2), minmax(0, 1fr));
+  column-gap: var(--pp-proj-column-gap, 100px);
+  row-gap: var(--pp-proj-row-gap, 70px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.programme-pro-projets__item {
+  text-align: left;
+}
+
+.programme-pro-projets__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--pp-proj-title-size, 26px);
+  line-height: 1.25;
+  color: #1A1A1A;
+  margin: 0 0 14px;
+  letter-spacing: 0.005em;
+}
+
+.programme-pro-projets__description {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pp-proj-body-size, 15px);
+  line-height: var(--pp-proj-body-line-height, 1.65);
+  color: #5A5446;
+  margin: 0;
+}
+
+/* ------- RESPONSIVE < 768px ------- */
+@media (max-width: 767px) {
+  .programme-pro-projets {
+    padding-bottom: calc(var(--pp-proj-padding-bottom, 140px) * 0.55);
+  }
+
+  .programme-pro-projets__eyebrow {
+    margin-bottom: calc(var(--pp-proj-eyebrow-margin-bottom, 90px) * 0.55);
+  }
+
+  .programme-pro-projets__grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: calc(var(--pp-proj-row-gap, 70px) * 0.7);
+  }
+
+  .programme-pro-projets__item {
+    text-align: center;
+  }
+
+  .programme-pro-projets__title {
+    font-size: clamp(20px, 5.6vw, var(--pp-proj-title-size, 26px));
+  }
+}

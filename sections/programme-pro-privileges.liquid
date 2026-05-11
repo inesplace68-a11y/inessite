@@ -1,0 +1,109 @@
+{{ 'section-programme-pro-privileges.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pp-priv-padding-top: {{ section.settings.padding_top }}px;
+    --pp-priv-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pp-priv-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --pp-priv-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --pp-priv-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --pp-priv-numeral-size: {{ section.settings.numeral_size }}px;
+    --pp-priv-numeral-color: {{ section.settings.numeral_color }};
+    --pp-priv-title-size: {{ section.settings.title_size }}px;
+    --pp-priv-body-size: {{ section.settings.body_size }}px;
+    --pp-priv-body-max-width: {{ section.settings.body_max_width }}px;
+    --pp-priv-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --pp-priv-separator-width: {{ section.settings.separator_width }}px;
+    --pp-priv-separator-gap-top: {{ section.settings.separator_gap_top }}px;
+    --pp-priv-separator-gap-bottom: {{ section.settings.separator_gap_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="programme-pro-privileges">
+  <div class="programme-pro-privileges__inner">
+
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="programme-pro-privileges__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="programme-pro-privileges__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'privilege' -%}
+            <li class="programme-pro-privileges__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.numeral != blank -%}
+                <p class="programme-pro-privileges__numeral">{{ block.settings.numeral | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h2 class="programme-pro-privileges__title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="programme-pro-privileges__body">{{ block.settings.body }}</div>
+              {%- endif -%}
+              {%- unless forloop.last -%}
+                <span class="programme-pro-privileges__separator" aria-hidden="true"></span>
+              {%- endunless -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Programme Pro – Privilèges",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "LES PRIVILÈGES" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking eyebrow (letter-spacing × 100)", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 100 },
+
+    { "type": "header", "content": "Numéral I / II / III…" },
+    { "type": "range", "id": "numeral_size", "min": 24, "max": 80, "step": 1, "unit": "px", "label": "Taille du numéral", "default": 44 },
+    { "type": "color", "id": "numeral_color", "label": "Couleur du numéral", "default": "#8C826E" },
+
+    { "type": "header", "content": "Titre & body de chaque privilège" },
+    { "type": "range", "id": "title_size", "min": 20, "max": 60, "step": 1, "unit": "px", "label": "Taille du titre", "default": 32 },
+    { "type": "range", "id": "body_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille du body", "default": 17 },
+    { "type": "range", "id": "body_max_width", "min": 500, "max": 900, "step": 10, "unit": "px", "label": "Largeur max du body", "default": 720 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne body", "default": 170 },
+
+    { "type": "header", "content": "Séparateur entre privilèges" },
+    { "type": "range", "id": "separator_width", "min": 30, "max": 200, "step": 2, "unit": "px", "label": "Largeur du séparateur", "default": 60 },
+    { "type": "range", "id": "separator_gap_top", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "Gap au-dessus du séparateur", "default": 50 },
+    { "type": "range", "id": "separator_gap_bottom", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "Gap en dessous du séparateur", "default": 50 },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 140 }
+  ],
+  "blocks": [
+    {
+      "type": "privilege",
+      "name": "Privilège",
+      "settings": [
+        { "type": "text", "id": "numeral", "label": "Numéral (I, II, III…)", "default": "I" },
+        { "type": "text", "id": "title", "label": "Titre du privilège", "default": "Sourcing curatorial prioritaire" },
+        { "type": "richtext", "id": "body", "label": "Description", "default": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Programme Pro – Privilèges",
+      "blocks": [
+        { "type": "privilege", "settings": { "numeral": "I", "title": "Sourcing curatorial prioritaire", "body": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>" } },
+        { "type": "privilege", "settings": { "numeral": "II", "title": "Tarification professionnelle", "body": "<p>Une tarification professionnelle s'applique à l'ensemble du catalogue ainsi qu'aux pièces sourcées via la Conciergerie, calibrée selon la pièce et le projet. Les conditions précises sont communiquées à la suite de l'inscription au programme.</p>" } },
+        { "type": "privilege", "settings": { "numeral": "III", "title": "Réservation sur les nouvelles acquisitions", "body": "<p>Les pièces fraîchement entrées dans la sélection sont signalées en avant-première aux membres du programme, qui peuvent les réserver avant publication sur le site.</p>" } },
+        { "type": "privilege", "settings": { "numeral": "IV", "title": "Conseil curatorial en amont de projet", "body": "<p>Pour les projets d'ensemble — agencement complet d'un espace, d'un restaurant ou d'un appartement — la galerie propose un échange curatorial préalable, destiné à calibrer l'esthétique et la cohérence des pièces choisies.</p>" } },
+        { "type": "privilege", "settings": { "numeral": "V", "title": "Documentation enrichie pour le client final", "body": "<p>Chaque pièce livrée est accompagnée de ses justificatifs de provenance, de ses certificats d'expertise tiers lorsqu'ils existent, et d'une note de présentation rédigée à l'attention de votre client final.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
