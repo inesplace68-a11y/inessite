@@ -4,10 +4,6 @@
   assign coll = collections[section.settings.featured_collection]
   assign pieces_total = section.settings.pieces_total
   assign pieces_visible = section.settings.pieces_visible_desktop
-  assign cta_url = section.settings.section_cta_url
-  if cta_url == blank and coll != blank
-    assign cta_url = coll.url
-  endif
 -%}
 
 {%- style -%}
@@ -16,32 +12,22 @@
     --hs-padding-bottom: {{ section.settings.padding_bottom }}px;
     --hs-pieces-visible: {{ pieces_visible }};
     --hs-card-gap: {{ section.settings.card_gap }}px;
+    --hs-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
   }
 {%- endstyle -%}
 
 <section class="home-selection">
   <div class="home-selection__inner">
-    <header class="home-selection__header">
-      {%- if section.settings.title_main != blank -%}
-        <h2 class="home-selection__title">{{ section.settings.title_main | escape }}</h2>
-      {%- endif -%}
-      {%- if section.settings.show_section_cta and section.settings.section_cta_text != blank -%}
-        <a
-          href="{{ cta_url | default: '#' }}"
-          class="home-selection__section-cta"
-          {% if cta_url == blank %}aria-disabled="true"{% endif %}
-        >
-          {{ section.settings.section_cta_text | escape }} <span aria-hidden="true">→</span>
-        </a>
-      {%- endif -%}
-    </header>
+    {%- if section.settings.show_eyebrow and section.settings.title_eyebrow != blank -%}
+      <p class="home-selection__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+    {%- endif -%}
 
     {%- if coll != blank and coll.products.size > 0 -%}
       <div class="home-selection__carousel">
         <div
           class="home-selection__track"
           role="region"
-          aria-label="{{ section.settings.title_main | default: 'Sélection actuelle' | escape }}"
+          aria-label="{{ section.settings.title_eyebrow | default: 'Sélection actuelle' | escape }}"
           tabindex="0"
           data-home-selection-track
         >
@@ -175,29 +161,28 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    { "type": "header", "content": "Titre & CTA" },
-    {
-      "type": "text",
-      "id": "title_main",
-      "label": "Titre",
-      "default": "Sélection actuelle"
-    },
+    { "type": "header", "content": "Eyebrow" },
     {
       "type": "checkbox",
-      "id": "show_section_cta",
-      "label": "Afficher le lien à droite",
+      "id": "show_eyebrow",
+      "label": "Afficher l'eyebrow",
       "default": true
     },
     {
       "type": "text",
-      "id": "section_cta_text",
-      "label": "Libellé du lien (CAPS)",
-      "default": "VOIR TOUTES LES PIÈCES"
+      "id": "title_eyebrow",
+      "label": "Eyebrow (CAPS)",
+      "default": "NOUVEAUTÉS"
     },
     {
-      "type": "url",
-      "id": "section_cta_url",
-      "label": "URL du lien (vide = lien vers la collection)"
+      "type": "range",
+      "id": "eyebrow_margin_bottom",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge sous l'eyebrow",
+      "default": 36
     },
 
     { "type": "header", "content": "Contenu" },
@@ -246,7 +231,7 @@
       "step": 8,
       "unit": "px",
       "label": "Marge en haut",
-      "default": 96
+      "default": 48
     },
     {
       "type": "range",
