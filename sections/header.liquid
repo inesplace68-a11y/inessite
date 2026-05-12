@@ -39,6 +39,7 @@
   }
   #shopify-section-{{ section.id }} .mc-hd-nav {
     padding-top: {{ section.settings.nav_top_spacing }}px;
+    padding-bottom: {{ section.settings.header_padding_bottom }}px;
     {%- if section.settings.nav_separator_visible %}
     border-top: {{ section.settings.nav_separator_thickness }}px solid {{ section.settings.nav_separator_color }};
     {%- endif %}
@@ -509,6 +510,17 @@
       "step": 4,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom",
+      "label": "Padding bas du header (px)",
+      "info": "Espace vertical entre la fin du menu nav et le bord inférieur du bloc crème du header. Combiné avec « Espace entre menu et hero » à 0, permet de coller le hero au menu.",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 4
     },
     {
       "type": "header",
