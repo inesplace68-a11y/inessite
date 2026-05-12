@@ -63,7 +63,7 @@
       "type": "home-selection-actuelle",
       "settings": {
         "show_eyebrow": true,
-        "title_eyebrow": "NOUVEAUTÉS",
+        "title_eyebrow": "NOS NOUVEAUTÉS",
         "eyebrow_margin_bottom": 36,
         "featured_collection": "miroirs",
         "pieces_visible_desktop": 4,
@@ -133,8 +133,10 @@
       "type": "home-vus-dans",
       "settings": {
         "title_eyebrow": "VUS DANS",
+        "logo_1_image": "shopify://shop_images/le-journal-de-la-maison-logo.png",
         "logo_1_alt": "Marie Claire Maison",
         "logo_1_url": "",
+        "logo_2_image": "shopify://shop_images/marie-claire-maison-logo.png",
         "logo_2_alt": "Le Journal de la Maison",
         "logo_2_url": "",
         "logo_3_alt": "",
@@ -147,8 +149,8 @@
         "logo_6_url": "",
         "logo_height": 36,
         "logo_gap": 64,
-        "padding_top": 128,
-        "padding_bottom": 128
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "home_services": {
@@ -165,9 +167,9 @@
         "col2_cta_text": "DÉCOUVRIR LE PROGRAMME",
         "col2_cta_url": "shopify://pages/programme-pro",
         "show_separator": true,
-        "background_color": "#f7f5f1",
-        "padding_top": 96,
-        "padding_bottom": 96,
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 48,
         "column_gap": 64
       }
     },
