@@ -33,6 +33,12 @@
       min-height: {{ section.settings.image_height_desktop_custom }}rem;
     }
   }
+
+  {%- if section.settings.nav_hero_gap != blank -%}
+  #Banner-{{ section.id }} {
+    margin-top: calc({{ section.settings.nav_hero_gap }}px - 18px);
+  }
+  {%- endif -%}
 {%- endstyle -%}
 
 {%- liquid
@@ -219,6 +225,17 @@
       "unit": "%",
       "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
       "default": 0
+    },
+    {
+      "type": "range",
+      "id": "nav_hero_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espace entre menu et hero (px)",
+      "info": "Distance verticale entre la fin de la nav éditoriale et le haut du hero.",
+      "default": 8
     },
     {
       "type": "select",

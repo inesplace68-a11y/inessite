@@ -46,6 +46,7 @@
       "settings": {
         "image": "shopify://shop_images/188188F6-5F76-4B13-B3A5-AD6E09CA91B8.png",
         "image_overlay_opacity": 40,
+        "nav_hero_gap": 8,
         "image_height": "large",
         "image_height_desktop_custom": 50,
         "image_behavior": "none",
