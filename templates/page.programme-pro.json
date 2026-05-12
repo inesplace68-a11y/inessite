@@ -11,7 +11,18 @@
   "sections": {
     "hero": {
       "type": "programme-pro-hero",
-      "settings": {}
+      "settings": {
+        "hero_image": "shopify://shop_images/IMG_6240.jpg",
+        "hero_height": 55,
+        "overlay_opacity": 80,
+        "title_text": "Programme Pro",
+        "title_size": 64,
+        "intro_text": "<p>Maison Coeur accompagne architectes d'intérieur, décorateurs, hôteliers et restaurateurs dans la recherche et l'acquisition de pièces vintage, de design de collection et d'art singulier. Le Programme Pro offre un accès privilégié à la sélection, à la Conciergerie, et au conseil curatorial en amont des projets.</p>",
+        "intro_size": 17,
+        "manifeste_text": "<p>Travailler avec celles et ceux qui composent les lieux.</p>",
+        "manifeste_size": 24,
+        "manifeste_margin_top": 32
+      }
     },
     "privileges": {
       "type": "programme-pro-privileges",
@@ -57,23 +68,106 @@
           }
         }
       },
-      "block_order": ["p1", "p2", "p3", "p4", "p5"],
-      "settings": {}
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5"
+      ],
+      "settings": {
+        "eyebrow_text": "LES PRIVILÈGES",
+        "eyebrow_size": 13,
+        "eyebrow_tracking": 30,
+        "eyebrow_margin_bottom": 60,
+        "numeral_size": 32,
+        "numeral_color": "#8c826e",
+        "title_size": 20,
+        "body_size": 14,
+        "body_max_width": 720,
+        "body_line_height": 170,
+        "grid_gap_horizontal": 64,
+        "grid_gap_vertical": 48,
+        "couronnement_margin_top": 96,
+        "padding_top": 28,
+        "padding_bottom": 40
+      }
     },
     "lettre": {
       "type": "programme-pro-lettre",
-      "settings": {}
+      "settings": {
+        "eyebrow_text": "LETTRE DE LA FONDATRICE",
+        "eyebrow_size": 13,
+        "eyebrow_tracking": 30,
+        "eyebrow_margin_bottom": 32,
+        "paragraph_1": "<p>J'ai créé le Programme Pro pour accompagner sereinement les professionnels qui me confient leurs projets — sans compromettre les délais, sans diluer l'exigence, sans renoncer à l'attention personnelle.</p>",
+        "paragraph_2": "<p>Je serai votre interlocutrice directe tout au long du projet.</p>",
+        "body_size": 18,
+        "body_max_width": 820,
+        "body_line_height": 155,
+        "paragraph_gap": 36,
+        "signature_text": "— Ines Belhaj",
+        "signature_size": 18,
+        "signature_subtext": "Fondatrice de Maison Coeur",
+        "signature_subtext_size": 11,
+        "signature_margin_top": 32,
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
     },
     "projets": {
       "type": "programme-pro-projets",
       "settings": {
-        "cta_link": "/pages/projets-accompagnes"
+        "eyebrow_text": "PROJETS ACCOMPAGNÉS",
+        "eyebrow_size": 13,
+        "eyebrow_tracking": 30,
+        "eyebrow_margin_bottom": 64,
+        "content_max_width": 1200,
+        "column_gap": 40,
+        "v1_secteur": "Hôtellerie de luxe",
+        "v1_titre": "Hôtel particulier Côte d'Azur",
+        "v1_lieu": "Cap d'Antibes, France",
+        "v2_secteur": "Architecture intérieure",
+        "v2_titre": "Appartement haussmannien",
+        "v2_lieu": "Paris VIIIe, France",
+        "v3_secteur": "Restauration gastronomique",
+        "v3_titre": "Table étoilée du Marais",
+        "v3_lieu": "Paris IIIe, France",
+        "cta_text": "VOIR TOUS LES PROJETS",
+        "cta_link": "/pages/projets-accompagnes",
+        "cta_margin_top": 64,
+        "padding_top": 40,
+        "padding_bottom": 60
       }
     },
     "rejoindre": {
       "type": "programme-pro-rejoindre",
-      "settings": {}
+      "settings": {
+        "eyebrow_text": "REJOINDRE LE PROGRAMME",
+        "eyebrow_size": 13,
+        "eyebrow_tracking": 30,
+        "eyebrow_margin_bottom": 32,
+        "intro_text": "<p>L'inscription au Programme Pro se fait via le formulaire ci-dessous. Indiquez les coordonnées de votre structure, votre numéro SIRET (ou équivalent international), et une présentation succincte de votre activité. La galerie revient vers vous sous 48 heures ouvrées avec les conditions du programme et une mise en relation avec votre interlocuteur curatorial dédié.</p>",
+        "intro_size": 15,
+        "intro_max_width": 780,
+        "intro_line_height": 170,
+        "form_max_width": 600,
+        "form_margin_top": 48,
+        "cta_label": "ENVOYER MA CANDIDATURE  →",
+        "cta_size": 13,
+        "cta_tracking": 28,
+        "success_message": "<p>Votre candidature a bien été reçue. La galerie revient vers vous sous 48 heures ouvrées.</p>",
+        "mandatory_note": "Les champs marqués d'un astérisque sont obligatoires.",
+        "padding_top": 28,
+        "padding_bottom": 56
+      }
     }
   },
-  "order": ["hero", "privileges", "lettre", "projets", "rejoindre"]
+  "order": [
+    "hero",
+    "privileges",
+    "lettre",
+    "projets",
+    "rejoindre"
+  ]
 }
