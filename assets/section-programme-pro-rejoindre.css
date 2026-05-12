@@ -68,7 +68,7 @@
 }
 
 .programme-pro-rejoindre__field {
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .programme-pro-rejoindre__field label {
@@ -79,7 +79,7 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #8C826E;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .programme-pro-rejoindre__field input,
@@ -91,7 +91,7 @@
   border: 0;
   border-bottom: 1px solid #DDD5C5;
   border-radius: 0;
-  padding: 12px 0;
+  padding: 8px 0;
   font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 15px;
@@ -165,7 +165,7 @@
   font-size: 13px;
   color: #8C826E;
   text-align: center;
-  margin: 25px 0 0;
+  margin: 16px 0 0;
 }
 
 .programme-pro-rejoindre__success {
