@@ -39,6 +39,12 @@
     margin-top: calc({{ section.settings.nav_hero_gap }}px - 18px);
   }
   {%- endif -%}
+
+  #Banner-{{ section.id }} .banner__media > img,
+  #Banner-{{ section.id }} .banner__media > video,
+  #Banner-{{ section.id }} .banner__media .hero-video {
+    object-position: {{ section.settings.hero_image_position_x }}% {{ section.settings.hero_image_position_y }}%;
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -236,6 +242,28 @@
       "label": "Espace entre menu et hero (px)",
       "info": "Distance verticale entre la fin de la nav éditoriale et le haut du hero.",
       "default": 8
+    },
+    {
+      "type": "range",
+      "id": "hero_image_position_x",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Position horizontale image (%)",
+      "info": "0 = bord gauche cadré, 50 = centre, 100 = bord droit cadré.",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "hero_image_position_y",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Position verticale image (%)",
+      "info": "0 = haut cadré, 50 = centre, 100 = bas cadré.",
+      "default": 50
     },
     {
       "type": "select",
