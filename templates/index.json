@@ -58,6 +58,20 @@
         "show_text_below": false
       }
     },
+    "home_selection_actuelle": {
+      "type": "home-selection-actuelle",
+      "settings": {
+        "show_eyebrow": true,
+        "title_eyebrow": "SÉLECTION ACTUELLE",
+        "title_main": "Coups de coeur du moment",
+        "pieces_visible_desktop": 3,
+        "pieces_total": 9,
+        "show_arrows": true,
+        "arrow_alignment": "center",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
     "mc_collection_grid": {
       "type": "mc-collection-grid",
       "blocks": {
@@ -114,6 +128,38 @@
         "cta_link": "shopify://pages/a-propos"
       }
     },
+    "home_vus_dans": {
+      "type": "home-vus-dans",
+      "settings": {
+        "title_eyebrow": "VUS DANS",
+        "logo_1_alt": "Marie Claire Maison",
+        "logo_2_alt": "Le Journal de la Maison",
+        "logo_height": 36,
+        "logo_gap": 64,
+        "padding_top": 128,
+        "padding_bottom": 128
+      }
+    },
+    "home_services": {
+      "type": "home-services",
+      "settings": {
+        "col1_eyebrow": "CONCIERGERIE",
+        "col1_title": "Une pièce particulière à trouver ?",
+        "col1_description": "Notre conciergerie la cherche pour vous, partout dans le monde.",
+        "col1_cta_text": "CONFIER UNE RECHERCHE",
+        "col1_cta_url": "shopify://pages/conciergerie",
+        "col2_eyebrow": "PROGRAMME PRO",
+        "col2_title": "Architectes, hôteliers, restaurateurs.",
+        "col2_description": "Sourcing curatorial prioritaire, tarification professionnelle, conseil en amont de projet.",
+        "col2_cta_text": "DÉCOUVRIR LE PROGRAMME",
+        "col2_cta_url": "shopify://pages/programme-pro",
+        "show_separator": true,
+        "background_color": "#F7F5F1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "column_gap": 64
+      }
+    },
     "mc_reassurance": {
       "type": "mc-reassurance",
       "blocks": {
@@ -161,8 +207,11 @@
   },
   "order": [
     "image_banner",
+    "home_selection_actuelle",
     "mc_collection_grid",
     "mc_editorial",
+    "home_vus_dans",
+    "home_services",
     "mc_reassurance"
   ]
 }

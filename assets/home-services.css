@@ -1,0 +1,129 @@
+/* ============================================================
+   HOME — Services Maison Coeur (Conciergerie + Programme Pro)
+   ============================================================ */
+
+.home-services {
+  padding-top: var(--hsv-padding-top, 96px);
+  padding-bottom: var(--hsv-padding-bottom, 96px);
+  background-color: var(--hsv-bg, #F7F5F1);
+}
+
+.home-services__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.home-services__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--hsv-column-gap, 64px);
+  align-items: start;
+}
+
+.home-services--with-separator .home-services__col--pro {
+  position: relative;
+  padding-left: var(--hsv-column-gap, 64px);
+  margin-left: calc(var(--hsv-column-gap, 64px) * -1);
+}
+
+.home-services--with-separator .home-services__col--pro::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 1px;
+  background-color: #E8E4DD;
+  transform: scaleX(0.5);
+  transform-origin: left;
+}
+
+.home-services__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-services__eyebrow {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-mid, #8C8882);
+  margin: 0 0 18px;
+}
+
+.home-services__title {
+  font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  color: var(--mc-dark, #1A1614);
+  margin: 0 0 20px;
+  max-width: 22ch;
+}
+
+.home-services__description {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--mc-dark, #1A1614);
+  margin: 0 0 28px;
+  max-width: 38ch;
+}
+
+.home-services__cta {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-dark, #1A1614);
+  border-bottom: 1px solid var(--mc-dark, #1A1614);
+  padding-bottom: 3px;
+  display: inline-block;
+  align-self: flex-start;
+  transition: opacity 0.2s ease;
+}
+
+.home-services__cta:hover {
+  opacity: 0.65;
+}
+
+.home-services__cta[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+@media (max-width: 749px) {
+  .home-services {
+    padding-top: clamp(56px, var(--hsv-padding-top, 96px), var(--hsv-padding-top, 96px));
+    padding-bottom: clamp(56px, var(--hsv-padding-bottom, 96px), var(--hsv-padding-bottom, 96px));
+  }
+  .home-services__inner {
+    padding: 0 20px;
+  }
+  .home-services__grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .home-services--with-separator .home-services__col--pro {
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: 56px;
+  }
+  .home-services--with-separator .home-services__col--pro::before {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: top;
+  }
+}

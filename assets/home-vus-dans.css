@@ -1,0 +1,82 @@
+/* ============================================================
+   HOME — Vus dans (presse / logos)
+   ============================================================ */
+
+.home-vus-dans {
+  padding-top: var(--hvd-padding-top, 128px);
+  padding-bottom: var(--hvd-padding-bottom, 128px);
+  background-color: var(--mc-bg, #F7F5F1);
+}
+
+.home-vus-dans__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+  text-align: center;
+}
+
+.home-vus-dans__eyebrow {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-mid, #8C8882);
+  margin: 0 0 56px;
+}
+
+.home-vus-dans__logos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hvd-logo-gap, 64px);
+}
+
+.home-vus-dans__logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-vus-dans__logo-link {
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.home-vus-dans__logo-link:hover {
+  opacity: 0.65;
+}
+
+.home-vus-dans__logo {
+  height: var(--hvd-logo-height, 36px);
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+  filter: grayscale(100%);
+  opacity: 0.85;
+}
+
+@media (max-width: 749px) {
+  .home-vus-dans {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  .home-vus-dans__inner {
+    padding: 0 20px;
+  }
+  .home-vus-dans__eyebrow {
+    margin-bottom: 32px;
+  }
+  .home-vus-dans__logos {
+    gap: 32px;
+  }
+  .home-vus-dans__logo {
+    height: calc(var(--hvd-logo-height, 36px) * 0.85);
+  }
+}

@@ -1,0 +1,253 @@
+{{ 'home-selection-actuelle.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign coll = collections[section.settings.featured_collection]
+  assign pieces_total = section.settings.pieces_total
+  assign pieces_visible = section.settings.pieces_visible_desktop
+  assign arrow_align = section.settings.arrow_alignment
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --hs-padding-top: {{ section.settings.padding_top }}px;
+    --hs-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hs-pieces-visible: {{ pieces_visible }};
+  }
+{%- endstyle -%}
+
+<section
+  class="home-selection home-selection--align-{{ arrow_align }}"
+  data-pieces-visible="{{ pieces_visible }}"
+>
+  <div class="home-selection__inner">
+    <header class="home-selection__header">
+      {%- if section.settings.show_eyebrow and section.settings.title_eyebrow != blank -%}
+        <p class="home-selection__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.title_main != blank -%}
+        <h2 class="home-selection__title">{{ section.settings.title_main | escape }}</h2>
+      {%- endif -%}
+    </header>
+
+    {%- if coll != blank and coll.products.size > 0 -%}
+      <div
+        class="home-selection__track"
+        role="region"
+        aria-label="{{ section.settings.title_main | default: 'Sélection actuelle' | escape }}"
+        tabindex="0"
+        data-home-selection-track
+      >
+        {%- assign limit = pieces_total -%}
+        {%- if coll.products_count < limit -%}
+          {%- assign limit = coll.products_count -%}
+        {%- endif -%}
+
+        {%- for product in coll.products limit: limit -%}
+          <article class="home-selection__card">
+            <a class="home-selection__card-link" href="{{ product.url }}">
+              <div class="home-selection__media">
+                {%- if product.featured_image != blank -%}
+                  <img
+                    class="home-selection__image"
+                    src="{{ product.featured_image | image_url: width: 800 }}"
+                    srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+                    sizes="(max-width: 749px) 88vw, (max-width: 989px) 44vw, 30vw"
+                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                    loading="lazy"
+                    width="{{ product.featured_image.width }}"
+                    height="{{ product.featured_image.height }}"
+                  >
+                {%- else -%}
+                  <div class="home-selection__image home-selection__image--placeholder"></div>
+                {%- endif -%}
+              </div>
+
+              <h3 class="home-selection__name">{{ product.title }}</h3>
+
+              {%- if product.vendor != blank -%}
+                <p class="home-selection__meta">{{ product.vendor }}</p>
+              {%- endif -%}
+
+              <p class="home-selection__price">
+                {%- if product.price_varies -%}
+                  {{ 'products.product.from_price_html' | t: price: product.price_min }}
+                {%- else -%}
+                  {{ product.price | money }}
+                {%- endif -%}
+              </p>
+
+              <span class="home-selection__cta">VOIR LA PIÈCE <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_arrows -%}
+        <div class="home-selection__arrows" data-arrow-align="{{ arrow_align }}">
+          <button
+            type="button"
+            class="home-selection__arrow"
+            data-home-selection-prev
+            aria-label="Voir les pièces précédentes"
+          >
+            <span aria-hidden="true">←</span> PRÉC.
+          </button>
+          <button
+            type="button"
+            class="home-selection__arrow"
+            data-home-selection-next
+            aria-label="Voir les pièces suivantes"
+          >
+            SUIV. <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <p class="home-selection__empty">
+        Sélectionnez une collection dans les réglages pour afficher la sélection actuelle.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    var track = root.querySelector('[data-home-selection-track]');
+    if (!track) return;
+    var prev = root.querySelector('[data-home-selection-prev]');
+    var next = root.querySelector('[data-home-selection-next]');
+
+    function cardStep() {
+      var card = track.querySelector('.home-selection__card');
+      if (!card) return track.clientWidth;
+      var styles = window.getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap || '0');
+      return card.getBoundingClientRect().width + gap;
+    }
+
+    function updateButtons() {
+      if (!prev || !next) return;
+      var maxScroll = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= maxScroll - 1;
+    }
+
+    if (prev) {
+      prev.addEventListener('click', function () {
+        track.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+      });
+    }
+    if (next) {
+      next.addEventListener('click', function () {
+        track.scrollBy({ left: cardStep(), behavior: 'smooth' });
+      });
+    }
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Home — Sélection actuelle",
+  "tag": "section",
+  "class": "section section--home-selection",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "header", "content": "Titres" },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Afficher l'eyebrow",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title_eyebrow",
+      "label": "Eyebrow (CAPS)",
+      "default": "SÉLECTION ACTUELLE"
+    },
+    {
+      "type": "text",
+      "id": "title_main",
+      "label": "Titre principal",
+      "default": "Coups de coeur du moment"
+    },
+
+    { "type": "header", "content": "Contenu" },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection à afficher"
+    },
+    {
+      "type": "range",
+      "id": "pieces_visible_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "unit": "pcs",
+      "label": "Pièces visibles (desktop)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "pieces_total",
+      "min": 6,
+      "max": 12,
+      "step": 1,
+      "unit": "pcs",
+      "label": "Pool total de pièces",
+      "default": 9
+    },
+
+    { "type": "header", "content": "Navigation" },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Afficher les flèches",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "arrow_alignment",
+      "label": "Alignement des flèches",
+      "options": [
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Droite" }
+      ],
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Espacements" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 48,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en haut",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 48,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en bas",
+      "default": 96
+    }
+  ],
+  "presets": [
+    { "name": "Home — Sélection actuelle" }
+  ]
+}
+{% endschema %}

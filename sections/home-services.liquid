@@ -1,0 +1,185 @@
+{{ 'home-services.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --hsv-padding-top: {{ section.settings.padding_top }}px;
+    --hsv-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hsv-column-gap: {{ section.settings.column_gap }}px;
+    --hsv-bg: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+<section
+  class="home-services{% if section.settings.show_separator %} home-services--with-separator{% endif %}"
+>
+  <div class="home-services__inner">
+    <div class="home-services__grid">
+
+      <article class="home-services__col home-services__col--conciergerie">
+        {%- if section.settings.col1_eyebrow != blank -%}
+          <p class="home-services__eyebrow">{{ section.settings.col1_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.col1_title != blank -%}
+          <h3 class="home-services__title">{{ section.settings.col1_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.col1_description != blank -%}
+          <p class="home-services__description">{{ section.settings.col1_description | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.col1_cta_text != blank -%}
+          <a
+            href="{{ section.settings.col1_cta_url | default: '#' }}"
+            class="home-services__cta"
+            {% if section.settings.col1_cta_url == blank %}aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.col1_cta_text | escape }} <span aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+      </article>
+
+      <article class="home-services__col home-services__col--pro">
+        {%- if section.settings.col2_eyebrow != blank -%}
+          <p class="home-services__eyebrow">{{ section.settings.col2_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.col2_title != blank -%}
+          <h3 class="home-services__title">{{ section.settings.col2_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.col2_description != blank -%}
+          <p class="home-services__description">{{ section.settings.col2_description | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.col2_cta_text != blank -%}
+          <a
+            href="{{ section.settings.col2_cta_url | default: '#' }}"
+            class="home-services__cta"
+            {% if section.settings.col2_cta_url == blank %}aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.col2_cta_text | escape }} <span aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+      </article>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Services",
+  "tag": "section",
+  "class": "section section--home-services",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "header", "content": "Colonne 1 — Conciergerie" },
+    {
+      "type": "text",
+      "id": "col1_eyebrow",
+      "label": "Eyebrow (CAPS)",
+      "default": "CONCIERGERIE"
+    },
+    {
+      "type": "text",
+      "id": "col1_title",
+      "label": "Titre",
+      "default": "Une pièce particulière à trouver ?"
+    },
+    {
+      "type": "textarea",
+      "id": "col1_description",
+      "label": "Description",
+      "default": "Notre conciergerie la cherche pour vous, partout dans le monde."
+    },
+    {
+      "type": "text",
+      "id": "col1_cta_text",
+      "label": "Libellé CTA",
+      "default": "CONFIER UNE RECHERCHE"
+    },
+    {
+      "type": "url",
+      "id": "col1_cta_url",
+      "label": "Lien CTA"
+    },
+
+    { "type": "header", "content": "Colonne 2 — Programme Pro" },
+    {
+      "type": "text",
+      "id": "col2_eyebrow",
+      "label": "Eyebrow (CAPS)",
+      "default": "PROGRAMME PRO"
+    },
+    {
+      "type": "text",
+      "id": "col2_title",
+      "label": "Titre",
+      "default": "Architectes, hôteliers, restaurateurs."
+    },
+    {
+      "type": "textarea",
+      "id": "col2_description",
+      "label": "Description",
+      "default": "Sourcing curatorial prioritaire, tarification professionnelle, conseil en amont de projet."
+    },
+    {
+      "type": "text",
+      "id": "col2_cta_text",
+      "label": "Libellé CTA",
+      "default": "DÉCOUVRIR LE PROGRAMME"
+    },
+    {
+      "type": "url",
+      "id": "col2_cta_url",
+      "label": "Lien CTA"
+    },
+
+    { "type": "header", "content": "Apparence" },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Séparateur vertical entre colonnes",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Couleur de fond",
+      "default": "#F7F5F1"
+    },
+
+    { "type": "header", "content": "Espacements" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 48,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en haut",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 48,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en bas",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 32,
+      "max": 128,
+      "step": 8,
+      "unit": "px",
+      "label": "Espace entre colonnes",
+      "default": 64
+    }
+  ],
+  "presets": [
+    { "name": "Home — Services" }
+  ]
+}
+{% endschema %}

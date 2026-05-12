@@ -1,0 +1,159 @@
+{{ 'home-vus-dans.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --hvd-padding-top: {{ section.settings.padding_top }}px;
+    --hvd-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hvd-logo-height: {{ section.settings.logo_height }}px;
+    --hvd-logo-gap: {{ section.settings.logo_gap }}px;
+  }
+{%- endstyle -%}
+
+{%- assign logo_indices = '1,2,3,4,5,6' | split: ',' -%}
+{%- assign filled_count = 0 -%}
+{%- for i in logo_indices -%}
+  {%- assign img_key = 'logo_' | append: i | append: '_image' -%}
+  {%- assign img = section.settings[img_key] -%}
+  {%- if img != blank -%}
+    {%- assign filled_count = filled_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<section class="home-vus-dans">
+  <div class="home-vus-dans__inner">
+    {%- if section.settings.title_eyebrow != blank -%}
+      <p class="home-vus-dans__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+    {%- endif -%}
+
+    {%- if filled_count > 0 -%}
+      <ul class="home-vus-dans__logos" role="list">
+        {%- for i in logo_indices -%}
+          {%- assign img_key = 'logo_' | append: i | append: '_image' -%}
+          {%- assign alt_key = 'logo_' | append: i | append: '_alt' -%}
+          {%- assign url_key = 'logo_' | append: i | append: '_url' -%}
+          {%- assign img = section.settings[img_key] -%}
+          {%- assign alt = section.settings[alt_key] -%}
+          {%- assign url = section.settings[url_key] -%}
+
+          {%- if img != blank -%}
+            <li class="home-vus-dans__logo-item">
+              {%- if url != blank -%}
+                <a href="{{ url }}" class="home-vus-dans__logo-link" target="_blank" rel="noopener noreferrer">
+              {%- endif -%}
+                <img
+                  class="home-vus-dans__logo"
+                  src="{{ img | image_url: width: 400 }}"
+                  srcset="{{ img | image_url: width: 200 }} 200w, {{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 600 }} 600w"
+                  sizes="200px"
+                  alt="{{ alt | default: img.alt | default: 'Presse' | escape }}"
+                  loading="lazy"
+                  width="{{ img.width }}"
+                  height="{{ img.height }}"
+                >
+              {%- if url != blank -%}
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Vus dans",
+  "tag": "section",
+  "class": "section section--home-vus-dans",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "header", "content": "Titre" },
+    {
+      "type": "text",
+      "id": "title_eyebrow",
+      "label": "Eyebrow (CAPS)",
+      "default": "VUS DANS"
+    },
+
+    { "type": "header", "content": "Logo 1" },
+    { "type": "image_picker", "id": "logo_1_image", "label": "Image" },
+    { "type": "text", "id": "logo_1_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_1_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Logo 2" },
+    { "type": "image_picker", "id": "logo_2_image", "label": "Image" },
+    { "type": "text", "id": "logo_2_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_2_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Logo 3" },
+    { "type": "image_picker", "id": "logo_3_image", "label": "Image" },
+    { "type": "text", "id": "logo_3_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_3_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Logo 4" },
+    { "type": "image_picker", "id": "logo_4_image", "label": "Image" },
+    { "type": "text", "id": "logo_4_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_4_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Logo 5" },
+    { "type": "image_picker", "id": "logo_5_image", "label": "Image" },
+    { "type": "text", "id": "logo_5_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_5_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Logo 6" },
+    { "type": "image_picker", "id": "logo_6_image", "label": "Image" },
+    { "type": "text", "id": "logo_6_alt", "label": "Texte alternatif" },
+    { "type": "url", "id": "logo_6_url", "label": "Lien (optionnel)" },
+
+    { "type": "header", "content": "Apparence" },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Hauteur des logos",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "logo_gap",
+      "min": 24,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacement entre logos",
+      "default": 64
+    },
+
+    { "type": "header", "content": "Espacements" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 64,
+      "max": 200,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en haut",
+      "default": 128
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 64,
+      "max": 200,
+      "step": 8,
+      "unit": "px",
+      "label": "Marge en bas",
+      "default": 128
+    }
+  ],
+  "presets": [
+    { "name": "Home — Vus dans" }
+  ]
+}
+{% endschema %}
