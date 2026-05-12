@@ -61,14 +61,14 @@
     "home_selection_actuelle": {
       "type": "home-selection-actuelle",
       "settings": {
-        "show_eyebrow": true,
-        "title_eyebrow": "NOUVEAUTES",
-        "title_main": "Coups de coeur du moment",
+        "title_main": "Sélection actuelle",
+        "show_section_cta": true,
+        "section_cta_text": "VOIR TOUTES LES PIÈCES",
+        "section_cta_url": "",
         "featured_collection": "miroirs",
-        "pieces_visible_desktop": 3,
+        "pieces_visible_desktop": 4,
         "pieces_total": 9,
-        "show_arrows": true,
-        "arrow_alignment": "center",
+        "card_gap": 28,
         "padding_top": 96,
         "padding_bottom": 96
       }
