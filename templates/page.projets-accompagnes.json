@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "hero": {
+      "type": "projets-accompagnes-hero",
+      "settings": {}
+    },
+    "grille": {
+      "type": "projets-accompagnes-grille",
+      "blocks": {
+        "c1": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Hôtellerie de luxe",
+            "titre": "Hôtel particulier Côte d'Azur",
+            "lieu": "Cap d'Antibes, France",
+            "resume": "Sélection de pièces vintage italiennes pour le réagencement de huit suites, en collaboration avec l'agence d'architecture intérieure."
+          }
+        },
+        "c2": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Architecture intérieure",
+            "titre": "Appartement haussmannien",
+            "lieu": "Paris VIIIe, France",
+            "resume": "Conseil curatorial et sourcing de design de collection pour les espaces de réception d'une résidence familiale."
+          }
+        },
+        "c3": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Restauration gastronomique",
+            "titre": "Table étoilée du Marais",
+            "lieu": "Paris IIIe, France",
+            "resume": "Mobilier de salle et pièces signature, dans une approche éditoriale alignée au registre de la cheffe."
+          }
+        },
+        "c4": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Bureaux d'entreprise",
+            "titre": "Siège d'une maison de mode",
+            "lieu": "Paris IXe, France",
+            "resume": "Direction artistique des espaces communs et salles de réunion, pièces vintage scandinaves et italiennes."
+          }
+        },
+        "c5": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Résidence privée",
+            "titre": "Villa contemporaine",
+            "lieu": "Saint-Paul-de-Vence, France",
+            "resume": "Accompagnement d'un collectionneur pour la composition d'un ensemble cohérent autour de pièces d'art singulier."
+          }
+        },
+        "c6": {
+          "type": "carte",
+          "settings": {
+            "secteur": "Acquisitions & conseil",
+            "titre": "Collection privée internationale",
+            "lieu": "Londres, Royaume-Uni",
+            "resume": "Mission de sourcing dédiée sur le marché européen pour le compte d'un collectionneur de design de collection."
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "settings": {}
+    },
+    "cta": {
+      "type": "projets-accompagnes-cta",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "grille", "cta"]
+}

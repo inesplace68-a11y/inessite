@@ -1,17 +1,19 @@
 /* ============================================================
    PROGRAMME PRO — Section PRIVILÈGES
-   Liste verticale centrée : numéral / titre / body, hairlines internes
+   Grille 2×2 (I, II, III, IV) + V couronnement centré
    ============================================================ */
 
 .programme-pro-privileges {
   background-color: var(--mc-bg);
-  padding-top: var(--pp-priv-padding-top, 0);
-  padding-bottom: var(--pp-priv-padding-bottom, 140px);
+  padding-top: var(--pp-priv-padding-top, 28px);
+  padding-bottom: var(--pp-priv-padding-bottom, 40px);
 }
 
 .programme-pro-privileges__inner {
   text-align: center;
   padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .programme-pro-privileges__eyebrow {
@@ -21,48 +23,65 @@
   letter-spacing: var(--pp-priv-eyebrow-tracking, 0.3em);
   text-transform: uppercase;
   color: #1A1A1A;
-  margin: 0 0 var(--pp-priv-eyebrow-margin-bottom, 100px);
+  margin: 0 0 var(--pp-priv-eyebrow-margin-bottom, 60px);
 }
 
-.programme-pro-privileges__list {
+.programme-pro-privileges__grid {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--pp-priv-grid-gap-h, 64px);
+  row-gap: var(--pp-priv-grid-gap-v, 48px);
 }
 
 .programme-pro-privileges__item {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+}
+
+.programme-pro-privileges__item--couronnement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.programme-pro-privileges__couronnement {
+  margin-top: var(--pp-priv-couronnement-margin-top, 96px);
+  display: flex;
+  justify-content: center;
 }
 
 .programme-pro-privileges__numeral {
   font-family: var(--mc-font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: var(--pp-priv-numeral-size, 44px);
+  font-size: var(--pp-priv-numeral-size, 32px);
   line-height: 1;
   color: var(--pp-priv-numeral-color, #8C826E);
-  margin: 0 0 24px;
+  margin: 0 0 18px;
 }
 
 .programme-pro-privileges__title {
   font-family: var(--mc-font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: var(--pp-priv-title-size, 32px);
+  font-size: var(--pp-priv-title-size, 20px);
   line-height: 1.25;
   color: #1A1A1A;
-  margin: 0 0 22px;
+  margin: 0 0 16px;
   letter-spacing: 0.005em;
-  max-width: 760px;
+  max-width: 480px;
 }
 
 .programme-pro-privileges__body {
   font-family: var(--mc-font-sans);
   font-weight: 300;
-  font-size: var(--pp-priv-body-size, 17px);
+  font-size: var(--pp-priv-body-size, 14px);
   line-height: var(--pp-priv-body-line-height, 1.70);
   color: #5A5446;
   max-width: var(--pp-priv-body-max-width, 720px);
@@ -77,41 +96,37 @@
   margin-bottom: 0;
 }
 
-.programme-pro-privileges__separator {
-  display: block;
-  width: var(--pp-priv-separator-width, 60px);
-  height: 1px;
-  background-color: #8C826E;
-  margin-top: var(--pp-priv-separator-gap-top, 50px);
-  margin-bottom: var(--pp-priv-separator-gap-bottom, 50px);
-}
-
 /* ------- RESPONSIVE < 768px ------- */
 @media (max-width: 767px) {
   .programme-pro-privileges {
-    padding-bottom: calc(var(--pp-priv-padding-bottom, 140px) * 0.55);
+    padding-bottom: calc(var(--pp-priv-padding-bottom, 40px) * 0.7);
   }
 
   .programme-pro-privileges__eyebrow {
-    margin-bottom: calc(var(--pp-priv-eyebrow-margin-bottom, 100px) * 0.55);
+    margin-bottom: calc(var(--pp-priv-eyebrow-margin-bottom, 60px) * 0.6);
+  }
+
+  .programme-pro-privileges__grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: calc(var(--pp-priv-grid-gap-v, 48px) * 0.9);
+  }
+
+  .programme-pro-privileges__couronnement {
+    margin-top: calc(var(--pp-priv-couronnement-margin-top, 96px) * 0.6);
   }
 
   .programme-pro-privileges__numeral {
-    font-size: clamp(28px, 8vw, var(--pp-priv-numeral-size, 44px));
-    margin-bottom: 18px;
+    font-size: clamp(24px, 7vw, var(--pp-priv-numeral-size, 32px));
+    margin-bottom: 14px;
   }
 
   .programme-pro-privileges__title {
-    font-size: clamp(22px, 6vw, var(--pp-priv-title-size, 32px));
-    margin-bottom: 16px;
+    font-size: clamp(18px, 5vw, var(--pp-priv-title-size, 20px));
+    margin-bottom: 12px;
   }
 
   .programme-pro-privileges__body {
-    font-size: clamp(14px, 4.2vw, var(--pp-priv-body-size, 17px));
-  }
-
-  .programme-pro-privileges__separator {
-    margin-top: calc(var(--pp-priv-separator-gap-top, 50px) * 0.7);
-    margin-bottom: calc(var(--pp-priv-separator-gap-bottom, 50px) * 0.7);
+    font-size: clamp(13px, 4vw, var(--pp-priv-body-size, 14px));
   }
 }

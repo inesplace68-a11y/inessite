@@ -1,6 +1,6 @@
 {{ 'section-programme-pro-hero.css' | asset_url | stylesheet_tag }}
 
-<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px;">
+<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px; --manifeste-size: {{ section.settings.manifeste_size }}px; --manifeste-margin-top: {{ section.settings.manifeste_margin_top }}px;">
   <div class="programme-pro-hero__media">
     {%- if section.settings.hero_image != blank -%}
       <img
@@ -24,6 +24,9 @@
     {%- if section.settings.intro_text != blank -%}
       <div class="programme-pro-hero__intro">{{ section.settings.intro_text }}</div>
     {%- endif -%}
+    {%- if section.settings.manifeste_text != blank -%}
+      <div class="programme-pro-hero__manifeste">{{ section.settings.manifeste_text }}</div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -33,7 +36,7 @@
   "settings": [
     { "type": "header", "content": "Image hero" },
     { "type": "image_picker", "id": "hero_image", "label": "Image hero (vide = placeholder)" },
-    { "type": "range", "id": "hero_height", "min": 50, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 80 },
+    { "type": "range", "id": "hero_height", "min": 50, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 70 },
     { "type": "range", "id": "overlay_opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Opacité du voile sombre", "default": 25 },
 
     { "type": "header", "content": "Titre" },
@@ -42,7 +45,12 @@
 
     { "type": "header", "content": "Intro" },
     { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Maison Coeur accompagne architectes d'intérieur, décorateurs, hôteliers et restaurateurs dans la recherche et l'acquisition de pièces vintage, de design de collection et d'art singulier. Le Programme Pro offre un accès privilégié à la sélection, à la Conciergerie, et au conseil curatorial en amont des projets.</p>" },
-    { "type": "range", "id": "intro_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Taille du texte d'intro", "default": 17 }
+    { "type": "range", "id": "intro_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Taille du texte d'intro", "default": 17 },
+
+    { "type": "header", "content": "Manifeste" },
+    { "type": "richtext", "id": "manifeste_text", "label": "Texte du manifeste (Cormorant italic)", "default": "<p>Travailler avec celles et ceux qui composent les lieux.</p>" },
+    { "type": "range", "id": "manifeste_size", "min": 18, "max": 36, "step": 1, "unit": "px", "label": "Taille du manifeste", "default": 24 },
+    { "type": "range", "id": "manifeste_margin_top", "min": 16, "max": 64, "step": 2, "unit": "px", "label": "Marge au-dessus du manifeste", "default": 32 }
   ],
   "presets": [
     { "name": "Programme Pro – Hero" }

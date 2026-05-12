@@ -1,0 +1,51 @@
+{{ 'section-projets-accompagnes-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pa-hero-height: {{ section.settings.hero_height }}vh;
+    --pa-hero-bg: {{ section.settings.background_color }};
+    --pa-hero-title-size: {{ section.settings.title_size }}px;
+    --pa-hero-title-color: {{ section.settings.title_color }};
+    --pa-hero-intro-size: {{ section.settings.intro_size }}px;
+    --pa-hero-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --pa-hero-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --pa-hero-intro-color: {{ section.settings.intro_color }};
+    --pa-hero-intro-margin-top: {{ section.settings.intro_margin_top }}px;
+  }
+{%- endstyle -%}
+
+<section class="projets-accompagnes-hero">
+  <div class="projets-accompagnes-hero__inner">
+    <h1 class="projets-accompagnes-hero__title">{{ section.settings.title_text | escape }}</h1>
+    {%- if section.settings.intro_text != blank -%}
+      <div class="projets-accompagnes-hero__intro">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Projets – Hero",
+  "settings": [
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "hero_height", "min": 30, "max": 60, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 40 },
+    { "type": "color", "id": "background_color", "label": "Couleur de fond", "default": "#E8E4DD" },
+
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_text", "label": "Titre", "default": "Projets accompagnés" },
+    { "type": "range", "id": "title_size", "min": 36, "max": 96, "step": 2, "unit": "px", "label": "Taille du titre", "default": 56 },
+    { "type": "color", "id": "title_color", "label": "Couleur du titre", "default": "#1A1A1A" },
+
+    { "type": "header", "content": "Chapô" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte du chapô", "default": "<p>Une sélection de réalisations menées avec architectes d'intérieur, hôteliers, restaurateurs et collectionneurs.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille du chapô", "default": 16 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max du chapô", "default": 720 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur du chapô", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_top", "min": 16, "max": 64, "step": 2, "unit": "px", "label": "Marge au-dessus du chapô", "default": 28 }
+  ],
+  "presets": [
+    { "name": "Projets – Hero" }
+  ]
+}
+{% endschema %}

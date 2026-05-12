@@ -1,0 +1,40 @@
+{{ 'section-projets-accompagnes-cta.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pa-cta-padding-top: {{ section.settings.padding_top }}px;
+    --pa-cta-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pa-cta-bg: {{ section.settings.background_color }};
+    --pa-cta-size: {{ section.settings.cta_size }}px;
+    --pa-cta-tracking: {{ section.settings.cta_tracking | divided_by: 100.0 }}em;
+  }
+{%- endstyle -%}
+
+<section class="projets-accompagnes-cta">
+  <div class="projets-accompagnes-cta__inner">
+    {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="projets-accompagnes-cta__button">{{ section.settings.cta_text | escape }} →</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Projets – CTA bas",
+  "settings": [
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "cta_text", "label": "Texte du bouton", "default": "REJOINDRE LE PROGRAMME PRO" },
+    { "type": "url", "id": "cta_link", "label": "URL de destination" },
+    { "type": "range", "id": "cta_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Taille du texte", "default": 13 },
+    { "type": "range", "id": "cta_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking", "default": 22 },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "color", "id": "background_color", "label": "Couleur de fond", "default": "#E8E4DD" },
+    { "type": "range", "id": "padding_top", "min": 40, "max": 200, "step": 4, "unit": "px", "label": "Padding top", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 40, "max": 200, "step": 4, "unit": "px", "label": "Padding bottom", "default": 100 }
+  ],
+  "presets": [
+    { "name": "Projets – CTA bas" }
+  ]
+}
+{% endschema %}

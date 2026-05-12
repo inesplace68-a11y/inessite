@@ -1,0 +1,59 @@
+/* ============================================================
+   PROJETS ACCOMPAGNÉS — Section HERO (éditorial sobre)
+   ============================================================ */
+
+.projets-accompagnes-hero {
+  background-color: var(--pa-hero-bg, #E8E4DD);
+  min-height: var(--pa-hero-height, 40vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+}
+
+.projets-accompagnes-hero__inner {
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.projets-accompagnes-hero__title {
+  font-family: var(--mc-font-serif, 'Cormorant', serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--pa-hero-title-size, 56px);
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  color: var(--pa-hero-title-color, #1A1A1A);
+  margin: 0;
+}
+
+.projets-accompagnes-hero__intro {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: var(--pa-hero-intro-size, 16px);
+  line-height: var(--pa-hero-intro-line-height, 1.7);
+  color: var(--pa-hero-intro-color, #5A5446);
+  max-width: var(--pa-hero-intro-max-width, 720px);
+  margin: var(--pa-hero-intro-margin-top, 28px) auto 0;
+}
+
+.projets-accompagnes-hero__intro p {
+  margin: 0 0 1em;
+}
+
+.projets-accompagnes-hero__intro p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .projets-accompagnes-hero {
+    padding: 56px 24px;
+  }
+  .projets-accompagnes-hero__title {
+    font-size: clamp(36px, 10vw, var(--pa-hero-title-size, 56px));
+  }
+  .projets-accompagnes-hero__intro {
+    font-size: clamp(14px, 4.2vw, var(--pa-hero-intro-size, 16px));
+  }
+}

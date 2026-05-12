@@ -1,0 +1,46 @@
+/* ============================================================
+   PROJETS ACCOMPAGNÉS — Section CTA bas (bordé rectangulaire)
+   ============================================================ */
+
+.projets-accompagnes-cta {
+  background-color: var(--pa-cta-bg, #E8E4DD);
+  padding-top: var(--pa-cta-padding-top, 80px);
+  padding-bottom: var(--pa-cta-padding-bottom, 100px);
+}
+
+.projets-accompagnes-cta__inner {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.projets-accompagnes-cta__button {
+  display: inline-block;
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: var(--pa-cta-size, 13px);
+  letter-spacing: var(--pa-cta-tracking, 0.22em);
+  text-transform: uppercase;
+  color: #1A1A1A;
+  background-color: transparent;
+  border: 0.5px solid #1A1A1A;
+  padding: 16px 48px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.projets-accompagnes-cta__button:hover,
+.projets-accompagnes-cta__button:focus-visible {
+  background-color: #1A1A1A;
+  color: #FFFFFF;
+}
+
+@media (max-width: 767px) {
+  .projets-accompagnes-cta {
+    padding-top: calc(var(--pa-cta-padding-top, 80px) * 0.75);
+    padding-bottom: calc(var(--pa-cta-padding-bottom, 100px) * 0.75);
+  }
+  .projets-accompagnes-cta__button {
+    padding: 14px 32px;
+    font-size: calc(var(--pa-cta-size, 13px) * 0.95);
+  }
+}

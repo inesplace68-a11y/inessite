@@ -17,7 +17,7 @@
   }
 {%- endstyle -%}
 
-<section class="programme-pro-rejoindre">
+<section class="programme-pro-rejoindre" id="rejoindre">
   <div class="programme-pro-rejoindre__inner">
 
     {%- if section.settings.eyebrow_text != blank -%}
@@ -57,37 +57,13 @@
           </div>
 
           <div class="programme-pro-rejoindre__field">
-            <label for="ContactSecteur">SECTEUR D'ACTIVITÉ *</label>
-            <select id="ContactSecteur" name="contact[secteur]" required>
-              <option value="">— Sélectionner —</option>
-              <option>Architecture intérieure</option>
-              <option>Décoration</option>
-              <option>Hôtellerie</option>
-              <option>Restauration</option>
-              <option>Bureau d'études</option>
-              <option>Galerie d'art</option>
-              <option>Autre</option>
-            </select>
-          </div>
-
-          <div class="programme-pro-rejoindre__field">
-            <label for="ContactSiteWeb">SITE WEB</label>
-            <input type="url" id="ContactSiteWeb" name="contact[site_web]" autocomplete="url" placeholder="https://">
-          </div>
-
-          <div class="programme-pro-rejoindre__field">
             <label for="ContactEmail">EMAIL PROFESSIONNEL *</label>
             <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required>
           </div>
 
-          <div class="programme-pro-rejoindre__field">
-            <label for="ContactPhone">TÉLÉPHONE</label>
-            <input type="tel" id="ContactPhone" name="contact[phone]" autocomplete="tel">
-          </div>
-
           <div class="programme-pro-rejoindre__field programme-pro-rejoindre__field--textarea">
-            <label for="ContactBody">PROJET OU BESOIN ACTUEL</label>
-            <textarea id="ContactBody" name="contact[body]" rows="3" placeholder="(optionnel — votre projet en quelques lignes)"></textarea>
+            <label for="ContactBody">PROJET OU BESOIN ACTUEL *</label>
+            <textarea id="ContactBody" name="contact[body]" rows="4" required placeholder="Décrivez votre projet en quelques lignes"></textarea>
           </div>
 
           <div class="programme-pro-rejoindre__submit">
@@ -134,8 +110,8 @@
     { "type": "text", "id": "mandatory_note", "label": "Note champs obligatoires", "default": "Les champs marqués d'un astérisque sont obligatoires." },
 
     { "type": "header", "content": "Espacements section" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 80 }
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 }
   ],
   "presets": [
     { "name": "Programme Pro – Rejoindre" }

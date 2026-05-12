@@ -1,0 +1,88 @@
+{{ 'section-projets-accompagnes-grille.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --pa-grille-padding-top: {{ section.settings.padding_top }}px;
+    --pa-grille-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pa-grille-content-max-width: {{ section.settings.content_max_width }}px;
+    --pa-grille-column-gap: {{ section.settings.column_gap }}px;
+    --pa-grille-row-gap: {{ section.settings.row_gap }}px;
+  }
+{%- endstyle -%}
+
+<section class="projets-accompagnes-grille">
+  <div class="projets-accompagnes-grille__inner">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="projets-accompagnes-grille__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'carte' -%}
+            <li class="projets-accompagnes-grille__card" {{ block.shopify_attributes }}>
+              <div class="projets-accompagnes-grille__media">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1000 }}"
+                    srcset="{{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 800 }} 800w, {{ block.settings.image | image_url: width: 1200 }} 1200w"
+                    sizes="(max-width: 767px) 100vw, 50vw"
+                    alt="{{ block.settings.image.alt | default: block.settings.titre | escape }}"
+                    loading="lazy"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                  >
+                {%- else -%}
+                  <div class="projets-accompagnes-grille__placeholder" role="img" aria-label="Photo à venir">
+                    <span class="projets-accompagnes-grille__placeholder-text">PHOTO À VENIR</span>
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.secteur != blank -%}
+                <p class="projets-accompagnes-grille__secteur">{{ block.settings.secteur | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.titre != blank -%}
+                <h2 class="projets-accompagnes-grille__titre">{{ block.settings.titre | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.lieu != blank -%}
+                <p class="projets-accompagnes-grille__lieu">{{ block.settings.lieu | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.resume != blank -%}
+                <p class="projets-accompagnes-grille__resume">{{ block.settings.resume | escape }}</p>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Projets – Grille",
+  "settings": [
+    { "type": "header", "content": "Grille" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max du contenu", "default": 1200 },
+    { "type": "range", "id": "column_gap", "min": 24, "max": 96, "step": 4, "unit": "px", "label": "Gap horizontal", "default": 48 },
+    { "type": "range", "id": "row_gap", "min": 32, "max": 160, "step": 4, "unit": "px", "label": "Gap vertical", "default": 80 },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Padding top", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Padding bottom", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "carte",
+      "name": "Carte projet",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "secteur", "label": "Secteur (eyebrow)", "default": "Hôtellerie de luxe" },
+        { "type": "text", "id": "titre", "label": "Titre du projet", "default": "Hôtel particulier Côte d'Azur" },
+        { "type": "text", "id": "lieu", "label": "Lieu", "default": "Cap d'Antibes, France" },
+        { "type": "text", "id": "resume", "label": "Résumé (1-2 lignes)", "default": "Sélection de pièces vintage italiennes pour le réagencement de huit suites." }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    { "name": "Projets – Grille" }
+  ]
+}
+{% endschema %}

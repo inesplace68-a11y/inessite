@@ -1,17 +1,16 @@
 /* ============================================================
-   PROGRAMME PRO — Section PROJETS ACCOMPAGNÉS
-   Grille configurable (default 2 colonnes desktop)
+   PROGRAMME PRO — Section PROJETS (teaser 3 vignettes)
    ============================================================ */
 
 .programme-pro-projets {
   background-color: var(--mc-bg);
-  padding-top: var(--pp-proj-padding-top, 0);
-  padding-bottom: var(--pp-proj-padding-bottom, 140px);
+  padding-top: var(--pp-proj-padding-top, 40px);
+  padding-bottom: var(--pp-proj-padding-bottom, 60px);
 }
 
 .programme-pro-projets__inner {
   text-align: center;
-  max-width: var(--pp-proj-content-max-width, 1080px);
+  max-width: var(--pp-proj-content-max-width, 1200px);
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -23,64 +22,132 @@
   letter-spacing: var(--pp-proj-eyebrow-tracking, 0.3em);
   text-transform: uppercase;
   color: #1A1A1A;
-  margin: 0 0 var(--pp-proj-eyebrow-margin-bottom, 90px);
+  margin: 0 0 var(--pp-proj-eyebrow-margin-bottom, 64px);
 }
 
 .programme-pro-projets__grid {
   display: grid;
-  grid-template-columns: repeat(var(--pp-proj-columns-desktop, 2), minmax(0, 1fr));
-  column-gap: var(--pp-proj-column-gap, 100px);
-  row-gap: var(--pp-proj-row-gap, 70px);
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--pp-proj-column-gap, 40px);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.programme-pro-projets__item {
+.programme-pro-projets__card {
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
-.programme-pro-projets__title {
+.programme-pro-projets__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #D6CEBE;
+  margin-bottom: 20px;
+}
+
+.programme-pro-projets__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.programme-pro-projets__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #D6CEBE;
+}
+
+.programme-pro-projets__placeholder-text {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: #A0947A;
+  text-transform: uppercase;
+}
+
+.programme-pro-projets__secteur {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8C826E;
+  margin: 0 0 10px;
+}
+
+.programme-pro-projets__titre {
   font-family: var(--mc-font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: var(--pp-proj-title-size, 26px);
+  font-size: 20px;
   line-height: 1.25;
   color: #1A1A1A;
-  margin: 0 0 14px;
+  margin: 0 0 6px;
   letter-spacing: 0.005em;
 }
 
-.programme-pro-projets__description {
+.programme-pro-projets__lieu {
   font-family: var(--mc-font-sans);
+  font-style: italic;
   font-weight: 300;
-  font-size: var(--pp-proj-body-size, 15px);
-  line-height: var(--pp-proj-body-line-height, 1.65);
+  font-size: 14px;
+  line-height: 1.4;
   color: #5A5446;
   margin: 0;
+}
+
+.programme-pro-projets__cta-wrap {
+  margin-top: var(--pp-proj-cta-margin-top, 64px);
+  text-align: center;
+}
+
+.programme-pro-projets__cta {
+  display: inline-block;
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 0.5px;
+  padding: 4px 0;
+  transition: opacity 0.2s ease;
+}
+
+.programme-pro-projets__cta:hover,
+.programme-pro-projets__cta:focus-visible {
+  opacity: 0.7;
 }
 
 /* ------- RESPONSIVE < 768px ------- */
 @media (max-width: 767px) {
   .programme-pro-projets {
-    padding-bottom: calc(var(--pp-proj-padding-bottom, 140px) * 0.55);
+    padding-top: calc(var(--pp-proj-padding-top, 40px) * 0.7);
+    padding-bottom: calc(var(--pp-proj-padding-bottom, 60px) * 0.7);
   }
 
   .programme-pro-projets__eyebrow {
-    margin-bottom: calc(var(--pp-proj-eyebrow-margin-bottom, 90px) * 0.55);
+    margin-bottom: calc(var(--pp-proj-eyebrow-margin-bottom, 64px) * 0.6);
   }
 
   .programme-pro-projets__grid {
     grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: calc(var(--pp-proj-row-gap, 70px) * 0.7);
+    gap: 36px;
   }
 
-  .programme-pro-projets__item {
-    text-align: center;
-  }
-
-  .programme-pro-projets__title {
-    font-size: clamp(20px, 5.6vw, var(--pp-proj-title-size, 26px));
+  .programme-pro-projets__cta-wrap {
+    margin-top: calc(var(--pp-proj-cta-margin-top, 64px) * 0.7);
   }
 }

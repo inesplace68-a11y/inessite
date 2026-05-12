@@ -4,10 +4,6 @@
       "type": "programme-pro-hero",
       "settings": {}
     },
-    "manifeste": {
-      "type": "programme-pro-manifeste",
-      "settings": {}
-    },
     "privileges": {
       "type": "programme-pro-privileges",
       "blocks": {
@@ -61,57 +57,14 @@
     },
     "projets": {
       "type": "programme-pro-projets",
-      "blocks": {
-        "j1": {
-          "type": "projet",
-          "settings": {
-            "title": "Hôtellerie de luxe",
-            "description": "Propriétés sur la Côte d'Azur, résidences hôtelières en région."
-          }
-        },
-        "j2": {
-          "type": "projet",
-          "settings": {
-            "title": "Architecture intérieure et décoration",
-            "description": "Cabinets parisiens et internationaux."
-          }
-        },
-        "j3": {
-          "type": "projet",
-          "settings": {
-            "title": "Restauration gastronomique",
-            "description": "Projets à Paris et en région."
-          }
-        },
-        "j4": {
-          "type": "projet",
-          "settings": {
-            "title": "Sièges et bureaux d'entreprise",
-            "description": "Projets parisiens haut de gamme."
-          }
-        },
-        "j5": {
-          "type": "projet",
-          "settings": {
-            "title": "Résidences privées",
-            "description": "Collectionneurs en France et à l'international."
-          }
-        },
-        "j6": {
-          "type": "projet",
-          "settings": {
-            "title": "Acquisitions et conseil en art",
-            "description": "Pour collectionneurs et galeries partenaires."
-          }
-        }
-      },
-      "block_order": ["j1", "j2", "j3", "j4", "j5", "j6"],
-      "settings": {}
+      "settings": {
+        "cta_link": "/pages/projets-accompagnes"
+      }
     },
     "rejoindre": {
       "type": "programme-pro-rejoindre",
       "settings": {}
     }
   },
-  "order": ["hero", "manifeste", "privileges", "lettre", "projets", "rejoindre"]
+  "order": ["hero", "privileges", "lettre", "projets", "rejoindre"]
 }

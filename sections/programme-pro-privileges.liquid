@@ -13,9 +13,9 @@
     --pp-priv-body-size: {{ section.settings.body_size }}px;
     --pp-priv-body-max-width: {{ section.settings.body_max_width }}px;
     --pp-priv-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
-    --pp-priv-separator-width: {{ section.settings.separator_width }}px;
-    --pp-priv-separator-gap-top: {{ section.settings.separator_gap_top }}px;
-    --pp-priv-separator-gap-bottom: {{ section.settings.separator_gap_bottom }}px;
+    --pp-priv-grid-gap-h: {{ section.settings.grid_gap_horizontal }}px;
+    --pp-priv-grid-gap-v: {{ section.settings.grid_gap_vertical }}px;
+    --pp-priv-couronnement-margin-top: {{ section.settings.couronnement_margin_top }}px;
   }
 {%- endstyle -%}
 
@@ -27,8 +27,8 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <ul class="programme-pro-privileges__list" role="list">
-        {%- for block in section.blocks -%}
+      <ul class="programme-pro-privileges__grid" role="list">
+        {%- for block in section.blocks limit: 4 -%}
           {%- if block.type == 'privilege' -%}
             <li class="programme-pro-privileges__item" {{ block.shopify_attributes }}>
               {%- if block.settings.numeral != blank -%}
@@ -40,13 +40,30 @@
               {%- if block.settings.body != blank -%}
                 <div class="programme-pro-privileges__body">{{ block.settings.body }}</div>
               {%- endif -%}
-              {%- unless forloop.last -%}
-                <span class="programme-pro-privileges__separator" aria-hidden="true"></span>
-              {%- endunless -%}
             </li>
           {%- endif -%}
         {%- endfor -%}
       </ul>
+
+      {%- if section.blocks.size > 4 -%}
+        <div class="programme-pro-privileges__couronnement">
+          {%- for block in section.blocks offset: 4 limit: 1 -%}
+            {%- if block.type == 'privilege' -%}
+              <article class="programme-pro-privileges__item programme-pro-privileges__item--couronnement" {{ block.shopify_attributes }}>
+                {%- if block.settings.numeral != blank -%}
+                  <p class="programme-pro-privileges__numeral">{{ block.settings.numeral | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h2 class="programme-pro-privileges__title">{{ block.settings.title | escape }}</h2>
+                {%- endif -%}
+                {%- if block.settings.body != blank -%}
+                  <div class="programme-pro-privileges__body">{{ block.settings.body }}</div>
+                {%- endif -%}
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     {%- endif -%}
 
   </div>
@@ -60,7 +77,7 @@
     { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "LES PRIVILÈGES" },
     { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
     { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Tracking eyebrow (letter-spacing × 100)", "default": 30 },
-    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 32 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 60 },
 
     { "type": "header", "content": "Numéral I / II / III…" },
     { "type": "range", "id": "numeral_size", "min": 24, "max": 80, "step": 1, "unit": "px", "label": "Taille du numéral", "default": 32 },
@@ -72,14 +89,14 @@
     { "type": "range", "id": "body_max_width", "min": 500, "max": 900, "step": 10, "unit": "px", "label": "Largeur max du body", "default": 720 },
     { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne body", "default": 170 },
 
-    { "type": "header", "content": "Séparateur entre privilèges" },
-    { "type": "range", "id": "separator_width", "min": 30, "max": 200, "step": 2, "unit": "px", "label": "Largeur du séparateur", "default": 60 },
-    { "type": "range", "id": "separator_gap_top", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "Gap au-dessus du séparateur", "default": 24 },
-    { "type": "range", "id": "separator_gap_bottom", "min": 20, "max": 120, "step": 2, "unit": "px", "label": "Gap en dessous du séparateur", "default": 24 },
+    { "type": "header", "content": "Grille (4 premiers items + V couronnement)" },
+    { "type": "range", "id": "grid_gap_horizontal", "min": 24, "max": 96, "step": 4, "unit": "px", "label": "Gap horizontal entre colonnes", "default": 64 },
+    { "type": "range", "id": "grid_gap_vertical", "min": 24, "max": 96, "step": 4, "unit": "px", "label": "Gap vertical entre lignes", "default": 48 },
+    { "type": "range", "id": "couronnement_margin_top", "min": 48, "max": 160, "step": 8, "unit": "px", "label": "Marge au-dessus du V couronnement", "default": 96 },
 
     { "type": "header", "content": "Espacements section" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 60 }
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 40 }
   ],
   "blocks": [
     {
