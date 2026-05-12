@@ -48,7 +48,7 @@
         "image_overlay_opacity": 40,
         "nav_hero_gap": 16,
         "hero_image_position_x": 0,
-        "hero_image_position_y": 50,
+        "hero_image_position_y": 25,
         "image_height": "large",
         "image_height_desktop_custom": 50,
         "image_behavior": "none",
