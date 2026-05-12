@@ -12,10 +12,6 @@
         width="2400"
         height="1600"
       >
-    {%- else -%}
-      <div class="programme-pro-hero__placeholder" role="img" aria-label="Photo à venir">
-        <span class="programme-pro-hero__placeholder-text">PHOTO À VENIR</span>
-      </div>
     {%- endif -%}
   </div>
   <div class="programme-pro-hero__overlay" aria-hidden="true"></div>
@@ -36,7 +32,7 @@
   "settings": [
     { "type": "header", "content": "Image hero" },
     { "type": "image_picker", "id": "hero_image", "label": "Image hero (vide = placeholder)" },
-    { "type": "range", "id": "hero_height", "min": 50, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 70 },
+    { "type": "range", "id": "hero_height", "min": 50, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 55 },
     { "type": "range", "id": "overlay_opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Opacité du voile sombre", "default": 25 },
 
     { "type": "header", "content": "Titre" },
