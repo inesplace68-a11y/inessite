@@ -20,6 +20,10 @@
   --mc-font-sans:  'Jost', 'Helvetica Neue', Arial, sans-serif;
 
   --mc-transition: 0.25s ease;
+
+  /* Largeur canonique du contenu home (hors hero + footer full-bleed) */
+  --content-max-width: 1440px;
+  --content-gutter-desktop: 64px;
 }
 
 /* ============================================================
@@ -54,7 +58,11 @@ h1, h2, h3, h4,
 .mc-section { padding: 80px 0; }
 @media (max-width: 749px) { .mc-section { padding: 48px 0; } }
 
-.mc-container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+.mc-container {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
 @media (max-width: 749px) { .mc-container { padding: 0 20px; } }
 
 .mc-section-heading {
@@ -233,14 +241,22 @@ h1, h2, h3, h4,
 /* ============================================================
    GRILLE NOTRE SÉLECTION (mc-collection-grid)
    ============================================================ */
+.mc-collection-grid {
+  background-color: var(--mc-bg, #F7F5F1);
+}
+
 .mc-collection-grid__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
-@media (max-width: 989px) {
-  .mc-collection-grid__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 1023px) {
+  .mc-collection-grid__grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+
+@media (max-width: 767px) {
+  .mc-collection-grid__grid { grid-template-columns: 1fr; gap: 16px; }
 }
 
 .mc-collection-grid__link {
@@ -284,23 +300,31 @@ h1, h2, h3, h4,
   text-align: center;
 }
 
-/* Lien DÉCOUVRIR sous chaque catégorie */
+/* Lien DÉCOUVRIR sous chaque catégorie — Phase 9 : style cohérent liens secondaires services */
 .mc-collection-grid__discover {
   font-family: var(--mc-font-sans);
   font-weight: 300;
   font-size: 1.2rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--mc-mid);
+  color: var(--mc-dark);
   margin: 0;
   text-align: center;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 1px;
-  transition: color var(--mc-transition);
+  border-bottom: 1px solid var(--mc-dark);
+  padding: 4px 0;
+  transition: opacity var(--mc-transition);
+}
+
+@supports (border-bottom-width: 0.5px) {
+  .mc-collection-grid__discover { border-bottom-width: 0.5px; }
+}
+
+.mc-collection-grid__discover-arrow {
+  display: inline-block;
 }
 
 .mc-collection-grid__link:hover .mc-collection-grid__discover {
-  color: var(--mc-dark);
+  opacity: 0.65;
 }
 
 /* ============================================================
@@ -536,15 +560,23 @@ h1, h2, h3, h4,
   color: var(--mc-mid) !important;
 }
 
-/* Cartes produit */
-.card__heading {
-  font-family: var(--mc-font-serif) !important;
+/* Cartes produit — Phase 9 : Jost non-italique partout (carousel, collection, PDP related) */
+.card__heading,
+.card__heading a {
+  font-family: var(--mc-font-sans) !important;
+  font-style: normal !important;
   font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
 }
 
-.card .price {
+.card .price,
+.card .price__regular,
+.card .price__sale,
+.card .price-item {
   font-family: var(--mc-font-sans) !important;
+  font-style: normal !important;
   font-weight: 300 !important;
+  letter-spacing: 0.02em !important;
 }
 
 /* ============================================================
@@ -847,29 +879,38 @@ h1, h2, h3, h4,
 
 .mc-footer-bar-localization .disclosure__button,
 .mc-footer-bar-localization .localization-form__select {
-  background: transparent;
-  border: none;
-  padding: 6px 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
   font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  font-size: 1.3rem;
-  letter-spacing: 0.07em;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(232, 228, 221, 0.7);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: color var(--mc-transition);
 }
 
 .mc-footer-bar-localization .disclosure__button:hover,
 .mc-footer-bar-localization .localization-form__select:hover {
-  color: #fff;
+  color: rgba(232, 228, 221, 1);
+}
+
+.mc-footer-bar-localization .disclosure__button > span,
+.mc-footer-bar-localization .localization-form__select > span {
+  display: inline;
 }
 
 .mc-footer-bar-localization .disclosure__button svg,
 .mc-footer-bar-localization .localization-form__select svg {
   width: 10px;
   height: 10px;
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .mc-footer-bar-inner {

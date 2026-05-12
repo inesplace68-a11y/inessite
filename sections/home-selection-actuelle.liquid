@@ -58,11 +58,15 @@
               <h3 class="home-selection__name">{{ product.title }}</h3>
 
               <p class="home-selection__price">
-                {%- if product.price_varies -%}
-                  {{ 'products.product.from_price_html' | t: price: product.price_min }}
-                {%- else -%}
-                  {{ product.price | money }}
-                {%- endif -%}
+                {%- liquid
+                  if product.price_varies
+                    assign hs_price_str = 'products.product.from_price_html' | t: price: product.price_min
+                  else
+                    assign hs_price_str = product.price | money
+                  endif
+                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+                -%}
+                {{ hs_price_str }}
               </p>
             </a>
           {%- endfor -%}

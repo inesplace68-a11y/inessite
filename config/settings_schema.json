@@ -147,6 +147,31 @@
     ]
   },
   {
+    "name": "Maison Coeur — Largeur",
+    "settings": [
+      {
+        "type": "range",
+        "id": "content_max_width",
+        "min": 1200,
+        "max": 1600,
+        "step": 4,
+        "unit": "px",
+        "label": "Largeur maximale du contenu (desktop)",
+        "default": 1440
+      },
+      {
+        "type": "range",
+        "id": "content_gutter_desktop",
+        "min": 16,
+        "max": 128,
+        "step": 4,
+        "unit": "px",
+        "label": "Gouttières latérales (desktop)",
+        "default": 64
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.layout.name",
     "settings": [
       {

@@ -33,7 +33,9 @@
                 <p class="mc-collection-grid__label">{{ block.settings.title }}</p>
               {%- endif -%}
 
-              <p class="mc-collection-grid__discover">{{ block.settings.discover_label | default: 'Découvrir' }}</p>
+              <p class="mc-collection-grid__discover">
+                {{- block.settings.discover_label | default: 'Découvrir' | upcase -}}<span class="mc-collection-grid__discover-arrow" aria-hidden="true">&nbsp;→</span>
+              </p>
             </a>
           </div>
         {%- endfor -%}
@@ -62,7 +64,7 @@
     {
       "type": "collection_item",
       "name": "Collection",
-      "limit": 4,
+      "limit": 5,
       "settings": [
         {
           "type": "image_picker",
@@ -95,19 +97,23 @@
       "blocks": [
         {
           "type": "collection_item",
-          "settings": { "title": "Art vintage", "discover_label": "Découvrir" }
+          "settings": { "title": "OBJETS", "discover_label": "Découvrir", "collection_link": "/collections/objets" }
         },
         {
           "type": "collection_item",
-          "settings": { "title": "Mobilier vintage", "discover_label": "Découvrir" }
+          "settings": { "title": "MIROIRS", "discover_label": "Découvrir", "collection_link": "/collections/miroirs" }
         },
         {
           "type": "collection_item",
-          "settings": { "title": "Pièces de design", "discover_label": "Découvrir" }
+          "settings": { "title": "LUMINAIRES", "discover_label": "Découvrir", "collection_link": "/collections/luminaires" }
         },
         {
           "type": "collection_item",
-          "settings": { "title": "Collectibles", "discover_label": "Découvrir" }
+          "settings": { "title": "MOBILIER", "discover_label": "Découvrir", "collection_link": "/collections/mobilier" }
+        },
+        {
+          "type": "collection_item",
+          "settings": { "title": "ART", "discover_label": "Découvrir", "collection_link": "/collections/art" }
         }
       ]
     }

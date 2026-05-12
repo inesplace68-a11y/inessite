@@ -35,6 +35,10 @@
     assign money_price_max = price_max | money_with_currency
   endif
 
+  assign money_price = money_price | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+  assign money_price_min = money_price_min | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+  assign money_price_max = money_price_max | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif

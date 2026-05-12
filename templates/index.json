@@ -81,33 +81,41 @@
         "col-1": {
           "type": "collection_item",
           "settings": {
-            "title": "Art vintage",
+            "title": "OBJETS",
             "discover_label": "Découvrir",
-            "collection_link": "shopify://collections/art-vintage"
+            "collection_link": "shopify://collections/objets"
           }
         },
         "col-2": {
           "type": "collection_item",
           "settings": {
-            "title": "Mobilier vintage",
+            "title": "MIROIRS",
             "discover_label": "Découvrir",
-            "collection_link": "shopify://collections/mobilier-vintage"
+            "collection_link": "shopify://collections/miroirs"
           }
         },
         "col-3": {
           "type": "collection_item",
           "settings": {
-            "title": "Pièces de design",
+            "title": "LUMINAIRES",
             "discover_label": "Découvrir",
-            "collection_link": "shopify://collections/design"
+            "collection_link": "shopify://collections/luminaires"
           }
         },
         "col-4": {
           "type": "collection_item",
           "settings": {
-            "title": "Collectibles",
+            "title": "MOBILIER",
             "discover_label": "Découvrir",
-            "collection_link": "shopify://collections/collectibles"
+            "collection_link": "shopify://collections/mobilier"
+          }
+        },
+        "col-5": {
+          "type": "collection_item",
+          "settings": {
+            "title": "ART",
+            "discover_label": "Découvrir",
+            "collection_link": "shopify://collections/art"
           }
         }
       },
@@ -115,7 +123,8 @@
         "col-1",
         "col-2",
         "col-3",
-        "col-4"
+        "col-4",
+        "col-5"
       ],
       "settings": {
         "title": "NOTRE SÉLECTION"
@@ -125,7 +134,7 @@
       "type": "mc-editorial",
       "settings": {
         "brand_name": "MAISON COEUR",
-        "tagline": "GALERIE D'ART — PARIS",
+        "tagline": "",
         "text": "<p>Nous sélectionnons avec soin des objets chargés d'histoire, des meubles d'exception et des œuvres d'art qui transforment un intérieur en un espace de vie unique. Chaque pièce raconte une histoire, chaque objet porte une intention.</p>",
         "cta_label": "Notre histoire",
         "cta_link": "shopify://pages/a-propos"
@@ -164,7 +173,7 @@
         "col1_cta_text": "CONFIER UNE RECHERCHE",
         "col1_cta_url": "shopify://pages/conciergerie",
         "col2_eyebrow": "PROGRAMME PRO",
-        "col2_title": "Architectes, hôteliers, restaurateurs.",
+        "col2_title": "Architectes, hôteliers, restaurateurs",
         "col2_description": "Sourcing curatorial prioritaire, tarification professionnelle, conseil en amont de projet.",
         "col2_cta_text": "DÉCOUVRIR LE PROGRAMME",
         "col2_cta_url": "shopify://pages/programme-pro",

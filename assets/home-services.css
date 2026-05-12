@@ -9,9 +9,9 @@
 }
 
 .home-services__inner {
-  max-width: 1280px;
+  max-width: var(--content-max-width, 1440px);
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 0 var(--content-gutter-desktop, 64px);
 }
 
 .home-services__grid {
