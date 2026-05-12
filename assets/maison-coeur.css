@@ -240,9 +240,10 @@ h1, h2, h3, h4,
 
 /* ============================================================
    GRILLE NOTRE SÉLECTION (mc-collection-grid)
+   Phase 9-bis : fond blanc — 2e rupture visuelle dans le flux pierre crème
    ============================================================ */
 .mc-collection-grid {
-  background-color: var(--mc-bg, #F7F5F1);
+  background-color: #FFFFFF;
 }
 
 .mc-collection-grid__grid {
