@@ -24,6 +24,9 @@
   #shopify-section-{{ section.id }} .mc-hd-left-stack {
     height: {{ section.settings.monogram_height }}px;
   }
+  #shopify-section-{{ section.id }} .mc-hd-globe {
+    transform: translateX({{ section.settings.globe_offset_x }}px);
+  }
   #shopify-section-{{ section.id }} .mc-hd-pro {
     font-size: {{ section.settings.pro_font_size }}px;
     letter-spacing: {{ section.settings.pro_letter_spacing }}em;
@@ -345,6 +348,17 @@
       "step": 2,
       "unit": "px",
       "default": 16
+    },
+    {
+      "type": "range",
+      "id": "globe_offset_x",
+      "label": "Décalage horizontal globe (px)",
+      "info": "Recalage micro de l'icône globe pour la centrer visuellement au-dessus du texte « PRO ».",
+      "min": -12,
+      "max": 0,
+      "step": 1,
+      "unit": "px",
+      "default": -5
     },
     {
       "type": "header",
