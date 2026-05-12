@@ -31,6 +31,7 @@
     font-size: {{ section.settings.pro_font_size }}px;
     letter-spacing: {{ section.settings.pro_letter_spacing }}em;
     color: {{ section.settings.pro_color }};
+    transform: translateX({{ section.settings.pro_offset_x }}px);
   }
   #shopify-section-{{ section.id }} .mc-hd-nav__link {
     font-size: {{ section.settings.nav_font_size }}px;
@@ -402,6 +403,17 @@
       "id": "pro_color",
       "label": "Couleur du lien PRO",
       "default": "#1A1814"
+    },
+    {
+      "type": "range",
+      "id": "pro_offset_x",
+      "label": "Décalage horizontal texte PRO (px)",
+      "info": "Recalage micro du texte « PRO » sous le globe (négatif = vers la gauche).",
+      "min": -12,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": -4
     },
     {
       "type": "header",
