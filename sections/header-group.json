@@ -43,7 +43,7 @@
         "wordmark_image": "shopify://shop_images/maison-coeur-logo-jost-regular-v5.png",
         "monogram_height": 30,
         "wordmark_height": 62,
-        "wordmark_offset_y": 4,
+        "wordmark_offset_y": -8,
         "mono_globe_gap": 16,
         "pro_text": "PRO",
         "pro_url": "/pages/programme-pro",
