@@ -13,6 +13,7 @@
     --hs-pieces-visible: {{ pieces_visible }};
     --hs-card-gap: {{ section.settings.card_gap }}px;
     --hs-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --hs-media-height: {{ section.settings.carousel_card_height }}px;
   }
 {%- endstyle -%}
 
@@ -224,6 +225,16 @@
       "unit": "px",
       "label": "Espace entre cartes",
       "default": 28
+    },
+    {
+      "type": "range",
+      "id": "carousel_card_height",
+      "min": 280,
+      "max": 680,
+      "step": 4,
+      "unit": "px",
+      "label": "Hauteur des cartes (desktop)",
+      "default": 320
     },
 
     { "type": "header", "content": "Espacements" },
