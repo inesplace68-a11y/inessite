@@ -56,6 +56,7 @@
   text-transform: uppercase;
   color: var(--mc-mid, #8C8882);
   margin: 0 0 18px;
+  text-align: center;
 }
 
 /* Niveau 4 dédié Services — Cormorant italique, réduit à ~22px
@@ -71,6 +72,7 @@
   margin: 0 0 var(--hsv-gap-title-body, 28px);
   max-width: 28ch;
   text-wrap: balance;
+  text-align: center;
 }
 
 .home-services__description {
@@ -81,6 +83,7 @@
   color: var(--mc-dark, #1A1614);
   margin: 0 0 28px;
   max-width: 38ch;
+  text-align: center;
 }
 
 .home-services__cta {
@@ -93,7 +96,8 @@
   border-bottom: 1px solid var(--mc-dark, #1A1614);
   padding-bottom: 3px;
   display: inline-block;
-  align-self: flex-start;
+  align-self: center;
+  text-align: center;
   transition: opacity 0.2s ease;
 }
 
