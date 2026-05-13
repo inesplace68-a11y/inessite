@@ -2,9 +2,10 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hsv-padding-top: {{ section.settings.padding_top }}px;
-    --hsv-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hsv-padding-vertical: {{ section.settings.padding_vertical_services }}px;
     --hsv-column-gap: {{ section.settings.column_gap }}px;
+    --hsv-title-size: {{ section.settings.services_title_size }}px;
+    --hsv-gap-title-body: {{ section.settings.gap_title_body_services }}px;
     --hsv-bg: {{ section.settings.background_color }};
   }
 {%- endstyle -%}
@@ -146,26 +147,40 @@
       "default": "#F7F5F1"
     },
 
-    { "type": "header", "content": "Espacements" },
+    { "type": "header", "content": "Typographie & rythme" },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 48,
-      "max": 160,
-      "step": 8,
+      "id": "services_title_size",
+      "min": 18,
+      "max": 32,
+      "step": 1,
       "unit": "px",
-      "label": "Marge en haut",
-      "default": 96
+      "label": "Taille titres Services (desktop)",
+      "info": "Cormorant italique. Niveau 4 dédié Services (distinct du Niveau 4 global cartes produit).",
+      "default": 22
     },
     {
       "type": "range",
-      "id": "padding_bottom",
-      "min": 48,
-      "max": 160,
-      "step": 8,
+      "id": "gap_title_body_services",
+      "min": 16,
+      "max": 64,
+      "step": 2,
       "unit": "px",
-      "label": "Marge en bas",
-      "default": 96
+      "label": "Gap titre/body Services",
+      "default": 28
+    },
+
+    { "type": "header", "content": "Espacements" },
+    {
+      "type": "range",
+      "id": "padding_vertical_services",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding vertical section Services",
+      "info": "Marge haute et basse de la section (symétrique).",
+      "default": 64
     },
     {
       "type": "range",

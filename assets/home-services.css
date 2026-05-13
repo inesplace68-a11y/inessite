@@ -1,10 +1,11 @@
 /* ============================================================
    HOME — Services Maison Coeur (Conciergerie + Programme Pro)
+   Phase 10-bis : titres N4 dédiés, séparateur recentré, rythme resserré
    ============================================================ */
 
 .home-services {
-  padding-top: var(--hsv-padding-top, 96px);
-  padding-bottom: var(--hsv-padding-bottom, 96px);
+  padding-top: var(--hsv-padding-vertical, 64px);
+  padding-bottom: var(--hsv-padding-vertical, 64px);
   background-color: var(--hsv-bg, #F7F5F1);
 }
 
@@ -14,29 +15,27 @@
   padding: 0 var(--content-gutter-desktop, 64px);
 }
 
+/* Grid 2 colonnes strictement égales (1fr 1fr) — le séparateur
+   tombe pile au milieu de la section grâce à ::before left: 50% sur le grid */
 .home-services__grid {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--hsv-column-gap, 64px);
   align-items: start;
 }
 
-.home-services--with-separator .home-services__col--pro {
-  position: relative;
-  padding-left: var(--hsv-column-gap, 64px);
-  margin-left: calc(var(--hsv-column-gap, 64px) * -1);
-}
-
-.home-services--with-separator .home-services__col--pro::before {
+.home-services--with-separator .home-services__grid::before {
   content: '';
   position: absolute;
   top: 8px;
   bottom: 8px;
-  left: 0;
+  left: 50%;
   width: 1px;
   background-color: #E8E4DD;
-  transform: scaleX(0.5);
-  transform-origin: left;
+  transform: translateX(-50%) scaleX(0.5);
+  transform-origin: center;
+  pointer-events: none;
 }
 
 .home-services__col {
@@ -54,20 +53,19 @@
   margin: 0 0 18px;
 }
 
-/* Niveau 3 — Titres éditoriaux secondaires (Cormorant italique) */
+/* Niveau 4 dédié Services — Cormorant italique, réduit à ~22px
+   text-wrap balance pour éviter les orphelins (mots seuls sur seconde ligne) */
 .home-services__title {
   font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: italic;
   font-weight: 400;
-  font-size: var(--type-h3, 32px);
-  line-height: 1.2;
+  font-size: var(--hsv-title-size, 22px);
+  line-height: 1.25;
   letter-spacing: 0.005em;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 20px;
-  max-width: 22ch;
-}
-@media (max-width: 749px) {
-  .home-services__title { font-size: calc(var(--type-h3, 32px) * 0.78); }
+  margin: 0 0 var(--hsv-gap-title-body, 28px);
+  max-width: 28ch;
+  text-wrap: balance;
 }
 
 .home-services__description {
@@ -105,29 +103,34 @@
 
 @media (max-width: 749px) {
   .home-services {
-    padding-top: clamp(56px, var(--hsv-padding-top, 96px), var(--hsv-padding-top, 96px));
-    padding-bottom: clamp(56px, var(--hsv-padding-bottom, 96px), var(--hsv-padding-bottom, 96px));
+    padding-top: clamp(48px, var(--hsv-padding-vertical, 64px), var(--hsv-padding-vertical, 64px));
+    padding-bottom: clamp(48px, var(--hsv-padding-vertical, 64px), var(--hsv-padding-vertical, 64px));
   }
   .home-services__inner {
     padding: 0 20px;
   }
   .home-services__grid {
     grid-template-columns: 1fr;
-    gap: 56px;
+    gap: 48px;
+  }
+  /* Séparateur vertical désactivé en mobile (cols empilées) ; rendu en bordure top sur col-pro */
+  .home-services--with-separator .home-services__grid::before {
+    display: none;
   }
   .home-services--with-separator .home-services__col--pro {
-    padding-left: 0;
-    margin-left: 0;
-    padding-top: 56px;
+    position: relative;
+    padding-top: 48px;
   }
   .home-services--with-separator .home-services__col--pro::before {
+    content: '';
+    position: absolute;
     top: 0;
-    bottom: auto;
     left: 0;
     right: 0;
-    width: auto;
     height: 1px;
+    background-color: #E8E4DD;
     transform: scaleY(0.5);
     transform-origin: top;
   }
+  .home-services__title { font-size: calc(var(--hsv-title-size, 22px) * 0.9); }
 }
