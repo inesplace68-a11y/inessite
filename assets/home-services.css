@@ -38,19 +38,14 @@
   pointer-events: none;
 }
 
+/* Phase 10-sexies — centrage symétrique : les enfants (titre 28ch / body 38ch)
+   sont centrés dans la cellule 624px pour obtenir une vraie symétrie visuelle
+   gauche/droite entre col1 et col2. text-align: left préservé en interne pour
+   la lisibilité du corps éditorial. */
 .home-services__col {
   display: flex;
   flex-direction: column;
-}
-
-/* Phase 10-sexies — miroir éditorial col2 : enfants ancrés à droite de la cellule
-   pour compenser le vide perçu (titre 28ch / body 38ch dans 624px). text-align: left
-   préservé sur les enfants ; CTA align-self surclassé pour suivre le miroir. */
-.home-services__col:nth-child(2) {
-  align-items: flex-end;
-}
-.home-services__col:nth-child(2) .home-services__cta {
-  align-self: flex-end;
+  align-items: center;
 }
 
 .home-services__eyebrow {
@@ -143,11 +138,8 @@
     transform-origin: top;
   }
   .home-services__title { font-size: calc(var(--hsv-title-size, 22px) * 0.9); }
-  /* Phase 10-sexies — en mobile (1 colonne), retour à flex-start sur col2 */
-  .home-services__col:nth-child(2) {
+  /* Phase 10-sexies — en mobile (grille 1 colonne), retour à flex-start */
+  .home-services__col {
     align-items: flex-start;
-  }
-  .home-services__col:nth-child(2) .home-services__cta {
-    align-self: flex-start;
   }
 }
