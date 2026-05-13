@@ -14,12 +14,12 @@
   padding: 0 var(--content-gutter-desktop, 64px);
 }
 
-/* ----------------- Eyebrow (aligné typographiquement sur NOTRE SÉLECTION) ----------------- */
+/* ----------------- Eyebrow (Niveau 5 — Jost CAPS letter-spaced) ----------------- */
 .home-selection__eyebrow {
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
-  font-size: 1.5rem;
-  letter-spacing: 0.2em;
+  font-size: var(--type-h5, 12px);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-align: center;
   color: var(--mc-dark, #1A1614);
@@ -81,15 +81,19 @@
   opacity: 0.85;
 }
 
+/* Niveau 4 — Titre fonctionnel : Cormorant regular non-italique (Phase 10 revert) */
 .home-selection__name {
-  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
+  font-size: var(--type-h4, 20px);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
   color: var(--mc-dark, #1A1614);
   margin: 0 0 6px;
+}
+@media (max-width: 749px) {
+  .home-selection__name { font-size: calc(var(--type-h4, 20px) * 0.85); }
 }
 
 .home-selection__price {

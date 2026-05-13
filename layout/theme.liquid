@@ -117,6 +117,13 @@
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
 
+        /* Phase 10 — Hiérarchie typographique (5 niveaux) */
+        --type-h1: {{ settings.type_h1_size | default: 88 }}px;
+        --type-h2: {{ settings.type_h2_size | default: 52 }}px;
+        --type-h3: {{ settings.type_h3_size | default: 32 }}px;
+        --type-h4: {{ settings.type_h4_size | default: 20 }}px;
+        --type-h5: {{ settings.type_h5_size | default: 12 }}px;
+
         --media-padding: {{ settings.media_padding }}px;
         --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
         --media-border-width: {{ settings.media_border_thickness }}px;

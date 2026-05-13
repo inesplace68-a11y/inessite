@@ -24,6 +24,16 @@
   /* Largeur canonique du contenu home (hors hero + footer full-bleed) */
   --content-max-width: 1440px;
   --content-gutter-desktop: 64px;
+
+  /* ----------------------------------------------------------
+     HIÉRARCHIE TYPOGRAPHIQUE — échelle 5 niveaux (Phase 10)
+     Defaults : surchargés par les settings Customizer via layout/theme.liquid
+     ---------------------------------------------------------- */
+  --type-h1: 88px;   /* Niveau 1 — Hero éditorial (Cormorant italic)         */
+  --type-h2: 52px;   /* Niveau 2 — Identité centerpiece (Cormorant regular)  */
+  --type-h3: 32px;   /* Niveau 3 — Titres éditoriaux secondaires (italic)    */
+  --type-h4: 20px;   /* Niveau 4 — Titres fonctionnels (Cormorant regular)   */
+  --type-h5: 12px;   /* Niveau 5 — Eyebrow / CTA (Jost CAPS letter-spaced)   */
 }
 
 /* ============================================================
@@ -358,10 +368,11 @@ h1, h2, h3, h4,
   align-items: flex-start;
 }
 
+/* Niveau 2 — Identité centerpiece (Cormorant regular non-italique) */
 .mc-editorial__brand {
   font-family: var(--mc-font-serif);
   font-weight: 400;
-  font-size: 3rem;
+  font-size: var(--type-h2);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--mc-dark);
@@ -370,7 +381,7 @@ h1, h2, h3, h4,
 }
 
 @media (max-width: 749px) {
-  .mc-editorial__brand { font-size: 2.2rem; }
+  .mc-editorial__brand { font-size: calc(var(--type-h2) * 0.72); }
 }
 
 .mc-editorial__tagline {
@@ -561,13 +572,58 @@ h1, h2, h3, h4,
   color: var(--mc-mid) !important;
 }
 
-/* Cartes produit — Phase 9 : Jost non-italique partout (carousel, collection, PDP related) */
+/* Cartes produit — Phase 10 : Cormorant regular non-italique (revert Phase 9) — Niveau 4 */
 .card__heading,
 .card__heading a {
-  font-family: var(--mc-font-sans) !important;
+  font-family: var(--mc-font-serif) !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  letter-spacing: 0.02em !important;
+  font-size: var(--type-h4) !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.25 !important;
+}
+@media (max-width: 749px) {
+  .card__heading,
+  .card__heading a {
+    font-size: calc(var(--type-h4) * 0.85) !important;
+  }
+}
+
+/* ============================================================
+   HIÉRARCHIE TYPOGRAPHIQUE — Phase 10
+   Niveau 1 — Hero éditorial (Cormorant italique)
+   ============================================================ */
+.banner__heading {
+  font-family: var(--mc-font-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: var(--type-h1) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0.005em !important;
+}
+@media (max-width: 749px) {
+  .banner__heading {
+    font-size: calc(var(--type-h1) * 0.7) !important;
+  }
+}
+
+/* Niveau 2 — PDP : titre produit principal (Cormorant regular non-italique) */
+.product__title h1,
+.product__title h2.h1,
+.product__title .h1 {
+  font-family: var(--mc-font-serif) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: var(--type-h2) !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0.01em !important;
+}
+@media (max-width: 749px) {
+  .product__title h1,
+  .product__title h2.h1,
+  .product__title .h1 {
+    font-size: calc(var(--type-h2) * 0.72) !important;
+  }
 }
 
 .card .price,

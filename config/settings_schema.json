@@ -1511,5 +1511,69 @@
         "default": "/pages/conciergerie"
       }
     ]
+  },
+  {
+    "name": "Hiérarchie typographique",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Échelle à 5 niveaux clairement hiérarchisés. Mobile auto-réduit à 70-85 % via media queries CSS."
+      },
+      {
+        "type": "range",
+        "id": "type_h1_size",
+        "min": 48,
+        "max": 144,
+        "step": 4,
+        "unit": "px",
+        "label": "Niveau 1 — Hero éditorial",
+        "info": "Cormorant italique. Hero « Reflets du temps ».",
+        "default": 88
+      },
+      {
+        "type": "range",
+        "id": "type_h2_size",
+        "min": 32,
+        "max": 96,
+        "step": 4,
+        "unit": "px",
+        "label": "Niveau 2 — Identité centerpiece",
+        "info": "Cormorant regular non-italique. Brand block « MAISON COEUR » + titre PDP.",
+        "default": 52
+      },
+      {
+        "type": "range",
+        "id": "type_h3_size",
+        "min": 20,
+        "max": 56,
+        "step": 2,
+        "unit": "px",
+        "label": "Niveau 3 — Titres éditoriaux secondaires",
+        "info": "Cormorant italique. Titres Conciergerie / Programme Pro.",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "type_h4_size",
+        "min": 14,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Niveau 4 — Titres fonctionnels",
+        "info": "Cormorant regular non-italique. Titre carte produit (carousel + collection).",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "type_h5_size",
+        "min": 10,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Niveau 5 — Eyebrow / CTA",
+        "info": "Jost CAPS letter-spaced. Eyebrows + CTAs secondaires + en-têtes footer.",
+        "default": 12
+      }
+    ]
   }
 ]

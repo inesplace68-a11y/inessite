@@ -47,23 +47,27 @@
 .home-services__eyebrow {
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
-  font-size: 12px;
+  font-size: var(--type-h5, 12px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--mc-mid, #8C8882);
   margin: 0 0 18px;
 }
 
+/* Niveau 3 — Titres éditoriaux secondaires (Cormorant italique) */
 .home-services__title {
   font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(28px, 3vw, 36px);
+  font-size: var(--type-h3, 32px);
   line-height: 1.2;
   letter-spacing: 0.005em;
   color: var(--mc-dark, #1A1614);
   margin: 0 0 20px;
   max-width: 22ch;
+}
+@media (max-width: 749px) {
+  .home-services__title { font-size: calc(var(--type-h3, 32px) * 0.78); }
 }
 
 .home-services__description {
