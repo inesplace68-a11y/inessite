@@ -2,8 +2,7 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hvd-padding-top: {{ section.settings.padding_top }}px;
-    --hvd-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hvd-padding-vertical: {{ section.settings.padding_vertical_press }}px;
     --hvd-logo-height: {{ section.settings.logo_height }}px;
     --hvd-logo-gap: {{ section.settings.logo_gap }}px;
   }
@@ -133,23 +132,14 @@
     { "type": "header", "content": "Espacements" },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 64,
+      "id": "padding_vertical_press",
+      "min": 40,
       "max": 200,
-      "step": 8,
+      "step": 10,
       "unit": "px",
-      "label": "Marge en haut",
-      "default": 128
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 64,
-      "max": 200,
-      "step": 8,
-      "unit": "px",
-      "label": "Marge en bas",
-      "default": 128
+      "label": "Hauteur de la bande Presse",
+      "info": "Marge haute et basse (symétrique). Default 80px = compact luxe-galerie en attendant l'enrichissement des logos.",
+      "default": 80
     }
   ],
   "presets": [

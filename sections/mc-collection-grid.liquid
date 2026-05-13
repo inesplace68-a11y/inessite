@@ -1,3 +1,9 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .mc-collection-grid {
+    --mcg-bg: {{ section.settings.background_color | default: '#F7F5F1' }};
+  }
+{%- endstyle -%}
+
 <section class="mc-section mc-collection-grid">
   <div class="mc-container">
     {%- if section.settings.title != blank -%}
@@ -58,6 +64,13 @@
       "id": "title",
       "label": "Titre de section",
       "default": "NOTRE SÉLECTION"
+    },
+    { "type": "header", "content": "Apparence" },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Couleur de fond de la section Notre Sélection",
+      "default": "#F7F5F1"
     }
   ],
   "blocks": [

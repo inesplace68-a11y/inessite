@@ -55,6 +55,12 @@
   cursor: pointer;
 }
 
+/* Carte unique : centrage horizontal dans la bande (en attendant l'enrichissement
+   de la collection). Multi-cartes : flex-start standard préservé. */
+.home-selection__card:only-child {
+  margin-inline: auto;
+}
+
 .home-selection__media {
   position: relative;
   width: 100%;

@@ -160,8 +160,7 @@
         "logo_6_url": "",
         "logo_height": 36,
         "logo_gap": 64,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "padding_vertical_press": 80
       }
     },
     "home_services": {
