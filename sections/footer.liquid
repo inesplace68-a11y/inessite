@@ -32,7 +32,9 @@
         {%- else -%}
           <span class="mc-fz-brand">
             <span class="mc-fz-brand__name">MAISON COEUR</span>
-            <span class="mc-fz-brand__tagline">GALERIE D'ART — PARIS</span>
+            {%- if section.settings.brand_tagline != blank -%}
+              <span class="mc-fz-brand__tagline">{{ section.settings.brand_tagline }}</span>
+            {%- endif -%}
           </span>
         {%- endif -%}
       </a>
@@ -222,6 +224,13 @@
       "unit": "px",
       "label": "Largeur du logo",
       "default": 380
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Tagline (fallback sans logo)",
+      "info": "Affichée sous MAISON COEUR uniquement si aucun logo n'est uploadé. Laisser vide pour masquer.",
+      "default": ""
     },
     {
       "type": "header",
