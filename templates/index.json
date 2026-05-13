@@ -134,17 +134,22 @@
     "mc_editorial": {
       "type": "mc-editorial",
       "settings": {
-        "brand_name": "MAISON COEUR",
-        "tagline": "",
-        "text": "<p>Nous sélectionnons avec soin des objets chargés d'histoire, des meubles d'exception et des œuvres d'art qui transforment un intérieur en un espace de vie unique. Chaque pièce raconte une histoire, chaque objet porte une intention.</p>",
+        "image": "shopify://shop_images/IMG_6240.jpg",
+        "overlay_opacity": 20,
+        "eyebrow": "MAISON",
+        "heading": "<p>Une galerie où chaque pièce raconte une histoire.</p>",
         "cta_label": "Notre histoire",
-        "cta_link": "shopify://pages/a-propos"
+        "cta_link": "shopify://pages/a-propos",
+        "block_height": 75,
+        "block_height_mobile": 60,
+        "text_color": "#ffffff",
+        "button_color": "#ffffff"
       }
     },
     "home_vus_dans": {
       "type": "home-vus-dans",
       "settings": {
-        "title_eyebrow": "VUS DANS",
+        "title_eyebrow": "VU DANS",
         "logo_1_image": "shopify://shop_images/le-journal-de-la-maison-logo.png",
         "logo_1_alt": "Marie Claire Maison",
         "logo_1_url": "",
@@ -159,9 +164,9 @@
         "logo_5_url": "",
         "logo_6_alt": "",
         "logo_6_url": "",
-        "logo_height": 36,
+        "logo_height": 24,
         "logo_gap": 64,
-        "padding_vertical_press": 80
+        "padding_vertical_press": 40
       }
     },
     "home_services": {
