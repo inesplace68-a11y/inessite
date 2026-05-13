@@ -127,7 +127,8 @@
         "col-5"
       ],
       "settings": {
-        "title": "NOTRE SÉLECTION"
+        "title": "NOTRE SÉLECTION",
+        "background_color": "#ffffff"
       }
     },
     "mc_editorial": {
