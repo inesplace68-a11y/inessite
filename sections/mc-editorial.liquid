@@ -1,77 +1,141 @@
-<section class="mc-section mc-editorial">
-  <div class="mc-container">
-    <div class="mc-editorial__grid">
+{{ 'mc-editorial.css' | asset_url | stylesheet_tag }}
 
-      <div class="mc-editorial__col-left">
-        {%- if section.settings.brand_name != blank -%}
-          <p class="mc-editorial__brand">{{ section.settings.brand_name }}</p>
-        {%- endif -%}
-        {%- if section.settings.tagline != blank -%}
-          <p class="mc-editorial__tagline">{{ section.settings.tagline }}</p>
-        {%- endif -%}
-        {%- if section.settings.cta_label != blank -%}
-          <a
-            href="{{ section.settings.cta_link | default: '#' }}"
-            class="mc-editorial__cta"
-            {% if section.settings.cta_link == blank %}aria-disabled="true"{% endif %}
-          >
-            {{ section.settings.cta_label }}
-          </a>
-        {%- endif -%}
-      </div>
+{%- liquid
+  assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0
+  assign block_height = section.settings.block_height | default: 75
+  assign mobile_height = section.settings.block_height_mobile | default: 60
+-%}
 
-      <div class="mc-editorial__col-right">
-        {%- if section.settings.text != blank -%}
-          <div class="mc-editorial__text">{{ section.settings.text }}</div>
-        {%- endif -%}
-      </div>
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --mce-overlay-alpha: {{ overlay_alpha }};
+    --mce-height: {{ block_height }}vh;
+    --mce-height-mobile: {{ mobile_height }}vh;
+    --mce-text-color: {{ section.settings.text_color | default: '#FFFFFF' }};
+    --mce-button-color: {{ section.settings.button_color | default: '#FFFFFF' }};
+  }
+{%- endstyle -%}
 
-    </div>
+<section
+  class="mc-editorial{% if section.settings.image == blank %} mc-editorial--no-image{% endif %}"
+  {%- if section.settings.image != blank -%}
+    style="background-image: url('{{ section.settings.image | image_url: width: 2400 }}');"
+  {%- endif -%}
+>
+  <div class="mc-editorial__overlay" aria-hidden="true"></div>
+
+  <div class="mc-editorial__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="mc-editorial__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="mc-editorial__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <a
+        href="{{ section.settings.cta_link | default: '/pages/la-maison' }}"
+        class="mc-editorial__cta"
+        {% if section.settings.cta_link == blank %}aria-disabled="false"{% endif %}
+      >
+        {{ section.settings.cta_label | escape }}
+      </a>
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Bloc éditorial",
+  "name": "Brand block — Maison",
   "tag": "section",
-  "class": "section",
+  "class": "section section--mc-editorial",
   "disabled_on": {
     "groups": ["header", "footer"]
   },
   "settings": [
+    { "type": "header", "content": "Image de fond" },
     {
-      "type": "text",
-      "id": "brand_name",
-      "label": "Nom de marque",
-      "default": "MAISON COEUR"
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image de fond",
+      "info": "Si vide, fond pierre crème uni en fallback."
     },
     {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacité overlay sombre",
+      "default": 20
+    },
+
+    { "type": "header", "content": "Contenu centré" },
+    {
       "type": "text",
-      "id": "tagline",
-      "label": "Tagline (sous le nom)",
-      "default": ""
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "MAISON"
     },
     {
       "type": "richtext",
-      "id": "text",
-      "label": "Texte éditorial",
-      "default": "<p>Nous sélectionnons avec soin des objets chargés d'histoire, des meubles d'exception et des œuvres d'art qui transforment un intérieur en un espace de vie unique. Chaque pièce raconte une histoire, chaque objet porte une intention.</p>"
+      "id": "heading",
+      "label": "Titre éditorial",
+      "default": "<p>Une galerie où chaque pièce raconte une histoire.</p>"
     },
     {
       "type": "text",
       "id": "cta_label",
-      "label": "Libellé du bouton",
-      "default": "Notre histoire"
+      "label": "Libellé bouton",
+      "default": "DÉCOUVRIR LA MAISON"
     },
     {
       "type": "url",
       "id": "cta_link",
-      "label": "Lien du bouton"
+      "label": "Cible bouton"
+    },
+
+    { "type": "header", "content": "Dimensions" },
+    {
+      "type": "range",
+      "id": "block_height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Hauteur du bloc (desktop)",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "block_height_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Hauteur du bloc (mobile)",
+      "default": 60
+    },
+
+    { "type": "header", "content": "Couleurs" },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Couleur texte (eyebrow + titre)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Couleur bouton (bordure + texte)",
+      "default": "#FFFFFF"
     }
   ],
   "presets": [
     {
-      "name": "Bloc éditorial"
+      "name": "Brand block — Maison"
     }
   ]
 }

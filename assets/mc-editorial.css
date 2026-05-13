@@ -1,0 +1,145 @@
+/* ============================================================
+   BRAND BLOCK — Maison (mc-editorial)
+   Phase 12 : refonte immersive — image fond + overlay sombre +
+   contenu centré (eyebrow / titre / CTA) full-bleed.
+   Référence luxe : Hermès "La Maison", The Row "World".
+   ============================================================ */
+
+.mc-editorial {
+  position: relative;
+  width: 100%;
+  min-height: var(--mce-height, 75vh);
+  background-color: var(--mc-bg, #F7F5F1);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Fallback sans image : fond pierre crème uni, overlay quasi-invisible
+   pour conserver une texture cohérente avec les autres bandes. */
+.mc-editorial--no-image {
+  background-image: none;
+}
+
+.mc-editorial__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, var(--mce-overlay-alpha, 0.2));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Sans image : l'overlay sombre n'a aucun sens sur pierre crème ;
+   on neutralise au cas où Ines laisse une opacité élevée. */
+.mc-editorial--no-image .mc-editorial__overlay {
+  background-color: rgba(26, 22, 20, calc(var(--mce-overlay-alpha, 0.2) * 0.15));
+}
+
+.mc-editorial__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 32px;
+  max-width: 720px;
+  padding: 48px var(--content-gutter-desktop, 64px);
+  color: var(--mce-text-color, #FFFFFF);
+}
+
+/* Sans image : texte sombre par-dessus pierre crème (override automatique
+   uniquement si la valeur Customizer est restée blanc — sinon respect du
+   choix utilisateur). */
+.mc-editorial--no-image .mc-editorial__content {
+  color: var(--mc-dark, #1A1614);
+}
+
+/* Niveau 5 — Eyebrow Jost CAPS letter-spaced */
+.mc-editorial__eyebrow {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: var(--type-h5, 12px);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: inherit;
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* Niveau 2 — Titre éditorial Cormorant italique */
+.mc-editorial__heading {
+  font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 4.5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: 0.005em;
+  color: inherit;
+  margin: 0;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.mc-editorial__heading p {
+  margin: 0;
+}
+
+/* CTA — bouton rectangulaire bordered (cohérent avec hero button) */
+.mc-editorial__cta {
+  display: inline-block;
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mce-button-color, #FFFFFF);
+  background: transparent;
+  border: 1px solid var(--mce-button-color, #FFFFFF);
+  padding: 14px 36px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+  margin-top: 8px;
+}
+
+.mc-editorial__cta:hover {
+  background-color: var(--mce-button-color, #FFFFFF);
+  color: var(--mc-dark, #1A1614);
+}
+
+/* Sans image : sur pierre crème, default white button est invisible ;
+   on bascule sur palette sombre tout en respectant l'override Customizer. */
+.mc-editorial--no-image .mc-editorial__cta {
+  color: var(--mc-dark, #1A1614);
+  border-color: var(--mc-dark, #1A1614);
+}
+
+.mc-editorial--no-image .mc-editorial__cta:hover {
+  background-color: var(--mc-dark, #1A1614);
+  color: var(--mc-bg, #F7F5F1);
+}
+
+/* ----------------- Mobile ----------------- */
+@media (max-width: 749px) {
+  .mc-editorial {
+    min-height: var(--mce-height-mobile, 60vh);
+  }
+  .mc-editorial__content {
+    padding: 40px 24px;
+    gap: 24px;
+    max-width: 100%;
+  }
+  .mc-editorial__heading {
+    font-size: clamp(24px, 8vw, 36px);
+    max-width: 14ch;
+  }
+  .mc-editorial__cta {
+    padding: 12px 28px;
+    font-size: 12px;
+  }
+}

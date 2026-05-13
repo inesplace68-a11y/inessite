@@ -340,89 +340,10 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
-   BLOC ÉDITORIAL (mc-editorial) — 2 colonnes
+   BLOC ÉDITORIAL (mc-editorial) — Phase 12 : refonte immersive
+   Styles déplacés dans assets/mc-editorial.css (image fond +
+   overlay + contenu centré).
    ============================================================ */
-.mc-editorial {
-  background-color: var(--mc-bg);
-}
-
-/* Grille 2 colonnes : wordmark gauche, texte droite */
-.mc-editorial__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-@media (max-width: 749px) {
-  .mc-editorial__grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    text-align: center;
-  }
-  .mc-editorial__col-left { align-items: center; }
-}
-
-.mc-editorial__col-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* Niveau 2 — Identité centerpiece (Cormorant regular non-italique) */
-.mc-editorial__brand {
-  font-family: var(--mc-font-serif);
-  font-weight: 400;
-  font-size: var(--type-h2);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mc-dark);
-  margin: 0 0 8px;
-  line-height: 1;
-}
-
-@media (max-width: 749px) {
-  .mc-editorial__brand { font-size: calc(var(--type-h2) * 0.72); }
-}
-
-.mc-editorial__tagline {
-  font-family: var(--mc-font-sans);
-  font-weight: 300;
-  font-size: 1.25rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--mc-mid);
-  margin: 0 0 36px;
-}
-
-.mc-editorial__cta {
-  display: inline-block;
-  padding: 12px 32px;
-  background: transparent;
-  color: var(--mc-dark);
-  border: 1px solid var(--mc-dark);
-  font-family: var(--mc-font-sans);
-  font-weight: 300;
-  font-size: 1.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  transition: all var(--mc-transition);
-}
-
-.mc-editorial__cta:hover {
-  background: var(--mc-dark);
-  color: var(--mc-bg);
-}
-
-.mc-editorial__text {
-  font-family: var(--mc-font-sans);
-  font-weight: 300;
-  font-size: 1.65rem;
-  line-height: 1.85;
-  color: var(--mc-mid);
-}
-
-.mc-editorial__text p { margin: 0; }
 
 /* ============================================================
    RÉASSURANCE (mc-reassurance) — icônes line-art fines
