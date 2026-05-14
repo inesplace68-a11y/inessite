@@ -102,11 +102,23 @@
       padding-bottom: var(--pdp-hero-py);
     }
     @media screen and (min-width: 990px) {
-      #MainProduct-{{ section.id }} .product--mc-pdp {
+      /* Hotfix Phase 15.1 — bascule en CSS grid sur le hero PDP pour gérer
+         proprement la colonne info à largeur fixe + gap calibré sans casser
+         le wrap flex hérité de Dawn (grid--2-col-tablet). */
+      #MainProduct-{{ section.id }} .product--mc-pdp.grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--pdp-info-col-w);
         column-gap: var(--pdp-hero-gap);
+        align-items: start;
       }
-      #MainProduct-{{ section.id }} .product--mc-pdp .product__info-wrapper {
-        max-width: var(--pdp-info-col-w);
+      #MainProduct-{{ section.id }} .product--mc-pdp.grid > .product__media-wrapper,
+      #MainProduct-{{ section.id }} .product--mc-pdp.grid > .product__info-wrapper {
+        max-width: none;
+        width: auto;
+        padding: 0;
+      }
+      #MainProduct-{{ section.id }} .product--mc-pdp.product--right.grid > .product__media-wrapper {
+        order: 2;
       }
     }
   {%- endstyle -%}
@@ -863,28 +875,76 @@
                 {%- endif -%}
               {%- when 'mc_cartel_specs' -%}
                 {%- liquid
-                  assign mc_h = product.metafields.custom.hauteur_cm
-                  assign mc_l = product.metafields.custom.largeur_cm
-                  assign mc_p = product.metafields.custom.profondeur_cm
-                  assign mc_mat_raw = product.metafields.custom.materiaux
+                  assign mc_h = product.metafields.custom.hauteur_cm.value
+                  assign mc_l = product.metafields.custom.largeur_cm.value
+                  assign mc_p = product.metafields.custom.profondeur_cm.value
+                  assign mc_mat_list = product.metafields.custom.materiaux.value
+
                   assign mc_cs_show_dims = block.settings.show_dimensions
                   assign mc_cs_show_mat = block.settings.show_materials
-                  assign mc_cs_unit = block.settings.unit | default: 'cm'
+                  assign mc_cs_unit = block.settings.unit | default: 'cm' | upcase
                   assign mc_cs_sep = block.settings.separator | default: '·'
-                  assign mc_has_dims = false
-                  if mc_h != blank or mc_l != blank or mc_p != blank
-                    assign mc_has_dims = true
+                  assign mc_prefix_h = block.settings.prefix_h | default: 'H'
+                  assign mc_prefix_l = block.settings.prefix_l | default: 'L'
+                  assign mc_prefix_p = block.settings.prefix_p | default: 'P'
+                -%}
+
+                {%- capture h_disp -%}
+                  {%- if mc_h != blank -%}
+                    {%- assign h_floor = mc_h | floor -%}
+                    {%- assign h_diff = mc_h | minus: h_floor -%}
+                    {%- if h_diff == 0 -%}{{- h_floor -}}{%- else -%}{{- mc_h | replace: '.', ',' -}}{%- endif -%}
+                  {%- endif -%}
+                {%- endcapture -%}
+                {%- capture l_disp -%}
+                  {%- if mc_l != blank -%}
+                    {%- assign l_floor = mc_l | floor -%}
+                    {%- assign l_diff = mc_l | minus: l_floor -%}
+                    {%- if l_diff == 0 -%}{{- l_floor -}}{%- else -%}{{- mc_l | replace: '.', ',' -}}{%- endif -%}
+                  {%- endif -%}
+                {%- endcapture -%}
+                {%- capture p_disp -%}
+                  {%- if mc_p != blank -%}
+                    {%- assign p_floor = mc_p | floor -%}
+                    {%- assign p_diff = mc_p | minus: p_floor -%}
+                    {%- if p_diff == 0 -%}{{- p_floor -}}{%- else -%}{{- mc_p | replace: '.', ',' -}}{%- endif -%}
+                  {%- endif -%}
+                {%- endcapture -%}
+
+                {%- liquid
+                  assign h_str = h_disp | strip
+                  assign l_str = l_disp | strip
+                  assign p_str = p_disp | strip
+
+                  assign dims_line = ''
+                  if h_str != blank
+                    assign dims_line = mc_prefix_h | append: ' ' | append: h_str | append: ' ' | append: mc_cs_unit
+                  endif
+                  if l_str != blank
+                    assign part_l = mc_prefix_l | append: ' ' | append: l_str | append: ' ' | append: mc_cs_unit
+                    if dims_line != blank
+                      assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_l
+                    else
+                      assign dims_line = part_l
+                    endif
+                  endif
+                  if p_str != blank
+                    assign part_p = mc_prefix_p | append: ' ' | append: p_str | append: ' ' | append: mc_cs_unit
+                    if dims_line != blank
+                      assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_p
+                    else
+                      assign dims_line = part_p
+                    endif
                   endif
 
                   assign mc_mat_text = ''
-                  if mc_mat_raw != blank
-                    assign mc_mat_joined = mc_mat_raw | join: ' · '
-                    assign mc_mat_text = mc_mat_joined | upcase
+                  if mc_mat_list != blank
+                    assign mc_mat_text = mc_mat_list | join: ' · ' | upcase
                   endif
 
                   assign mc_cs_render = false
                   if section.settings.pdp_cartel_show
-                    if mc_cs_show_dims and mc_has_dims
+                    if mc_cs_show_dims and dims_line != blank
                       assign mc_cs_render = true
                     endif
                     if mc_cs_show_mat and mc_mat_text != blank
@@ -892,19 +952,14 @@
                     endif
                   endif
                 -%}
+
                 {%- if mc_cs_render -%}
                   <div
                     class="mc-cartel"
                     {{ block.shopify_attributes }}
                   >
-                    {%- if mc_cs_show_dims and mc_has_dims -%}
-                      <p class="mc-cartel__line mc-cartel__line--dims">
-                        {%- if mc_h != blank -%}<span>{{ block.settings.prefix_h | default: 'H' }} {{ mc_h }} {{ mc_cs_unit }}</span>{%- endif -%}
-                        {%- if mc_h != blank and mc_l != blank -%}<span class="mc-cartel__sep">{{ mc_cs_sep }}</span>{%- endif -%}
-                        {%- if mc_l != blank -%}<span>{{ block.settings.prefix_l | default: 'L' }} {{ mc_l }} {{ mc_cs_unit }}</span>{%- endif -%}
-                        {%- if mc_l != blank and mc_p != blank or mc_h != blank and mc_p != blank and mc_l == blank -%}<span class="mc-cartel__sep">{{ mc_cs_sep }}</span>{%- endif -%}
-                        {%- if mc_p != blank -%}<span>{{ block.settings.prefix_p | default: 'P' }} {{ mc_p }} {{ mc_cs_unit }}</span>{%- endif -%}
-                      </p>
+                    {%- if mc_cs_show_dims and dims_line != blank -%}
+                      <p class="mc-cartel__line mc-cartel__line--dims">{{ dims_line }}</p>
                     {%- endif -%}
                     {%- if mc_cs_show_mat and mc_mat_text != blank -%}
                       <p class="mc-cartel__line mc-cartel__line--mat">{{ mc_mat_text }}</p>
