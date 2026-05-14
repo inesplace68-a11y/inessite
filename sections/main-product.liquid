@@ -179,12 +179,14 @@
               {%- when '@app' -%}
                 {% render block %}
               {%- when 'text' -%}
-                <p
-                  class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{- block.settings.text -}}
-                </p>
+                {%- unless block.id == 'vendor' and section.settings.pdp_show_vendor == false -%}
+                  <p
+                    class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- block.settings.text -}}
+                  </p>
+                {%- endunless -%}
               {%- when 'title' -%}
                 <div
                   class="product__title product__title--mc"
@@ -2860,12 +2862,13 @@
     { "type": "header", "content": "PDP — Mise en page (Phase 15)" },
     { "type": "range", "id": "pdp_info_col_width", "min": 380, "max": 560, "step": 10, "unit": "px", "default": 480, "label": "PDP — Largeur colonne info" },
     { "type": "range", "id": "pdp_hero_gap", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 100, "label": "PDP — Gap image / info" },
-    { "type": "range", "id": "pdp_hero_padding_y", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 100, "label": "PDP — Padding vertical hero" },
+    { "type": "range", "id": "pdp_hero_padding_y", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 60, "label": "Padding vertical hero (haut & bas)" },
     { "type": "header", "content": "PDP — Typographie" },
     { "type": "range", "id": "pdp_title_size", "min": 24, "max": 56, "step": 2, "unit": "px", "default": 34, "label": "PDP — Taille titre produit" },
     { "type": "range", "id": "pdp_price_size", "min": 14, "max": 22, "step": 1, "unit": "px", "default": 17, "label": "PDP — Taille prix" },
     { "type": "range", "id": "pdp_description_size", "min": 13, "max": 17, "step": 1, "unit": "px", "default": 15, "label": "PDP — Taille description" },
     { "type": "header", "content": "PDP — Visibilité blocs" },
+    { "type": "checkbox", "id": "pdp_show_vendor", "default": false, "label": "Afficher le fournisseur (vendor)" },
     { "type": "checkbox", "id": "pdp_tag_show", "default": true, "label": "Afficher les tags" },
     { "type": "checkbox", "id": "pdp_show_availability", "default": true, "label": "Afficher le module disponibilité" },
     { "type": "text", "id": "pdp_availability_label", "default": "DISPONIBLE", "label": "Libellé disponibilité (eyebrow)" },
