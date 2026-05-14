@@ -142,12 +142,10 @@
           }
         },
         "tab_aide": {
-          "type": "collapsible_tab",
+          "type": "mc_questions",
           "settings": {
             "heading": "Une question ?",
-            "icon": "chat_bubble",
-            "content": "<p>Notre conciergerie est à votre écoute pour toute question — pièce, livraison, conseil, mise en situation.</p><p><a href=\"https://wa.me/33665299614?text=Bonjour%20Maison%20Coeur%2C%20je%20souhaite%20%C3%A9changer%20au%20sujet%20d%E2%80%99une%20pi%C3%A8ce.\">Échanger sur WhatsApp →</a><br><a href=\"mailto:hello@maisoncoeur.fr\">Écrire un email →</a><br><a href=\"/pages/faq\">Consulter nos questions fréquentes →</a></p>",
-            "page": ""
+            "icon": "chat_bubble"
           }
         },
         "mc_ref": {
@@ -215,6 +213,10 @@
         "pdp_delivery_phrase": "Chez vous entre le {date_min} et le {date_max}",
         "pdp_cartel_show": true,
         "pdp_ref_show": true,
+        "pdp_questions_intro": "Notre équipe est à votre disposition pour toute information.",
+        "pdp_questions_whatsapp_label": "Échanger sur WhatsApp",
+        "pdp_questions_email_label": "Nous écrire par email",
+        "pdp_questions_faq_label": "Consulter notre FAQ",
         "pdp_tags_mb": 16,
         "pdp_title_mb": 24,
         "pdp_price_mb": 10,

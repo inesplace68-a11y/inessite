@@ -2157,3 +2157,49 @@ p.delivery-estimate {
   letter-spacing: 0.04em;
   color: #1A1A1A;
 }
+
+/* Phase 15.7 — bloc accordéon « Une question ? » */
+.product__accordion .accordion__content.pdp-questions {
+  padding: 0 1rem;
+}
+.pdp-questions .pdp-questions__intro {
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1A1A1A;
+  margin: 0 0 14px;
+}
+.pdp-questions .pdp-questions__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pdp-questions .pdp-questions__list li {
+  margin: 0 0 6px;
+}
+.pdp-questions .pdp-questions__list li:last-child {
+  margin-bottom: 0;
+}
+.pdp-questions .pdp-questions__link {
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+.pdp-questions .pdp-questions__link::after {
+  content: ' →';
+  margin-left: 2px;
+  text-decoration: none;
+  display: inline-block;
+}
+.pdp-questions .pdp-questions__link:hover,
+.pdp-questions .pdp-questions__link:focus-visible {
+  opacity: 0.6;
+  outline: none;
+}
