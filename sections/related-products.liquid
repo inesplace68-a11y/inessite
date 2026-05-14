@@ -6,24 +6,34 @@
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
+{%- liquid
+  assign pdp_related_visible = true
+  if section.settings.pdp_related_show == false
+    assign pdp_related_visible = false
+  endif
+  assign pdp_related_limit = section.settings.pdp_related_count | default: section.settings.products_to_show | default: 3
+  assign pdp_related_pb = section.settings.pdp_related_pb | default: section.settings.padding_bottom | default: 140
+-%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ pdp_related_pb | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-bottom: {{ pdp_related_pb }}px;
     }
   }
 {%- endstyle -%}
 
+{%- if pdp_related_visible -%}
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <product-recommendations
     class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ pdp_related_limit }}"
     data-section-id="{{ section.id }}"
     data-product-id="{{ product.id }}"
   >
@@ -57,6 +67,7 @@
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -249,7 +260,11 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    }
+    },
+    { "type": "header", "content": "PDP — Vous aimerez aussi (Phase 15)" },
+    { "type": "checkbox", "id": "pdp_related_show", "default": true, "label": "Afficher la section" },
+    { "type": "range", "id": "pdp_related_count", "min": 3, "max": 6, "step": 1, "default": 3, "label": "Nombre de produits" },
+    { "type": "range", "id": "pdp_related_pb", "min": 60, "max": 200, "step": 10, "unit": "px", "default": 140, "label": "Padding bas" }
   ]
 }
 {% endschema %}

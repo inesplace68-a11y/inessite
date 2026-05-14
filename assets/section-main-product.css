@@ -1744,29 +1744,31 @@ a.product__text {
 }
 
 /* ============================================================
-   Phase 14 — Refonte fiche produit Maison Coeur
-   Tokens couleur : crème #F7F5F1 · pierre #E8E4DD · pierre foncée #D9D3C7
-                    noir #1A1A1A · gris texte #5A554F · gris doux #9A938A
-   Polices : Cormorant Garamond (titres, signatures) · Jost light (UI, corps)
+   Phase 15 — Calibration PDP Maison Coeur sur mockup v5
+   Palette stricte : crème var(--mc-creme) #F7F5F1 · pierre var(--mc-pierre) #E8E4DD
+                     noir #1A1A1A (texte/bordures) · pas de gris, pas d'opacité
+   Polices : Cormorant Garamond (titre, phrase dispo italique)
+             Jost light (UI fonctionnel, description, CAPS letter-spaced)
+   Échelle typo : N5 = 12px Jost CAPS letter-spaced (eyebrows, trust, cartel, ref)
    ============================================================ */
 
-/* §1 — Tags VINTAGE + PIÈCE UNIQUE */
+/* §1 — Tags VINTAGE / PIÈCE UNIQUE — transparent fil noir */
 .mc-pdp-tags-row {
   display: flex;
-  gap: var(--mc-tag-gap, 10px);
-  margin: 0 0 var(--mc-tag-mb, 40px) 0;
+  gap: 10px;
+  margin: 0 0 var(--pdp-tags-mb, 40px) 0;
 }
 .mc-pdp-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--mc-tag-pv, 9px) var(--mc-tag-ph, 20px);
-  border: 0.5px solid var(--mc-tag-border, #1A1A1A);
+  padding: 9px 20px;
+  border: 0.5px solid #1A1A1A;
   background: transparent;
-  color: var(--mc-tag-text, #1A1A1A);
+  color: #1A1A1A;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
@@ -1775,58 +1777,83 @@ a.product__text {
 a.mc-pdp-tag { transition: opacity 180ms ease; }
 a.mc-pdp-tag:hover { opacity: 0.7; }
 
-/* §1bis — Titre produit Cormorant roman bas-de-casse */
+/* §2 — Titre produit Cormorant roman */
 .product__title--mc h1 {
   font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
   font-weight: 400;
-  font-style: var(--mc-title-style, normal);
-  font-size: var(--mc-title-size-m, 26px);
+  font-style: normal;
+  font-size: calc(var(--pdp-title-size, 34px) * 0.78);
   letter-spacing: 0;
   line-height: 1.25;
-  color: var(--mc-title-color, #1A1A1A);
+  color: #1A1A1A;
   text-transform: none;
-  margin: 0 0 var(--mc-title-mb, 24px) 0;
+  margin: 0 0 var(--pdp-title-mb, 24px) 0;
 }
 @media screen and (min-width: 750px) {
   .product__title--mc h1 {
-    font-size: var(--mc-title-size-d, 34px);
+    font-size: var(--pdp-title-size, 34px);
   }
 }
 .product__title--mc h2.h1 { display: none; }
 
-/* §3 — Disponibilité · Livraison estimée entre… */
-.mc-availability {
-  margin: var(--mc-av-mt, 22px) 0 var(--mc-av-mb, 30px) 0;
+/* §3 — Prix : Jost light */
+.product__price--mc {
+  margin: 0 0 var(--pdp-price-mb, 22px) 0;
+}
+.product__price--mc .price,
+.product__price--mc .price__regular .price-item,
+.product__price--mc .price__sale .price-item,
+.product__price--mc .price-item--regular,
+.product__price--mc .price-item--sale {
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: var(--pdp-price-size, 17px);
+  letter-spacing: 0.02em;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+
+/* §4 — Module Disponibilité · phrase italique FR */
+.mc-availability,
+p.delivery-estimate {
+  margin: 0 0 var(--pdp-av-mb, 30px) 0;
   font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
-  font-style: italic;
   font-size: 16px;
   letter-spacing: 0.01em;
-  color: #5A554F;
+  color: #1A1A1A;
   line-height: 1.5;
 }
-.mc-availability__prefix {
+.mc-availability__prefix,
+.delivery-estimate .stock {
   font-family: 'Jost', system-ui, sans-serif;
   font-style: normal;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #1A1A1A;
   margin-right: 8px;
 }
-.mc-availability__sep {
-  color: #9A938A;
+.mc-availability__sep,
+.delivery-estimate .sep {
+  color: #1A1A1A;
   margin: 0 8px 0 0;
 }
+.mc-availability__phrase,
+.delivery-estimate .delivery-phrase,
+.delivery-estimate em {
+  font-style: italic;
+  color: #1A1A1A;
+}
 
-/* §4 — Lien Ajouter à ma sélection (heart + label) */
+/* §5 — Lien Ajouter à ma sélection (heart + label) */
 .mc-wishlist-link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding-top: var(--mc-wl-pt, 22px);
-  margin: 0 auto var(--mc-wl-mb, 36px) auto;
+  padding-top: 22px;
+  margin: 0 auto var(--pdp-fav-mb, 36px) auto;
   text-align: center;
   transition: opacity 180ms ease;
 }
@@ -1834,7 +1861,7 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
 .mc-wishlist-link__label {
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.30em;
   text-transform: uppercase;
   color: #1A1A1A;
@@ -1868,23 +1895,23 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   fill: #1A1A1A;
 }
 
-/* §5 — Trust strip 3 items cliquables */
+/* §6 — Trust strip 3 items cliquables */
 .mc-trust-strip {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  padding: var(--mc-ts-pv, 20px) 0;
-  margin: 0 0 var(--mc-ts-mb, 48px) 0;
-  border-top: 0.5px solid #D9D3C7;
-  border-bottom: 0.5px solid #D9D3C7;
+  padding: 20px 0;
+  margin: 0 0 var(--pdp-trust-mb, 48px) 0;
+  border-top: 0.5px solid var(--mc-pierre, #E8E4DD);
+  border-bottom: 0.5px solid var(--mc-pierre, #E8E4DD);
 }
 .mc-trust-strip__item {
   flex: 1 1 auto;
   text-align: center;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: #1A1A1A;
@@ -1894,11 +1921,14 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
 }
 .mc-trust-strip__item:hover { opacity: 0.6; }
 
-/* §6 — Description corps long + variantes typographiques */
+/* §7 — Description corps long */
 .product__description--mc {
-  margin: 0 0 var(--mc-desc-mb, 24px) 0;
-  font-size: var(--mc-desc-size, 15px);
-  color: var(--mc-desc-color, #5A554F);
+  margin: 0 0 var(--pdp-desc-mb, 24px) 0;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: var(--pdp-desc-size, 15px);
+  color: #1A1A1A;
   line-height: 1.75;
   letter-spacing: 0.01em;
 }
@@ -1908,61 +1938,43 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   font-weight: 300;
   font-style: normal;
 }
-.product__description--cormorant_italic,
-.product__description--cormorant_italic p {
-  font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
-  font-weight: 400;
-  font-style: italic;
-}
 
-/* §6 — Closing line (signature) */
-.mc-closing-line {
-  margin: 0 0 var(--mc-cl-mb, 44px) 0;
-  font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: var(--mc-cl-size, 18px);
-  line-height: 1.55;
-  letter-spacing: 0.005em;
-  color: var(--mc-cl-color, #5A554F);
-}
-
-/* §7 — Cartel dimensions & matériaux */
+/* §8 — Cartel dimensions & matériaux — 2 lignes CAPS, fines bordures pierre */
 .mc-cartel {
-  padding: var(--mc-cs-pv, 22px) 0;
-  margin: 0 0 var(--mc-cs-mb, 48px) 0;
-  border-top: 0.5px solid #D9D3C7;
-  border-bottom: 0.5px solid #D9D3C7;
+  padding: 22px 0;
+  margin: 0 0 var(--pdp-cartel-mb, 48px) 0;
+  border-top: 0.5px solid var(--mc-pierre, #E8E4DD);
+  border-bottom: 0.5px solid var(--mc-pierre, #E8E4DD);
   text-align: center;
 }
 .mc-cartel__line {
   margin: 0;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #5A554F;
+  color: #1A1A1A;
   line-height: 1.9;
 }
 .mc-cartel__sep {
   margin: 0 8px;
-  color: #9A938A;
+  color: #1A1A1A;
 }
 
-/* §9 — Référence inventaire */
+/* §9 — Référence inventaire — CAPS noir */
 .mc-reference {
-  margin: var(--mc-ref-mt, 36px) 0 0 0;
+  margin: var(--pdp-ref-mt, 36px) 0 0 0;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.30em;
   text-transform: uppercase;
-  color: var(--mc-ref-color, #9A938A);
+  color: #1A1A1A;
   text-align: left;
 }
 
-/* §2 — CTA Ajouter au panier — style noir plein, sans Dynamic Checkout */
+/* §10 — CTA Ajouter au panier (inchangé Phase 14) */
 .product-form__submit,
 .product-form__buttons .product-form__submit {
   background-color: #1A1A1A;
@@ -1974,7 +1986,7 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   padding-bottom: 19px;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.30em;
   text-transform: uppercase;
   transition: opacity 180ms ease;
@@ -1982,7 +1994,7 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
 .product-form__submit:not([disabled]):hover { opacity: 0.85; }
 .shopify-payment-button { display: none !important; }
 
-/* §10 — Photo éditoriale pleine largeur (full bleed) */
+/* §11 — Photo éditoriale pleine largeur (full bleed) */
 .section--mc-product-editorial {
   padding-top: var(--mc-ed-pad-t, 40px);
   padding-bottom: var(--mc-ed-pad-b, 120px);
@@ -1991,7 +2003,7 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  background: var(--mc-ed-bg, #E8E4DD);
+  background: var(--mc-pierre, #E8E4DD);
 }
 .mc-product-editorial__figure {
   margin: 0;
@@ -2008,7 +2020,7 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   display: block;
   width: 100%;
   aspect-ratio: var(--mc-ed-ratio, 21 / 10);
-  background: var(--mc-ed-bg, #E8E4DD);
+  background: var(--mc-pierre, #E8E4DD);
 }
 .mc-product-editorial__caption {
   display: block;
@@ -2020,17 +2032,17 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   font-weight: 400;
   font-size: var(--mc-ed-caption-size, 18px);
   line-height: 1.5;
-  color: var(--mc-ed-caption-color, #5A554F);
+  color: #1A1A1A;
   text-align: center;
 }
 
-/* §11 — Vous aimerez aussi : titre encadré + grille 3 cols + typographies */
+/* §12 — Vous aimerez aussi : titre encadré + grille 3 cols + typographies */
 .related-products h2,
 .related-products .related-products__heading {
   text-align: center;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: #1A1A1A;
@@ -2056,17 +2068,34 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
     gap: 36px;
   }
 }
+.related-products .card__media,
+.related-products .card .media {
+  background: var(--mc-pierre, #E8E4DD);
+  aspect-ratio: 1 / 1.25;
+}
+.related-products .card__media img,
+.related-products .card .media img {
+  transition: opacity 300ms ease;
+}
+.related-products .card:hover .card__media img,
+.related-products .card:hover .media img {
+  opacity: 0.85;
+}
+.related-products .card-information,
+.related-products .card__information {
+  margin-top: 22px;
+}
 .related-products .card-information .card__heading,
 .related-products .card__information .card__heading {
   font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.3;
   text-transform: none;
   letter-spacing: 0;
   color: #1A1A1A;
-  margin: 22px 0 8px 0;
+  margin: 0 0 8px 0;
 }
 .related-products .card-information .price,
 .related-products .card__information .price {
@@ -2074,9 +2103,5 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   font-weight: 300;
   font-size: 13px;
   letter-spacing: 0.04em;
-  color: #5A554F;
-}
-.related-products .card__media,
-.related-products .card .media {
-  background: #E8E4DD;
+  color: #1A1A1A;
 }

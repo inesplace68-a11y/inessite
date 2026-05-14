@@ -7,8 +7,14 @@
 
 {%- liquid
   assign s = section.settings
-  assign show_section = s.section_visible
-  assign img = s.image
+  assign show_section = s.pdp_editorial_show
+  if s.section_visible == false
+    assign show_section = false
+  endif
+  assign img = s.pdp_editorial_image
+  if img == blank
+    assign img = s.image
+  endif
   assign caption_visible = s.show_caption
   assign caption_text = s.caption_text
   case s.ratio
@@ -28,11 +34,11 @@
 {%- if show_section -%}
   {%- style -%}
     #shopify-section-{{ section.id }} {
-      --mc-ed-pad-t: {{ s.padding_top | default: 40 }}px;
-      --mc-ed-pad-b: {{ s.padding_bottom | default: 120 }}px;
+      --mc-ed-pad-t: {{ s.pdp_editorial_pt | default: s.padding_top | default: 40 }}px;
+      --mc-ed-pad-b: {{ s.pdp_editorial_pb | default: s.padding_bottom | default: 120 }}px;
       --mc-ed-ratio: {{ ratio_css }};
-      --mc-ed-bg: {{ s.placeholder_color | default: '#E8E4DD' }};
-      --mc-ed-caption-color: {{ s.caption_color | default: '#5A554F' }};
+      --mc-ed-bg: var(--mc-pierre, #E8E4DD);
+      --mc-ed-caption-color: #1A1A1A;
       --mc-ed-caption-size: {{ s.caption_size | default: 18 }}px;
       --mc-ed-caption-maxw: {{ s.caption_max_width | default: 620 }}px;
     }
@@ -79,8 +85,8 @@
     "templates": ["product"]
   },
   "settings": [
-    { "type": "checkbox", "id": "section_visible", "default": true, "label": "Section visible" },
-    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "pdp_editorial_show", "default": true, "label": "Section visible" },
+    { "type": "image_picker", "id": "pdp_editorial_image", "label": "Image éditoriale" },
     {
       "type": "select",
       "id": "ratio",
@@ -93,16 +99,14 @@
       "default": "21-10",
       "label": "Ratio"
     },
-    { "type": "color", "id": "placeholder_color", "default": "#E8E4DD", "label": "Couleur placeholder" },
-    { "type": "header", "content": "Légende (optionnelle)" },
+    { "type": "header", "content": "Légende (optionnelle, désactivée par défaut)" },
     { "type": "checkbox", "id": "show_caption", "default": false, "label": "Afficher la légende" },
     { "type": "richtext", "id": "caption_text", "label": "Texte" },
-    { "type": "color", "id": "caption_color", "default": "#5A554F", "label": "Couleur" },
     { "type": "range", "id": "caption_size", "min": 14, "max": 28, "step": 1, "unit": "px", "default": 18, "label": "Taille" },
     { "type": "range", "id": "caption_max_width", "min": 400, "max": 900, "step": 20, "unit": "px", "default": 620, "label": "Largeur max" },
     { "type": "header", "content": "Espacements" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Padding haut" },
-    { "type": "range", "id": "padding_bottom", "min": 60, "max": 180, "step": 10, "unit": "px", "default": 120, "label": "Padding bas" }
+    { "type": "range", "id": "pdp_editorial_pt", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Padding haut" },
+    { "type": "range", "id": "pdp_editorial_pb", "min": 60, "max": 180, "step": 10, "unit": "px", "default": 120, "label": "Padding bas" }
   ],
   "presets": [
     { "name": "PDP — Photo éditoriale" }

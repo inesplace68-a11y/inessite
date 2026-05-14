@@ -78,6 +78,37 @@
         cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{{ vt_cursor_size }}' height='{{ vt_cursor_size }}' viewBox='0 0 {{ vt_cursor_size }} {{ vt_cursor_size }}'><circle cx='{{ vt_cursor_half }}' cy='{{ vt_cursor_half }}' r='{{ vt_cursor_radius }}' fill='none' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/><line x1='{{ vt_cursor_half }}' y1='{{ vt_cursor_arm_start }}' x2='{{ vt_cursor_half }}' y2='{{ vt_cursor_arm_end }}' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/><line x1='{{ vt_cursor_arm_start }}' y1='{{ vt_cursor_half }}' x2='{{ vt_cursor_arm_end }}' y2='{{ vt_cursor_half }}' stroke='{{ vt_cursor_color_encoded }}' stroke-width='1'/></svg>") {{ vt_cursor_half }} {{ vt_cursor_half }}, zoom-in;
       }
     {%- endif -%}
+
+    /* Phase 15 — variables PDP exposées au Customizer */
+    #MainProduct-{{ section.id }} {
+      --pdp-info-col-w: {{ section.settings.pdp_info_col_width | default: 480 }}px;
+      --pdp-hero-gap: {{ section.settings.pdp_hero_gap | default: 100 }}px;
+      --pdp-hero-py: {{ section.settings.pdp_hero_padding_y | default: 100 }}px;
+      --pdp-title-size: {{ section.settings.pdp_title_size | default: 34 }}px;
+      --pdp-price-size: {{ section.settings.pdp_price_size | default: 17 }}px;
+      --pdp-desc-size: {{ section.settings.pdp_description_size | default: 15 }}px;
+      --pdp-tags-mb: {{ section.settings.pdp_tags_mb | default: 40 }}px;
+      --pdp-title-mb: {{ section.settings.pdp_title_mb | default: 24 }}px;
+      --pdp-price-mb: {{ section.settings.pdp_price_mb | default: 22 }}px;
+      --pdp-av-mb: {{ section.settings.pdp_availability_mb | default: 30 }}px;
+      --pdp-fav-mb: {{ section.settings.pdp_favoris_mb | default: 36 }}px;
+      --pdp-trust-mb: {{ section.settings.pdp_trust_mb | default: 48 }}px;
+      --pdp-desc-mb: {{ section.settings.pdp_description_mb | default: 24 }}px;
+      --pdp-cartel-mb: {{ section.settings.pdp_cartel_mb | default: 48 }}px;
+      --pdp-ref-mt: {{ section.settings.pdp_ref_mt | default: 36 }}px;
+    }
+    #MainProduct-{{ section.id }}.section-{{ section.id }}-padding {
+      padding-top: var(--pdp-hero-py);
+      padding-bottom: var(--pdp-hero-py);
+    }
+    @media screen and (min-width: 990px) {
+      #MainProduct-{{ section.id }} .product--mc-pdp {
+        column-gap: var(--pdp-hero-gap);
+      }
+      #MainProduct-{{ section.id }} .product--mc-pdp .product__info-wrapper {
+        max-width: var(--pdp-info-col-w);
+      }
+    }
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -116,7 +147,7 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
     <div
-      class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'vertical_thumbnails' %} product--vt-active-{{ section.settings.vt_active_style }}{% endif %}"
+      class="product product--mc-pdp product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'vertical_thumbnails' %} product--vt-active-{{ section.settings.vt_active_style }}{% endif %}"
       {% if section.settings.gallery_layout == 'vertical_thumbnails' %}
         data-vt-modal-enabled="{% if section.settings.vt_modal_enabled %}true{% else %}false{% endif %}"
       {% endif %}
@@ -143,16 +174,8 @@
                   {{- block.settings.text -}}
                 </p>
               {%- when 'title' -%}
-                {%- liquid
-                  assign mc_title_size_d = block.settings.mc_size_desktop | default: 34
-                  assign mc_title_size_m = block.settings.mc_size_mobile | default: 26
-                  assign mc_title_color = block.settings.mc_text_color | default: '#1A1A1A'
-                  assign mc_title_mb = block.settings.mc_margin_bottom | default: 24
-                  assign mc_title_style = block.settings.mc_font_style | default: 'normal'
-                -%}
                 <div
                   class="product__title product__title--mc"
-                  style="--mc-title-size-d: {{ mc_title_size_d }}px; --mc-title-size-m: {{ mc_title_size_m }}px; --mc-title-color: {{ mc_title_color }}; --mc-title-mb: {{ mc_title_mb }}px; --mc-title-style: {{ mc_title_style }};"
                   {{ block.shopify_attributes }}
                 >
                   <h1>{{ product.title | escape }}</h1>
@@ -163,7 +186,7 @@
                   </a>
                 </div>
               {%- when 'price' -%}
-                <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                <div id="price-{{ section.id }}" class="product__price--mc" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
                     product: product,
                     use_variant: true,
@@ -250,15 +273,8 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  {%- liquid
-                    assign mc_desc_style = block.settings.mc_font_style | default: 'jost_roman'
-                    assign mc_desc_size = block.settings.mc_size | default: 15
-                    assign mc_desc_color = block.settings.mc_text_color | default: '#5A554F'
-                    assign mc_desc_mb = block.settings.mc_margin_bottom | default: 24
-                  -%}
                   <div
-                    class="product__description product__description--mc product__description--{{ mc_desc_style }} rte quick-add-hidden"
-                    style="--mc-desc-size: {{ mc_desc_size }}px; --mc-desc-color: {{ mc_desc_color }}; --mc-desc-mb: {{ mc_desc_mb }}px;"
+                    class="product__description product__description--mc product__description--jost_roman rte quick-add-hidden"
                     {{ block.shopify_attributes }}
                   >
                     {{ product.description }}
@@ -745,65 +761,74 @@
                 {%- liquid
                   assign mc_tags_show_1 = block.settings.tag_1_visible
                   assign mc_tags_show_2 = block.settings.tag_2_visible
+                  assign mc_tags_section_visible = section.settings.pdp_tag_show
                 -%}
-                {%- if mc_tags_show_1 or mc_tags_show_2 -%}
+                {%- if mc_tags_section_visible and mc_tags_show_1 or mc_tags_section_visible and mc_tags_show_2 -%}
                   <div
                     class="mc-pdp-tags-row"
-                    style="--mc-tag-border: {{ block.settings.border_color | default: '#1A1A1A' }}; --mc-tag-text: {{ block.settings.text_color | default: '#1A1A1A' }}; --mc-tag-ph: {{ block.settings.pad_h | default: 20 }}px; --mc-tag-pv: {{ block.settings.pad_v | default: 9 }}px; --mc-tag-gap: {{ block.settings.gap | default: 10 }}px; --mc-tag-mb: {{ block.settings.margin_bottom | default: 40 }}px;"
                     {{ block.shopify_attributes }}
                   >
                     {%- if mc_tags_show_1 and block.settings.tag_1_label != blank -%}
+                      {%- assign mc_tag_1_label = block.settings.tag_1_label | upcase -%}
                       {%- if block.settings.tag_1_link != blank -%}
-                        <a class="mc-pdp-tag" href="{{ block.settings.tag_1_link }}">{{ block.settings.tag_1_label }}</a>
+                        <a class="mc-pdp-tag" href="{{ block.settings.tag_1_link }}">{{ mc_tag_1_label }}</a>
                       {%- else -%}
-                        <span class="mc-pdp-tag">{{ block.settings.tag_1_label }}</span>
+                        <span class="mc-pdp-tag">{{ mc_tag_1_label }}</span>
                       {%- endif -%}
                     {%- endif -%}
                     {%- if mc_tags_show_2 and block.settings.tag_2_label != blank -%}
+                      {%- assign mc_tag_2_label = block.settings.tag_2_label | upcase -%}
                       {%- if block.settings.tag_2_link != blank -%}
-                        <a class="mc-pdp-tag" href="{{ block.settings.tag_2_link }}">{{ block.settings.tag_2_label }}</a>
+                        <a class="mc-pdp-tag" href="{{ block.settings.tag_2_link }}">{{ mc_tag_2_label }}</a>
                       {%- else -%}
-                        <span class="mc-pdp-tag">{{ block.settings.tag_2_label }}</span>
+                        <span class="mc-pdp-tag">{{ mc_tag_2_label }}</span>
                       {%- endif -%}
                     {%- endif -%}
                   </div>
                 {%- endif -%}
               {%- when 'mc_availability' -%}
-                {%- if block.settings.visible -%}
-                  {%- assign mc_av_mt = block.settings.margin_top | default: 22 -%}
-                  {%- assign mc_av_mb = block.settings.margin_bottom | default: 30 -%}
+                {%- if section.settings.pdp_show_availability and block.settings.visible -%}
                   {%- if block.settings.app_active -%}
-                    <div
-                      class="mc-availability mc-availability--app"
+                    <p
+                      class="delivery-estimate mc-availability mc-availability--app"
                       data-mc-onestock
                       data-product-id="{{ product.id }}"
-                      style="--mc-av-mt: {{ mc_av_mt }}px; --mc-av-mb: {{ mc_av_mb }}px;"
                       {{ block.shopify_attributes }}
-                    ></div>
+                    ></p>
                   {%- else -%}
-                    {%- assign prep_days = block.settings.prep_days | default: 2 -%}
-                    {%- assign min_ship = block.settings.min_ship_days | default: 3 -%}
-                    {%- assign max_ship = block.settings.max_ship_days | default: 7 -%}
-                    {%- assign min_total_days = prep_days | plus: min_ship -%}
-                    {%- assign max_total_days = prep_days | plus: max_ship -%}
-                    {%- assign min_seconds = min_total_days | times: 86400 -%}
-                    {%- assign max_seconds = max_total_days | times: 86400 -%}
-                    {%- assign now_seconds = 'now' | date: '%s' | times: 1 -%}
-                    {%- assign min_epoch = now_seconds | plus: min_seconds -%}
-                    {%- assign max_epoch = now_seconds | plus: max_seconds -%}
-                    {%- assign d1 = min_epoch | date: '%-d %B' -%}
-                    {%- assign d2 = max_epoch | date: '%-d %B' -%}
-                    {%- assign mc_av_phrase = block.settings.wrapper_text | default: 'Livraison estimée entre [date1] et [date2]' | replace: '[date1]', d1 | replace: '[date2]', d2 -%}
+                    {%- liquid
+                      assign prep_days = block.settings.prep_days | default: 2
+                      assign min_ship = block.settings.min_ship_days | default: 3
+                      assign max_ship = block.settings.max_ship_days | default: 7
+                      assign min_total_days = prep_days | plus: min_ship
+                      assign max_total_days = prep_days | plus: max_ship
+                      assign min_seconds = min_total_days | times: 86400
+                      assign max_seconds = max_total_days | times: 86400
+                      assign now_seconds = 'now' | date: '%s' | times: 1
+                      assign min_epoch = now_seconds | plus: min_seconds
+                      assign max_epoch = now_seconds | plus: max_seconds
+                      assign min_day = min_epoch | date: '%-d'
+                      assign min_month_num = min_epoch | date: '%-m' | plus: 0
+                      assign max_day = max_epoch | date: '%-d'
+                      assign max_month_num = max_epoch | date: '%-m' | plus: 0
+                      assign fr_months = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
+                      assign min_month_idx = min_month_num | minus: 1
+                      assign max_month_idx = max_month_num | minus: 1
+                      assign d1 = min_day | append: ' ' | append: fr_months[min_month_idx]
+                      assign d2 = max_day | append: ' ' | append: fr_months[max_month_idx]
+                      assign phrase_template = section.settings.pdp_delivery_phrase | default: 'Chez vous entre le {date_min} et le {date_max}'
+                      assign mc_av_phrase = phrase_template | replace: '{date_min}', d1 | replace: '{date_max}', d2 | replace: '[date1]', d1 | replace: '[date2]', d2
+                      assign mc_av_label = section.settings.pdp_availability_label | default: 'DISPONIBLE'
+                    -%}
                     <p
-                      class="mc-availability"
-                      style="--mc-av-mt: {{ mc_av_mt }}px; --mc-av-mb: {{ mc_av_mb }}px;"
+                      class="delivery-estimate mc-availability"
                       {{ block.shopify_attributes }}
                     >
-                      {%- if block.settings.show_prefix and block.settings.label_avail != blank -%}
-                        <span class="mc-availability__prefix">{{ block.settings.label_avail }}</span>
-                        <span class="mc-availability__sep">{{ block.settings.separator | default: '·' }}</span>
+                      {%- if block.settings.show_prefix and mc_av_label != blank -%}
+                        <span class="stock mc-availability__prefix">{{ mc_av_label }}</span>
+                        <span class="sep mc-availability__sep">{{ block.settings.separator | default: '·' }}</span>
                       {%- endif -%}
-                      <span class="mc-availability__phrase">{{ mc_av_phrase }}</span>
+                      <em class="delivery-phrase mc-availability__phrase">{{ mc_av_phrase }}</em>
                     </p>
                   {%- endif -%}
                 {%- endif -%}
@@ -836,23 +861,12 @@
                     {%- endif -%}
                   </div>
                 {%- endif -%}
-              {%- when 'mc_closing_line' -%}
-                {%- if block.settings.visible -%}
-                  {%- assign mc_cl_text = product.metafields.custom.closing_line | default: block.settings.fallback_text -%}
-                  {%- if mc_cl_text != blank -%}
-                    <p
-                      class="mc-closing-line"
-                      style="--mc-cl-size: {{ block.settings.font_size | default: 18 }}px; --mc-cl-mb: {{ block.settings.margin_bottom | default: 44 }}px; --mc-cl-color: {{ block.settings.text_color | default: '#5A554F' }};"
-                      {{ block.shopify_attributes }}
-                    >{{ mc_cl_text }}</p>
-                  {%- endif -%}
-                {%- endif -%}
               {%- when 'mc_cartel_specs' -%}
                 {%- liquid
                   assign mc_h = product.metafields.custom.hauteur_cm
                   assign mc_l = product.metafields.custom.largeur_cm
                   assign mc_p = product.metafields.custom.profondeur_cm
-                  assign mc_mat = product.metafields.custom.materiaux
+                  assign mc_mat_raw = product.metafields.custom.materiaux
                   assign mc_cs_show_dims = block.settings.show_dimensions
                   assign mc_cs_show_mat = block.settings.show_materials
                   assign mc_cs_unit = block.settings.unit | default: 'cm'
@@ -861,18 +875,26 @@
                   if mc_h != blank or mc_l != blank or mc_p != blank
                     assign mc_has_dims = true
                   endif
-                  assign mc_cs_render = false
-                  if mc_cs_show_dims and mc_has_dims
-                    assign mc_cs_render = true
+
+                  assign mc_mat_text = ''
+                  if mc_mat_raw != blank
+                    assign mc_mat_joined = mc_mat_raw | join: ' · '
+                    assign mc_mat_text = mc_mat_joined | upcase
                   endif
-                  if mc_cs_show_mat and mc_mat != blank
-                    assign mc_cs_render = true
+
+                  assign mc_cs_render = false
+                  if section.settings.pdp_cartel_show
+                    if mc_cs_show_dims and mc_has_dims
+                      assign mc_cs_render = true
+                    endif
+                    if mc_cs_show_mat and mc_mat_text != blank
+                      assign mc_cs_render = true
+                    endif
                   endif
                 -%}
                 {%- if mc_cs_render -%}
                   <div
                     class="mc-cartel"
-                    style="--mc-cs-pv: {{ block.settings.padding_v | default: 22 }}px; --mc-cs-mb: {{ block.settings.margin_bottom | default: 48 }}px;"
                     {{ block.shopify_attributes }}
                   >
                     {%- if mc_cs_show_dims and mc_has_dims -%}
@@ -884,18 +906,17 @@
                         {%- if mc_p != blank -%}<span>{{ block.settings.prefix_p | default: 'P' }} {{ mc_p }} {{ mc_cs_unit }}</span>{%- endif -%}
                       </p>
                     {%- endif -%}
-                    {%- if mc_cs_show_mat and mc_mat != blank -%}
-                      <p class="mc-cartel__line mc-cartel__line--mat">{{ mc_mat }}</p>
+                    {%- if mc_cs_show_mat and mc_mat_text != blank -%}
+                      <p class="mc-cartel__line mc-cartel__line--mat">{{ mc_mat_text }}</p>
                     {%- endif -%}
                   </div>
                 {%- endif -%}
               {%- when 'mc_reference' -%}
-                {%- if block.settings.visible -%}
+                {%- if section.settings.pdp_ref_show and block.settings.visible -%}
                   {%- assign mc_ref_value = product.metafields.custom.reference_inventaire | default: product.selected_or_first_available_variant.sku -%}
                   {%- if mc_ref_value != blank -%}
                     <p
                       class="mc-reference"
-                      style="--mc-ref-color: {{ block.settings.text_color | default: '#9A938A' }}; --mc-ref-mt: {{ block.settings.margin_top | default: 36 }}px;"
                       {{ block.shopify_attributes }}
                     >{{ block.settings.prefix | default: 'Réf.' }} {{ mc_ref_value }}</p>
                   {%- endif -%}
@@ -1538,18 +1559,6 @@
         { "type": "header", "content": "Espacements" },
         { "type": "range", "id": "padding_v", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 20, "label": "Padding vertical" },
         { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 48, "label": "Marge basse" }
-      ]
-    },
-    {
-      "type": "mc_closing_line",
-      "name": "MC — Phrase clôture",
-      "limit": 1,
-      "settings": [
-        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
-        { "type": "textarea", "id": "fallback_text", "default": "Une pièce de caractère, immédiatement habitable.", "label": "Texte (fallback si métachamp custom.closing_line vide)" },
-        { "type": "range", "id": "font_size", "min": 14, "max": 24, "step": 1, "unit": "px", "default": 18, "label": "Taille" },
-        { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 44, "label": "Marge basse" },
-        { "type": "color", "id": "text_color", "default": "#5A554F", "label": "Couleur" }
       ]
     },
     {
@@ -2792,7 +2801,32 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    }
+    },
+    { "type": "header", "content": "PDP — Mise en page (Phase 15)" },
+    { "type": "range", "id": "pdp_info_col_width", "min": 380, "max": 560, "step": 10, "unit": "px", "default": 480, "label": "PDP — Largeur colonne info" },
+    { "type": "range", "id": "pdp_hero_gap", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 100, "label": "PDP — Gap image / info" },
+    { "type": "range", "id": "pdp_hero_padding_y", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 100, "label": "PDP — Padding vertical hero" },
+    { "type": "header", "content": "PDP — Typographie" },
+    { "type": "range", "id": "pdp_title_size", "min": 24, "max": 56, "step": 2, "unit": "px", "default": 34, "label": "PDP — Taille titre produit" },
+    { "type": "range", "id": "pdp_price_size", "min": 14, "max": 22, "step": 1, "unit": "px", "default": 17, "label": "PDP — Taille prix" },
+    { "type": "range", "id": "pdp_description_size", "min": 13, "max": 17, "step": 1, "unit": "px", "default": 15, "label": "PDP — Taille description" },
+    { "type": "header", "content": "PDP — Visibilité blocs" },
+    { "type": "checkbox", "id": "pdp_tag_show", "default": true, "label": "Afficher les tags" },
+    { "type": "checkbox", "id": "pdp_show_availability", "default": true, "label": "Afficher le module disponibilité" },
+    { "type": "text", "id": "pdp_availability_label", "default": "DISPONIBLE", "label": "Libellé disponibilité (eyebrow)" },
+    { "type": "text", "id": "pdp_delivery_phrase", "default": "Chez vous entre le {date_min} et le {date_max}", "label": "Phrase livraison", "info": "Utiliser {date_min} et {date_max} comme placeholders." },
+    { "type": "checkbox", "id": "pdp_cartel_show", "default": true, "label": "Afficher le cartel dimensions" },
+    { "type": "checkbox", "id": "pdp_ref_show", "default": true, "label": "Afficher la référence inventaire" },
+    { "type": "header", "content": "PDP — Espacements verticaux" },
+    { "type": "range", "id": "pdp_tags_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40, "label": "Marge basse — Tags" },
+    { "type": "range", "id": "pdp_title_mb", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24, "label": "Marge basse — Titre" },
+    { "type": "range", "id": "pdp_price_mb", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 22, "label": "Marge basse — Prix" },
+    { "type": "range", "id": "pdp_availability_mb", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 30, "label": "Marge basse — Dispo" },
+    { "type": "range", "id": "pdp_favoris_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 36, "label": "Marge basse — Favoris" },
+    { "type": "range", "id": "pdp_trust_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Trust strip" },
+    { "type": "range", "id": "pdp_description_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Marge basse — Description" },
+    { "type": "range", "id": "pdp_cartel_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Cartel" },
+    { "type": "range", "id": "pdp_ref_mt", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36, "label": "Marge haute — Référence" }
   ]
 }
 {% endschema %}

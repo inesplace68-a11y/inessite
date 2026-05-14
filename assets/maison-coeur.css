@@ -16,6 +16,12 @@
   --mc-footer-text: #E8E4DD;    /* texte footer */
   --mc-border:      rgba(26, 22, 20, 0.14);
 
+  /* Palette stricte Phase 15 — aliases canoniques */
+  --mc-creme:       #F7F5F1;    /* fond */
+  --mc-pierre:      #E8E4DD;    /* fines bordures, fond thumbs, placeholder */
+  --mc-bronze:      #8C6D3F;    /* accents éventuels (non utilisé en PDP)  */
+  --mc-noir:        #1A1A1A;    /* texte / bordures noires */
+
   --mc-font-serif: 'Cormorant Garamond', Georgia, serif;
   --mc-font-sans:  'Jost', 'Helvetica Neue', Arial, sans-serif;
 

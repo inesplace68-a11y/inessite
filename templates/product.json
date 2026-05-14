@@ -54,10 +54,6 @@
           "type": "description",
           "settings": {}
         },
-        "mc_closing": {
-          "type": "mc_closing_line",
-          "settings": {}
-        },
         "mc_cartel": {
           "type": "mc_cartel_specs",
           "settings": {}
@@ -104,7 +100,6 @@
         "mc_wish",
         "mc_trust",
         "description",
-        "mc_closing",
         "mc_cartel",
         "tab_desc",
         "tab_dims",
@@ -129,18 +124,19 @@
     "mc_editorial": {
       "type": "mc-product-editorial",
       "settings": {
-        "section_visible": true,
+        "pdp_editorial_show": true,
         "ratio": "21-10",
         "show_caption": false,
-        "padding_top": 40,
-        "padding_bottom": 120
+        "pdp_editorial_pt": 40,
+        "pdp_editorial_pb": 120
       }
     },
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "VOUS AIMEREZ AUSSI",
+        "heading": "Vous aimerez aussi",
         "heading_size": "h2",
+        "products_to_show": 3,
         "columns_desktop": 3,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
@@ -148,8 +144,11 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "padding_top": 60,
-        "padding_bottom": 36
+        "padding_top": 0,
+        "padding_bottom": 140,
+        "pdp_related_show": true,
+        "pdp_related_count": 3,
+        "pdp_related_pb": 140
       }
     }
   },
