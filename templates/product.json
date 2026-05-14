@@ -50,6 +50,15 @@
           "type": "price",
           "settings": {}
         },
+        "description": {
+          "type": "description",
+          "settings": {
+            "mc_font_style": "jost_roman",
+            "mc_size": 15,
+            "mc_text_color": "#5a554f",
+            "mc_margin_bottom": 24
+          }
+        },
         "mc_avail": {
           "type": "mc_availability",
           "settings": {
@@ -98,15 +107,6 @@
             "item_3_visible": true,
             "padding_v": 20,
             "margin_bottom": 48
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {
-            "mc_font_style": "jost_roman",
-            "mc_size": 15,
-            "mc_text_color": "#5a554f",
-            "mc_margin_bottom": 24
           }
         },
         "mc_cartel": {
@@ -165,11 +165,11 @@
         "mc_tags",
         "title",
         "price",
+        "description",
         "mc_avail",
         "buy_buttons",
         "mc_wish",
         "mc_trust",
-        "description",
         "mc_cartel",
         "tab_desc",
         "tab_dims",
@@ -203,11 +203,12 @@
         "padding_top": 36,
         "padding_bottom": 12,
         "pdp_info_col_width": 390,
-        "pdp_hero_gap": 100,
-        "pdp_hero_padding_y": 100,
+        "pdp_hero_gap": 50,
+        "pdp_hero_padding_y": 40,
         "pdp_title_size": 34,
         "pdp_price_size": 17,
         "pdp_description_size": 15,
+        "pdp_show_vendor": false,
         "pdp_tag_show": true,
         "pdp_show_availability": true,
         "pdp_availability_label": "DISPONIBLE",
@@ -216,8 +217,8 @@
         "pdp_ref_show": true,
         "pdp_tags_mb": 16,
         "pdp_title_mb": 24,
-        "pdp_price_mb": 22,
-        "pdp_availability_mb": 30,
+        "pdp_price_mb": 10,
+        "pdp_availability_mb": 8,
         "pdp_favoris_mb": 36,
         "pdp_trust_mb": 48,
         "pdp_description_mb": 24,
@@ -227,15 +228,17 @@
     },
     "mc_editorial": {
       "type": "mc-product-editorial",
+      "disabled": true,
       "settings": {
-        "pdp_editorial_show": true,
+        "pdp_editorial_show": false,
+        "pdp_editorial_image": "shopify://shop_images/IMG_6240.jpg",
         "ratio": "21-10",
         "show_caption": false,
         "caption_text": "",
         "caption_size": 18,
         "caption_max_width": 620,
-        "pdp_editorial_pt": 40,
-        "pdp_editorial_pb": 120
+        "pdp_editorial_pt": 0,
+        "pdp_editorial_pb": 60
       }
     },
     "related-products": {
