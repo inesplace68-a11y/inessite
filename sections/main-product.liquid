@@ -308,7 +308,6 @@
                       hidden
                     >
                       <span class="mc-description-toggle__label">{{ mc_desc_more }}</span>
-                      <span class="mc-description-toggle__arrow" aria-hidden="true">→</span>
                     </button>
                   </div>
                   <script>
@@ -331,15 +330,12 @@
 
                       toggle.addEventListener('click', function () {
                         var labelEl = toggle.querySelector('.mc-description-toggle__label');
-                        var arrowEl = toggle.querySelector('.mc-description-toggle__arrow');
                         var clamped = body.classList.toggle('mc-description--clamped');
                         if (clamped) {
                           if (labelEl) labelEl.textContent = toggle.dataset.labelMore;
-                          if (arrowEl) arrowEl.textContent = '→';
                           toggle.setAttribute('aria-expanded', 'false');
                         } else {
                           if (labelEl) labelEl.textContent = toggle.dataset.labelLess;
-                          if (arrowEl) arrowEl.textContent = '↑';
                           toggle.setAttribute('aria-expanded', 'true');
                         }
                       });

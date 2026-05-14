@@ -1954,29 +1954,25 @@ p.delivery-estimate {
   overflow: hidden;
 }
 .mc-description-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: block;
   margin-top: 12px;
-  padding: 0 0 1px 0;
+  padding: 0;
   background: transparent;
   border: 0;
-  border-bottom: 0.5px solid #1A1A1A;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
   color: #1A1A1A;
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 3px;
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
 .mc-description-toggle:hover { opacity: 0.6; }
 .mc-description-toggle[hidden] { display: none; }
-.mc-description-toggle__arrow {
-  font-size: 13px;
-  line-height: 1;
-}
 
 /* §8 — Cartel dimensions & matériaux — 2 lignes CAPS, fines bordures pierre */
 .mc-cartel {
