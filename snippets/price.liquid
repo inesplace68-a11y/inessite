@@ -35,9 +35,9 @@
     assign money_price_max = price_max | money_with_currency
   endif
 
-  assign money_price = money_price | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
-  assign money_price_min = money_price_min | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
-  assign money_price_max = money_price_max | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+  assign money_price = money_price | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
+  assign money_price_min = money_price_min | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
+  assign money_price_max = money_price_max | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
 
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
@@ -76,7 +76,7 @@
                   {%- else -%}
                     {%- assign compare_str = compare_at_price | money -%}
                   {%- endif -%}
-                  {{ compare_str | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€' }}
+                  {{ compare_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €' }}
                 </s>
               </span>
             {%- endunless -%}
@@ -105,7 +105,7 @@
               {%- else -%}
                 {%- assign compare_sale_str = compare_at_price | money -%}
               {%- endif -%}
-              {{ compare_sale_str | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€' }}
+              {{ compare_sale_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €' }}
             </s>
           </span>
         {%- endunless -%}

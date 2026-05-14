@@ -64,7 +64,7 @@
                   else
                     assign hs_price_str = product.price | money
                   endif
-                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€'
+                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
                 -%}
                 {{ hs_price_str }}
               </p>

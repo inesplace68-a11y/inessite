@@ -180,7 +180,7 @@
           {%- assign remaining_cents = threshold_cents | minus: cart.total_price -%}
           <p class="mc-cd__shipping" data-mc-cd-shipping>
             {%- if remaining_cents > 0 -%}
-              {%- assign remaining_amount = remaining_cents | money_without_trailing_zeros | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€' -%}
+              {%- assign remaining_amount = remaining_cents | money_without_trailing_zeros | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €' -%}
               {{ s.shipping_threshold_text_below | replace: '[amount]', remaining_amount }}
             {%- else -%}
               {{ s.shipping_threshold_text_reached }}
@@ -222,7 +222,7 @@
                 {%- endif -%}
 
                 <p class="mc-cd__line-price">
-                  {{- item.final_line_price | money | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€' -}}
+                  {{- item.final_line_price | money | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €' -}}
                 </p>
 
                 <div class="mc-cd__qty" role="group" aria-label="Quantité">
@@ -266,7 +266,7 @@
           <span class="mc-cd__subtotal-label">{{ s.subtotal_label_text }}</span>
           <span class="mc-cd__subtotal-right">
             <span class="mc-cd__subtotal-amount" data-mc-cd-subtotal>
-              {{- cart.total_price | money | replace: '&nbsp;€', ' €' | replace: ' €', '&nbsp;€' -}}
+              {{- cart.total_price | money | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €' -}}
             </span>
             {%- if s.subtotal_taxes_visible and s.subtotal_taxes_text != blank -%}
               <span class="mc-cd__subtotal-taxes">{{ s.subtotal_taxes_text }}</span>
