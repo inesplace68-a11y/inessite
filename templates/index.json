@@ -241,8 +241,8 @@
         "reas-4"
       ],
       "settings": {
-        "padding_top": 64,
-        "padding_bottom": 64
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     }
   },
