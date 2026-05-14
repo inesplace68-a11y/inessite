@@ -426,16 +426,8 @@ h1, h2, h3, h4,
 /* ============================================================
    PAGE PRODUIT
    ============================================================ */
-.product__title h1,
-.product__title .h1 {
-  font-family: var(--mc-font-serif) !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
-  font-size: 3rem !important;
-  line-height: 1.12 !important;
-  color: var(--mc-dark) !important;
-  letter-spacing: 0.01em !important;
-}
+/* Phase 15.2 — règle italique 3rem retirée : superseded par Phase 10 N2 ci-dessous
+   et par la calibration Phase 15 (.product__title--mc) dans section-main-product.css */
 
 .product__text.caption-with-letter-spacing {
   font-family: var(--mc-font-sans) !important;
@@ -535,10 +527,13 @@ h1, h2, h3, h4,
   }
 }
 
-/* Niveau 2 — PDP : titre produit principal (Cormorant regular non-italique) */
-.product__title h1,
-.product__title h2.h1,
-.product__title .h1 {
+/* Niveau 2 — PDP générique (theme par défaut) : titre produit Cormorant regular.
+   Phase 15.2 — exclusion .product__title--mc : la PDP Maison Coeur calibrée
+   Phase 15 prend le relais avec sa propre échelle (N3 = 34px) via le setting
+   Customizer pdp_title_size, géré dans section-main-product.css. */
+.product__title:not(.product__title--mc) h1,
+.product__title:not(.product__title--mc) h2.h1,
+.product__title:not(.product__title--mc) .h1 {
   font-family: var(--mc-font-serif) !important;
   font-style: normal !important;
   font-weight: 400 !important;
@@ -547,9 +542,9 @@ h1, h2, h3, h4,
   letter-spacing: 0.01em !important;
 }
 @media (max-width: 749px) {
-  .product__title h1,
-  .product__title h2.h1,
-  .product__title .h1 {
+  .product__title:not(.product__title--mc) h1,
+  .product__title:not(.product__title--mc) h2.h1,
+  .product__title:not(.product__title--mc) .h1 {
     font-size: calc(var(--type-h2) * 0.72) !important;
   }
 }
