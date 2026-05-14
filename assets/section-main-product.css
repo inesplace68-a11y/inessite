@@ -1797,6 +1797,23 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
 .product__title--mc h2.h1 { display: none; }
 
 /* §3 — Prix : Jost light */
+/* Phase 15.5.2 — wrapper unique qui porte la marge basse Prix.
+   Le slider --pdp-price-mb contrôle seul l'écart prix → bloc suivant. */
+.mc-price-block {
+  margin: 0 0 var(--pdp-price-mb, 22px) 0;
+}
+.mc-price-block > .product__price--mc {
+  margin: 0;
+}
+.mc-price-block > .product__tax {
+  margin-bottom: 0;
+}
+.mc-price-block > .mc-price-block__installment {
+  margin: 0;
+}
+.mc-price-block > .mc-price-block__installment:empty { display: none; }
+.mc-price-block .installment { margin: 0; }
+.mc-price-block shopify-payment-terms { display: block; margin: 0; }
 .product__price--mc {
   margin: 0 0 var(--pdp-price-mb, 22px) 0;
 }
