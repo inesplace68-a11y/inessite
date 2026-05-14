@@ -1939,6 +1939,45 @@ p.delivery-estimate {
   font-style: normal;
 }
 
+/* §7b — Description : troncature 3 lignes + lien "Lire la suite" (Phase 15.5) */
+.mc-description-wrap {
+  display: block;
+}
+.mc-description__body {
+  transition: max-height 0.3s ease;
+}
+.mc-description__body.mc-description--clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--pdp-description-lines, 3);
+  line-clamp: var(--pdp-description-lines, 3);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mc-description-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 0 0 1px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.5px solid #1A1A1A;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.mc-description-toggle:hover { opacity: 0.6; }
+.mc-description-toggle[hidden] { display: none; }
+.mc-description-toggle__arrow {
+  font-size: 13px;
+  line-height: 1;
+}
+
 /* §8 — Cartel dimensions & matériaux — 2 lignes CAPS, fines bordures pierre */
 .mc-cartel {
   padding: 22px 0;

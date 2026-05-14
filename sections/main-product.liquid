@@ -87,6 +87,7 @@
       --pdp-title-size: {{ section.settings.pdp_title_size | default: 34 }}px;
       --pdp-price-size: {{ section.settings.pdp_price_size | default: 17 }}px;
       --pdp-desc-size: {{ section.settings.pdp_description_size | default: 15 }}px;
+      --pdp-description-lines: {{ section.settings.pdp_description_lines | default: 3 }};
       --pdp-tags-mb: {{ section.settings.pdp_tags_mb | default: 40 }}px;
       --pdp-title-mb: {{ section.settings.pdp_title_mb | default: 24 }}px;
       --pdp-price-mb: {{ section.settings.pdp_price_mb | default: 22 }}px;
@@ -287,12 +288,70 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
+                  {%- assign mc_desc_more = section.settings.pdp_description_more_label | default: 'Lire la suite' -%}
+                  {%- assign mc_desc_less = section.settings.pdp_description_less_label | default: 'Réduire' -%}
                   <div
-                    class="product__description product__description--mc product__description--jost_roman rte quick-add-hidden"
+                    class="product__description product__description--mc product__description--jost_roman rte quick-add-hidden mc-description-wrap"
+                    data-mc-description="{{ section.id }}"
                     {{ block.shopify_attributes }}
                   >
-                    {{ product.description }}
+                    <div class="mc-description__body mc-description--clamped" data-mc-description-body>
+                      {{ product.description }}
+                    </div>
+                    <button
+                      type="button"
+                      class="mc-description-toggle"
+                      data-mc-description-toggle
+                      data-label-more="{{ mc_desc_more | escape }}"
+                      data-label-less="{{ mc_desc_less | escape }}"
+                      aria-expanded="false"
+                      hidden
+                    >
+                      <span class="mc-description-toggle__label">{{ mc_desc_more }}</span>
+                      <span class="mc-description-toggle__arrow" aria-hidden="true">→</span>
+                    </button>
                   </div>
+                  <script>
+                    (function () {
+                      var wrap = document.querySelector('[data-mc-description="{{ section.id }}"]');
+                      if (!wrap) return;
+                      var body = wrap.querySelector('[data-mc-description-body]');
+                      var toggle = wrap.querySelector('[data-mc-description-toggle]');
+                      if (!body || !toggle) return;
+
+                      function syncToggleVisibility() {
+                        var overflows = body.scrollHeight - body.clientHeight > 1;
+                        var isClamped = body.classList.contains('mc-description--clamped');
+                        if (isClamped && !overflows) {
+                          toggle.setAttribute('hidden', '');
+                        } else {
+                          toggle.removeAttribute('hidden');
+                        }
+                      }
+
+                      toggle.addEventListener('click', function () {
+                        var labelEl = toggle.querySelector('.mc-description-toggle__label');
+                        var arrowEl = toggle.querySelector('.mc-description-toggle__arrow');
+                        var clamped = body.classList.toggle('mc-description--clamped');
+                        if (clamped) {
+                          if (labelEl) labelEl.textContent = toggle.dataset.labelMore;
+                          if (arrowEl) arrowEl.textContent = '→';
+                          toggle.setAttribute('aria-expanded', 'false');
+                        } else {
+                          if (labelEl) labelEl.textContent = toggle.dataset.labelLess;
+                          if (arrowEl) arrowEl.textContent = '↑';
+                          toggle.setAttribute('aria-expanded', 'true');
+                        }
+                      });
+
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', syncToggleVisibility);
+                      } else {
+                        syncToggleVisibility();
+                      }
+                      window.addEventListener('resize', syncToggleVisibility);
+                    })();
+                  </script>
                 {%- endif -%}
               {%- when 'sku' -%}
                 <p
@@ -2867,6 +2926,10 @@
     { "type": "range", "id": "pdp_title_size", "min": 24, "max": 56, "step": 2, "unit": "px", "default": 34, "label": "PDP — Taille titre produit" },
     { "type": "range", "id": "pdp_price_size", "min": 14, "max": 22, "step": 1, "unit": "px", "default": 17, "label": "PDP — Taille prix" },
     { "type": "range", "id": "pdp_description_size", "min": 13, "max": 17, "step": 1, "unit": "px", "default": 15, "label": "PDP — Taille description" },
+    { "type": "header", "content": "PDP — Description (troncature)" },
+    { "type": "range", "id": "pdp_description_lines", "min": 2, "max": 8, "step": 1, "unit": "li", "default": 3, "label": "Description — lignes visibles avant 'Lire la suite'" },
+    { "type": "text", "id": "pdp_description_more_label", "default": "Lire la suite", "label": "Texte du lien (déplier)" },
+    { "type": "text", "id": "pdp_description_less_label", "default": "Réduire", "label": "Texte du lien (replier)" },
     { "type": "header", "content": "PDP — Visibilité blocs" },
     { "type": "checkbox", "id": "pdp_show_vendor", "default": false, "label": "Afficher le fournisseur (vendor)" },
     { "type": "checkbox", "id": "pdp_tag_show", "default": true, "label": "Afficher les tags" },
