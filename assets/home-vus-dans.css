@@ -3,8 +3,8 @@
    ============================================================ */
 
 .home-vus-dans {
-  padding-top: var(--hvd-padding-vertical, 80px);
-  padding-bottom: var(--hvd-padding-vertical, 80px);
+  padding-top: var(--hvd-padding-top, 64px);
+  padding-bottom: var(--hvd-padding-bottom, 64px);
   background-color: var(--mc-bg, #F7F5F1);
 }
 
@@ -22,7 +22,7 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--mc-mid, #8C8882);
-  margin: 0 0 56px;
+  margin: 0 0 var(--hvd-eyebrow-gap, 20px);
 }
 
 .home-vus-dans__logos {
@@ -64,14 +64,11 @@
 
 @media (max-width: 749px) {
   .home-vus-dans {
-    padding-top: clamp(48px, var(--hvd-padding-vertical, 80px), var(--hvd-padding-vertical, 80px));
-    padding-bottom: clamp(48px, var(--hvd-padding-vertical, 80px), var(--hvd-padding-vertical, 80px));
+    padding-top: clamp(40px, var(--hvd-padding-top, 64px), var(--hvd-padding-top, 64px));
+    padding-bottom: clamp(40px, var(--hvd-padding-bottom, 64px), var(--hvd-padding-bottom, 64px));
   }
   .home-vus-dans__inner {
     padding: 0 20px;
-  }
-  .home-vus-dans__eyebrow {
-    margin-bottom: 32px;
   }
   .home-vus-dans__logos {
     gap: 32px;

@@ -4,8 +4,8 @@
    ============================================================ */
 
 .home-services {
-  padding-top: var(--hsv-padding-vertical, 64px);
-  padding-bottom: var(--hsv-padding-vertical, 64px);
+  padding-top: var(--hsv-padding-top, 96px);
+  padding-bottom: var(--hsv-padding-bottom, 96px);
   background-color: var(--hsv-bg, #F7F5F1);
 }
 
@@ -112,8 +112,8 @@
 
 @media (max-width: 749px) {
   .home-services {
-    padding-top: clamp(48px, var(--hsv-padding-vertical, 64px), var(--hsv-padding-vertical, 64px));
-    padding-bottom: clamp(48px, var(--hsv-padding-vertical, 64px), var(--hsv-padding-vertical, 64px));
+    padding-top: clamp(56px, var(--hsv-padding-top, 96px), var(--hsv-padding-top, 96px));
+    padding-bottom: clamp(56px, var(--hsv-padding-bottom, 96px), var(--hsv-padding-bottom, 96px));
   }
   .home-services__inner {
     padding: 0 20px;

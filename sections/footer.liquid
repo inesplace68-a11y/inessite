@@ -1,6 +1,9 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 
 {%- style -%}
+  #shopify-section-{{ section.id }} .mc-footer-inner {
+    padding-top: {{ section.settings.footer_top_padding | default: 48 }}px;
+  }
   #shopify-section-{{ section.id }} .mc-footer-bar-inner {
     padding-top: {{ section.settings.footer_bottom_padding_y }}px;
     padding-bottom: {{ section.settings.footer_bottom_padding_y }}px;
@@ -10,8 +13,27 @@
     font-size: {{ section.settings.footer_bottom_font_size }}px;
   }
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select {
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button > span,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select > span {
     font-size: {{ section.settings.footer_bottom_font_size }}px;
+    color: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
+  }
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button svg,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select svg {
+    color: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
+    fill: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
+  }
+  #shopify-section-{{ section.id }} .mc-fz-nl__btn {
+    height: {{ section.settings.newsletter_btn_height | default: 40 }}px;
+    line-height: 1;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: {{ section.settings.newsletter_btn_padding | default: 12 }}px;
+    padding-right: {{ section.settings.newsletter_btn_padding | default: 12 }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 {%- endstyle -%}
 
@@ -250,7 +272,55 @@
     },
     {
       "type": "header",
+      "content": "Espacements footer"
+    },
+    {
+      "type": "range",
+      "id": "footer_top_padding",
+      "label": "Marge supérieure footer",
+      "info": "Phase 13 — espace au-dessus du logo footer. Default 48px compact.",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Bouton S'abonner (newsletter)"
+    },
+    {
+      "type": "range",
+      "id": "newsletter_btn_height",
+      "label": "Hauteur bouton S'abonner",
+      "info": "Phase 13 — hauteur en pixels du bouton newsletter.",
+      "min": 28,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "newsletter_btn_padding",
+      "label": "Padding interne bouton S'abonner",
+      "info": "Phase 13 — padding gauche/droit en pixels.",
+      "min": 4,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
       "content": "Ligne du bas (sélecteur / copyright / mentions)"
+    },
+    {
+      "type": "color",
+      "id": "footer_localization_color",
+      "label": "Couleur sélecteur devise",
+      "info": "Phase 13 — couleur du texte du sélecteur pays/devise (et de la flèche). Blanc recommandé sur fond marron.",
+      "default": "#FFFFFF"
     },
     {
       "type": "range",

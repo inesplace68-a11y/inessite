@@ -2,7 +2,8 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hsv-padding-vertical: {{ section.settings.padding_vertical_services }}px;
+    --hsv-padding-top: {{ section.settings.padding_top | default: 96 }}px;
+    --hsv-padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
     --hsv-column-gap: {{ section.settings.column_gap }}px;
     --hsv-title-size: {{ section.settings.services_title_size }}px;
     --hsv-gap-title-body: {{ section.settings.gap_title_body_services }}px;
@@ -173,14 +174,24 @@
     { "type": "header", "content": "Espacements" },
     {
       "type": "range",
-      "id": "padding_vertical_services",
-      "min": 32,
-      "max": 160,
+      "id": "padding_top",
+      "min": 0,
+      "max": 240,
       "step": 4,
       "unit": "px",
-      "label": "Padding vertical section Services",
-      "info": "Marge haute et basse de la section (symétrique).",
-      "default": 64
+      "label": "Marge haute",
+      "info": "Phase 13 — niveau STANDARD 96/96.",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge basse",
+      "default": 96
     },
     {
       "type": "range",

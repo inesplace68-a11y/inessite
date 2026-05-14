@@ -45,6 +45,28 @@
   #Banner-{{ section.id }} .banner__media .hero-video {
     object-position: {{ section.settings.hero_image_position_x }}% {{ section.settings.hero_image_position_y }}%;
   }
+
+  {%- liquid
+    assign hero_title_size = section.settings.hero_title_size | default: 64
+    assign hero_title_min = hero_title_size | times: 60 | divided_by: 100
+    if hero_title_min < 32
+      assign hero_title_min = 32
+    endif
+    assign hero_title_mobile = hero_title_size | times: 70 | divided_by: 100
+    if hero_title_mobile < 32
+      assign hero_title_mobile = 32
+    endif
+  -%}
+  #Banner-{{ section.id }} .banner__heading,
+  #Banner-{{ section.id }} .banner__heading.inline-richtext {
+    font-size: clamp({{ hero_title_min }}px, 5vw, {{ hero_title_size }}px) !important;
+  }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__heading,
+    #Banner-{{ section.id }} .banner__heading.inline-richtext {
+      font-size: clamp(32px, 7vw, {{ hero_title_mobile }}px) !important;
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -264,6 +286,17 @@
       "label": "Position verticale image (%)",
       "info": "0 = haut cadré, 50 = centre, 100 = bas cadré.",
       "default": 50
+    },
+    {
+      "type": "range",
+      "id": "hero_title_size",
+      "min": 32,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "label": "Taille du titre hero (px)",
+      "info": "Taille du titre Cormorant italique. Clamp adaptatif appliqué entre mobile et desktop.",
+      "default": 64
     },
     {
       "type": "select",

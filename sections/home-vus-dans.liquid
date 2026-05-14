@@ -2,9 +2,11 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hvd-padding-vertical: {{ section.settings.padding_vertical_press }}px;
+    --hvd-padding-top: {{ section.settings.padding_top | default: 64 }}px;
+    --hvd-padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px;
     --hvd-logo-height: {{ section.settings.logo_height }}px;
     --hvd-logo-gap: {{ section.settings.logo_gap }}px;
+    --hvd-eyebrow-gap: {{ section.settings.eyebrow_logos_gap | default: 20 }}px;
   }
 {%- endstyle -%}
 
@@ -129,17 +131,39 @@
       "default": 64
     },
 
+    {
+      "type": "range",
+      "id": "eyebrow_logos_gap",
+      "min": 4,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Écart eyebrow / logos",
+      "info": "Espace vertical entre l'eyebrow VU DANS et la ligne de logos.",
+      "default": 20
+    },
+
     { "type": "header", "content": "Espacements" },
     {
       "type": "range",
-      "id": "padding_vertical_press",
-      "min": 40,
-      "max": 200,
-      "step": 10,
+      "id": "padding_top",
+      "min": 0,
+      "max": 240,
+      "step": 4,
       "unit": "px",
-      "label": "Hauteur de la bande Presse",
-      "info": "Marge haute et basse (symétrique). Default 80px = compact luxe-galerie en attendant l'enrichissement des logos.",
-      "default": 80
+      "label": "Marge haute",
+      "info": "Phase 13 — niveau COMPACT 64/64.",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge basse",
+      "default": 64
     }
   ],
   "presets": [
