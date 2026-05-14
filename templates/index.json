@@ -193,8 +193,8 @@
         "background_color": "#ffffff",
         "services_title_size": 22,
         "gap_title_body_services": 28,
-        "padding_top": 96,
-        "padding_bottom": 96,
+        "padding_top": 72,
+        "padding_bottom": 72,
         "column_gap": 64
       }
     },
