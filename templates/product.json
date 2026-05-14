@@ -19,6 +19,10 @@
             "text_style": "uppercase"
           }
         },
+        "mc_tags": {
+          "type": "mc_tags",
+          "settings": {}
+        },
         "title": {
           "type": "title",
           "settings": {}
@@ -27,8 +31,8 @@
           "type": "price",
           "settings": {}
         },
-        "description": {
-          "type": "description",
+        "mc_avail": {
+          "type": "mc_availability",
           "settings": {}
         },
         "buy_buttons": {
@@ -38,43 +42,74 @@
             "show_gift_card_recipient": false
           }
         },
-        "tab-livraison": {
+        "mc_wish": {
+          "type": "mc_wishlist_link",
+          "settings": {}
+        },
+        "mc_trust": {
+          "type": "mc_trust_strip",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "mc_closing": {
+          "type": "mc_closing_line",
+          "settings": {}
+        },
+        "mc_cartel": {
+          "type": "mc_cartel_specs",
+          "settings": {}
+        },
+        "tab_desc": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Livraison & Retours",
-            "icon": "truck",
-            "content": "<p>Livraison offerte en France métropolitaine dès 150 €. Délai estimé : 3 à 7 jours ouvrés. Retours acceptés sous 14 jours.</p>",
+            "heading": "Description complète",
+            "icon": "clipboard",
+            "content": "<p>Cette pièce a été sélectionnée et expertisée par notre équipe. Voir la description ci-dessus pour les détails et l'historique de l'objet.</p>",
             "page": ""
           }
         },
-        "tab-paiement": {
+        "tab_dims": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Paiement sécurisé",
-            "icon": "credit_card",
-            "content": "<p>Règlement sécurisé par SSL — Visa, Mastercard, PayPal, virement bancaire. Paiement en 3 fois disponible.</p>",
+            "heading": "Dimensions & Matériaux",
+            "icon": "box",
+            "content": "<p>Voir le cartel ci-dessus pour les dimensions exactes (H/L/P) et la nature des matériaux. Cette pièce a été chinée puis restaurée dans nos ateliers.</p>",
             "page": ""
           }
         },
-        "tab-aide": {
+        "tab_aide": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Besoin d'aide ?",
+            "heading": "Une question ?",
             "icon": "chat_bubble",
-            "content": "<p>Notre équipe est disponible du lundi au vendredi, 9h–18h. Contactez-nous à <a href=\"mailto:bonjour@maisoncoeur.fr\">bonjour@maisoncoeur.fr</a></p>",
+            "content": "<p>Notre conciergerie est à votre écoute pour toute question — pièce, livraison, conseil, mise en situation.</p><p><a href=\"https://wa.me/33665299614?text=Bonjour%20Maison%20Coeur%2C%20je%20souhaite%20%C3%A9changer%20au%20sujet%20d%E2%80%99une%20pi%C3%A8ce.\">Échanger sur WhatsApp →</a><br><a href=\"mailto:hello@maisoncoeur.fr\">Écrire un email →</a><br><a href=\"/pages/faq\">Consulter nos questions fréquentes →</a></p>",
             "page": ""
           }
+        },
+        "mc_ref": {
+          "type": "mc_reference",
+          "settings": {}
         }
       },
       "block_order": [
         "vendor",
+        "mc_tags",
         "title",
         "price",
-        "description",
+        "mc_avail",
         "buy_buttons",
-        "tab-livraison",
-        "tab-paiement",
-        "tab-aide"
+        "mc_wish",
+        "mc_trust",
+        "description",
+        "mc_closing",
+        "mc_cartel",
+        "tab_desc",
+        "tab_dims",
+        "tab_aide",
+        "mc_ref"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -86,8 +121,19 @@
         "media_position": "left",
         "hide_variants": true,
         "enable_video_looping": false,
+        "vt_thumb_ratio": "4-5",
         "padding_top": 36,
         "padding_bottom": 12
+      }
+    },
+    "mc_editorial": {
+      "type": "mc-product-editorial",
+      "settings": {
+        "section_visible": true,
+        "ratio": "21-10",
+        "show_caption": false,
+        "padding_top": 40,
+        "padding_bottom": 120
       }
     },
     "related-products": {
@@ -95,7 +141,7 @@
       "settings": {
         "heading": "VOUS AIMEREZ AUSSI",
         "heading_size": "h2",
-        "columns_desktop": 4,
+        "columns_desktop": 3,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "portrait",
@@ -109,6 +155,7 @@
   },
   "order": [
     "main",
+    "mc_editorial",
     "related-products"
   ]
 }

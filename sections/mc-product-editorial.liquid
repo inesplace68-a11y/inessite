@@ -1,0 +1,111 @@
+{%- comment -%}
+  Maison Coeur — Photo éditoriale PDP (pleine largeur, full-bleed)
+
+  À placer entre la section main-product et la grille de produits similaires.
+  Sans légende par défaut (code Hermès / The Row / Celine).
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign show_section = s.section_visible
+  assign img = s.image
+  assign caption_visible = s.show_caption
+  assign caption_text = s.caption_text
+  case s.ratio
+    when '21-10'
+      assign ratio_css = '21 / 10'
+    when '16-9'
+      assign ratio_css = '16 / 9'
+    when '3-2'
+      assign ratio_css = '3 / 2'
+    when '4-3'
+      assign ratio_css = '4 / 3'
+    else
+      assign ratio_css = '21 / 10'
+  endcase
+-%}
+
+{%- if show_section -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      --mc-ed-pad-t: {{ s.padding_top | default: 40 }}px;
+      --mc-ed-pad-b: {{ s.padding_bottom | default: 120 }}px;
+      --mc-ed-ratio: {{ ratio_css }};
+      --mc-ed-bg: {{ s.placeholder_color | default: '#E8E4DD' }};
+      --mc-ed-caption-color: {{ s.caption_color | default: '#5A554F' }};
+      --mc-ed-caption-size: {{ s.caption_size | default: 18 }}px;
+      --mc-ed-caption-maxw: {{ s.caption_max_width | default: 620 }}px;
+    }
+  {%- endstyle -%}
+
+  <section class="mc-product-editorial">
+    <figure class="mc-product-editorial__figure">
+      {%- if img != blank -%}
+        <img
+          class="mc-product-editorial__image"
+          srcset="
+            {%- if img.width >= 400 -%}{{ img | image_url: width: 400 }} 400w,{%- endif -%}
+            {%- if img.width >= 800 -%}{{ img | image_url: width: 800 }} 800w,{%- endif -%}
+            {%- if img.width >= 1200 -%}{{ img | image_url: width: 1200 }} 1200w,{%- endif -%}
+            {%- if img.width >= 1800 -%}{{ img | image_url: width: 1800 }} 1800w,{%- endif -%}
+            {%- if img.width >= 2400 -%}{{ img | image_url: width: 2400 }} 2400w,{%- endif -%}
+            {{ img | image_url }} {{ img.width }}w
+          "
+          src="{{ img | image_url: width: 1800 }}"
+          sizes="100vw"
+          alt="{{ img.alt | escape }}"
+          loading="lazy"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+        >
+      {%- else -%}
+        <div class="mc-product-editorial__placeholder" aria-hidden="true"></div>
+      {%- endif -%}
+      {%- if caption_visible and caption_text != blank -%}
+        <figcaption class="mc-product-editorial__caption">
+          {{ caption_text }}
+        </figcaption>
+      {%- endif -%}
+    </figure>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP — Photo éditoriale",
+  "tag": "section",
+  "class": "section section--mc-product-editorial",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    { "type": "checkbox", "id": "section_visible", "default": true, "label": "Section visible" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "ratio",
+      "options": [
+        { "value": "21-10", "label": "21:10 (cinéma)" },
+        { "value": "16-9", "label": "16:9" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" }
+      ],
+      "default": "21-10",
+      "label": "Ratio"
+    },
+    { "type": "color", "id": "placeholder_color", "default": "#E8E4DD", "label": "Couleur placeholder" },
+    { "type": "header", "content": "Légende (optionnelle)" },
+    { "type": "checkbox", "id": "show_caption", "default": false, "label": "Afficher la légende" },
+    { "type": "richtext", "id": "caption_text", "label": "Texte" },
+    { "type": "color", "id": "caption_color", "default": "#5A554F", "label": "Couleur" },
+    { "type": "range", "id": "caption_size", "min": 14, "max": 28, "step": 1, "unit": "px", "default": 18, "label": "Taille" },
+    { "type": "range", "id": "caption_max_width", "min": 400, "max": 900, "step": 20, "unit": "px", "default": 620, "label": "Largeur max" },
+    { "type": "header", "content": "Espacements" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Padding haut" },
+    { "type": "range", "id": "padding_bottom", "min": 60, "max": 180, "step": 10, "unit": "px", "default": 120, "label": "Padding bas" }
+  ],
+  "presets": [
+    { "name": "PDP — Photo éditoriale" }
+  ]
+}
+{% endschema %}

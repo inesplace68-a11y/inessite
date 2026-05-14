@@ -27,6 +27,8 @@
 
   {%- liquid
     case section.settings.vt_thumb_ratio
+      when '2-3'
+        assign vt_ratio_css = '2 / 3'
       when '3-4'
         assign vt_ratio_css = '3 / 4'
       when '4-5'
@@ -34,7 +36,7 @@
       when '1-1'
         assign vt_ratio_css = '1 / 1'
       else
-        assign vt_ratio_css = '3 / 4'
+        assign vt_ratio_css = '4 / 5'
     endcase
     assign vt_cursor_size = section.settings.vt_cursor_size | default: 32
     assign vt_cursor_half = vt_cursor_size | divided_by: 2
@@ -141,9 +143,19 @@
                   {{- block.settings.text -}}
                 </p>
               {%- when 'title' -%}
-                <div class="product__title product__title--with-heart" {{ block.shopify_attributes }}>
+                {%- liquid
+                  assign mc_title_size_d = block.settings.mc_size_desktop | default: 34
+                  assign mc_title_size_m = block.settings.mc_size_mobile | default: 26
+                  assign mc_title_color = block.settings.mc_text_color | default: '#1A1A1A'
+                  assign mc_title_mb = block.settings.mc_margin_bottom | default: 24
+                  assign mc_title_style = block.settings.mc_font_style | default: 'normal'
+                -%}
+                <div
+                  class="product__title product__title--mc"
+                  style="--mc-title-size-d: {{ mc_title_size_d }}px; --mc-title-size-m: {{ mc_title_size_m }}px; --mc-title-color: {{ mc_title_color }}; --mc-title-mb: {{ mc_title_mb }}px; --mc-title-style: {{ mc_title_style }};"
+                  {{ block.shopify_attributes }}
+                >
                   <h1>{{ product.title | escape }}</h1>
-                  {%- render 'heart-button', product: product, size: 22, context: 'product' -%}
                   <a href="{{ product.url }}" class="product__title">
                     <h2 class="h1">
                       {{ product.title | escape }}
@@ -238,7 +250,17 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                  {%- liquid
+                    assign mc_desc_style = block.settings.mc_font_style | default: 'jost_roman'
+                    assign mc_desc_size = block.settings.mc_size | default: 15
+                    assign mc_desc_color = block.settings.mc_text_color | default: '#5A554F'
+                    assign mc_desc_mb = block.settings.mc_margin_bottom | default: 24
+                  -%}
+                  <div
+                    class="product__description product__description--mc product__description--{{ mc_desc_style }} rte quick-add-hidden"
+                    style="--mc-desc-size: {{ mc_desc_size }}px; --mc-desc-color: {{ mc_desc_color }}; --mc-desc-mb: {{ mc_desc_mb }}px;"
+                    {{ block.shopify_attributes }}
+                  >
                     {{ product.description }}
                   </div>
                 {%- endif -%}
@@ -719,6 +741,165 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {%- when 'mc_tags' -%}
+                {%- liquid
+                  assign mc_tags_show_1 = block.settings.tag_1_visible
+                  assign mc_tags_show_2 = block.settings.tag_2_visible
+                -%}
+                {%- if mc_tags_show_1 or mc_tags_show_2 -%}
+                  <div
+                    class="mc-pdp-tags-row"
+                    style="--mc-tag-border: {{ block.settings.border_color | default: '#1A1A1A' }}; --mc-tag-text: {{ block.settings.text_color | default: '#1A1A1A' }}; --mc-tag-ph: {{ block.settings.pad_h | default: 20 }}px; --mc-tag-pv: {{ block.settings.pad_v | default: 9 }}px; --mc-tag-gap: {{ block.settings.gap | default: 10 }}px; --mc-tag-mb: {{ block.settings.margin_bottom | default: 40 }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if mc_tags_show_1 and block.settings.tag_1_label != blank -%}
+                      {%- if block.settings.tag_1_link != blank -%}
+                        <a class="mc-pdp-tag" href="{{ block.settings.tag_1_link }}">{{ block.settings.tag_1_label }}</a>
+                      {%- else -%}
+                        <span class="mc-pdp-tag">{{ block.settings.tag_1_label }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                    {%- if mc_tags_show_2 and block.settings.tag_2_label != blank -%}
+                      {%- if block.settings.tag_2_link != blank -%}
+                        <a class="mc-pdp-tag" href="{{ block.settings.tag_2_link }}">{{ block.settings.tag_2_label }}</a>
+                      {%- else -%}
+                        <span class="mc-pdp-tag">{{ block.settings.tag_2_label }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- when 'mc_availability' -%}
+                {%- if block.settings.visible -%}
+                  {%- assign mc_av_mt = block.settings.margin_top | default: 22 -%}
+                  {%- assign mc_av_mb = block.settings.margin_bottom | default: 30 -%}
+                  {%- if block.settings.app_active -%}
+                    <div
+                      class="mc-availability mc-availability--app"
+                      data-mc-onestock
+                      data-product-id="{{ product.id }}"
+                      style="--mc-av-mt: {{ mc_av_mt }}px; --mc-av-mb: {{ mc_av_mb }}px;"
+                      {{ block.shopify_attributes }}
+                    ></div>
+                  {%- else -%}
+                    {%- assign prep_days = block.settings.prep_days | default: 2 -%}
+                    {%- assign min_ship = block.settings.min_ship_days | default: 3 -%}
+                    {%- assign max_ship = block.settings.max_ship_days | default: 7 -%}
+                    {%- assign min_total_days = prep_days | plus: min_ship -%}
+                    {%- assign max_total_days = prep_days | plus: max_ship -%}
+                    {%- assign min_seconds = min_total_days | times: 86400 -%}
+                    {%- assign max_seconds = max_total_days | times: 86400 -%}
+                    {%- assign now_seconds = 'now' | date: '%s' | times: 1 -%}
+                    {%- assign min_epoch = now_seconds | plus: min_seconds -%}
+                    {%- assign max_epoch = now_seconds | plus: max_seconds -%}
+                    {%- assign d1 = min_epoch | date: '%-d %B' -%}
+                    {%- assign d2 = max_epoch | date: '%-d %B' -%}
+                    {%- assign mc_av_phrase = block.settings.wrapper_text | default: 'Livraison estimée entre [date1] et [date2]' | replace: '[date1]', d1 | replace: '[date2]', d2 -%}
+                    <p
+                      class="mc-availability"
+                      style="--mc-av-mt: {{ mc_av_mt }}px; --mc-av-mb: {{ mc_av_mb }}px;"
+                      {{ block.shopify_attributes }}
+                    >
+                      {%- if block.settings.show_prefix and block.settings.label_avail != blank -%}
+                        <span class="mc-availability__prefix">{{ block.settings.label_avail }}</span>
+                        <span class="mc-availability__sep">{{ block.settings.separator | default: '·' }}</span>
+                      {%- endif -%}
+                      <span class="mc-availability__phrase">{{ mc_av_phrase }}</span>
+                    </p>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- when 'mc_wishlist_link' -%}
+                {%- if block.settings.visible -%}
+                  <div
+                    class="mc-wishlist-link"
+                    style="--mc-wl-pt: {{ block.settings.padding_top | default: 22 }}px; --mc-wl-mb: {{ block.settings.margin_bottom | default: 36 }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- render 'heart-button', product: product, size: 14, context: 'product-text' -%}
+                    <span class="mc-wishlist-link__label">{{ block.settings.label_default | default: 'Ajouter à ma sélection' }}</span>
+                  </div>
+                {%- endif -%}
+              {%- when 'mc_trust_strip' -%}
+                {%- if block.settings.visible -%}
+                  <div
+                    class="mc-trust-strip"
+                    style="--mc-ts-pv: {{ block.settings.padding_v | default: 20 }}px; --mc-ts-mb: {{ block.settings.margin_bottom | default: 48 }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if block.settings.item_1_visible and block.settings.item_1_label != blank -%}
+                      <a class="mc-trust-strip__item" href="{{ block.settings.item_1_link | default: '/pages/authenticite' }}">{{ block.settings.item_1_label }}</a>
+                    {%- endif -%}
+                    {%- if block.settings.item_2_visible and block.settings.item_2_label != blank -%}
+                      <a class="mc-trust-strip__item" href="{{ block.settings.item_2_link | default: '/pages/livraisons' }}">{{ block.settings.item_2_label }}</a>
+                    {%- endif -%}
+                    {%- if block.settings.item_3_visible and block.settings.item_3_label != blank -%}
+                      <a class="mc-trust-strip__item" href="{{ block.settings.item_3_link | default: '/pages/retours' }}">{{ block.settings.item_3_label }}</a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- when 'mc_closing_line' -%}
+                {%- if block.settings.visible -%}
+                  {%- assign mc_cl_text = product.metafields.custom.closing_line | default: block.settings.fallback_text -%}
+                  {%- if mc_cl_text != blank -%}
+                    <p
+                      class="mc-closing-line"
+                      style="--mc-cl-size: {{ block.settings.font_size | default: 18 }}px; --mc-cl-mb: {{ block.settings.margin_bottom | default: 44 }}px; --mc-cl-color: {{ block.settings.text_color | default: '#5A554F' }};"
+                      {{ block.shopify_attributes }}
+                    >{{ mc_cl_text }}</p>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- when 'mc_cartel_specs' -%}
+                {%- liquid
+                  assign mc_h = product.metafields.custom.hauteur_cm
+                  assign mc_l = product.metafields.custom.largeur_cm
+                  assign mc_p = product.metafields.custom.profondeur_cm
+                  assign mc_mat = product.metafields.custom.materiaux
+                  assign mc_cs_show_dims = block.settings.show_dimensions
+                  assign mc_cs_show_mat = block.settings.show_materials
+                  assign mc_cs_unit = block.settings.unit | default: 'cm'
+                  assign mc_cs_sep = block.settings.separator | default: '·'
+                  assign mc_has_dims = false
+                  if mc_h != blank or mc_l != blank or mc_p != blank
+                    assign mc_has_dims = true
+                  endif
+                  assign mc_cs_render = false
+                  if mc_cs_show_dims and mc_has_dims
+                    assign mc_cs_render = true
+                  endif
+                  if mc_cs_show_mat and mc_mat != blank
+                    assign mc_cs_render = true
+                  endif
+                -%}
+                {%- if mc_cs_render -%}
+                  <div
+                    class="mc-cartel"
+                    style="--mc-cs-pv: {{ block.settings.padding_v | default: 22 }}px; --mc-cs-mb: {{ block.settings.margin_bottom | default: 48 }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if mc_cs_show_dims and mc_has_dims -%}
+                      <p class="mc-cartel__line mc-cartel__line--dims">
+                        {%- if mc_h != blank -%}<span>{{ block.settings.prefix_h | default: 'H' }} {{ mc_h }} {{ mc_cs_unit }}</span>{%- endif -%}
+                        {%- if mc_h != blank and mc_l != blank -%}<span class="mc-cartel__sep">{{ mc_cs_sep }}</span>{%- endif -%}
+                        {%- if mc_l != blank -%}<span>{{ block.settings.prefix_l | default: 'L' }} {{ mc_l }} {{ mc_cs_unit }}</span>{%- endif -%}
+                        {%- if mc_l != blank and mc_p != blank or mc_h != blank and mc_p != blank and mc_l == blank -%}<span class="mc-cartel__sep">{{ mc_cs_sep }}</span>{%- endif -%}
+                        {%- if mc_p != blank -%}<span>{{ block.settings.prefix_p | default: 'P' }} {{ mc_p }} {{ mc_cs_unit }}</span>{%- endif -%}
+                      </p>
+                    {%- endif -%}
+                    {%- if mc_cs_show_mat and mc_mat != blank -%}
+                      <p class="mc-cartel__line mc-cartel__line--mat">{{ mc_mat }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- when 'mc_reference' -%}
+                {%- if block.settings.visible -%}
+                  {%- assign mc_ref_value = product.metafields.custom.reference_inventaire | default: product.selected_or_first_available_variant.sku -%}
+                  {%- if mc_ref_value != blank -%}
+                    <p
+                      class="mc-reference"
+                      style="--mc-ref-color: {{ block.settings.text_color | default: '#9A938A' }}; --mc-ref-mt: {{ block.settings.margin_top | default: 36 }}px;"
+                      {{ block.shopify_attributes }}
+                    >{{ block.settings.prefix | default: 'Réf.' }} {{ mc_ref_value }}</p>
+                  {%- endif -%}
+                {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -827,7 +1008,47 @@
     {
       "type": "title",
       "name": "t:sections.main-product.blocks.title.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Maison Coeur — Style titre" },
+        {
+          "type": "select",
+          "id": "mc_font_style",
+          "options": [
+            { "value": "normal", "label": "Roman (Cormorant)" },
+            { "value": "italic", "label": "Italique (Cormorant)" }
+          ],
+          "default": "normal",
+          "label": "Style typographique"
+        },
+        {
+          "type": "range",
+          "id": "mc_size_desktop",
+          "min": 24, "max": 48, "step": 1, "unit": "px",
+          "default": 34,
+          "label": "Taille desktop"
+        },
+        {
+          "type": "range",
+          "id": "mc_size_mobile",
+          "min": 18, "max": 32, "step": 1, "unit": "px",
+          "default": 26,
+          "label": "Taille mobile"
+        },
+        {
+          "type": "color",
+          "id": "mc_text_color",
+          "default": "#1A1A1A",
+          "label": "Couleur"
+        },
+        {
+          "type": "range",
+          "id": "mc_margin_bottom",
+          "min": 8, "max": 48, "step": 2, "unit": "px",
+          "default": 24,
+          "label": "Marge basse"
+        }
+      ]
     },
     {
       "type": "price",
@@ -976,7 +1197,40 @@
     {
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Maison Coeur — Style description" },
+        {
+          "type": "select",
+          "id": "mc_font_style",
+          "options": [
+            { "value": "jost_roman", "label": "Jost light (corps)" },
+            { "value": "cormorant_italic", "label": "Cormorant italique" }
+          ],
+          "default": "jost_roman",
+          "label": "Famille typographique"
+        },
+        {
+          "type": "range",
+          "id": "mc_size",
+          "min": 12, "max": 18, "step": 1, "unit": "px",
+          "default": 15,
+          "label": "Taille"
+        },
+        {
+          "type": "color",
+          "id": "mc_text_color",
+          "default": "#5A554F",
+          "label": "Couleur"
+        },
+        {
+          "type": "range",
+          "id": "mc_margin_bottom",
+          "min": 8, "max": 60, "step": 2, "unit": "px",
+          "default": 24,
+          "label": "Marge basse"
+        }
+      ]
     },
     {
       "type": "share",
@@ -1207,6 +1461,122 @@
           "id": "page",
           "label": "t:sections.main-product.blocks.collapsible_tab.settings.page.label"
         }
+      ]
+    },
+    {
+      "type": "mc_tags",
+      "name": "MC — Tags PDP",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Tag 1" },
+        { "type": "text", "id": "tag_1_label", "default": "VINTAGE", "label": "Libellé" },
+        { "type": "url", "id": "tag_1_link", "label": "Lien (optionnel)" },
+        { "type": "checkbox", "id": "tag_1_visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Tag 2" },
+        { "type": "text", "id": "tag_2_label", "default": "PIÈCE UNIQUE", "label": "Libellé" },
+        { "type": "url", "id": "tag_2_link", "label": "Lien (optionnel)" },
+        { "type": "checkbox", "id": "tag_2_visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Style" },
+        { "type": "color", "id": "border_color", "default": "#1A1A1A", "label": "Bordure" },
+        { "type": "color", "id": "text_color", "default": "#1A1A1A", "label": "Texte" },
+        { "type": "range", "id": "pad_h", "min": 10, "max": 30, "step": 1, "unit": "px", "default": 20, "label": "Padding horizontal" },
+        { "type": "range", "id": "pad_v", "min": 5, "max": 20, "step": 1, "unit": "px", "default": 9, "label": "Padding vertical" },
+        { "type": "range", "id": "gap", "min": 4, "max": 24, "step": 1, "unit": "px", "default": 10, "label": "Gap entre tags" },
+        { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 40, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_availability",
+      "name": "MC — Disponibilité",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "checkbox", "id": "show_prefix", "default": true, "label": "Afficher préfixe" },
+        { "type": "text", "id": "label_avail", "default": "Disponible", "label": "Préfixe" },
+        { "type": "text", "id": "separator", "default": "·", "label": "Séparateur" },
+        { "type": "text", "id": "wrapper_text", "default": "Livraison estimée entre [date1] et [date2]", "label": "Phrase", "info": "Utiliser [date1] et [date2] comme placeholders." },
+        { "type": "header", "content": "Délais (jours)" },
+        { "type": "range", "id": "prep_days", "min": 0, "max": 7, "step": 1, "unit": "j", "default": 2, "label": "Préparation" },
+        { "type": "range", "id": "min_ship_days", "min": 1, "max": 15, "step": 1, "unit": "j", "default": 3, "label": "Transport min" },
+        { "type": "range", "id": "max_ship_days", "min": 2, "max": 20, "step": 1, "unit": "j", "default": 7, "label": "Transport max" },
+        { "type": "checkbox", "id": "app_active", "default": false, "label": "App OneStock active", "info": "Masque le calcul Liquid pour laisser OneStock injecter la date." },
+        { "type": "header", "content": "Espacements" },
+        { "type": "range", "id": "margin_top", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 22, "label": "Marge haute" },
+        { "type": "range", "id": "margin_bottom", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 30, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_wishlist_link",
+      "name": "MC — Lien Sélection",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "text", "id": "label_default", "default": "Ajouter à ma sélection", "label": "Libellé par défaut" },
+        { "type": "text", "id": "label_active", "default": "Enregistré dans Ma Sélection", "label": "Libellé état actif" },
+        { "type": "range", "id": "padding_top", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 22, "label": "Padding haut" },
+        { "type": "range", "id": "margin_bottom", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 36, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_trust_strip",
+      "name": "MC — Bandeau confiance",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Item 1" },
+        { "type": "text", "id": "item_1_label", "default": "PIÈCES AUTHENTIFIÉES", "label": "Libellé" },
+        { "type": "url", "id": "item_1_link", "label": "Lien" },
+        { "type": "checkbox", "id": "item_1_visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Item 2" },
+        { "type": "text", "id": "item_2_label", "default": "EXPÉDITION SUR MESURE", "label": "Libellé" },
+        { "type": "url", "id": "item_2_link", "label": "Lien" },
+        { "type": "checkbox", "id": "item_2_visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Item 3" },
+        { "type": "text", "id": "item_3_label", "default": "GARANTIE SATISFACTION", "label": "Libellé" },
+        { "type": "url", "id": "item_3_link", "label": "Lien" },
+        { "type": "checkbox", "id": "item_3_visible", "default": true, "label": "Visible" },
+        { "type": "header", "content": "Espacements" },
+        { "type": "range", "id": "padding_v", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 20, "label": "Padding vertical" },
+        { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 48, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_closing_line",
+      "name": "MC — Phrase clôture",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "textarea", "id": "fallback_text", "default": "Une pièce de caractère, immédiatement habitable.", "label": "Texte (fallback si métachamp custom.closing_line vide)" },
+        { "type": "range", "id": "font_size", "min": 14, "max": 24, "step": 1, "unit": "px", "default": 18, "label": "Taille" },
+        { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 44, "label": "Marge basse" },
+        { "type": "color", "id": "text_color", "default": "#5A554F", "label": "Couleur" }
+      ]
+    },
+    {
+      "type": "mc_cartel_specs",
+      "name": "MC — Cartel dimensions",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_dimensions", "default": true, "label": "Ligne dimensions" },
+        { "type": "checkbox", "id": "show_materials", "default": true, "label": "Ligne matériaux" },
+        { "type": "text", "id": "prefix_h", "default": "H", "label": "Préfixe hauteur" },
+        { "type": "text", "id": "prefix_l", "default": "L", "label": "Préfixe largeur" },
+        { "type": "text", "id": "prefix_p", "default": "P", "label": "Préfixe profondeur" },
+        { "type": "text", "id": "unit", "default": "cm", "label": "Unité" },
+        { "type": "text", "id": "separator", "default": "·", "label": "Séparateur" },
+        { "type": "range", "id": "padding_v", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 22, "label": "Padding vertical" },
+        { "type": "range", "id": "margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 48, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_reference",
+      "name": "MC — Réf. inventaire",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "text", "id": "prefix", "default": "Réf.", "label": "Préfixe" },
+        { "type": "color", "id": "text_color", "default": "#9A938A", "label": "Couleur" },
+        { "type": "range", "id": "margin_top", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 36, "label": "Marge haute" }
       ]
     },
     {
@@ -2327,11 +2697,12 @@
       "type": "select",
       "id": "vt_thumb_ratio",
       "options": [
+        { "value": "2-3", "label": "2:3" },
         { "value": "3-4", "label": "3:4 (portrait)" },
         { "value": "4-5", "label": "4:5" },
         { "value": "1-1", "label": "1:1 (carré)" }
       ],
-      "default": "3-4",
+      "default": "4-5",
       "label": "Ratio des vignettes"
     },
     {
