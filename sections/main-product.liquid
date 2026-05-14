@@ -79,6 +79,16 @@
       }
     {%- endif -%}
 
+    {%- if section.settings.pdp_cursor_zoom -%}
+      /* Phase 15.6 — curseur loupe custom outline (override vt_cursor crosshair). */
+      #MainProduct-{{ section.id }} .product__modal-opener--image,
+      #MainProduct-{{ section.id }} .product__modal-opener--image .product__media-toggle,
+      #MainProduct-{{ section.id }} .product__media-item img,
+      #MainProduct-{{ section.id }} .thumbnail-list__item .thumbnail {
+        cursor: url("{{ 'cursor-loupe.svg' | asset_url }}") 16 16, zoom-in;
+      }
+    {%- endif -%}
+
     /* Phase 15 — variables PDP exposées au Customizer */
     #MainProduct-{{ section.id }} {
       --pdp-info-col-w: {{ section.settings.pdp_info_col_width | default: 480 }}px;
@@ -2930,6 +2940,7 @@
     { "type": "text", "id": "pdp_description_less_label", "default": "Réduire", "label": "Texte du lien (replier)" },
     { "type": "header", "content": "PDP — Visibilité blocs" },
     { "type": "checkbox", "id": "pdp_show_vendor", "default": false, "label": "Afficher le fournisseur (vendor)" },
+    { "type": "checkbox", "id": "pdp_cursor_zoom", "default": true, "label": "Activer curseur loupe au survol image principale" },
     { "type": "checkbox", "id": "pdp_tag_show", "default": true, "label": "Afficher les tags" },
     { "type": "checkbox", "id": "pdp_show_availability", "default": true, "label": "Afficher le module disponibilité" },
     { "type": "text", "id": "pdp_availability_label", "default": "DISPONIBLE", "label": "Libellé disponibilité (eyebrow)" },
