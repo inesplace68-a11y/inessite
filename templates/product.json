@@ -21,11 +21,30 @@
         },
         "mc_tags": {
           "type": "mc_tags",
-          "settings": {}
+          "settings": {
+            "tag_1_label": "VINTAGE",
+            "tag_1_link": "",
+            "tag_1_visible": true,
+            "tag_2_label": "PIÈCE UNIQUE",
+            "tag_2_link": "",
+            "tag_2_visible": true,
+            "border_color": "#1a1a1a",
+            "text_color": "#1a1a1a",
+            "pad_h": 20,
+            "pad_v": 9,
+            "gap": 10,
+            "margin_bottom": 40
+          }
         },
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "mc_font_style": "normal",
+            "mc_size_desktop": 34,
+            "mc_size_mobile": 26,
+            "mc_text_color": "#1a1a1a",
+            "mc_margin_bottom": 24
+          }
         },
         "price": {
           "type": "price",
@@ -33,7 +52,19 @@
         },
         "mc_avail": {
           "type": "mc_availability",
-          "settings": {}
+          "settings": {
+            "visible": true,
+            "show_prefix": true,
+            "label_avail": "Disponible",
+            "separator": "·",
+            "wrapper_text": "Livraison estimée entre [date1] et [date2]",
+            "prep_days": 2,
+            "min_ship_days": 3,
+            "max_ship_days": 7,
+            "app_active": false,
+            "margin_top": 22,
+            "margin_bottom": 30
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -44,19 +75,53 @@
         },
         "mc_wish": {
           "type": "mc_wishlist_link",
-          "settings": {}
+          "settings": {
+            "visible": true,
+            "label_default": "Ajouter à ma sélection",
+            "label_active": "Enregistré dans Ma Sélection",
+            "padding_top": 22,
+            "margin_bottom": 36
+          }
         },
         "mc_trust": {
           "type": "mc_trust_strip",
-          "settings": {}
+          "settings": {
+            "visible": true,
+            "item_1_label": "PIÈCES AUTHENTIFIÉES",
+            "item_1_link": "",
+            "item_1_visible": true,
+            "item_2_label": "EXPÉDITION SUR MESURE",
+            "item_2_link": "",
+            "item_2_visible": true,
+            "item_3_label": "GARANTIE SATISFACTION",
+            "item_3_link": "",
+            "item_3_visible": true,
+            "padding_v": 20,
+            "margin_bottom": 48
+          }
         },
         "description": {
           "type": "description",
-          "settings": {}
+          "settings": {
+            "mc_font_style": "jost_roman",
+            "mc_size": 15,
+            "mc_text_color": "#5a554f",
+            "mc_margin_bottom": 24
+          }
         },
         "mc_cartel": {
           "type": "mc_cartel_specs",
-          "settings": {}
+          "settings": {
+            "show_dimensions": true,
+            "show_materials": true,
+            "prefix_h": "H",
+            "prefix_l": "L",
+            "prefix_p": "P",
+            "unit": "cm",
+            "separator": "·",
+            "padding_v": 22,
+            "margin_bottom": 48
+          }
         },
         "tab_desc": {
           "type": "collapsible_tab",
@@ -87,7 +152,12 @@
         },
         "mc_ref": {
           "type": "mc_reference",
-          "settings": {}
+          "settings": {
+            "visible": true,
+            "prefix": "Réf.",
+            "text_color": "#9a938a",
+            "margin_top": 36
+          }
         }
       },
       "block_order": [
@@ -111,14 +181,48 @@
         "color_scheme": "scheme-1",
         "media_size": "large",
         "constrain_to_viewport": true,
+        "media_fit": "contain",
         "gallery_layout": "vertical_thumbnails",
         "mobile_thumbnails": "show",
         "media_position": "left",
+        "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
+        "vt_thumbs_width": 80,
+        "vt_gap_thumbs": 8,
+        "vt_gap_main": 0,
         "vt_thumb_ratio": "4-5",
+        "vt_active_style": "border",
+        "vt_active_color": "#000000",
+        "vt_active_width": 1,
+        "vt_cursor_enabled": true,
+        "vt_cursor_size": 32,
+        "vt_cursor_color": "#000000",
+        "vt_modal_enabled": true,
+        "vt_modal_opacity": 90,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "pdp_info_col_width": 480,
+        "pdp_hero_gap": 100,
+        "pdp_hero_padding_y": 100,
+        "pdp_title_size": 34,
+        "pdp_price_size": 17,
+        "pdp_description_size": 15,
+        "pdp_tag_show": true,
+        "pdp_show_availability": true,
+        "pdp_availability_label": "DISPONIBLE",
+        "pdp_delivery_phrase": "Chez vous entre le {date_min} et le {date_max}",
+        "pdp_cartel_show": true,
+        "pdp_ref_show": true,
+        "pdp_tags_mb": 40,
+        "pdp_title_mb": 24,
+        "pdp_price_mb": 22,
+        "pdp_availability_mb": 30,
+        "pdp_favoris_mb": 36,
+        "pdp_trust_mb": 48,
+        "pdp_description_mb": 24,
+        "pdp_cartel_mb": 48,
+        "pdp_ref_mt": 36
       }
     },
     "mc_editorial": {
@@ -127,6 +231,9 @@
         "pdp_editorial_show": true,
         "ratio": "21-10",
         "show_caption": false,
+        "caption_text": "",
+        "caption_size": 18,
+        "caption_max_width": 620,
         "pdp_editorial_pt": 40,
         "pdp_editorial_pb": 120
       }
@@ -134,18 +241,19 @@
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "Vous aimerez aussi",
+        "heading": "VOUS AIMEREZ AUSSI",
         "heading_size": "h2",
-        "products_to_show": 3,
+        "products_to_show": 4,
         "columns_desktop": 3,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "portrait",
+        "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "padding_top": 0,
-        "padding_bottom": 140,
+        "padding_top": 60,
+        "padding_bottom": 36,
         "pdp_related_show": true,
         "pdp_related_count": 3,
         "pdp_related_pb": 140
