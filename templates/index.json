@@ -72,8 +72,8 @@
         "pieces_visible_desktop": 4,
         "pieces_total": 9,
         "card_gap": 28,
-        "padding_top": 96,
-        "padding_bottom": 96
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "mc_collection_grid": {
