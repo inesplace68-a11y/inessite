@@ -80,12 +80,15 @@
     {%- endif -%}
 
     {%- if section.settings.pdp_cursor_zoom -%}
-      /* Phase 15.6 — curseur loupe custom outline (override vt_cursor crosshair). */
+      /* Phase 15.6.1 — curseur loupe custom : cible le ::after qui couvre le
+         bouton et porte cursor:pointer (section-main-product.css:564), et la
+         classe .thumbnail qui porte aussi cursor:pointer (ligne 1022). !important
+         pour gagner sur vt_cursor (spec plus haute) + sur les règles Dawn. */
       #MainProduct-{{ section.id }} .product__modal-opener--image,
       #MainProduct-{{ section.id }} .product__modal-opener--image .product__media-toggle,
-      #MainProduct-{{ section.id }} .product__media-item img,
+      #MainProduct-{{ section.id }} .product__modal-opener--image .product__media-toggle::after,
       #MainProduct-{{ section.id }} .thumbnail-list__item .thumbnail {
-        cursor: url("{{ 'cursor-loupe.svg' | asset_url }}") 16 16, zoom-in;
+        cursor: url("{{ 'cursor-loupe.svg' | asset_url }}") 13 13, zoom-in !important;
       }
     {%- endif -%}
 
