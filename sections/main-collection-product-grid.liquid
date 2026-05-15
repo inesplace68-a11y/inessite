@@ -41,6 +41,7 @@
     --mcg-card-gap-desktop: {{ section.settings.card_gap_desktop | default: 20 }}px;
     --mcg-card-gap-mobile: {{ section.settings.card_gap_mobile | default: 12 }}px;
     --mcg-card-title-size: {{ section.settings.card_title_size | default: 16 }}px;
+    --mcg-card-title-lines: {{ section.settings.card_title_max_lines | default: 2 }};
     --mcg-card-price-size: {{ section.settings.card_price_size | default: 14 }}px;
     --mcg-image-zoom: {{ section.settings.image_zoom_amount | default: 102 }};
     --mcg-wishlist-color: {{ section.settings.wishlist_color | default: '#1A1814' }};
@@ -64,17 +65,38 @@
     --ratio-percent: 125%;
   }
   /* Typo vignette */
-  #shopify-section-{{ section.id }} .card__heading,
-  #shopify-section-{{ section.id }} .card__heading a {
+  #shopify-section-{{ section.id }} .card__heading {
     font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
     font-weight: 400;
     font-style: normal;
     font-size: var(--mcg-card-title-size, 16px);
     line-height: 1.25;
-    white-space: nowrap;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--mcg-card-title-lines, 2);
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #shopify-section-{{ section.id }} .card__heading a {
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #shopify-section-{{ section.id }} .card__information,
+  #shopify-section-{{ section.id }} .card-information {
+    min-width: 0;
   }
   #shopify-section-{{ section.id }} .price,
   #shopify-section-{{ section.id }} .price__regular .price-item,
@@ -140,8 +162,12 @@
     margin-bottom: var(--mc-grid-gap, 24px);
     padding-top: var(--mc-bar-pt, 20px);
     padding-bottom: var(--mc-bar-pb, 20px);
+    {%- if section.settings.show_bar_top_border -%}
     border-top: 1px solid rgba(26, 24, 20, 0.10);
+    {%- endif -%}
+    {%- if section.settings.show_bar_bottom_border -%}
     border-bottom: 1px solid rgba(26, 24, 20, 0.10);
+    {%- endif -%}
     position: relative;
   }
   #shopify-section-{{ section.id }} .mc-toolbar__filter-trigger {
@@ -465,7 +491,7 @@
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
     {%- liquid
-      assign filter_btn_label = section.settings.filter_button_label | default: 'AFFICHER LES FILTRES'
+      assign filter_btn_label = section.settings.filter_button_label | default: 'FILTRES'
       assign show_filter_icon = section.settings.show_filter_icon
       assign icon_style = section.settings.filter_icon_style | default: 'curseurs'
       assign show_count = section.settings.show_product_count
@@ -960,6 +986,7 @@
     { "type": "range", "id": "card_gap_desktop", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Gap entre vignettes (desktop)" },
     { "type": "range", "id": "card_gap_mobile", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 12, "label": "Gap entre vignettes (mobile)" },
     { "type": "range", "id": "card_title_size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 16, "label": "Taille titre vignette" },
+    { "type": "range", "id": "card_title_max_lines", "min": 1, "max": 4, "step": 1, "default": 2, "label": "Lignes maximum du titre produit" },
     { "type": "range", "id": "card_price_size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14, "label": "Taille prix vignette" },
 
     { "type": "header", "content": "Coeur wishlist — Phase 16.6" },
@@ -972,7 +999,7 @@
     { "type": "range", "id": "image_zoom_amount", "min": 100, "max": 110, "step": 1, "unit": "%", "default": 102, "label": "Niveau de zoom (%)", "info": "100 = sans zoom, 110 = +10% au survol" },
 
     { "type": "header", "content": "Barre filtres/tri — Phase 16.7" },
-    { "type": "text", "id": "filter_button_label", "default": "AFFICHER LES FILTRES", "label": "Libellé bouton filtres" },
+    { "type": "text", "id": "filter_button_label", "default": "FILTRES", "label": "Libellé bouton filtres" },
     { "type": "checkbox", "id": "show_filter_icon", "default": true, "label": "Afficher l'icône à gauche du libellé" },
     {
       "type": "select",
@@ -985,7 +1012,9 @@
         { "value": "plus", "label": "Plus (+)" }
       ]
     },
-    { "type": "checkbox", "id": "show_product_count", "default": true, "label": "Afficher le compteur de pièces" },
+    { "type": "checkbox", "id": "show_product_count", "default": false, "label": "Afficher le nombre de pièces" },
+    { "type": "checkbox", "id": "show_bar_top_border", "default": false, "label": "Afficher le trait au-dessus de la barre filtres" },
+    { "type": "checkbox", "id": "show_bar_bottom_border", "default": false, "label": "Afficher le trait en dessous de la barre filtres" },
     { "type": "range", "id": "bar_padding_top", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding haut de la barre" },
     { "type": "range", "id": "bar_padding_bottom", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding bas de la barre" },
     { "type": "range", "id": "title_to_bar_gap", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Espace titre → barre" },
