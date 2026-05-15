@@ -16,10 +16,16 @@
       "settings": {
         "footer_logo": "shopify://shop_images/maison-coeur-logo-horizontal-centre-blanc.png",
         "footer_logo_width": 600,
+        "brand_tagline": "COLLECTIBLE INTERIORS · PARIS",
         "newsletter_heading": "ICI, LES COUPS DE COEUR DURENT POUR TOUJOURS.",
         "newsletter_subtext": "",
-        "footer_bottom_padding_y": 8,
-        "footer_bottom_font_size": 9,
+        "footer_top_padding": 48,
+        "footer_top_padding_mobile": 32,
+        "newsletter_btn_height": 40,
+        "newsletter_btn_padding": 12,
+        "footer_localization_color": "#f5f0e8",
+        "footer_bottom_padding_y": 0,
+        "footer_bottom_font_size": 8,
         "footer_bottom_selector_padding_y": 4,
         "footer_bottom_selector_padding_x": 12
       }
