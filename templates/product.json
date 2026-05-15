@@ -123,21 +123,21 @@
             "margin_bottom": 48
           }
         },
-        "tab_desc": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Description complète",
-            "icon": "clipboard",
-            "content": "<p>Cette pièce a été sélectionnée et expertisée par notre équipe. Voir la description ci-dessus pour les détails et l'historique de l'objet.</p>",
-            "page": ""
-          }
-        },
         "tab_dims": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Dimensions & Matériaux",
             "icon": "box",
             "content": "<p>Voir le cartel ci-dessus pour les dimensions exactes (H/L/P) et la nature des matériaux. Cette pièce a été chinée puis restaurée dans nos ateliers.</p>",
+            "page": ""
+          }
+        },
+        "tab_desc": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Authenticité & provenance",
+            "icon": "clipboard",
+            "content": "<p>Cette pièce a été sélectionnée et expertisée par notre équipe. Voir la description ci-dessus pour les détails et l'historique de l'objet.</p>",
             "page": ""
           }
         },
@@ -171,8 +171,8 @@
         "mc_wish",
         "mc_trust",
         "mc_cartel",
-        "tab_desc",
         "tab_dims",
+        "tab_desc",
         "tab_aide",
         "mc_ref"
       ],
