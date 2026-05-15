@@ -50,29 +50,6 @@
           "type": "price",
           "settings": {}
         },
-        "description": {
-          "type": "description",
-          "settings": {
-            "mc_font_style": "jost_roman",
-            "mc_size": 15,
-            "mc_text_color": "#5a554f",
-            "mc_margin_bottom": 24
-          }
-        },
-        "mc_cartel": {
-          "type": "mc_cartel_specs",
-          "settings": {
-            "show_dimensions": true,
-            "show_materials": true,
-            "prefix_h": "H",
-            "prefix_l": "L",
-            "prefix_p": "P",
-            "unit": "cm",
-            "separator": "·",
-            "padding_v": 22,
-            "margin_bottom": 48
-          }
-        },
         "mc_avail": {
           "type": "mc_availability",
           "settings": {
@@ -96,6 +73,39 @@
             "show_gift_card_recipient": false
           }
         },
+        "mc_wish": {
+          "type": "mc_wishlist_link",
+          "settings": {
+            "visible": true,
+            "label_default": "Ajouter à ma sélection",
+            "label_active": "Enregistré dans Ma Sélection",
+            "padding_top": 22,
+            "margin_bottom": 36
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "mc_font_style": "jost_roman",
+            "mc_size": 15,
+            "mc_text_color": "#5a554f",
+            "mc_margin_bottom": 24
+          }
+        },
+        "mc_cartel": {
+          "type": "mc_cartel_specs",
+          "settings": {
+            "show_dimensions": true,
+            "show_materials": true,
+            "prefix_h": "H",
+            "prefix_l": "L",
+            "prefix_p": "P",
+            "unit": "cm",
+            "separator": "·",
+            "padding_v": 22,
+            "margin_bottom": 48
+          }
+        },
         "mc_pay": {
           "type": "mc_payment_security",
           "settings": {
@@ -109,16 +119,6 @@
             "show_shop_pay": false,
             "margin_top": 8,
             "margin_bottom": 14
-          }
-        },
-        "mc_wish": {
-          "type": "mc_wishlist_link",
-          "settings": {
-            "visible": true,
-            "label_default": "Ajouter à ma sélection",
-            "label_active": "Enregistré dans Ma Sélection",
-            "padding_top": 22,
-            "margin_bottom": 36
           }
         },
         "tab_desc": {
@@ -175,9 +175,9 @@
         "mc_avail",
         "buy_buttons",
         "mc_wish",
-        "mc_pay",
         "description",
         "mc_cartel",
+        "mc_pay",
         "tab_desc",
         "tab_dims",
         "tab_livraison",
@@ -224,9 +224,9 @@
         "pdp_tag_show": true,
         "pdp_show_availability": true,
         "pdp_avail_label_prefix": "Disponible immédiatement",
+        "pdp_delivery_phrase": "Chez vous entre le {date_min} et le {date_max}",
         "pdp_avail_size": 15,
         "pdp_avail_alignment": "center",
-        "pdp_delivery_phrase": "Chez vous entre le {date_min} et le {date_max}",
         "pdp_cartel_show": true,
         "pdp_ref_show": true,
         "pdp_questions_intro": "Notre équipe est à votre disposition pour toute information.",
