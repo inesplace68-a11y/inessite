@@ -142,10 +142,12 @@
           }
         },
         "tab_aide": {
-          "type": "mc_questions",
+          "type": "collapsible_tab",
           "settings": {
             "heading": "Une question ?",
-            "icon": "chat_bubble"
+            "icon": "chat_bubble",
+            "content": "<p>Notre équipe est à votre disposition pour toute information.</p><p><a href=\"https://wa.me/33665299614?text=Bonjour%20Maison%20Coeur%2C%20je%20souhaite%20%C3%A9changer%20au%20sujet%20d%E2%80%99une%20pi%C3%A8ce.\">Échanger sur WhatsApp →</a><br/><a href=\"mailto:hello@maisoncoeur.fr\">Nous écrire par email →</a><br/><a href=\"/pages/faq\">Consulter notre FAQ →</a></p>",
+            "page": ""
           }
         },
         "mc_ref": {
@@ -206,7 +208,11 @@
         "pdp_title_size": 34,
         "pdp_price_size": 17,
         "pdp_description_size": 15,
+        "pdp_description_lines": 3,
+        "pdp_description_more_label": "Lire la suite",
+        "pdp_description_less_label": "Réduire",
         "pdp_show_vendor": false,
+        "pdp_cursor_zoom": true,
         "pdp_tag_show": true,
         "pdp_show_availability": true,
         "pdp_availability_label": "DISPONIBLE",
