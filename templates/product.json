@@ -117,6 +117,7 @@
             "show_apple_pay": false,
             "show_google_pay": false,
             "show_shop_pay": false,
+            "pay_logos_opacity": 60,
             "margin_top": 8,
             "margin_bottom": 14
           }
@@ -239,9 +240,9 @@
         "pdp_price_mb": 10,
         "pdp_description_mb": 24,
         "pdp_gap_description_more": 8,
-        "pdp_availability_mb": 6,
+        "pdp_availability_mb": 4,
         "pdp_gap_cta_wishlist": 4,
-        "pdp_favoris_mb": 36,
+        "pdp_favoris_mb": 24,
         "pdp_trust_mb": 48,
         "pdp_cartel_mb": 48,
         "pdp_ref_mt": 36,
@@ -249,7 +250,7 @@
         "pdp_tags_letter_spacing": 0.2,
         "pdp_tags_border_width": 0.5,
         "pdp_tags_show_border": true,
-        "pdp_gap_cta_section_to_details": 32
+        "pdp_gap_cta_section_to_details": 12
       }
     },
     "mc_editorial": {
