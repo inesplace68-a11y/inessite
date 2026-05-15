@@ -225,11 +225,14 @@
         "pdp_questions_faq_label": "Consulter notre FAQ",
         "pdp_tags_mb": 16,
         "pdp_title_mb": 24,
+        "pdp_gap_price_taxes": 2,
         "pdp_price_mb": 10,
-        "pdp_availability_mb": 8,
+        "pdp_description_mb": 24,
+        "pdp_gap_description_more": 8,
+        "pdp_availability_mb": 6,
+        "pdp_gap_cta_wishlist": 4,
         "pdp_favoris_mb": 36,
         "pdp_trust_mb": 48,
-        "pdp_description_mb": 24,
         "pdp_cartel_mb": 48,
         "pdp_ref_mt": 36
       }
