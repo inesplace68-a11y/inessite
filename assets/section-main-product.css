@@ -2059,6 +2059,43 @@ p.delivery-estimate {
 .product-form__submit:not([disabled]):hover { opacity: 0.85; }
 .shopify-payment-button { display: none !important; }
 
+/* Phase 15.11.1 — Logos cartes intégrés DANS le bouton CTA (A2b monochrome).
+   Le bouton passe en colonne pour empiler label + ligne logos centrés.
+   Le filter convertit les SVG cartes colorés en blanc semi-transparent
+   pour rester cohérent avec le label sur fond noir. */
+.product-form__submit--has-pay-logos {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--cta-pay-top, 8px);
+}
+.product-form__submit--has-pay-logos .product-form__submit-label {
+  display: block;
+  line-height: 1;
+}
+.product-form__submit-pay {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cta-pay-gap, 8px);
+}
+.product-form__submit-pay__item {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+.product-form__submit-pay__icon {
+  display: block;
+  height: var(--cta-pay-size, 14px);
+  width: auto;
+  filter: grayscale(1) brightness(0) invert(1);
+  opacity: var(--cta-pay-opacity, 0.6);
+}
+
 /* Phase 15.10 — Mini-mention "Paiement sécurisé" sous CTA panier.
    Registre presque transparent, juste réassurance subliminale. */
 .mc-pay {

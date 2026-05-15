@@ -109,7 +109,7 @@
         "mc_pay": {
           "type": "mc_payment_security",
           "settings": {
-            "visible": true,
+            "visible": false,
             "text": "Paiement sécurisé",
             "show_visa": true,
             "show_master": true,
