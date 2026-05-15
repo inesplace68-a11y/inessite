@@ -957,6 +957,47 @@
                     <span class="mc-wishlist-link__label">{{ block.settings.label_default | default: 'Ajouter à ma sélection' }}</span>
                   </div>
                 {%- endif -%}
+              {%- when 'mc_payment_security' -%}
+                {%- if block.settings.visible -%}
+                  <div
+                    class="mc-pay"
+                    style="--mc-pay-mt: {{ block.settings.margin_top | default: 8 }}px; --mc-pay-mb: {{ block.settings.margin_bottom | default: 16 }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if block.settings.text != blank -%}
+                      <p class="mc-pay__label">{{ block.settings.text | escape }}</p>
+                    {%- endif -%}
+                    {%- liquid
+                      assign mc_pay_cards = ''
+                      if block.settings.show_visa
+                        assign mc_pay_cards = mc_pay_cards | append: 'visa,'
+                      endif
+                      if block.settings.show_master
+                        assign mc_pay_cards = mc_pay_cards | append: 'master,'
+                      endif
+                      if block.settings.show_cb
+                        assign mc_pay_cards = mc_pay_cards | append: 'cb,'
+                      endif
+                      if block.settings.show_apple_pay
+                        assign mc_pay_cards = mc_pay_cards | append: 'apple_pay,'
+                      endif
+                      if block.settings.show_google_pay
+                        assign mc_pay_cards = mc_pay_cards | append: 'google_pay,'
+                      endif
+                      if block.settings.show_shop_pay
+                        assign mc_pay_cards = mc_pay_cards | append: 'shop_pay,'
+                      endif
+                      assign mc_pay_cards = mc_pay_cards | split: ','
+                    -%}
+                    {%- if mc_pay_cards.size > 0 -%}
+                      <ul class="mc-pay__cards" role="list" aria-label="Cartes acceptées">
+                        {%- for card in mc_pay_cards -%}
+                          <li class="mc-pay__card">{{ card | payment_type_svg_tag: class: 'mc-pay__icon' }}</li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
               {%- when 'mc_trust_strip' -%}
                 {%- if block.settings.visible -%}
                   <div
@@ -1718,6 +1759,25 @@
         { "type": "text", "id": "label_active", "default": "Enregistré dans Ma Sélection", "label": "Libellé état actif" },
         { "type": "range", "id": "padding_top", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 22, "label": "Padding haut" },
         { "type": "range", "id": "margin_bottom", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 36, "label": "Marge basse" }
+      ]
+    },
+    {
+      "type": "mc_payment_security",
+      "name": "MC — Paiement sécurisé",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "visible", "default": true, "label": "Visible" },
+        { "type": "text", "id": "text", "default": "Paiement sécurisé", "label": "Texte" },
+        { "type": "header", "content": "Cartes acceptées" },
+        { "type": "checkbox", "id": "show_visa", "default": true, "label": "Visa" },
+        { "type": "checkbox", "id": "show_master", "default": true, "label": "Mastercard" },
+        { "type": "checkbox", "id": "show_cb", "default": true, "label": "Carte Bancaire (CB)" },
+        { "type": "checkbox", "id": "show_apple_pay", "default": false, "label": "Apple Pay" },
+        { "type": "checkbox", "id": "show_google_pay", "default": false, "label": "Google Pay" },
+        { "type": "checkbox", "id": "show_shop_pay", "default": false, "label": "Shop Pay" },
+        { "type": "header", "content": "Espacements" },
+        { "type": "range", "id": "margin_top", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 8, "label": "Marge haute (sous CTA)" },
+        { "type": "range", "id": "margin_bottom", "min": 0, "max": 48, "step": 1, "unit": "px", "default": 16, "label": "Marge basse" }
       ]
     },
     {

@@ -96,6 +96,21 @@
             "show_gift_card_recipient": false
           }
         },
+        "mc_pay": {
+          "type": "mc_payment_security",
+          "settings": {
+            "visible": true,
+            "text": "Paiement sécurisé",
+            "show_visa": true,
+            "show_master": true,
+            "show_cb": true,
+            "show_apple_pay": false,
+            "show_google_pay": false,
+            "show_shop_pay": false,
+            "margin_top": 8,
+            "margin_bottom": 16
+          }
+        },
         "mc_wish": {
           "type": "mc_wishlist_link",
           "settings": {
@@ -106,38 +121,30 @@
             "margin_bottom": 36
           }
         },
-        "mc_trust": {
-          "type": "mc_trust_strip",
+        "tab_desc": {
+          "type": "collapsible_tab",
           "settings": {
-            "visible": true,
-            "item_1_label": "PIÈCES AUTHENTIFIÉES",
-            "item_1_link": "",
-            "item_1_visible": true,
-            "item_2_label": "EXPÉDITION SUR MESURE",
-            "item_2_link": "",
-            "item_2_visible": true,
-            "item_3_label": "GARANTIE SATISFACTION",
-            "item_3_link": "",
-            "item_3_visible": true,
-            "padding_v": 20,
-            "margin_bottom": 48
+            "heading": "AUTHENTICITÉ & PROVENANCE",
+            "icon": "clipboard",
+            "content": "<p>Origine : France. Époque : XIXe siècle, second Empire. Pièce sélectionnée et authentifiée par Maison Coeur. Une attestation de provenance vous est délivrée à l'acquisition.</p>",
+            "page": ""
           }
         },
         "tab_dims": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "état & condition",
-            "icon": "box",
-            "content": "<p>Voir le cartel ci-dessus pour les dimensions exactes (H/L/P) et la nature des matériaux. Cette pièce a été chinée puis restaurée dans nos ateliers.</p>",
+            "heading": "ÉTAT & CONDITION",
+            "icon": "leaf",
+            "content": "<p>Pièce vintage authentique. Patine, oxydation et marques d'usage témoignent de son âge et participent à son caractère. Toute restauration ou intervention est mentionnée si applicable.</p>",
             "page": ""
           }
         },
-        "tab_desc": {
+        "tab_livraison": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Authenticité & provenance",
-            "icon": "clipboard",
-            "content": "<p>Cette pièce a été sélectionnée et expertisée par notre équipe. Voir la description ci-dessus pour les détails et l'historique de l'objet.</p>",
+            "heading": "LIVRAISON & RETOURS",
+            "icon": "truck",
+            "content": "<p>Expédition sur mesure dans le monde entier, adaptée à chaque pièce. Garantie 14 jours pour valider sereinement votre acquisition.</p><p><a href=\"/pages/livraisons\">Consulter nos conditions de livraison →</a><br/><a href=\"/pages/retours\">Consulter nos conditions de retour →</a></p>",
             "page": ""
           }
         },
@@ -169,10 +176,11 @@
         "mc_cartel",
         "mc_avail",
         "buy_buttons",
+        "mc_pay",
         "mc_wish",
-        "mc_trust",
-        "tab_dims",
         "tab_desc",
+        "tab_dims",
+        "tab_livraison",
         "tab_aide",
         "mc_ref"
       ],

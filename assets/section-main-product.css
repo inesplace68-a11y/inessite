@@ -2050,6 +2050,46 @@ p.delivery-estimate {
 .product-form__submit:not([disabled]):hover { opacity: 0.85; }
 .shopify-payment-button { display: none !important; }
 
+/* Phase 15.10 — Mini-mention "Paiement sécurisé" sous CTA panier.
+   Registre presque transparent, juste réassurance subliminale. */
+.mc-pay {
+  margin: var(--mc-pay-mt, 8px) 0 var(--mc-pay-mb, 16px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.mc-pay__label {
+  margin: 0;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #9A938A;
+  line-height: 1;
+}
+.mc-pay__cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.mc-pay__card {
+  display: inline-flex;
+  align-items: center;
+}
+.mc-pay__icon {
+  display: block;
+  height: 16px;
+  width: auto;
+  opacity: 0.65;
+}
+
 /* Phase 15.9 — neutralisation des marges hardcoded Dawn pour que les
    sliders Customizer soient l'UNIQUE levier d'espacement vertical PDP.
    - .product-form (buy_buttons) recevait margin: 2.5rem 0 via
