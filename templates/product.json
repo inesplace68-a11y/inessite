@@ -59,6 +59,20 @@
             "mc_margin_bottom": 24
           }
         },
+        "mc_cartel": {
+          "type": "mc_cartel_specs",
+          "settings": {
+            "show_dimensions": true,
+            "show_materials": true,
+            "prefix_h": "H",
+            "prefix_l": "L",
+            "prefix_p": "P",
+            "unit": "cm",
+            "separator": "·",
+            "padding_v": 22,
+            "margin_bottom": 48
+          }
+        },
         "mc_avail": {
           "type": "mc_availability",
           "settings": {
@@ -109,24 +123,10 @@
             "margin_bottom": 48
           }
         },
-        "mc_cartel": {
-          "type": "mc_cartel_specs",
-          "settings": {
-            "show_dimensions": true,
-            "show_materials": true,
-            "prefix_h": "H",
-            "prefix_l": "L",
-            "prefix_p": "P",
-            "unit": "cm",
-            "separator": "·",
-            "padding_v": 22,
-            "margin_bottom": 48
-          }
-        },
         "tab_dims": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Dimensions & Matériaux",
+            "heading": "état & condition",
             "icon": "box",
             "content": "<p>Voir le cartel ci-dessus pour les dimensions exactes (H/L/P) et la nature des matériaux. Cette pièce a été chinée puis restaurée dans nos ateliers.</p>",
             "page": ""
@@ -166,11 +166,11 @@
         "title",
         "price",
         "description",
+        "mc_cartel",
         "mc_avail",
         "buy_buttons",
         "mc_wish",
         "mc_trust",
-        "mc_cartel",
         "tab_dims",
         "tab_desc",
         "tab_aide",
