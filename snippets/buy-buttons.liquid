@@ -109,7 +109,7 @@
             name="add"
             class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}{% if cta_has_logos %} product-form__submit--has-pay-logos{% endif %}"
             {% if cta_has_logos %}
-              style="--cta-pay-size: {{ block.settings.cta_payment_logos_size | default: 14 }}px; --cta-pay-gap: {{ block.settings.cta_payment_logos_gap | default: 8 }}px; --cta-pay-opacity: {{ block.settings.cta_payment_logos_opacity | default: 0.6 }}; --cta-pay-top: {{ block.settings.cta_payment_logos_top_margin | default: 8 }}px;"
+              style="--cta-pay-size: {{ block.settings.cta_payment_logos_size | default: 14 }}px; --cta-pay-gap: {{ block.settings.cta_payment_logos_gap | default: 8 }}px; --cta-pay-opacity: {{ block.settings.cta_payment_logos_opacity | default: 60 | divided_by: 100.0 }}; --cta-pay-top: {{ block.settings.cta_payment_logos_top_margin | default: 8 }}px;"
             {% endif %}
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout

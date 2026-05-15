@@ -14,6 +14,10 @@ Rules checked (any failure causes Shopify GitHub Sync to reject the commit):
                              declared block types across sections — guards
                              against the Phase 14/15.10 failure mode where a
                              template references a type that exists nowhere.
+  9. range.unit not empty  : if `unit` is declared, it must be non-empty.
+                             Shopify rejects `"unit": ""` with "unit can't
+                             be blank" (Phase 15.11.1 failure mode). Omitting
+                             the `unit` key entirely is allowed.
 
 Usage:
     python3 scripts/validate_shopify_schema.py sections/foo.liquid [...]
@@ -50,9 +54,16 @@ def check_range(setting: dict, where: str) -> list[str]:
     sid = setting.get('id', '<no-id>')
     tag = f"{where} » id={sid}"
 
-    unit = setting.get('unit')
-    if unit is not None and len(unit) > 3:
-        errs.append(f"{tag}: unit '{unit}' is {len(unit)} chars (max 3)")
+    if 'unit' in setting:
+        unit = setting.get('unit')
+        if unit is None or unit == '':
+            errs.append(
+                f"{tag}: unit is declared but empty — Shopify rejects "
+                f"\"unit\": \"\" with 'unit can't be blank'. "
+                f"Either omit the key or set a non-empty value (e.g. '%', 'px')."
+            )
+        elif len(unit) > 3:
+            errs.append(f"{tag}: unit '{unit}' is {len(unit)} chars (max 3)")
 
     min_v = setting.get('min')
     max_v = setting.get('max')
