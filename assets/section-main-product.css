@@ -1806,7 +1806,9 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   margin: 0;
 }
 .mc-price-block > .product__tax {
-  margin-bottom: 0;
+  /* Phase 15.9 — gap Prix ↔ Taxes incluses exposé en Customizer.
+     Override de .product__tax { margin-top: -1.4rem } (section-main-product.css:321) */
+  margin: var(--pdp-gap-price-taxes, 6px) 0 0 0;
 }
 .mc-price-block > .mc-price-block__installment {
   margin: 0;
@@ -1869,7 +1871,8 @@ p.delivery-estimate {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding-top: 22px;
+  /* Phase 15.9 — gap Ajouter au panier ↔ Sélection exposé en Customizer */
+  padding-top: var(--pdp-gap-cta-wishlist, 16px);
   margin: 0 auto var(--pdp-fav-mb, 36px) auto;
   text-align: center;
   transition: opacity 180ms ease;
@@ -1972,7 +1975,8 @@ p.delivery-estimate {
 }
 .mc-description-toggle {
   display: block;
-  margin-top: 12px;
+  /* Phase 15.9 — gap Description ↔ "Lire la suite" exposé en Customizer */
+  margin-top: var(--pdp-gap-description-more, 8px);
   padding: 0;
   background: transparent;
   border: 0;
@@ -2045,6 +2049,29 @@ p.delivery-estimate {
 }
 .product-form__submit:not([disabled]):hover { opacity: 0.85; }
 .shopify-payment-button { display: none !important; }
+
+/* Phase 15.9 — neutralisation des marges hardcoded Dawn pour que les
+   sliders Customizer soient l'UNIQUE levier d'espacement vertical PDP.
+   - .product-form (buy_buttons) recevait margin: 2.5rem 0 via
+     `.product__info-container .product-form` (section-main-product.css:228) :
+     le gap Dispo↔CTA est désormais piloté par --pdp-av-mb seul, et
+     le gap CTA↔Sélection par --pdp-gap-cta-wishlist seul.
+   - .product__description--mc recevait margin: 2.5rem 0 via le même
+     sélecteur : le gap Prix(Taxes)↔Description est piloté par
+     --pdp-price-mb seul, et le gap Description↔suivant par --pdp-desc-mb. */
+.product__info-container .product-form {
+  margin: 0;
+}
+.product__info-container .product-form__buttons {
+  margin: 0;
+}
+.product__info-container .product-form__submit {
+  /* override de .product-form__submit { margin-bottom: 1rem } (section-main-product.css:192) */
+  margin-bottom: 0;
+}
+.product__info-container .product__description--mc {
+  margin: 0 0 var(--pdp-desc-mb, 24px) 0;
+}
 
 /* §11 — Photo éditoriale pleine largeur (full bleed) */
 .section--mc-product-editorial {

@@ -110,6 +110,10 @@
       --pdp-desc-mb: {{ section.settings.pdp_description_mb | default: 24 }}px;
       --pdp-cartel-mb: {{ section.settings.pdp_cartel_mb | default: 48 }}px;
       --pdp-ref-mt: {{ section.settings.pdp_ref_mt | default: 36 }}px;
+      /* Phase 15.9 — gaps internes exposés au Customizer */
+      --pdp-gap-price-taxes: {{ section.settings.pdp_gap_price_taxes | default: 6 }}px;
+      --pdp-gap-description-more: {{ section.settings.pdp_gap_description_more | default: 8 }}px;
+      --pdp-gap-cta-wishlist: {{ section.settings.pdp_gap_cta_wishlist | default: 16 }}px;
     }
     #MainProduct-{{ section.id }}.section-{{ section.id }}-padding {
       padding-top: var(--pdp-hero-py);
@@ -3009,11 +3013,14 @@
     { "type": "header", "content": "PDP — Espacements verticaux" },
     { "type": "range", "id": "pdp_tags_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40, "label": "Marge basse — Tags" },
     { "type": "range", "id": "pdp_title_mb", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24, "label": "Marge basse — Titre" },
-    { "type": "range", "id": "pdp_price_mb", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 22, "label": "Marge basse — Prix" },
-    { "type": "range", "id": "pdp_availability_mb", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 30, "label": "Marge basse — Dispo" },
+    { "type": "range", "id": "pdp_gap_price_taxes", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 6, "label": "Espace Prix ↔ Taxes incluses" },
+    { "type": "range", "id": "pdp_price_mb", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 22, "label": "Marge basse — Prix (Taxes ↔ Description)" },
+    { "type": "range", "id": "pdp_description_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Marge basse — Description" },
+    { "type": "range", "id": "pdp_gap_description_more", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 8, "label": "Espace Description ↔ Lire la suite" },
+    { "type": "range", "id": "pdp_availability_mb", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30, "label": "Marge basse — Dispo (Dispo ↔ CTA panier)" },
+    { "type": "range", "id": "pdp_gap_cta_wishlist", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 16, "label": "Espace Ajouter au panier ↔ Sélection" },
     { "type": "range", "id": "pdp_favoris_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 36, "label": "Marge basse — Favoris" },
     { "type": "range", "id": "pdp_trust_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Trust strip" },
-    { "type": "range", "id": "pdp_description_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Marge basse — Description" },
     { "type": "range", "id": "pdp_cartel_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Cartel" },
     { "type": "range", "id": "pdp_ref_mt", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36, "label": "Marge haute — Référence" }
   ]
