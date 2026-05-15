@@ -136,7 +136,7 @@
         "title": "NOTRE SÉLECTION",
         "background_color": "#f7f5f1",
         "padding_top_desktop": 56,
-        "padding_bottom_desktop": 80,
+        "padding_bottom_desktop": 48,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 48,
         "title_to_grid_gap_desktop": 40,
@@ -149,8 +149,8 @@
       "type": "mc-editorial",
       "settings": {
         "image": "shopify://shop_images/IMG_6240.jpg",
-        "overlay_opacity": 20,
-        "eyebrow": "MAISON",
+        "overlay_opacity": 35,
+        "eyebrow": "",
         "heading": "<p>Une galerie où chaque pièce raconte une histoire.</p>",
         "cta_label": "Notre histoire",
         "cta_link": "shopify://pages/a-propos",
@@ -260,8 +260,8 @@
         "reas-4"
       ],
       "settings": {
-        "padding_top_desktop": 32,
-        "padding_bottom_desktop": 32,
+        "padding_top_desktop": 28,
+        "padding_bottom_desktop": 28,
         "padding_top_mobile": 28,
         "padding_bottom_mobile": 28,
         "icon_to_label_gap": 14,
