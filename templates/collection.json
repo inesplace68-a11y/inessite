@@ -31,9 +31,9 @@
         "intro_text_style": "italic",
         "intro_alignment": "center",
         "show_collection_description": true,
-        "nav_to_content_gap_desktop": 24,
-        "nav_to_content_gap_mobile": 16,
-        "header_padding_bottom": 8,
+        "nav_to_content_gap_desktop": 0,
+        "nav_to_content_gap_mobile": 0,
+        "header_padding_bottom": 0,
         "color_scheme": "scheme-1"
       }
     },
@@ -76,7 +76,8 @@
         "sort_active_indicator": "bronze",
         "bar_padding_top": 8,
         "bar_padding_bottom": 8,
-        "title_to_bar_gap": 16,
+        "collection_padding_top_desktop": 8,
+        "collection_padding_top_mobile": 8,
         "bar_to_grid_gap": 16,
         "drawer_height_mode": "auto",
         "drawer_top_offset": 80,

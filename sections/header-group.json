@@ -60,6 +60,8 @@
         "topbar_color": "#1a1814",
         "icons_gap": 10,
         "nav_top_spacing": 8,
+        "header_padding_bottom_desktop": 16,
+        "header_padding_bottom_mobile": 12,
         "nav_separator_visible": false,
         "nav_separator_color": "#c4b8a4",
         "nav_separator_thickness": 0.5,

@@ -47,7 +47,8 @@
     --mcg-wishlist-color: {{ section.settings.wishlist_color | default: '#1A1814' }};
     --mc-bar-pt: {{ section.settings.bar_padding_top | default: 20 }}px;
     --mc-bar-pb: {{ section.settings.bar_padding_bottom | default: 20 }}px;
-    --mc-title-gap: {{ section.settings.title_to_bar_gap | default: 0 }}px;
+    --mc-title-gap: {{ section.settings.collection_padding_top_desktop | default: 8 }}px;
+    --mc-title-gap-mobile: {{ section.settings.collection_padding_top_mobile | default: 8 }}px;
     --mc-grid-gap: {{ section.settings.bar_to_grid_gap | default: 24 }}px;
     --mc-drawer-w: {{ section.settings.drawer_width_desktop | default: 400 }}px;
     --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
@@ -597,6 +598,7 @@
     #shopify-section-{{ section.id }} .mc-collection-toolbar {
       flex-wrap: wrap;
       gap: 8px;
+      margin-top: var(--mc-title-gap-mobile, 8px);
     }
     #shopify-section-{{ section.id }} .mc-sort__menu {
       right: 0;
@@ -1280,7 +1282,8 @@
     },
     { "type": "range", "id": "bar_padding_top", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding haut de la barre" },
     { "type": "range", "id": "bar_padding_bottom", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding bas de la barre" },
-    { "type": "range", "id": "title_to_bar_gap", "min": 0, "max": 96, "step": 8, "unit": "px", "default": 0, "label": "Espace titre → barre filtres" },
+    { "type": "range", "id": "collection_padding_top_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 8, "label": "Espace au-dessus de la barre filtres (desktop)" },
+    { "type": "range", "id": "collection_padding_top_mobile", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 8, "label": "Espace au-dessus de la barre filtres (mobile)" },
     { "type": "range", "id": "bar_to_grid_gap", "min": 16, "max": 80, "step": 8, "unit": "px", "default": 24, "label": "Espace barre → grille" },
 
     { "type": "header", "content": "Drawer filtres — Phase 16.7" },
