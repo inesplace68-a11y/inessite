@@ -212,7 +212,7 @@
         "padding_top": 36,
         "padding_bottom": 12,
         "pdp_info_col_width": 390,
-        "pdp_hero_gap": 50,
+        "pdp_hero_gap": 40,
         "pdp_hero_padding_y": 40,
         "pdp_title_size": 34,
         "pdp_price_size": 17,
