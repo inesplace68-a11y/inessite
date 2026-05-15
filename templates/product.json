@@ -199,7 +199,7 @@
         "enable_video_looping": false,
         "vt_thumbs_width": 80,
         "vt_gap_thumbs": 14,
-        "vt_gap_main": 18,
+        "vt_gap_main": 12,
         "vt_thumb_ratio": "4-5",
         "vt_active_style": "line",
         "vt_active_color": "#000000",
