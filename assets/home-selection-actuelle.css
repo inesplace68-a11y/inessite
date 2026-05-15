@@ -23,7 +23,7 @@
   text-transform: uppercase;
   text-align: center;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 var(--hs-title-to-product, 32px);
+  margin: 0 0 var(--hs-eyebrow-to-grid, 32px);
 }
 
 /* ----------------- Carousel wrapper ----------------- */
@@ -47,12 +47,13 @@
 
 /* ----------------- Card ----------------- */
 .home-selection__card {
-  flex: 0 0 calc((100% - (var(--hs-card-gap, 28px) * (var(--hs-pieces-visible, 4) - 1))) / var(--hs-pieces-visible, 4));
+  flex: 0 0 calc((100% - (var(--hs-card-gap, 20px) * (var(--hs-visible-desktop, 4) - 1))) / var(--hs-visible-desktop, 4));
   scroll-snap-align: start;
   display: block;
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+  min-width: 0;
 }
 
 /* Carte unique : centrage horizontal dans la bande (en attendant l'enrichissement
@@ -64,7 +65,7 @@
 .home-selection__media {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: var(--hs-image-aspect, 4 / 5);
   overflow: hidden;
   background-color: #EFEBE3;
   margin: 0 0 var(--hs-image-to-name, 18px);
@@ -87,7 +88,8 @@
   opacity: 0.85;
 }
 
-/* Niveau 4 — Titre fonctionnel : Cormorant regular non-italique (Phase 10 revert) */
+/* Niveau 4 — Titre fonctionnel : Cormorant regular non-italique (Phase 10 revert).
+   Phase 16.5 — 1 ligne avec ellipse si dépassement. */
 .home-selection__name {
   font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: normal;
@@ -97,6 +99,9 @@
   letter-spacing: 0.01em;
   color: var(--mc-dark, #1A1614);
   margin: 0 0 var(--hs-name-to-price, 6px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 @media (max-width: 749px) {
   .home-selection__name { font-size: calc(var(--type-h4, 20px) * 0.85); }
@@ -112,54 +117,55 @@
   letter-spacing: 0.02em;
 }
 
-/* ----------------- Side nav (round buttons) ----------------- */
+/* ----------------- Flèches navigation — registre Hermès / Oblist / RV74 :
+   trait fin, sans fond, sans bordure, discrètes ----------------- */
 .home-selection__nav {
   position: absolute;
   top: var(--hs-photo-mid, 35%);
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #FFFFFF;
-  border: 1px solid var(--mc-dark, #1A1614);
-  color: var(--mc-dark, #1A1614);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--hs-arrow-color, #1A1814);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 0;
   z-index: 2;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 1px 4px rgba(26, 22, 20, 0.06);
-}
-
-@supports (border: 0.5px solid black) {
-  .home-selection__nav {
-    border-width: 0.5px;
-  }
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .home-selection__nav svg {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   display: block;
+  stroke: currentColor;
 }
 
 .home-selection__nav--prev {
-  left: -22px;
+  left: -36px;
 }
 
 .home-selection__nav--next {
-  right: -22px;
+  right: -36px;
 }
 
-.home-selection__nav:not(:disabled):hover {
-  background-color: var(--mc-dark, #1A1614);
-  color: #FFFFFF;
+.home-selection__nav:not(:disabled):hover,
+.home-selection__nav:not(:disabled):focus-visible {
+  opacity: 1;
+  background: transparent;
+  outline: none;
 }
 
 .home-selection__nav:disabled {
-  opacity: 0.3;
+  opacity: 0.15;
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -177,12 +183,6 @@
 }
 
 /* ----------------- Responsive ----------------- */
-@media (max-width: 989px) {
-  .home-selection__card {
-    flex: 0 0 calc((100% - var(--hs-card-gap, 28px)) / 2);
-  }
-}
-
 @media (max-width: 749px) {
   .home-selection {
     padding-top: var(--hs-padding-top-mobile, 40px);
@@ -192,15 +192,12 @@
     padding: 0 20px;
   }
   .home-selection__eyebrow {
-    margin-bottom: var(--hs-title-to-product-mobile, 24px);
+    margin-bottom: var(--hs-eyebrow-to-grid-mobile, 24px);
   }
-  .home-selection__track {
-    gap: 16px;
-    margin: 0 -20px;
-    padding: 0 20px;
-  }
+  /* Phase 16.5 — peek du suivant : visible_mobile = 1.2 par défaut → la carte
+     courante prend ~83% de la largeur viewport, le bord de la suivante apparaît. */
   .home-selection__card {
-    flex: 0 0 calc(100% - 40px);
+    flex: 0 0 calc((100% - (var(--hs-card-gap, 20px) * (var(--hs-visible-mobile, 1.2) - 1))) / var(--hs-visible-mobile, 1.2));
   }
   .home-selection__nav {
     display: none !important;

@@ -2,22 +2,37 @@
 
 {%- liquid
   assign coll = collections[section.settings.featured_collection]
-  assign pieces_total = section.settings.pieces_total
-  assign pieces_visible = section.settings.pieces_visible_desktop
+  assign products_count = section.settings.products_count | default: 8
+  assign visible_desktop = section.settings.visible_desktop | default: 4
+  assign visible_mobile = section.settings.visible_mobile | default: 1.2
+  assign image_ratio = section.settings.image_ratio | default: '4-5'
+  case image_ratio
+    when '1-1'
+      assign image_aspect = '1 / 1'
+    when '3-4'
+      assign image_aspect = '3 / 4'
+    when '2-3'
+      assign image_aspect = '2 / 3'
+    else
+      assign image_aspect = '4 / 5'
+  endcase
 -%}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hs-padding-top: {{ section.settings.padding_top_desktop | default: 64 }}px;
-    --hs-padding-bottom: {{ section.settings.padding_bottom_desktop | default: 48 }}px;
+    --hs-padding-top: {{ section.settings.section_padding_top | default: 64 }}px;
+    --hs-padding-bottom: {{ section.settings.section_padding_bottom | default: 64 }}px;
     --hs-padding-top-mobile: {{ section.settings.padding_top_mobile | default: 40 }}px;
     --hs-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 32 }}px;
-    --hs-title-to-product: {{ section.settings.title_to_product_gap_desktop | default: 32 }}px;
-    --hs-title-to-product-mobile: {{ section.settings.title_to_product_gap_mobile | default: 24 }}px;
+    --hs-eyebrow-to-grid: {{ section.settings.eyebrow_to_grid | default: 32 }}px;
+    --hs-eyebrow-to-grid-mobile: {{ section.settings.title_to_product_gap_mobile | default: 24 }}px;
     --hs-image-to-name: {{ section.settings.image_to_name_gap | default: 18 }}px;
     --hs-name-to-price: {{ section.settings.name_to_price_gap | default: 6 }}px;
-    --hs-pieces-visible: {{ pieces_visible }};
-    --hs-card-gap: {{ section.settings.card_gap }}px;
+    --hs-visible-desktop: {{ visible_desktop }};
+    --hs-visible-mobile: {{ visible_mobile }};
+    --hs-card-gap: {{ section.settings.card_gap | default: 20 }}px;
+    --hs-image-aspect: {{ image_aspect }};
+    --hs-arrow-color: {{ section.settings.arrows_color | default: '#1A1814' }};
   }
 {%- endstyle -%}
 
@@ -36,7 +51,7 @@
           tabindex="0"
           data-home-selection-track
         >
-          {%- assign limit = pieces_total -%}
+          {%- assign limit = products_count -%}
           {%- if coll.products_count < limit -%}
             {%- assign limit = coll.products_count -%}
           {%- endif -%}
@@ -77,13 +92,14 @@
           {%- endfor -%}
         </div>
 
+        {%- if section.settings.show_arrows -%}
         <button
           type="button"
           class="home-selection__nav home-selection__nav--prev"
           data-home-selection-prev
           aria-label="Voir les pièces précédentes"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
@@ -93,10 +109,11 @@
           data-home-selection-next
           aria-label="Voir les pièces suivantes"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
+        {%- endif -%}
       </div>
     {%- else -%}
       <p class="home-selection__empty">
@@ -189,46 +206,38 @@
       "id": "featured_collection",
       "label": "Collection à afficher"
     },
-    {
-      "type": "range",
-      "id": "pieces_visible_desktop",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "unit": "pcs",
-      "label": "Pièces visibles (desktop)",
-      "default": 4
-    },
-    {
-      "type": "range",
-      "id": "pieces_total",
-      "min": 6,
-      "max": 12,
-      "step": 1,
-      "unit": "pcs",
-      "label": "Pool total de pièces",
-      "default": 9
-    },
-    {
-      "type": "range",
-      "id": "card_gap",
-      "min": 16,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "label": "Espace entre cartes",
-      "default": 28
-    },
+    { "type": "range", "id": "products_count", "min": 4, "max": 16, "step": 1, "unit": "pcs", "default": 8, "label": "Nombre de pièces affichées" },
 
-    { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },
-    { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 64, "label": "Marge haute desktop" },
-    { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 48, "label": "Marge basse desktop" },
-    { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Marge haute mobile" },
-    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 32, "label": "Marge basse mobile" },
+    { "type": "header", "content": "Carrousel (Phase 16.5)" },
+    { "type": "range", "id": "visible_desktop", "min": 2, "max": 6, "step": 1, "unit": "pcs", "default": 4, "label": "Pièces visibles desktop" },
+    { "type": "range", "id": "visible_mobile", "min": 1.0, "max": 3.0, "step": 0.1, "unit": "pcs", "default": 1.2, "label": "Pièces visibles mobile" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Format image",
+      "options": [
+        { "value": "1-1", "label": "1:1 (carré)" },
+        { "value": "4-5", "label": "4:5 (portrait Maison Coeur)" },
+        { "value": "3-4", "label": "3:4 (portrait standard)" },
+        { "value": "2-3", "label": "2:3 (portrait haut)" }
+      ],
+      "default": "4-5"
+    },
+    { "type": "range", "id": "card_gap", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Espace entre vignettes" },
 
-    { "type": "header", "content": "Rythme vertical interne (Phase 16.1 V2)" },
-    { "type": "range", "id": "title_to_product_gap_desktop", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 32, "label": "Gap vertical eyebrow → image produit (desktop)" },
-    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Gap vertical eyebrow → image produit (mobile)" },
+    { "type": "header", "content": "Flèches navigation (Phase 16.5)" },
+    { "type": "checkbox", "id": "show_arrows", "default": true, "label": "Afficher les flèches" },
+    { "type": "color", "id": "arrows_color", "default": "#1A1814", "label": "Couleur des flèches" },
+
+    { "type": "header", "content": "Espacements section" },
+    { "type": "range", "id": "section_padding_top", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 64, "label": "Padding haut section" },
+    { "type": "range", "id": "section_padding_bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 64, "label": "Padding bas section" },
+    { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Padding haut section (mobile)" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 32, "label": "Padding bas section (mobile)" },
+
+    { "type": "header", "content": "Rythme vertical interne" },
+    { "type": "range", "id": "eyebrow_to_grid", "min": 16, "max": 96, "step": 4, "unit": "px", "default": 32, "label": "Espace eyebrow → grille" },
+    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Espace eyebrow → grille (mobile)" },
     { "type": "range", "id": "image_to_name_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18, "label": "Gap vertical image → nom" },
     { "type": "range", "id": "name_to_price_gap", "min": 2, "max": 20, "step": 2, "unit": "px", "default": 6, "label": "Gap vertical nom → prix" }
   ],
