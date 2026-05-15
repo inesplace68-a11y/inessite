@@ -53,6 +53,8 @@
     --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
     --mc-drawer-bg: {{ section.settings.drawer_bg_color | default: '#F5F0E8' }};
     --mc-overlay-op: {{ section.settings.overlay_opacity | default: 0.4 }};
+    --mc-sort-gap: {{ section.settings.sort_chevron_gap | default: 8 }}px;
+    --mc-sort-bg: {{ section.settings.sort_dropdown_bg | default: '#F5F0E8' }};
   }
   /* Grille — gap configurable */
   #shopify-section-{{ section.id }} .grid--quarter-max,
@@ -223,60 +225,134 @@
   #shopify-section-{{ section.id }} .mc-toolbar__sort {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    margin-left: auto;
+    margin-right: 0;
   }
   #shopify-section-{{ section.id }} .mc-toolbar__sort form {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    margin: 0;
   }
-  #shopify-section-{{ section.id }} .mc-toolbar__sort-label {
+  /* Native select hidden — facets.js submission compat */
+  #shopify-section-{{ section.id }} .mc-toolbar__select-native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    pointer-events: none;
+  }
+  /* Custom sort dropdown */
+  #shopify-section-{{ section.id }} .mc-sort {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__trigger {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 6px 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mc-sort-gap, 8px);
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: #1A1814;
+    transition: color 200ms ease;
   }
-  #shopify-section-{{ section.id }} .mc-toolbar__select {
-    position: relative;
+  #shopify-section-{{ section.id }} .mc-sort__trigger:hover,
+  #shopify-section-{{ section.id }} .mc-sort__trigger:focus-visible {
+    color: #8C6D3F;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__caret {
     display: inline-flex;
-    align-items: center;
+    width: 10px;
+    height: 10px;
+    color: currentColor;
+    transition: transform 200ms ease;
   }
-  #shopify-section-{{ section.id }} .mc-toolbar__select-input {
+  #shopify-section-{{ section.id }} .mc-sort__caret svg {
+    width: 100%;
+    height: 100%;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__trigger[aria-expanded='true'] .mc-sort__caret {
+    transform: rotate(180deg);
+  }
+  #shopify-section-{{ section.id }} .mc-sort__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    max-width: 320px;
+    background: var(--mc-sort-bg, #F5F0E8);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    z-index: 50;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__menu[hidden] {
+    display: none;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__option {
     appearance: none;
-    -webkit-appearance: none;
     background: transparent;
     border: 0;
-    padding: 4px 22px 4px 4px;
-    margin: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px 22px;
+    cursor: pointer;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #1A1814;
-    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+    display: block;
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__option:hover,
+  #shopify-section-{{ section.id }} .mc-sort__option:focus-visible {
+    background: rgba(26, 24, 20, 0.04);
+    color: #8C6D3F;
     outline: none;
   }
-  #shopify-section-{{ section.id }} .mc-toolbar__select-input:hover,
-  #shopify-section-{{ section.id }} .mc-toolbar__select-input:focus-visible {
+  /* Active option — bronze color */
+  #shopify-section-{{ section.id }} .mc-sort__option.is-active--bronze {
     color: #8C6D3F;
   }
-  #shopify-section-{{ section.id }} .mc-toolbar__caret {
+  /* Active option — underline */
+  #shopify-section-{{ section.id }} .mc-sort__option.is-active--underline {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: #8C6D3F;
+  }
+  /* Active option — left dot */
+  #shopify-section-{{ section.id }} .mc-sort__option.is-active--dot {
+    padding-left: 30px;
+  }
+  #shopify-section-{{ section.id }} .mc-sort__option.is-active--dot::before {
+    content: '';
     position: absolute;
-    right: 4px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none;
-    width: 12px;
-    height: 12px;
-    display: inline-flex;
-    color: #1A1814;
-  }
-  #shopify-section-{{ section.id }} .mc-toolbar__caret svg {
-    width: 100%;
-    height: 100%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8C6D3F;
   }
 
   /* Overlay */
@@ -479,8 +555,9 @@
       flex-wrap: wrap;
       gap: 8px;
     }
-    #shopify-section-{{ section.id }} .mc-toolbar__sort-label {
-      display: none;
+    #shopify-section-{{ section.id }} .mc-sort__menu {
+      right: 0;
+      min-width: 200px;
     }
   }
 {%- endstyle -%}
@@ -502,6 +579,15 @@
       assign close_on_escape = section.settings.close_on_escape
       assign close_on_overlay = section.settings.close_on_overlay_click
       assign sort_by = collection.sort_by | default: collection.default_sort_by
+      assign sort_show_current = section.settings.sort_show_current_value
+      assign sort_active_indicator = section.settings.sort_active_indicator | default: 'bronze'
+      assign sort_label_text = 'products.facets.sort_by_label' | t | replace: ' :', '' | strip
+      assign sort_current_label = ''
+      for option in collection.sort_options
+        if option.value == sort_by
+          assign sort_current_label = option.name
+        endif
+      endfor
       assign apply_prefix = apply_text | split: 'X' | first | strip
       assign apply_suffix = apply_text | split: 'X' | last
       if apply_suffix == apply_text
@@ -554,25 +640,62 @@
         {%- if section.settings.enable_sorting -%}
           <facet-filters-form class="mc-toolbar__sort">
             <form id="FacetSortForm">
-              <label class="mc-toolbar__sort-label" for="SortBy">
-                {{- 'products.facets.sort_by_label' | t | replace: ' :', '' -}}
-              </label>
-              <div class="mc-toolbar__select">
-                <select
-                  name="sort_by"
-                  id="SortBy"
-                  class="mc-toolbar__select-input"
-                  aria-describedby="a11y-refresh-page-message"
+              <label class="visually-hidden" for="SortBy">{{ sort_label_text }}</label>
+              <select
+                name="sort_by"
+                id="SortBy"
+                class="mc-toolbar__select-native"
+                data-mc-sort-select
+                aria-describedby="a11y-refresh-page-message"
+                tabindex="-1"
+              >
+                {%- for option in collection.sort_options -%}
+                  <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                    {{- option.name | escape -}}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <div class="mc-sort" data-mc-sort>
+                <button
+                  type="button"
+                  class="mc-sort__trigger"
+                  data-mc-sort-trigger
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-controls="MCSortMenu-{{ section.id }}"
+                >
+                  <span class="mc-sort__label">
+                    {{- sort_label_text -}}
+                    {%- if sort_show_current and sort_current_label != blank -%}
+                      &nbsp;: <span data-mc-sort-current>{{ sort_current_label }}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="mc-sort__caret" aria-hidden="true">
+                    {{- 'icon-caret.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+                <ul
+                  id="MCSortMenu-{{ section.id }}"
+                  class="mc-sort__menu"
+                  data-mc-sort-menu
+                  role="listbox"
+                  aria-label="{{ sort_label_text }}"
+                  hidden
                 >
                   {%- for option in collection.sort_options -%}
-                    <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
-                      {{- option.name | escape -}}
-                    </option>
+                    <li>
+                      <button
+                        type="button"
+                        role="option"
+                        class="mc-sort__option{% if option.value == sort_by %} is-active is-active--{{ sort_active_indicator }}{% endif %}"
+                        data-value="{{ option.value | escape }}"
+                        aria-selected="{% if option.value == sort_by %}true{% else %}false{% endif %}"
+                      >
+                        {{- option.name | escape -}}
+                      </button>
+                    </li>
                   {%- endfor -%}
-                </select>
-                <span class="mc-toolbar__caret" aria-hidden="true">
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
-                </span>
+                </ul>
               </div>
             </form>
           </facet-filters-form>
@@ -787,6 +910,69 @@
           var mo = new MutationObserver(syncCounts);
           mo.observe(countMirror, { childList: true, characterData: true, subtree: true });
         }
+      })();
+
+      /* === Sort dropdown — Phase 16.9 === */
+      (function () {
+        var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+        if (!sectionEl) return;
+
+        function getRoot(target) {
+          return target && target.closest ? target.closest('[data-mc-sort]') : null;
+        }
+        function openMenu(root) {
+          var trigger = root.querySelector('[data-mc-sort-trigger]');
+          var menu = root.querySelector('[data-mc-sort-menu]');
+          if (menu) menu.hidden = false;
+          if (trigger) trigger.setAttribute('aria-expanded', 'true');
+        }
+        function closeMenu(root) {
+          var trigger = root.querySelector('[data-mc-sort-trigger]');
+          var menu = root.querySelector('[data-mc-sort-menu]');
+          if (menu) menu.hidden = true;
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        }
+        function closeAll() {
+          sectionEl.querySelectorAll('[data-mc-sort]').forEach(closeMenu);
+        }
+
+        sectionEl.addEventListener('click', function (e) {
+          var trigger = e.target.closest && e.target.closest('[data-mc-sort-trigger]');
+          if (trigger) {
+            var root = getRoot(trigger);
+            if (!root) return;
+            var menu = root.querySelector('[data-mc-sort-menu]');
+            var isOpen = menu && !menu.hidden;
+            closeAll();
+            if (!isOpen) openMenu(root);
+            return;
+          }
+          var option = e.target.closest && e.target.closest('[data-mc-sort-menu] [data-value]');
+          if (option) {
+            var optRoot = getRoot(option);
+            if (!optRoot) return;
+            var form = optRoot.closest('form');
+            var nativeSelect = form && form.querySelector('[data-mc-sort-select]');
+            if (nativeSelect) {
+              nativeSelect.value = option.dataset.value;
+              nativeSelect.dispatchEvent(new Event('input', { bubbles: true }));
+              nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            closeMenu(optRoot);
+          }
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!sectionEl.contains(e.target)) {
+            closeAll();
+            return;
+          }
+          if (!e.target.closest('[data-mc-sort]')) closeAll();
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeAll();
+        });
       })();
     </script>
   {%- endpaginate -%}
@@ -1015,6 +1201,22 @@
     { "type": "checkbox", "id": "show_product_count", "default": false, "label": "Afficher le nombre de pièces" },
     { "type": "checkbox", "id": "show_bar_top_border", "default": false, "label": "Afficher le trait au-dessus de la barre filtres" },
     { "type": "checkbox", "id": "show_bar_bottom_border", "default": false, "label": "Afficher le trait en dessous de la barre filtres" },
+
+    { "type": "header", "content": "Dropdown tri — Phase 16.9" },
+    { "type": "checkbox", "id": "sort_show_current_value", "default": false, "label": "Afficher la valeur de tri à côté du label" },
+    { "type": "range", "id": "sort_chevron_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8, "label": "Espace entre 'TRIER PAR' et le chevron" },
+    { "type": "color", "id": "sort_dropdown_bg", "default": "#F5F0E8", "label": "Couleur de fond du menu déroulant" },
+    {
+      "type": "select",
+      "id": "sort_active_indicator",
+      "label": "Marqueur de l'option sélectionnée",
+      "default": "bronze",
+      "options": [
+        { "value": "bronze", "label": "Couleur bronze" },
+        { "value": "underline", "label": "Souligné" },
+        { "value": "dot", "label": "Pastille gauche" }
+      ]
+    },
     { "type": "range", "id": "bar_padding_top", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding haut de la barre" },
     { "type": "range", "id": "bar_padding_bottom", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding bas de la barre" },
     { "type": "range", "id": "title_to_bar_gap", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Espace titre → barre" },

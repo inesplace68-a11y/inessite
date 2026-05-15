@@ -12,10 +12,15 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
+        "show_collection_title": false,
         "show_breadcrumb": true,
         "show_eyebrow": false,
         "eyebrow_default_text": "MIROIRS",
         "show_product_count_in_eyebrow": true,
+        "breadcrumb_font_family": "cormorant_italic",
+        "breadcrumb_size_desktop": 14,
+        "breadcrumb_alignment": "left",
+        "breadcrumb_color": "#8C6D3F",
         "title_size_desktop": 60,
         "title_size_mobile": 40,
         "title_style": "italic",
@@ -25,8 +30,8 @@
         "intro_text_style": "italic",
         "intro_alignment": "center",
         "show_collection_description": true,
-        "header_padding_top": 56,
-        "header_padding_bottom": 32,
+        "nav_to_content_gap": 24,
+        "header_padding_bottom": 16,
         "color_scheme": "scheme-1"
       }
     },
@@ -62,6 +67,10 @@
         "show_product_count": false,
         "show_bar_top_border": false,
         "show_bar_bottom_border": false,
+        "sort_show_current_value": false,
+        "sort_chevron_gap": 8,
+        "sort_dropdown_bg": "#f5f0e8",
+        "sort_active_indicator": "bronze",
         "bar_padding_top": 16,
         "bar_padding_bottom": 16,
         "title_to_bar_gap": 16,

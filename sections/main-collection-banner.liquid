@@ -1,6 +1,7 @@
 {% comment %}
-  Phase 16.6 — En-tête de collection éditorial Maison Coeur
-  Structure : fil d'Ariane + eyebrow + titre Cormorant + intro éditoriale.
+  Phase 16.9 — En-tête de collection éditorial Maison Coeur
+  Structure : fil d'Ariane (Cormorant Italic petit) + titre (masqué par défaut)
+              + intro éditoriale.
 
   Intro éditoriale priorité :
   1. collection.metafields.maison_coeur.intro_editorial (multi_line_text_field)
@@ -9,6 +10,7 @@
 {% endcomment %}
 
 {%- liquid
+  assign show_collection_title = section.settings.show_collection_title
   assign show_breadcrumb = section.settings.show_breadcrumb
   assign show_eyebrow = section.settings.show_eyebrow
   assign show_count = section.settings.show_product_count_in_eyebrow
@@ -17,6 +19,8 @@
   assign intro_alignment = section.settings.intro_alignment | default: 'center'
   assign title_style = section.settings.title_style | default: 'italic'
   assign intro_style = section.settings.intro_text_style | default: 'italic'
+  assign breadcrumb_font = section.settings.breadcrumb_font_family | default: 'cormorant_italic'
+  assign breadcrumb_align = section.settings.breadcrumb_alignment | default: 'left'
 
   assign intro_text = ''
   if collection.metafields.maison_coeur.intro_editorial != blank
@@ -30,13 +34,16 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --mcch-pt: {{ section.settings.header_padding_top | default: 56 }}px;
-    --mcch-pb: {{ section.settings.header_padding_bottom | default: 32 }}px;
+    --mcch-pt: {{ section.settings.nav_to_content_gap | default: 24 }}px;
+    --mcch-pb: {{ section.settings.header_padding_bottom | default: 16 }}px;
     --mcch-title-size: {{ section.settings.title_size_desktop | default: 60 }}px;
     --mcch-title-size-mobile: {{ section.settings.title_size_mobile | default: 40 }}px;
     --mcch-intro-size: {{ section.settings.intro_text_size_desktop | default: 18 }}px;
     --mcch-title-align: {{ title_alignment }};
     --mcch-intro-align: {{ intro_alignment }};
+    --mcch-bc-size: {{ section.settings.breadcrumb_size_desktop | default: 14 }}px;
+    --mcch-bc-align: {{ breadcrumb_align }};
+    --mcch-bc-color: {{ section.settings.breadcrumb_color | default: '#8C6D3F' }};
   }
   #shopify-section-{{ section.id }} .mc-collection-header {
     padding-top: var(--mcch-pt);
@@ -48,7 +55,7 @@
   <div class="mc-collection-header__inner page-width">
 
     {%- if show_breadcrumb -%}
-      <nav class="mc-collection-header__breadcrumb" aria-label="Fil d'Ariane">
+      <nav class="mc-collection-header__breadcrumb mc-collection-header__breadcrumb--{{ breadcrumb_font }}" aria-label="Fil d'Ariane">
         <a href="{{ routes.root_url }}">Accueil</a>
         <span aria-hidden="true"> — </span>
         <span>{{ collection.title | escape }}</span>
@@ -64,10 +71,15 @@
       </p>
     {%- endif -%}
 
-    <h1 class="mc-collection-header__title mc-collection-header__title--{{ title_style }}">
-      <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-      {{- collection.title | escape -}}
-    </h1>
+    {%- if show_collection_title -%}
+      <h1 class="mc-collection-header__title mc-collection-header__title--{{ title_style }}">
+        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+        {{- collection.title | escape -}}
+      </h1>
+    {%- else -%}
+      {%- comment -%} Titre conservé en visually-hidden pour SEO/a11y {%- endcomment -%}
+      <h1 class="visually-hidden">{{ collection.title | escape }}</h1>
+    {%- endif -%}
 
     {%- if intro_text != blank -%}
       <div class="mc-collection-header__intro mc-collection-header__intro--{{ intro_style }} rte">
@@ -85,14 +97,27 @@
   .mc-collection-header__inner {
     text-align: var(--mcch-title-align, center);
   }
+  /* Fil d'Ariane — Cormorant Italic petit aligné gauche par défaut */
   .mc-collection-header__breadcrumb {
+    font-size: var(--mcch-bc-size, 14px);
+    color: var(--mcch-bc-color, #8C6D3F);
+    text-align: var(--mcch-bc-align, left);
+    margin: 0 0 12px;
+  }
+  .mc-collection-header__breadcrumb--cormorant_italic {
+    font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .mc-collection-header__breadcrumb--jost_light_caps {
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: 11px;
+    font-style: normal;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #8C8882;
-    margin: 0 0 14px;
+    font-size: calc(var(--mcch-bc-size, 14px) - 2px);
   }
   .mc-collection-header__breadcrumb a {
     color: inherit;
@@ -141,6 +166,9 @@
     .mc-collection-header__title {
       font-size: var(--mcch-title-size-mobile, 40px);
     }
+    .mc-collection-header__breadcrumb {
+      font-size: calc(var(--mcch-bc-size, 14px) - 2px);
+    }
   }
 {%- endstyle -%}
 
@@ -149,11 +177,37 @@
   "name": "En-tête collection",
   "class": "section section--mc-collection-header",
   "settings": [
-    { "type": "header", "content": "Fil d'Ariane + eyebrow" },
-    { "type": "checkbox", "id": "show_breadcrumb", "default": false, "label": "Afficher le fil d'Ariane" },
+    { "type": "header", "content": "Affichage titre + fil d'Ariane" },
+    { "type": "checkbox", "id": "show_collection_title", "default": false, "label": "Afficher le titre de la catégorie" },
+    { "type": "checkbox", "id": "show_breadcrumb", "default": true, "label": "Afficher le fil d'Ariane" },
     { "type": "checkbox", "id": "show_eyebrow", "default": false, "label": "Afficher l'eyebrow au-dessus du titre" },
     { "type": "text", "id": "eyebrow_default_text", "default": "COLLECTION", "label": "Texte eyebrow" },
     { "type": "checkbox", "id": "show_product_count_in_eyebrow", "default": true, "label": "Afficher le nombre de pièces dans l'eyebrow" },
+
+    { "type": "header", "content": "Fil d'Ariane — style" },
+    {
+      "type": "select",
+      "id": "breadcrumb_font_family",
+      "label": "Police du fil d'Ariane",
+      "default": "cormorant_italic",
+      "options": [
+        { "value": "cormorant_italic", "label": "Cormorant Italic" },
+        { "value": "jost_light_caps", "label": "Jost Light Caps" }
+      ]
+    },
+    { "type": "range", "id": "breadcrumb_size_desktop", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 14, "label": "Taille du fil d'Ariane desktop" },
+    {
+      "type": "select",
+      "id": "breadcrumb_alignment",
+      "label": "Alignement du fil d'Ariane",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Droite" }
+      ]
+    },
+    { "type": "color", "id": "breadcrumb_color", "default": "#8C6D3F", "label": "Couleur du fil d'Ariane" },
 
     { "type": "header", "content": "Titre" },
     { "type": "range", "id": "title_size_desktop", "min": 32, "max": 96, "step": 4, "unit": "px", "default": 60, "label": "Taille titre desktop" },
@@ -215,8 +269,8 @@
     },
 
     { "type": "header", "content": "Espacements" },
-    { "type": "range", "id": "header_padding_top", "min": 24, "max": 120, "step": 8, "unit": "px", "default": 56, "label": "Padding haut en-tête" },
-    { "type": "range", "id": "header_padding_bottom", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Padding bas en-tête" },
+    { "type": "range", "id": "nav_to_content_gap", "min": 8, "max": 80, "step": 4, "unit": "px", "default": 24, "label": "Espace menu navigation → contenu" },
+    { "type": "range", "id": "header_padding_bottom", "min": 0, "max": 96, "step": 8, "unit": "px", "default": 16, "label": "Padding bas en-tête" },
 
     {
       "type": "color_scheme",
