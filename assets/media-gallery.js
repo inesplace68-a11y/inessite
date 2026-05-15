@@ -30,7 +30,9 @@ if (!customElements.get('media-gallery')) {
       }
 
       navigate(direction) {
-        const items = Array.from(this.elements.viewer.querySelectorAll('[data-media-id]'));
+        const items = Array.from(
+          this.elements.viewer.querySelectorAll('li.product__media-item[data-media-id]')
+        );
         if (items.length < 2) return;
         const activeIndex = items.findIndex((el) => el.classList.contains('is-active'));
         const currentIndex = activeIndex === -1 ? 0 : activeIndex;

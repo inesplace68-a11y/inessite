@@ -56,6 +56,7 @@
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
+    <div class="product__media-frame">
     {%- if section.settings.gallery_arrows_show and media_count > 1 -%}
       <button
         type="button"
@@ -147,6 +148,7 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
+    </div>
     <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
       <button
         type="button"

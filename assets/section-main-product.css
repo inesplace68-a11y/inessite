@@ -2325,12 +2325,13 @@ p.delivery-estimate > .mc-availability__line {
   }
 }
 
-/* Le slider-component doit pouvoir porter les arrows en absolute */
-[id^='GalleryViewer'] {
+/* Phase 15.12.1 — Frame qui englobe l'ul + les flèches.
+   Permet d'aligner les arrows sur la hauteur réelle de l'image active
+   (en VT desktop, .product__media-item:not(.is-active) { display:none },
+   donc la hauteur du frame = hauteur de l'image visible). */
+.product__media-frame {
   position: relative;
 }
-
-/* En VT desktop, le GalleryViewer occupe la colonne droite ; les flèches s'y posent naturellement */
 
 /* Variante modale — flèches blanches sur fond sombre */
 .gallery-nav-arrow--modal {
