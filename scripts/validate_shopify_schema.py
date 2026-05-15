@@ -10,10 +10,15 @@ Rules checked (any failure causes Shopify GitHub Sync to reject the commit):
   6. section/block name    : <= 25 characters
   7. template block refs   : every block "type" in templates/*.json must
                              exist in the matching section's schema "blocks"
+  8. global block registry : same as 7 but against the union of all
+                             declared block types across sections — guards
+                             against the Phase 14/15.10 failure mode where a
+                             template references a type that exists nowhere.
 
 Usage:
     python3 scripts/validate_shopify_schema.py sections/foo.liquid [...]
-    python3 scripts/validate_shopify_schema.py --all   # walk sections + templates
+    python3 scripts/validate_shopify_schema.py --all       # walk sections + templates
+    python3 scripts/validate_shopify_schema.py --all -v    # verbose template ↔ schema cross-check
 
 Exit codes: 0 = all good, 1 = violations found, 2 = bad invocation.
 """
@@ -151,16 +156,35 @@ def section_block_types(path: Path) -> set:
     return types
 
 
-def validate_templates(repo_root: Path) -> list[str]:
+def global_block_registry(sections_dir: Path) -> dict:
+    """Map block_type -> set of section files declaring it.
+
+    Used by the global cross-check (rule 8): even if the section a template
+    references is missing, we want to know whether the block type exists
+    *anywhere* in the theme. The output is also surfaced in verbose mode
+    to make it obvious where each type lives.
+    """
+    registry: dict = {}
+    if not sections_dir.is_dir():
+        return registry
+    for sec_file in sorted(sections_dir.glob('*.liquid')):
+        for btype in section_block_types(sec_file):
+            registry.setdefault(btype, set()).add(sec_file.name)
+    return registry
+
+
+def validate_templates(repo_root: Path, verbose: bool = False) -> list[str]:
     """Cross-check: every block.type in templates/*.json must exist in the
-    referenced section's schema. Catches the Phase 14 failure mode where
-    main-product.liquid lost a block schema but product.json still pointed
-    at it."""
+    referenced section's schema (rule 7) AND in the global block registry
+    (rule 8). Catches the Phase 14 / 15.10 failure modes where a template
+    references a type the live schema doesn't declare."""
     errs = []
     templates_dir = repo_root / 'templates'
     sections_dir = repo_root / 'sections'
     if not templates_dir.is_dir() or not sections_dir.is_dir():
         return errs
+
+    registry = global_block_registry(sections_dir)
 
     for tpl in sorted(templates_dir.glob('*.json')):
         try:
@@ -180,11 +204,16 @@ def validate_templates(repo_root: Path) -> list[str]:
             if not sec_type:
                 continue
             section_file = sections_dir / f"{sec_type}.liquid"
-            if not section_file.exists():
-                # Section type not found in /sections — likely a theme app block
-                continue
-            allowed = section_block_types(section_file)
+            section_exists = section_file.exists()
+            allowed = section_block_types(section_file) if section_exists else set()
             blocks = sec.get('blocks', {}) or {}
+
+            if verbose and blocks:
+                print(
+                    f"  {tpl.name} » section '{sec_id}' "
+                    f"(type={sec_type}, schema={'✓' if section_exists else '—'})"
+                )
+
             for block_id, block in blocks.items():
                 if not isinstance(block, dict):
                     continue
@@ -192,21 +221,46 @@ def validate_templates(repo_root: Path) -> list[str]:
                 if btype is None:
                     continue
                 if btype.startswith('@'):
-                    # @app / @theme reserved block types — skip
+                    if verbose:
+                        print(f"    · {block_id} → @reserved ({btype})")
                     continue
-                if btype not in allowed:
+
+                ok_section = (not section_exists) or (btype in allowed)
+                ok_global = btype in registry
+
+                if verbose:
+                    where = ', '.join(sorted(registry.get(btype, []))) or '<unknown>'
+                    mark = '✓' if (ok_section and ok_global) else '✗'
+                    print(f"    · {block_id} → type '{btype}' [{mark}] declared in: {where}")
+
+                if section_exists and btype not in allowed:
                     errs.append(
                         f"{tpl.name} » section '{sec_id}' (type={sec_type}) "
                         f"» block '{block_id}': type '{btype}' is not "
                         f"declared in {section_file.name} schema blocks"
+                    )
+                elif not ok_global:
+                    errs.append(
+                        f"{tpl.name} » section '{sec_id}' (type={sec_type}) "
+                        f"» block '{block_id}': type '{btype}' is not "
+                        f"declared in any section schema (global registry miss)"
                     )
     return errs
 
 
 def main(argv: list[str]) -> int:
     if not argv:
-        print("Usage: validate_shopify_schema.py <file.liquid> [...]", file=sys.stderr)
+        print("Usage: validate_shopify_schema.py <file.liquid> [...] [-v|--verbose]", file=sys.stderr)
         return 2
+
+    verbose = False
+    cleaned = []
+    for arg in argv:
+        if arg in ('-v', '--verbose'):
+            verbose = True
+        else:
+            cleaned.append(arg)
+    argv = cleaned or ['--all']
 
     # Determine repo root from script location for the cross-check
     script_dir = Path(__file__).resolve().parent
@@ -227,8 +281,9 @@ def main(argv: list[str]) -> int:
         files_checked += 1
         all_errs.extend(validate_file(p))
 
-    # Cross-check templates if we can find a templates directory
-    template_errs = validate_templates(repo_root)
+    if verbose:
+        print("\nTemplate ↔ schema cross-check:")
+    template_errs = validate_templates(repo_root, verbose=verbose)
     all_errs.extend(template_errs)
 
     if all_errs:
