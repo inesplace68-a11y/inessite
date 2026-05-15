@@ -5,6 +5,7 @@
     --mcr-pt-mobile: {{ section.settings.padding_top_mobile | default: 16 }}px;
     --mcr-pb-mobile: {{ section.settings.padding_bottom_mobile | default: 16 }}px;
     --mcr-icon-to-label: {{ section.settings.icon_to_label_gap | default: 10 }}px;
+    --mc-trust-sep-inset: {{ section.settings.separator_vertical_inset | default: 0 }}px;
     padding-top: var(--mcr-pt);
     padding-bottom: var(--mcr-pb);
   }
@@ -21,9 +22,39 @@
   #shopify-section-{{ section.id }} .mc-reassurance__item {
     padding-top: 0;
     padding-bottom: 0;
+    position: relative;
+    border-right: none !important;
   }
   #shopify-section-{{ section.id }} .mc-reassurance__icon {
     margin-bottom: var(--mcr-icon-to-label);
+  }
+  /* Phase 16.4 — séparateurs verticaux en ligne pleine : ::before en absolute
+     positionné sur le bord droit de chaque cellule, avec top/bottom étendus
+     dans le padding de la section via offsets négatifs. inset 0 par défaut
+     → la ligne touche les bords haut et bas de la bande beige. inset > 0
+     → retrait progressif de chaque extrémité. */
+  #shopify-section-{{ section.id }} .mc-reassurance__item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: calc(-1 * var(--mcr-pt) + var(--mc-trust-sep-inset));
+    bottom: calc(-1 * var(--mcr-pb) + var(--mc-trust-sep-inset));
+    width: 1px;
+    background-color: var(--mc-border);
+    pointer-events: none;
+  }
+  @media (max-width: 749px) {
+    /* Sur mobile la grille passe en 2 colonnes : la cellule n°2 devient
+       la dernière de sa rangée, son ::before doit être masqué. Pour les
+       autres, on contraint la ligne à la hauteur de la cellule pour ne
+       pas chevaucher la bordure horizontale entre les 2 rangées. */
+    #shopify-section-{{ section.id }} .mc-reassurance__item:not(:last-child)::before {
+      top: var(--mc-trust-sep-inset);
+      bottom: var(--mc-trust-sep-inset);
+    }
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2)::before {
+      display: none;
+    }
   }
 {%- endstyle -%}
 
@@ -101,7 +132,10 @@
     { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 16, "label": "Marge basse mobile" },
 
     { "type": "header", "content": "Rythme vertical interne (Phase 16.2)" },
-    { "type": "range", "id": "icon_to_label_gap", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10, "label": "Gap vertical icône → label" }
+    { "type": "range", "id": "icon_to_label_gap", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10, "label": "Gap vertical icône → label" },
+
+    { "type": "header", "content": "Séparateurs verticaux (Phase 16.4)" },
+    { "type": "range", "id": "separator_vertical_inset", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "label": "Retrait vertical des séparateurs", "info": "0 = ligne pleine touchant les bords haut/bas de la bande beige. Augmenter pour rétracter symétriquement de chaque extrémité." }
   ],
   "blocks": [
     {
