@@ -4,8 +4,8 @@
    ============================================================ */
 
 .home-services {
-  padding-top: var(--hsv-padding-top, 96px);
-  padding-bottom: var(--hsv-padding-bottom, 96px);
+  padding-top: var(--hsv-padding-top, 64px);
+  padding-bottom: var(--hsv-padding-bottom, 80px);
   background-color: var(--hsv-bg, #F7F5F1);
 }
 
@@ -69,7 +69,7 @@
   line-height: 1.25;
   letter-spacing: 0.005em;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 var(--hsv-gap-title-body, 28px);
+  margin: 0 0 var(--hsv-gap-title-body, 14px);
   max-width: 28ch;
   text-wrap: balance;
   text-align: center;
@@ -81,7 +81,7 @@
   font-size: 15px;
   line-height: 1.65;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 28px;
+  margin: 0 0 var(--hsv-gap-body-cta, 24px);
   max-width: 38ch;
   text-align: center;
 }
@@ -112,8 +112,8 @@
 
 @media (max-width: 749px) {
   .home-services {
-    padding-top: clamp(56px, var(--hsv-padding-top, 96px), var(--hsv-padding-top, 96px));
-    padding-bottom: clamp(56px, var(--hsv-padding-bottom, 96px), var(--hsv-padding-bottom, 96px));
+    padding-top: var(--hsv-padding-top-mobile, 48px);
+    padding-bottom: var(--hsv-padding-bottom-mobile, 56px);
   }
   .home-services__inner {
     padding: 0 20px;

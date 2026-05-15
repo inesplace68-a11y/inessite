@@ -1,8 +1,36 @@
 {%- style -%}
   #shopify-section-{{ section.id }} .mc-collection-grid {
     --mcg-bg: {{ section.settings.background_color | default: '#F7F5F1' }};
-    padding-top: {{ section.settings.padding_top | default: 96 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
+    --mcg-pt: {{ section.settings.padding_top_desktop | default: 56 }}px;
+    --mcg-pb: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    --mcg-pt-mobile: {{ section.settings.padding_top_mobile | default: 40 }}px;
+    --mcg-pb-mobile: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    --mcg-title-gap: {{ section.settings.title_to_grid_gap_desktop | default: 40 }}px;
+    --mcg-title-gap-mobile: {{ section.settings.title_to_grid_gap_mobile | default: 28 }}px;
+    --mcg-image-to-label: {{ section.settings.image_to_label_gap | default: 18 }}px;
+    --mcg-label-to-link: {{ section.settings.label_to_link_gap | default: 8 }}px;
+    padding-top: var(--mcg-pt);
+    padding-bottom: var(--mcg-pb);
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-collection-grid {
+      padding-top: var(--mcg-pt-mobile);
+      padding-bottom: var(--mcg-pb-mobile);
+    }
+  }
+  #shopify-section-{{ section.id }} .mc-collection-grid .mc-section-heading {
+    margin-bottom: var(--mcg-title-gap);
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-collection-grid .mc-section-heading {
+      margin-bottom: var(--mcg-title-gap-mobile);
+    }
+  }
+  #shopify-section-{{ section.id }} .mc-collection-grid__image-wrap {
+    margin-bottom: var(--mcg-image-to-label);
+  }
+  #shopify-section-{{ section.id }} .mc-collection-grid__label {
+    margin-bottom: var(--mcg-label-to-link);
   }
 {%- endstyle -%}
 
@@ -75,28 +103,17 @@
       "default": "#F7F5F1"
     },
 
-    { "type": "header", "content": "Espacements" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge haute",
-      "info": "Phase 13 — 3 niveaux harmonisés : 64 compact / 96 standard / 140 immersif.",
-      "default": 96
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge basse",
-      "default": 96
-    }
+    { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },
+    { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 56, "label": "Marge haute desktop" },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 80, "label": "Marge basse desktop" },
+    { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Marge haute mobile" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Marge basse mobile" },
+
+    { "type": "header", "content": "Rythme vertical interne (Phase 16.1 V2)" },
+    { "type": "range", "id": "title_to_grid_gap_desktop", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40, "label": "Gap vertical titre → grille (desktop)" },
+    { "type": "range", "id": "title_to_grid_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 28, "label": "Gap vertical titre → grille (mobile)" },
+    { "type": "range", "id": "image_to_label_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18, "label": "Gap vertical image → label (carte)" },
+    { "type": "range", "id": "label_to_link_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8, "label": "Gap vertical label → lien Découvrir" }
   ],
   "blocks": [
     {

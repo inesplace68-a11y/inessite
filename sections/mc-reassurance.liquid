@@ -1,7 +1,21 @@
 {%- style -%}
   #shopify-section-{{ section.id }} .mc-reassurance {
-    padding-top: {{ section.settings.padding_top | default: 64 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px;
+    --mcr-pt: {{ section.settings.padding_top_desktop | default: 36 }}px;
+    --mcr-pb: {{ section.settings.padding_bottom_desktop | default: 36 }}px;
+    --mcr-pt-mobile: {{ section.settings.padding_top_mobile | default: 28 }}px;
+    --mcr-pb-mobile: {{ section.settings.padding_bottom_mobile | default: 28 }}px;
+    --mcr-icon-to-label: {{ section.settings.icon_to_label_gap | default: 14 }}px;
+    padding-top: var(--mcr-pt);
+    padding-bottom: var(--mcr-pb);
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-reassurance {
+      padding-top: var(--mcr-pt-mobile);
+      padding-bottom: var(--mcr-pb-mobile);
+    }
+  }
+  #shopify-section-{{ section.id }} .mc-reassurance__icon {
+    margin-bottom: var(--mcr-icon-to-label);
   }
 {%- endstyle -%}
 
@@ -72,28 +86,14 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    { "type": "header", "content": "Espacements" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge haute",
-      "info": "Phase 13 — niveau COMPACT 64/64.",
-      "default": 64
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge basse",
-      "default": 64
-    }
+    { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },
+    { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 36, "label": "Marge haute desktop" },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 36, "label": "Marge basse desktop" },
+    { "type": "range", "id": "padding_top_mobile", "min": 12, "max": 80, "step": 4, "unit": "px", "default": 28, "label": "Marge haute mobile" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 12, "max": 80, "step": 4, "unit": "px", "default": 28, "label": "Marge basse mobile" },
+
+    { "type": "header", "content": "Rythme vertical interne (Phase 16.1 V2)" },
+    { "type": "range", "id": "icon_to_label_gap", "min": 6, "max": 40, "step": 2, "unit": "px", "default": 14, "label": "Gap vertical icône → label" }
   ],
   "blocks": [
     {
