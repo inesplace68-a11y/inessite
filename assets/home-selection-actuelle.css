@@ -3,8 +3,8 @@
    ============================================================ */
 
 .home-selection {
-  padding-top: var(--hs-padding-top, 64px);
-  padding-bottom: var(--hs-padding-bottom, 48px);
+  padding-top: var(--hs-padding-top, 96px);
+  padding-bottom: var(--hs-padding-bottom, 96px);
   background-color: var(--mc-bg, #F7F5F1);
 }
 
@@ -23,7 +23,7 @@
   text-transform: uppercase;
   text-align: center;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 var(--hs-title-to-grid-gap, 32px);
+  margin: 0 0 var(--hs-eyebrow-margin-bottom, 48px);
 }
 
 /* ----------------- Carousel wrapper ----------------- */
@@ -67,7 +67,7 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background-color: #EFEBE3;
-  margin: 0 0 var(--hs-image-to-name, 18px);
+  margin: 0 0 16px;
 }
 
 .home-selection__image {
@@ -96,7 +96,7 @@
   line-height: 1.25;
   letter-spacing: 0.01em;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 var(--hs-name-to-price, 6px);
+  margin: 0 0 6px;
 }
 @media (max-width: 749px) {
   .home-selection__name { font-size: calc(var(--type-h4, 20px) * 0.85); }
@@ -185,14 +185,14 @@
 
 @media (max-width: 749px) {
   .home-selection {
-    padding-top: var(--hs-padding-top-mobile, 40px);
-    padding-bottom: var(--hs-padding-bottom-mobile, 32px);
+    padding-top: clamp(56px, var(--hs-padding-top, 96px), var(--hs-padding-top, 96px));
+    padding-bottom: clamp(56px, var(--hs-padding-bottom, 96px), var(--hs-padding-bottom, 96px));
   }
   .home-selection__inner {
     padding: 0 20px;
   }
   .home-selection__eyebrow {
-    margin-bottom: var(--hs-title-to-grid-gap-mobile, 24px);
+    margin-bottom: clamp(20px, var(--hs-eyebrow-margin-bottom, 36px), var(--hs-eyebrow-margin-bottom, 36px));
   }
   .home-selection__track {
     gap: 16px;

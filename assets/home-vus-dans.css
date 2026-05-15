@@ -3,8 +3,8 @@
    ============================================================ */
 
 .home-vus-dans {
-  padding-top: var(--hvd-padding-top, 40px);
-  padding-bottom: var(--hvd-padding-bottom, 40px);
+  padding-top: var(--hvd-padding-top, 64px);
+  padding-bottom: var(--hvd-padding-bottom, 64px);
   background-color: var(--mc-bg, #F7F5F1);
 }
 
@@ -22,7 +22,7 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--mc-mid, #8C8882);
-  margin: 0 0 var(--hvd-eyebrow-gap, 24px);
+  margin: 0 0 var(--hvd-eyebrow-gap, 20px);
 }
 
 .home-vus-dans__logos {
@@ -33,7 +33,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: var(--hvd-logo-gap, 48px);
+  gap: var(--hvd-logo-gap, 64px);
 }
 
 .home-vus-dans__logo-item {
@@ -53,7 +53,7 @@
 }
 
 .home-vus-dans__logo {
-  height: var(--hvd-logo-height, 32px);
+  height: var(--hvd-logo-height, 36px);
   width: auto;
   max-width: 220px;
   object-fit: contain;
@@ -64,19 +64,16 @@
 
 @media (max-width: 749px) {
   .home-vus-dans {
-    padding-top: var(--hvd-padding-top-mobile, 28px);
-    padding-bottom: var(--hvd-padding-bottom-mobile, 28px);
+    padding-top: clamp(40px, var(--hvd-padding-top, 64px), var(--hvd-padding-top, 64px));
+    padding-bottom: clamp(40px, var(--hvd-padding-bottom, 64px), var(--hvd-padding-bottom, 64px));
   }
   .home-vus-dans__inner {
     padding: 0 20px;
   }
-  .home-vus-dans__eyebrow {
-    margin: 0 0 var(--hvd-eyebrow-gap-mobile, 18px);
-  }
   .home-vus-dans__logos {
-    gap: var(--hvd-logo-gap-mobile, 24px);
+    gap: 32px;
   }
   .home-vus-dans__logo {
-    height: var(--hvd-logo-height-mobile, 24px);
+    height: calc(var(--hvd-logo-height, 36px) * 0.85);
   }
 }
