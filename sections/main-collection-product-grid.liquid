@@ -34,6 +34,90 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Phase 16.6 — variables grille + vignette pilotées par Customizer */
+  #shopify-section-{{ section.id }} {
+    --mcg-card-gap-desktop: {{ section.settings.card_gap_desktop | default: 20 }}px;
+    --mcg-card-gap-mobile: {{ section.settings.card_gap_mobile | default: 12 }}px;
+    --mcg-card-title-size: {{ section.settings.card_title_size | default: 16 }}px;
+    --mcg-card-price-size: {{ section.settings.card_price_size | default: 14 }}px;
+    --mcg-image-zoom: {{ section.settings.image_zoom_amount | default: 102 }};
+    --mcg-wishlist-color: {{ section.settings.wishlist_color | default: '#1A1814' }};
+  }
+  /* Grille — gap configurable */
+  #shopify-section-{{ section.id }} .grid--quarter-max,
+  #shopify-section-{{ section.id }} .product-grid {
+    gap: var(--mcg-card-gap-desktop, 20px);
+  }
+  /* Format image 4:5 portrait (override Dawn ratio) */
+  #shopify-section-{{ section.id }} .card .card__inner.ratio,
+  #shopify-section-{{ section.id }} .card-wrapper .card__inner.ratio {
+    --ratio-percent: 125%;
+  }
+  /* Typo vignette */
+  #shopify-section-{{ section.id }} .card__heading,
+  #shopify-section-{{ section.id }} .card__heading a {
+    font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--mcg-card-title-size, 16px);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  #shopify-section-{{ section.id }} .price,
+  #shopify-section-{{ section.id }} .price__regular .price-item,
+  #shopify-section-{{ section.id }} .price-item--regular {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: var(--mcg-card-price-size, 14px);
+  }
+  /* Coeur wishlist sur la vignette — masqué au repos, visible au hover */
+  #shopify-section-{{ section.id }} .card-wrapper {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .card-wrapper .mc-product-heart--card {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    color: var(--mcg-wishlist-color, #1A1814);
+    {%- if section.settings.wishlist_hover_only -%}
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+    {%- endif -%}
+  }
+  {%- if section.settings.wishlist_hover_only -%}
+  #shopify-section-{{ section.id }} .card-wrapper:hover .mc-product-heart--card,
+  #shopify-section-{{ section.id }} .card-wrapper:focus-within .mc-product-heart--card,
+  #shopify-section-{{ section.id }} .card-wrapper .mc-product-heart--card[aria-pressed='true'],
+  #shopify-section-{{ section.id }} .card-wrapper .mc-product-heart--card[data-active='true'] {
+    opacity: 1;
+  }
+  {%- endif -%}
+  {%- unless section.settings.show_wishlist_heart -%}
+  #shopify-section-{{ section.id }} .card-wrapper .mc-product-heart--card {
+    display: none !important;
+  }
+  {%- endunless -%}
+  /* Zoom image au hover (optionnel) */
+  {%- if section.settings.enable_image_zoom_on_hover -%}
+  #shopify-section-{{ section.id }} .card-wrapper .card__media img {
+    transition: transform 400ms ease;
+  }
+  #shopify-section-{{ section.id }} .card-wrapper:hover .card__media img {
+    transform: scale(calc(var(--mcg-image-zoom, 102) / 100));
+  }
+  {%- endif -%}
+
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .grid--quarter-max,
+    #shopify-section-{{ section.id }} .product-grid {
+      gap: var(--mcg-card-gap-mobile, 12px);
+    }
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
@@ -372,7 +456,7 @@
           "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
         }
       ],
-      "default": "horizontal",
+      "default": "vertical",
       "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
     },
     {
@@ -381,6 +465,21 @@
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
     },
+
+    { "type": "header", "content": "Vignette — Phase 16.6" },
+    { "type": "range", "id": "card_gap_desktop", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Gap entre vignettes (desktop)" },
+    { "type": "range", "id": "card_gap_mobile", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 12, "label": "Gap entre vignettes (mobile)" },
+    { "type": "range", "id": "card_title_size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 16, "label": "Taille titre vignette" },
+    { "type": "range", "id": "card_price_size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14, "label": "Taille prix vignette" },
+
+    { "type": "header", "content": "Coeur wishlist — Phase 16.6" },
+    { "type": "checkbox", "id": "show_wishlist_heart", "default": true, "label": "Afficher le coeur wishlist sur les vignettes" },
+    { "type": "checkbox", "id": "wishlist_hover_only", "default": true, "label": "Coeur visible uniquement au survol (sauf si déjà ajouté)" },
+    { "type": "color", "id": "wishlist_color", "default": "#1A1814", "label": "Couleur du coeur" },
+
+    { "type": "header", "content": "Effet image — Phase 16.6" },
+    { "type": "checkbox", "id": "enable_image_zoom_on_hover", "default": true, "label": "Zoom léger image au survol" },
+    { "type": "range", "id": "image_zoom_amount", "min": 100, "max": 110, "step": 1, "unit": "%", "default": 102, "label": "Niveau de zoom (%)", "info": "100 = sans zoom, 110 = +10% au survol" },
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"

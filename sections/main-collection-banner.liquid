@@ -1,75 +1,227 @@
-{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  Phase 16.6 — En-tête de collection éditorial Maison Coeur
+  Structure : fil d'Ariane + eyebrow + titre Cormorant + intro éditoriale.
+
+  Intro éditoriale priorité :
+  1. collection.metafields.maison_coeur.intro_editorial (multi_line_text_field)
+  2. settings.intro_default_text (Customizer)
+  3. collection.description (fallback Dawn)
+{% endcomment %}
+
+{%- liquid
+  assign show_breadcrumb = section.settings.show_breadcrumb
+  assign show_eyebrow = section.settings.show_eyebrow
+  assign show_count = section.settings.show_product_count_in_eyebrow
+  assign eyebrow_text = section.settings.eyebrow_default_text | default: 'COLLECTION'
+  assign title_alignment = section.settings.title_alignment | default: 'center'
+  assign intro_alignment = section.settings.intro_alignment | default: 'center'
+  assign title_style = section.settings.title_style | default: 'italic'
+  assign intro_style = section.settings.intro_text_style | default: 'italic'
+
+  assign intro_text = ''
+  if collection.metafields.maison_coeur.intro_editorial != blank
+    assign intro_text = collection.metafields.maison_coeur.intro_editorial
+  elsif section.settings.intro_default_text != blank
+    assign intro_text = section.settings.intro_default_text
+  elsif section.settings.show_collection_description and collection.description != blank
+    assign intro_text = collection.description
+  endif
+-%}
 
 {%- style -%}
-  @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
+  #shopify-section-{{ section.id }} {
+    --mcch-pt: {{ section.settings.header_padding_top | default: 56 }}px;
+    --mcch-pb: {{ section.settings.header_padding_bottom | default: 32 }}px;
+    --mcch-title-size: {{ section.settings.title_size_desktop | default: 60 }}px;
+    --mcch-title-size-mobile: {{ section.settings.title_size_mobile | default: 40 }}px;
+    --mcch-intro-size: {{ section.settings.intro_text_size_desktop | default: 18 }}px;
+    --mcch-title-align: {{ title_alignment }};
+    --mcch-intro-align: {{ intro_alignment }};
+  }
+  #shopify-section-{{ section.id }} .mc-collection-header {
+    padding-top: var(--mcch-pt);
+    padding-bottom: var(--mcch-pb);
+  }
+{%- endstyle -%}
+
+<header class="mc-collection-header color-{{ section.settings.color_scheme }}">
+  <div class="mc-collection-header__inner page-width">
+
+    {%- if show_breadcrumb -%}
+      <nav class="mc-collection-header__breadcrumb" aria-label="Fil d'Ariane">
+        <a href="{{ routes.root_url }}">Accueil</a>
+        <span aria-hidden="true"> — </span>
+        <span>{{ collection.title | escape }}</span>
+      </nav>
+    {%- endif -%}
+
+    {%- if show_eyebrow -%}
+      <p class="mc-collection-header__eyebrow">
+        {{- eyebrow_text -}}
+        {%- if show_count -%}
+          <span aria-hidden="true"> — </span>{{ collection.products_count }} {%- if collection.products_count == 1 -%}pièce{%- else -%}pièces{%- endif -%}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    <h1 class="mc-collection-header__title mc-collection-header__title--{{ title_style }}">
+      <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+      {{- collection.title | escape -}}
+    </h1>
+
+    {%- if intro_text != blank -%}
+      <div class="mc-collection-header__intro mc-collection-header__intro--{{ intro_style }} rte">
+        {{ intro_text }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</header>
+
+{%- style -%}
+  .mc-collection-header {
+    background-color: var(--mc-bg, #F7F5F1);
+  }
+  .mc-collection-header__inner {
+    text-align: var(--mcch-title-align, center);
+  }
+  .mc-collection-header__breadcrumb {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8C8882;
+    margin: 0 0 14px;
+  }
+  .mc-collection-header__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  .mc-collection-header__breadcrumb a:hover {
+    color: #1A1814;
+  }
+  .mc-collection-header__eyebrow {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1A1814;
+    margin: 0 0 18px;
+  }
+  .mc-collection-header__title {
+    font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+    font-weight: 400;
+    font-size: var(--mcch-title-size, 60px);
+    line-height: 1.1;
+    letter-spacing: 0;
+    color: #1A1814;
+    margin: 0;
+  }
+  .mc-collection-header__title--italic { font-style: italic; }
+  .mc-collection-header__title--regular { font-style: normal; }
+  .mc-collection-header__intro {
+    font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+    font-weight: 400;
+    font-size: var(--mcch-intro-size, 18px);
+    line-height: 1.5;
+    color: #1A1814;
+    margin: 18px auto 0;
+    max-width: 60ch;
+    text-align: var(--mcch-intro-align, center);
+  }
+  .mc-collection-header__intro--italic { font-style: italic; }
+  .mc-collection-header__intro--regular { font-style: normal; }
+  .mc-collection-header__intro > * { margin: 0; }
+  .mc-collection-header__intro > * + * { margin-top: 8px; }
+
+  @media (max-width: 749px) {
+    .mc-collection-header__title {
+      font-size: var(--mcch-title-size-mobile, 40px);
     }
   }
 {%- endstyle -%}
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
-
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
-      {%- endif -%}
-    </div>
-
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
-        <img
-          srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
-          "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.image.alt | escape }}"
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
-        >
-      </div>
-    {%- endif -%}
-  </div>
-</div>
-
 {% schema %}
 {
-  "name": "t:sections.main-collection-banner.name",
-  "class": "section",
+  "name": "En-tête collection",
+  "class": "section section--mc-collection-header",
   "settings": [
+    { "type": "header", "content": "Fil d'Ariane + eyebrow" },
+    { "type": "checkbox", "id": "show_breadcrumb", "default": true, "label": "Afficher le fil d'Ariane" },
+    { "type": "checkbox", "id": "show_eyebrow", "default": true, "label": "Afficher l'eyebrow" },
+    { "type": "text", "id": "eyebrow_default_text", "default": "COLLECTION", "label": "Texte eyebrow" },
+    { "type": "checkbox", "id": "show_product_count_in_eyebrow", "default": true, "label": "Afficher le nombre de pièces dans l'eyebrow" },
+
+    { "type": "header", "content": "Titre" },
+    { "type": "range", "id": "title_size_desktop", "min": 32, "max": 96, "step": 4, "unit": "px", "default": 60, "label": "Taille titre desktop" },
+    { "type": "range", "id": "title_size_mobile", "min": 24, "max": 64, "step": 4, "unit": "px", "default": 40, "label": "Taille titre mobile" },
     {
-      "type": "paragraph",
-      "content": "t:sections.main-collection-banner.settings.paragraph.content"
+      "type": "select",
+      "id": "title_style",
+      "label": "Style titre",
+      "options": [
+        { "value": "regular", "label": "Regular" },
+        { "value": "italic", "label": "Italique" }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alignement titre",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "center", "label": "Centre" }
+      ],
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Intro éditoriale" },
+    {
+      "type": "textarea",
+      "id": "intro_default_text",
+      "label": "Texte intro par défaut",
+      "info": "Surchargé par collection.metafields.maison_coeur.intro_editorial si présent."
+    },
+    { "type": "range", "id": "intro_text_size_desktop", "min": 14, "max": 28, "step": 2, "unit": "px", "default": 18, "label": "Taille texte intro" },
+    {
+      "type": "select",
+      "id": "intro_text_style",
+      "label": "Style intro",
+      "options": [
+        { "value": "regular", "label": "Regular" },
+        { "value": "italic", "label": "Italique" }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "intro_alignment",
+      "label": "Alignement intro",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "center", "label": "Centre" }
+      ],
+      "default": "center"
     },
     {
       "type": "checkbox",
       "id": "show_collection_description",
       "default": true,
-      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+      "label": "Fallback : afficher description Shopify si pas d'intro"
     },
-    {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "default": false,
-      "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
-    },
+
+    { "type": "header", "content": "Espacements" },
+    { "type": "range", "id": "header_padding_top", "min": 24, "max": 120, "step": 8, "unit": "px", "default": 56, "label": "Padding haut en-tête" },
+    { "type": "range", "id": "header_padding_bottom", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Padding bas en-tête" },
+
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
+      "label": "Couleur de fond",
       "default": "scheme-1"
     }
   ]
