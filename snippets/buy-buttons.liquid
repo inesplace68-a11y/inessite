@@ -69,48 +69,12 @@
             if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
               assign quantity_rule_soldout = true
             endif
-
-            assign cta_show_logos = block.settings.cta_show_payment_logos
-            assign cta_pay_cards = ''
-            if cta_show_logos
-              for sblock in section.blocks
-                if sblock.type == 'mc_payment_security'
-                  if sblock.settings.show_visa
-                    assign cta_pay_cards = cta_pay_cards | append: 'visa,'
-                  endif
-                  if sblock.settings.show_master
-                    assign cta_pay_cards = cta_pay_cards | append: 'master,'
-                  endif
-                  if sblock.settings.show_cb
-                    assign cta_pay_cards = cta_pay_cards | append: 'cb,'
-                  endif
-                  if sblock.settings.show_apple_pay
-                    assign cta_pay_cards = cta_pay_cards | append: 'apple_pay,'
-                  endif
-                  if sblock.settings.show_google_pay
-                    assign cta_pay_cards = cta_pay_cards | append: 'google_pay,'
-                  endif
-                  if sblock.settings.show_shop_pay
-                    assign cta_pay_cards = cta_pay_cards | append: 'shop_pay,'
-                  endif
-                  break
-                endif
-              endfor
-            endif
-            assign cta_pay_cards = cta_pay_cards | split: ','
-            assign cta_has_logos = false
-            if cta_show_logos and cta_pay_cards.size > 0
-              assign cta_has_logos = true
-            endif
           -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}{% if cta_has_logos %} product-form__submit--has-pay-logos{% endif %}"
-            {% if cta_has_logos %}
-              style="--cta-pay-size: {{ block.settings.cta_payment_logos_size | default: 14 }}px; --cta-pay-gap: {{ block.settings.cta_payment_logos_gap | default: 8 }}px; --cta-pay-opacity: {{ block.settings.cta_payment_logos_opacity | default: 60 | divided_by: 100.0 }}; --cta-pay-top: {{ block.settings.cta_payment_logos_top_margin | default: 8 }}px;"
-            {% endif %}
+            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -118,7 +82,7 @@
               disabled
             {% endif %}
           >
-            <span class="product-form__submit-label">
+            <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
@@ -127,13 +91,6 @@
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
             </span>
-            {%- if cta_has_logos -%}
-              <ul class="product-form__submit-pay" role="presentation" aria-hidden="true">
-                {%- for card in cta_pay_cards -%}
-                  <li class="product-form__submit-pay__item">{{ card | payment_type_svg_tag: class: 'product-form__submit-pay__icon' }}</li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}

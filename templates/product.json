@@ -109,7 +109,7 @@
         "mc_pay": {
           "type": "mc_payment_security",
           "settings": {
-            "visible": false,
+            "visible": true,
             "text": "Paiement sécurisé",
             "show_visa": true,
             "show_master": true,
@@ -226,7 +226,7 @@
         "pdp_avail_label_prefix": "Disponible immédiatement",
         "pdp_delivery_phrase": "Chez vous entre le {date_min} et le {date_max}",
         "pdp_avail_size": 15,
-        "pdp_avail_alignment": "center",
+        "pdp_avail_alignment": "left",
         "pdp_cartel_show": true,
         "pdp_ref_show": true,
         "pdp_questions_intro": "Notre équipe est à votre disposition pour toute information.",

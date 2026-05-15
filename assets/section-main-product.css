@@ -2059,50 +2059,6 @@ p.delivery-estimate {
 .product-form__submit:not([disabled]):hover { opacity: 0.85; }
 .shopify-payment-button { display: none !important; }
 
-/* Phase 15.11.1 — Logos cartes intégrés DANS le bouton CTA (A2b monochrome).
-   Le bouton passe en colonne pour empiler label + ligne logos centrés.
-   Phase 15.11.3 — passage en `mix-blend-mode: luminosity` + `grayscale(1)`
-   pour PRÉSERVER les détails internes des SVG natifs Shopify (texte VISA,
-   silhouettes MC, marque CB). Le précédent filter `brightness(0) invert(1)`
-   aplatissait tout en silhouette blanche uniforme (rectangle plein).
-   Avec luminosity sur le backdrop quasi neutre du bouton (#1A1A1A), seules
-   les LUMINANCES de chaque SVG sont conservées en niveaux de gris — texte
-   blanc reste blanc, fonds colorés deviennent gris, contraste préservé. */
-.product-form__submit--has-pay-logos {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: var(--cta-pay-top, 8px);
-  isolation: isolate;
-}
-.product-form__submit--has-pay-logos .product-form__submit-label {
-  display: block;
-  line-height: 1;
-}
-.product-form__submit-pay {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--cta-pay-gap, 8px);
-}
-.product-form__submit-pay__item {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-}
-.product-form__submit-pay__icon {
-  display: block;
-  height: var(--cta-pay-size, 14px);
-  width: auto;
-  filter: grayscale(1);
-  mix-blend-mode: luminosity;
-  opacity: var(--cta-pay-opacity, 0.6);
-}
-
 /* Phase 15.10 — Mini-mention "Paiement sécurisé" sous CTA panier.
    Registre presque transparent, juste réassurance subliminale. */
 .mc-pay {
@@ -2140,7 +2096,12 @@ p.delivery-estimate {
   display: block;
   height: 16px;
   width: auto;
-  opacity: 0.65;
+  /* Phase 15.11.4 — grayscale seul (sans brightness(0)/invert(1) qui
+     aplatirait les SVG natifs Shopify en silhouettes uniformes). Détails
+     internes préservés (texte VISA, logo MC, marque CB). Opacité pilotée
+     par le slider Customizer mc_payment_security » pay_logos_opacity. */
+  filter: grayscale(1);
+  opacity: var(--mc-pay-opacity, 0.6);
 }
 
 /* Phase 15.9 — neutralisation des marges hardcoded Dawn pour que les

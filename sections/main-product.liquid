@@ -968,7 +968,7 @@
                 {%- if block.settings.visible -%}
                   <div
                     class="mc-pay"
-                    style="--mc-pay-mt: {{ block.settings.margin_top | default: 8 }}px; --mc-pay-mb: {{ block.settings.margin_bottom | default: 16 }}px;"
+                    style="--mc-pay-mt: {{ block.settings.margin_top | default: 8 }}px; --mc-pay-mb: {{ block.settings.margin_bottom | default: 16 }}px; --mc-pay-opacity: {{ block.settings.pay_logos_opacity | default: 60 | divided_by: 100.0 }};"
                     {{ block.shopify_attributes }}
                   >
                     {%- if block.settings.text != blank -%}
@@ -1417,13 +1417,7 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
-        },
-        { "type": "header", "content": "Logos cartes dans le bouton" },
-        { "type": "checkbox", "id": "cta_show_payment_logos", "default": true, "label": "Afficher logos cartes dans le bouton" },
-        { "type": "range", "id": "cta_payment_logos_size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 14, "label": "Taille des logos" },
-        { "type": "range", "id": "cta_payment_logos_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8, "label": "Espacement entre logos" },
-        { "type": "range", "id": "cta_payment_logos_opacity", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 60, "label": "Opacité des logos (%)" },
-        { "type": "range", "id": "cta_payment_logos_top_margin", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 8, "label": "Espace entre label et logos" }
+        }
       ]
     },
     {
@@ -1788,6 +1782,8 @@
         { "type": "checkbox", "id": "show_apple_pay", "default": false, "label": "Apple Pay" },
         { "type": "checkbox", "id": "show_google_pay", "default": false, "label": "Google Pay" },
         { "type": "checkbox", "id": "show_shop_pay", "default": false, "label": "Shop Pay" },
+        { "type": "header", "content": "Rendu logos" },
+        { "type": "range", "id": "pay_logos_opacity", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 60, "label": "Opacité des logos (%)" },
         { "type": "header", "content": "Espacements" },
         { "type": "range", "id": "margin_top", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 8, "label": "Marge haute (sous CTA)" },
         { "type": "range", "id": "margin_bottom", "min": 0, "max": 48, "step": 1, "unit": "px", "default": 16, "label": "Marge basse" }
@@ -3077,7 +3073,7 @@
     { "type": "text", "id": "pdp_avail_label_prefix", "default": "Disponible immédiatement", "label": "Libellé disponibilité (préfixe)" },
     { "type": "text", "id": "pdp_delivery_phrase", "default": "Chez vous entre le {date_min} et le {date_max}", "label": "Phrase livraison", "info": "Utiliser {date_min} et {date_max} comme placeholders." },
     { "type": "range", "id": "pdp_avail_size", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 15, "label": "Dispo — taille" },
-    { "type": "select", "id": "pdp_avail_alignment", "default": "center", "label": "Dispo — alignement", "options": [ { "value": "left", "label": "Gauche" }, { "value": "center", "label": "Centré" }, { "value": "right", "label": "Droite" } ] },
+    { "type": "select", "id": "pdp_avail_alignment", "default": "left", "label": "Dispo — alignement", "options": [ { "value": "left", "label": "Gauche" }, { "value": "center", "label": "Centré" }, { "value": "right", "label": "Droite" } ] },
     { "type": "checkbox", "id": "pdp_cartel_show", "default": true, "label": "Afficher le cartel dimensions" },
     { "type": "checkbox", "id": "pdp_ref_show", "default": true, "label": "Afficher la référence inventaire" },
     { "type": "header", "content": "PDP — Une question ?" },
