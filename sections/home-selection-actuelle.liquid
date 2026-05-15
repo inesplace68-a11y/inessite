@@ -8,11 +8,16 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hs-padding-top: {{ section.settings.padding_top }}px;
-    --hs-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hs-padding-top: {{ section.settings.padding_top_desktop | default: 64 }}px;
+    --hs-padding-bottom: {{ section.settings.padding_bottom_desktop | default: 48 }}px;
+    --hs-padding-top-mobile: {{ section.settings.padding_top_mobile | default: 40 }}px;
+    --hs-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 32 }}px;
+    --hs-title-to-grid-gap: {{ section.settings.title_to_grid_gap_desktop | default: 32 }}px;
+    --hs-title-to-grid-gap-mobile: {{ section.settings.title_to_grid_gap_mobile | default: 24 }}px;
+    --hs-image-to-name: {{ section.settings.image_to_name_gap | default: 18 }}px;
+    --hs-name-to-price: {{ section.settings.name_to_price_gap | default: 6 }}px;
     --hs-pieces-visible: {{ pieces_visible }};
     --hs-card-gap: {{ section.settings.card_gap }}px;
-    --hs-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
   }
 {%- endstyle -%}
 
@@ -178,16 +183,6 @@
       "label": "Eyebrow (CAPS)",
       "default": "NOUVEAUTÉS"
     },
-    {
-      "type": "range",
-      "id": "eyebrow_margin_bottom",
-      "min": 16,
-      "max": 64,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge sous l'eyebrow",
-      "default": 36
-    },
 
     { "type": "header", "content": "Contenu" },
     {
@@ -226,28 +221,17 @@
       "default": 28
     },
 
-    { "type": "header", "content": "Espacements" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge haute",
-      "info": "Phase 13 — 3 niveaux harmonisés : 64 compact / 96 standard / 140 immersif.",
-      "default": 96
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge basse",
-      "default": 96
-    }
+    { "type": "header", "content": "Espacements section (Phase 16.1)" },
+    { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 64, "label": "Marge haute desktop" },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 48, "label": "Marge basse desktop" },
+    { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Marge haute mobile" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 32, "label": "Marge basse mobile" },
+
+    { "type": "header", "content": "Rythme interne (Phase 16.1)" },
+    { "type": "range", "id": "title_to_grid_gap_desktop", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 32, "label": "Gap titre → grille (desktop)" },
+    { "type": "range", "id": "title_to_grid_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Gap titre → grille (mobile)" },
+    { "type": "range", "id": "image_to_name_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18, "label": "Gap image → nom produit" },
+    { "type": "range", "id": "name_to_price_gap", "min": 2, "max": 20, "step": 2, "unit": "px", "default": 6, "label": "Gap nom → prix" }
   ],
   "presets": [
     { "name": "Home — Sélection actuelle" }

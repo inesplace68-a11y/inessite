@@ -2,17 +2,26 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hsv-padding-top: {{ section.settings.padding_top | default: 96 }}px;
-    --hsv-padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
-    --hsv-column-gap: {{ section.settings.column_gap }}px;
+    --hsv-padding-top: {{ section.settings.padding_top_desktop | default: 64 }}px;
+    --hsv-padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    --hsv-padding-top-mobile: {{ section.settings.padding_top_mobile | default: 48 }}px;
+    --hsv-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 56 }}px;
+    --hsv-column-gap: {{ section.settings.columns_gap_desktop | default: 80 }}px;
+    --hsv-column-gap-mobile: {{ section.settings.columns_gap_mobile | default: 48 }}px;
+    --hsv-col-inner-pad: {{ section.settings.column_inner_padding_desktop | default: 24 }}px;
+    --hsv-col-inner-pad-mobile: {{ section.settings.column_inner_padding_mobile | default: 16 }}px;
+    --hsv-title-to-body: {{ section.settings.title_to_body_gap | default: 14 }}px;
+    --hsv-body-to-cta: {{ section.settings.body_to_cta_gap | default: 24 }}px;
     --hsv-title-size: {{ section.settings.services_title_size }}px;
-    --hsv-gap-title-body: {{ section.settings.gap_title_body_services }}px;
+    --hsv-gap-title-body: {{ section.settings.title_to_body_gap | default: 14 }}px;
     --hsv-bg: {{ section.settings.background_color }};
+    --hsv-divider-color: {{ section.settings.divider_color | default: '#E8E4DD' }};
+    --hsv-divider-width: {{ section.settings.divider_width | default: 1 }}px;
   }
 {%- endstyle -%}
 
 <section
-  class="home-services{% if section.settings.show_separator %} home-services--with-separator{% endif %}"
+  class="home-services{% if section.settings.show_separator and section.settings.divider_show %} home-services--with-separator{% endif %}"
 >
   <div class="home-services__inner">
     <div class="home-services__grid">
@@ -138,7 +147,7 @@
     {
       "type": "checkbox",
       "id": "show_separator",
-      "label": "Séparateur vertical entre colonnes",
+      "label": "Séparateur vertical entre colonnes (legacy)",
       "default": true
     },
     {
@@ -148,7 +157,7 @@
       "default": "#F7F5F1"
     },
 
-    { "type": "header", "content": "Typographie & rythme" },
+    { "type": "header", "content": "Typographie" },
     {
       "type": "range",
       "id": "services_title_size",
@@ -160,49 +169,25 @@
       "info": "Cormorant italique. Niveau 4 dédié Services (distinct du Niveau 4 global cartes produit).",
       "default": 22
     },
-    {
-      "type": "range",
-      "id": "gap_title_body_services",
-      "min": 16,
-      "max": 64,
-      "step": 2,
-      "unit": "px",
-      "label": "Gap titre/body Services",
-      "default": 28
-    },
 
-    { "type": "header", "content": "Espacements" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge haute",
-      "info": "Phase 13 — niveau STANDARD 96/96.",
-      "default": 96
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "label": "Marge basse",
-      "default": 96
-    },
-    {
-      "type": "range",
-      "id": "column_gap",
-      "min": 32,
-      "max": 128,
-      "step": 8,
-      "unit": "px",
-      "label": "Espace entre colonnes",
-      "default": 64
-    }
+    { "type": "header", "content": "Espacements section (Phase 16.1)" },
+    { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 64, "label": "Marge haute desktop" },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 80, "label": "Marge basse desktop" },
+    { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Marge haute mobile" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 56, "label": "Marge basse mobile" },
+
+    { "type": "header", "content": "Rythme interne (Phase 16.1)" },
+    { "type": "range", "id": "columns_gap_desktop", "min": 24, "max": 200, "step": 8, "unit": "px", "default": 80, "label": "Gap horizontal entre colonnes (desktop)" },
+    { "type": "range", "id": "columns_gap_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Gap horizontal entre colonnes (mobile)" },
+    { "type": "range", "id": "column_inner_padding_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24, "label": "Padding intérieur colonne (desktop)" },
+    { "type": "range", "id": "column_inner_padding_mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 16, "label": "Padding intérieur colonne (mobile)" },
+    { "type": "range", "id": "title_to_body_gap", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 14, "label": "Gap titre → body" },
+    { "type": "range", "id": "body_to_cta_gap", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 24, "label": "Gap body → CTA" },
+
+    { "type": "header", "content": "Filet vertical entre colonnes (Phase 16.1)" },
+    { "type": "checkbox", "id": "divider_show", "default": true, "label": "Afficher le filet de séparation entre les colonnes" },
+    { "type": "color", "id": "divider_color", "default": "#E8E4DD", "label": "Couleur du filet" },
+    { "type": "range", "id": "divider_width", "min": 0.5, "max": 2, "step": 0.5, "unit": "px", "default": 1, "label": "Épaisseur du filet" }
   ],
   "presets": [
     { "name": "Home — Services" }
