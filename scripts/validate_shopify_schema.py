@@ -18,11 +18,19 @@ Rules checked (any failure causes Shopify GitHub Sync to reject the commit):
                              Shopify rejects `"unit": ""` with "unit can't
                              be blank" (Phase 15.11.1 failure mode). Omitting
                              the `unit` key entirely is allowed.
+ 10. text default not blank: text/textarea/richtext/html/inline_richtext/
+                             liquid/url/video_url + picker (page, blog,
+                             article, collection, collection_list, product,
+                             product_list, link_list) settings cannot have
+                             `"default": ""`. Shopify rejects with 'default
+                             can't be blank' (Phase 16.3 failure mode).
+                             Omitting the `default` key entirely is allowed.
 
 Usage:
     python3 scripts/validate_shopify_schema.py sections/foo.liquid [...]
-    python3 scripts/validate_shopify_schema.py --all       # walk sections + templates
-    python3 scripts/validate_shopify_schema.py --all -v    # verbose template ↔ schema cross-check
+    python3 scripts/validate_shopify_schema.py --all          # walk sections + templates
+    python3 scripts/validate_shopify_schema.py --all -v       # verbose cross-check + rule 10 hits
+    python3 scripts/validate_shopify_schema.py --self-test    # run rule 10 self-test (4 cases)
 
 Exit codes: 0 = all good, 1 = violations found, 2 = bad invocation.
 """
@@ -36,6 +44,18 @@ SCHEMA_RE = re.compile(r'{%\s*schema\s*%}(.*?){%\s*endschema\s*%}', re.DOTALL)
 # Strip C-style block comments (used as banners in templates/*.json by Shopify Sync)
 JSON_BLOCK_COMMENT_RE = re.compile(r'/\*.*?\*/', re.DOTALL)
 EPS = 1e-9
+
+# Setting types where Shopify rejects `"default": ""` (rule 10).
+# Free-text and resource-picker types share the same "default can't be blank"
+# error. Number/checkbox/select/range/color/font_picker/etc. don't.
+TEXT_DEFAULT_TYPES = frozenset({
+    'text', 'textarea', 'richtext', 'html', 'inline_richtext', 'liquid',
+    'url', 'video_url',
+    'page', 'blog', 'article',
+    'collection', 'collection_list',
+    'product', 'product_list',
+    'link_list',
+})
 
 
 def loads_loose_json(text: str):
@@ -107,6 +127,29 @@ def check_range(setting: dict, where: str) -> list[str]:
     return errs
 
 
+def check_text_default(setting: dict, where: str) -> list[str]:
+    """Rule 10: text-like settings cannot have `"default": ""`.
+
+    Shopify rejects with 'setting with id=X default can't be blank' on push.
+    Omitting the `default` key entirely is fine; the field stays empty by
+    default but no validation error fires.
+    """
+    stype = setting.get('type')
+    if stype not in TEXT_DEFAULT_TYPES:
+        return []
+    if 'default' not in setting:
+        return []
+    default = setting['default']
+    if isinstance(default, str) and default == '':
+        sid = setting.get('id', '<no-id>')
+        return [
+            f"{where} » id={sid}: type '{stype}' has \"default\": \"\" — "
+            f"Shopify rejects with 'default can't be blank'. Either set a "
+            f"non-empty value or omit the \"default\" key entirely."
+        ]
+    return []
+
+
 def check_name(name, where: str) -> list[str]:
     if name is None:
         return []
@@ -123,6 +166,8 @@ def walk(schema: dict, file_label: str):
     for s in schema.get('settings', []):
         if s.get('type') == 'range':
             yield ('range', s, f"{file_label} » settings")
+        if s.get('type') in TEXT_DEFAULT_TYPES:
+            yield ('text_default', s, f"{file_label} » settings")
     for block in schema.get('blocks', []):
         bname = block.get('name')
         btype = block.get('type', '<block>')
@@ -130,9 +175,11 @@ def walk(schema: dict, file_label: str):
         for s in block.get('settings', []):
             if s.get('type') == 'range':
                 yield ('range', s, f"{file_label} » block '{btype}'")
+            if s.get('type') in TEXT_DEFAULT_TYPES:
+                yield ('text_default', s, f"{file_label} » block '{btype}'")
 
 
-def validate_file(path: Path) -> list[str]:
+def validate_file(path: Path, verbose: bool = False) -> list[str]:
     errs = []
     schemas = extract_schemas(path)
     if not schemas:
@@ -149,6 +196,14 @@ def validate_file(path: Path) -> list[str]:
                 errs.extend(check_name(payload, where))
             elif kind == 'range':
                 errs.extend(check_range(payload, where))
+            elif kind == 'text_default':
+                hits = check_text_default(payload, where)
+                if verbose and 'default' in payload:
+                    sid = payload.get('id', '<no-id>')
+                    stype = payload.get('type')
+                    mark = '✗' if hits else '✓'
+                    print(f"  rule 10 » {where} » id={sid} (type={stype}) [{mark}]")
+                errs.extend(hits)
     return errs
 
 
@@ -259,18 +314,56 @@ def validate_templates(repo_root: Path, verbose: bool = False) -> list[str]:
     return errs
 
 
+def run_self_test() -> int:
+    """Rule 10 self-test (4 cases). Returns 0 if all pass, 1 otherwise."""
+    cases = [
+        ("text type with empty default → ERROR",
+         {"type": "text", "id": "a", "default": ""}, True),
+        ("text type without default key → OK",
+         {"type": "text", "id": "b"}, False),
+        ("text type with valid default → OK",
+         {"type": "text", "id": "c", "default": "Valeur valide"}, False),
+        ("checkbox type with empty default → OK (type not text-like)",
+         {"type": "checkbox", "id": "d", "default": ""}, False),
+    ]
+    print("Rule 10 self-test:")
+    failed = 0
+    for desc, setting, should_error in cases:
+        errs = check_text_default(setting, "self-test")
+        actually_errored = len(errs) > 0
+        if actually_errored == should_error:
+            print(f"  ✓ {desc}")
+        else:
+            failed += 1
+            print(f"  ✗ {desc} (expected error={should_error}, got {actually_errored})")
+            for e in errs:
+                print(f"      ↳ {e}")
+    if failed:
+        print(f"\n❌ Self-test failed: {failed}/{len(cases)} case(s)")
+        return 1
+    print(f"\n✅ Self-test: {len(cases)}/{len(cases)} case(s) passed")
+    return 0
+
+
 def main(argv: list[str]) -> int:
     if not argv:
-        print("Usage: validate_shopify_schema.py <file.liquid> [...] [-v|--verbose]", file=sys.stderr)
+        print("Usage: validate_shopify_schema.py <file.liquid> [...] [-v|--verbose] [--self-test]", file=sys.stderr)
         return 2
 
     verbose = False
+    self_test_mode = False
     cleaned = []
     for arg in argv:
         if arg in ('-v', '--verbose'):
             verbose = True
+        elif arg == '--self-test':
+            self_test_mode = True
         else:
             cleaned.append(arg)
+
+    if self_test_mode:
+        return run_self_test()
+
     argv = cleaned or ['--all']
 
     # Determine repo root from script location for the cross-check
@@ -285,12 +378,15 @@ def main(argv: list[str]) -> int:
     else:
         targets = [Path(arg) for arg in argv]
 
+    if verbose:
+        print("Rule 10 (text default not blank) — settings with `default` key:")
+
     for p in targets:
         if not p.exists():
             print(f"WARN: {p} does not exist", file=sys.stderr)
             continue
         files_checked += 1
-        all_errs.extend(validate_file(p))
+        all_errs.extend(validate_file(p, verbose=verbose))
 
     if verbose:
         print("\nTemplate ↔ schema cross-check:")
