@@ -45,27 +45,35 @@
     color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
     opacity: 0.75;
   }
-  /* Phase 16.3.2 — contour rectangulaire du sélecteur pays/devise.
-     Le bouton hérite par défaut du black foreground via .link--text,
-     d'une UA-border <button>, et de l'outline focus Dawn. On force
-     currentColor sur tous les états (border + outline + dropdown wrapper)
-     pour que le contour soit toujours aligné sur la couleur consolidée
-     du sélecteur. text-decoration: none neutralise l'underline .link. */
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select {
+  /* Phase 16.3.3 — catch-all border/outline/box-shadow sur tout le sélecteur
+     pays/devise pour neutraliser tout reliquat de noir hérité (focus-visible
+     box-shadow Dawn, outline UA `<button>`, border-color de pseudo-éléments,
+     etc.). currentColor suit automatiquement footer_localization_color. */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization *,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization *::before,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization *::after {
     border-color: currentColor !important;
     outline-color: currentColor !important;
-    text-decoration: none !important;
   }
+  /* Bouton sélecteur : neutralise text-decoration .link + box-shadow focus
+     Dawn. Force un outline 1px solid cream toujours visible pour matérialiser
+     proprement le contour rectangulaire (au lieu de laisser un fantôme du
+     focus-visible box-shadow Dawn). */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:hover,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus-visible,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button[aria-expanded='true'],
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:hover,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus-visible {
+    text-decoration: none !important;
+    box-shadow: none !important;
+    outline: 1px solid currentColor !important;
+    outline-offset: 2px !important;
     border-color: currentColor !important;
-    outline-color: currentColor !important;
   }
   /* Dropdown popup quand le sélecteur est ouvert — border noir Dawn par défaut */
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__list-wrapper {
@@ -384,8 +392,8 @@
       "type": "range",
       "id": "footer_bottom_padding_y",
       "label": "Marge verticale de la dernière ligne",
-      "info": "Espace au-dessus et en dessous du sélecteur pays/devise et des mentions légales",
-      "min": 8,
+      "info": "Phase 16.3.3 — espace au-dessus et en dessous du sélecteur pays/devise et des mentions légales. Min abaissé à 0 pour resserrement total.",
+      "min": 0,
       "max": 60,
       "step": 4,
       "unit": "px",
