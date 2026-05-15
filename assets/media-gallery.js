@@ -19,6 +19,27 @@ if (!customElements.get('media-gallery')) {
             .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
         });
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+
+        this.querySelectorAll('[data-gallery-nav]').forEach((button) => {
+          button.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            this.navigate(button.dataset.galleryNav);
+          });
+        });
+      }
+
+      navigate(direction) {
+        const items = Array.from(this.elements.viewer.querySelectorAll('[data-media-id]'));
+        if (items.length < 2) return;
+        const activeIndex = items.findIndex((el) => el.classList.contains('is-active'));
+        const currentIndex = activeIndex === -1 ? 0 : activeIndex;
+        const nextIndex =
+          direction === 'next'
+            ? (currentIndex + 1) % items.length
+            : (currentIndex - 1 + items.length) % items.length;
+        const targetMediaId = items[nextIndex].dataset.mediaId;
+        if (targetMediaId) this.setActiveMedia(targetMediaId, false);
       }
 
       onSlideChanged(event) {

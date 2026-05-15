@@ -121,6 +121,12 @@
       --pdp-gap-cta-to-details: {{ section.settings.pdp_gap_cta_section_to_details | default: 32 }}px;
       --pdp-avail-size: {{ section.settings.pdp_avail_size | default: 15 }}px;
       --pdp-avail-align: {{ section.settings.pdp_avail_alignment | default: 'center' }};
+      /* Phase 15.12 — flèches galerie + zoom modale */
+      --gallery-arrows-size: {{ section.settings.gallery_arrows_size | default: 24 }}px;
+      --gallery-arrows-stroke: {{ section.settings.gallery_arrows_stroke | default: 1.4 }}px;
+      --gallery-arrows-opacity: {{ section.settings.gallery_arrows_opacity | default: 40 | divided_by: 100.0 }};
+      --gallery-arrows-hover-opacity: {{ section.settings.gallery_arrows_hover_opacity | default: 85 | divided_by: 100.0 }};
+      --modal-zoom-level: {{ section.settings.modal_zoom_level | default: 2.5 }};
     }
     #MainProduct-{{ section.id }}.section-{{ section.id }}-padding {
       padding-top: var(--pdp-hero-py);
@@ -184,7 +190,10 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
     <div
-      class="product product--mc-pdp product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'vertical_thumbnails' %} product--vt-active-{{ section.settings.vt_active_style }}{% endif %}"
+      class="product product--mc-pdp product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if section.settings.gallery_layout == 'vertical_thumbnails' %} product--vt-active-{{ section.settings.vt_active_style }}{% endif %}{% if section.settings.gallery_arrows_show %} product--gallery-arrows-on{% endif %}"
+      data-gallery-arrows="{% if section.settings.gallery_arrows_show %}true{% else %}false{% endif %}"
+      data-modal-zoom-level="{{ section.settings.modal_zoom_level | default: 2.5 }}"
+      data-modal-pan-enabled="{% if section.settings.modal_pan_enabled %}true{% else %}false{% endif %}"
       {% if section.settings.gallery_layout == 'vertical_thumbnails' %}
         data-vt-modal-enabled="{% if section.settings.vt_modal_enabled %}true{% else %}false{% endif %}"
       {% endif %}
@@ -3029,6 +3038,14 @@
       "label": "Opacité du fond noir du modal",
       "default": 90
     },
+    { "type": "header", "content": "PDP — Galerie photos (Phase 15.12)" },
+    { "type": "range", "id": "modal_zoom_level", "min": 1.5, "max": 5, "step": 0.5, "unit": "x", "default": 2.5, "label": "Niveau de zoom dans la modale" },
+    { "type": "checkbox", "id": "modal_pan_enabled", "default": true, "label": "Activer le déplacement en mode zoom" },
+    { "type": "checkbox", "id": "gallery_arrows_show", "default": true, "label": "Afficher les flèches de navigation sur la photo principale" },
+    { "type": "range", "id": "gallery_arrows_opacity", "min": 20, "max": 100, "step": 5, "unit": "%", "default": 40, "label": "Opacité des flèches au repos (%)" },
+    { "type": "range", "id": "gallery_arrows_hover_opacity", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 85, "label": "Opacité des flèches au survol (%)" },
+    { "type": "range", "id": "gallery_arrows_size", "min": 16, "max": 40, "step": 2, "unit": "px", "default": 24, "label": "Taille des flèches" },
+    { "type": "range", "id": "gallery_arrows_stroke", "min": 1, "max": 2, "step": 0.2, "unit": "px", "default": 1.4, "label": "Épaisseur du trait des flèches" },
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"

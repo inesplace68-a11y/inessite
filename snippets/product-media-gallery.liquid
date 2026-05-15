@@ -56,6 +56,28 @@
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
+    {%- if section.settings.gallery_arrows_show and media_count > 1 -%}
+      <button
+        type="button"
+        class="gallery-nav-arrow gallery-nav-arrow--prev"
+        data-gallery-nav="prev"
+        aria-label="Photo précédente"
+      >
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <path d="M20 8 L12 16 L20 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="gallery-nav-arrow gallery-nav-arrow--next"
+        data-gallery-nav="next"
+        aria-label="Photo suivante"
+      >
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <path d="M12 8 L20 16 L12 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+    {%- endif -%}
     <ul
       id="Slider-Gallery-{{ section.id }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
