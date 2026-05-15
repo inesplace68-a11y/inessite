@@ -260,11 +260,12 @@
         "reas-4"
       ],
       "settings": {
-        "padding_top_desktop": 16,
-        "padding_bottom_desktop": 16,
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32,
         "padding_top_mobile": 28,
         "padding_bottom_mobile": 28,
-        "icon_to_label_gap": 14
+        "icon_to_label_gap": 14,
+        "separator_vertical_inset": 0
       }
     }
   },
