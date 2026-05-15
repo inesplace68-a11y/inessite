@@ -47,7 +47,7 @@
     --mcg-wishlist-color: {{ section.settings.wishlist_color | default: '#1A1814' }};
     --mc-bar-pt: {{ section.settings.bar_padding_top | default: 20 }}px;
     --mc-bar-pb: {{ section.settings.bar_padding_bottom | default: 20 }}px;
-    --mc-title-gap: {{ section.settings.title_to_bar_gap | default: 32 }}px;
+    --mc-title-gap: {{ section.settings.title_to_bar_gap | default: 0 }}px;
     --mc-grid-gap: {{ section.settings.bar_to_grid_gap | default: 24 }}px;
     --mc-drawer-w: {{ section.settings.drawer_width_desktop | default: 400 }}px;
     --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
@@ -55,6 +55,13 @@
     --mc-overlay-op: {{ section.settings.overlay_opacity | default: 0.4 }};
     --mc-sort-gap: {{ section.settings.sort_chevron_gap | default: 8 }}px;
     --mc-sort-bg: {{ section.settings.sort_dropdown_bg | default: '#F5F0E8' }};
+    --mc-drawer-top: {{ section.settings.drawer_top_offset | default: 80 }}px;
+    --mc-drawer-maxh: {{ section.settings.drawer_max_height_vh | default: 85 }}vh;
+    --mc-drawer-divider: {{ section.settings.drawer_divider_color | default: '#E8E4DD' }};
+    --mc-filter-title-size: {{ section.settings.filter_title_size_desktop | default: 18 }}px;
+    --mc-filter-title-size-m: {{ section.settings.filter_title_size_mobile | default: 16 }}px;
+    --mc-filter-label-size: {{ section.settings.filter_section_label_size_desktop | default: 14 }}px;
+    --mc-filter-label-size-m: {{ section.settings.filter_section_label_size_mobile | default: 12 }}px;
   }
   /* Grille — gap configurable */
   #shopify-section-{{ section.id }} .grid--quarter-max,
@@ -373,9 +380,14 @@
   /* Drawer */
   #shopify-section-{{ section.id }} .mc-filter-drawer {
     position: fixed;
-    top: 0;
+    top: var(--mc-drawer-top, 80px);
+    {%- if section.settings.drawer_height_mode == 'fullscreen' -%}
     height: 100vh;
     height: 100dvh;
+    {%- else -%}
+    height: auto;
+    max-height: min(var(--mc-drawer-maxh, 85vh), calc(100vh - var(--mc-drawer-top, 80px) - 16px));
+    {%- endif -%}
     width: var(--mc-drawer-w, 400px);
     max-width: 100vw;
     background: var(--mc-drawer-bg, #F5F0E8);
@@ -408,15 +420,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 28px 16px;
-    border-bottom: 1px solid rgba(26, 24, 20, 0.10);
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--mc-drawer-divider, #E8E4DD);
     flex: 0 0 auto;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer__title {
     margin: 0;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: 14px;
+    font-size: var(--mc-filter-title-size, 18px);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #1A1814;
@@ -452,7 +464,7 @@
   #shopify-section-{{ section.id }} .mc-filter-drawer__footer {
     flex: 0 0 auto;
     padding: 16px 28px 24px;
-    border-top: 1px solid rgba(26, 24, 20, 0.10);
+    border-top: 1px solid var(--mc-drawer-divider, #E8E4DD);
     background: var(--mc-drawer-bg, #F5F0E8);
     display: flex;
     flex-direction: column;
@@ -494,6 +506,11 @@
     background: #1A1814;
     color: #F5F0E8;
   }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__apply[data-empty='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   /* Override facets snippet styles when inside the drawer (force full width / single column) */
   #shopify-section-{{ section.id }} .mc-filter-drawer .facets {
@@ -529,10 +546,29 @@
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 12px;
+    letter-spacing: 0.22em;
+    font-size: var(--mc-filter-label-size, 14px);
     color: #1A1814;
   }
+  /* Drawer accordion dividers — pierre */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__disclosure,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__disclosure-vertical,
+  #shopify-section-{{ section.id }} .mc-filter-drawer details.facets__disclosure-vertical {
+    border-bottom: 1px solid var(--mc-drawer-divider, #E8E4DD);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__disclosure:last-of-type,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__disclosure-vertical:last-of-type,
+  #shopify-section-{{ section.id }} .mc-filter-drawer details.facets__disclosure-vertical:last-of-type {
+    border-bottom: 0;
+  }
+  /* Hide top clear-all (active-facets) — keep only the bottom footer link */
+  {%- unless section.settings.show_clear_all_top -%}
+  #shopify-section-{{ section.id }} .mc-filter-drawer .active-facets,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .active-facets-vertical-filter,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .active-facets__button-remove {
+    display: none !important;
+  }
+  {%- endunless -%}
 
   /* Body/html scroll lock when drawer open */
   html.mc-filters-open,
@@ -545,11 +581,18 @@
     margin-top: 0;
   }
 
-  /* Mobile: full-width drawer */
+  /* Mobile: full-width drawer + mobile typo */
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .mc-filter-drawer {
       width: 100vw;
       max-width: 100vw;
+    }
+    #shopify-section-{{ section.id }} .mc-filter-drawer__title {
+      font-size: var(--mc-filter-title-size-m, 16px);
+    }
+    #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary,
+    #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary-label {
+      font-size: var(--mc-filter-label-size-m, 12px);
     }
     #shopify-section-{{ section.id }} .mc-collection-toolbar {
       flex-wrap: wrap;
@@ -581,7 +624,7 @@
       assign sort_by = collection.sort_by | default: collection.default_sort_by
       assign sort_show_current = section.settings.sort_show_current_value
       assign sort_active_indicator = section.settings.sort_active_indicator | default: 'bronze'
-      assign sort_label_text = 'products.facets.sort_by_label' | t | replace: ' :', '' | strip
+      assign sort_label_text = section.settings.sort_label_text | default: 'TRIER PAR'
       assign sort_current_label = ''
       for option in collection.sort_options
         if option.value == sort_by
@@ -753,10 +796,13 @@
           </div>
           <footer class="mc-filter-drawer__footer">
             <a href="{{ collection.url }}" class="mc-filter-drawer__clear">{{ clear_all_text }}</a>
-            <button type="button" class="mc-filter-drawer__apply" data-mc-filter-apply>
-              {%- if apply_prefix != blank -%}<span class="mc-apply-prefix">{{ apply_prefix }}&nbsp;</span>{%- endif -%}
-              <span data-mc-apply-count>{{ collection.products_count }}</span>
-              {%- if apply_suffix != blank -%}<span class="mc-apply-suffix">&nbsp;{{ apply_suffix }}</span>{%- endif -%}
+            <button
+              type="button"
+              class="mc-filter-drawer__apply"
+              data-mc-filter-apply
+              data-empty="{% if collection.products_count == 0 %}true{% else %}false{% endif %}"
+            >
+              <span data-mc-apply-text>{{ 'collection.see_pieces' | t: count: collection.products_count }}</span>
             </button>
           </footer>
         </div>
@@ -844,10 +890,16 @@
         var openers = sectionEl.querySelectorAll('[data-mc-filter-open]');
         var closers = sectionEl.querySelectorAll('[data-mc-filter-close]');
         var apply = sectionEl.querySelector('[data-mc-filter-apply]');
+        var applyText = sectionEl.querySelector('[data-mc-apply-text]');
         var countMirror = sectionEl.querySelector('[data-mc-count-mirror]');
         var countNumber = sectionEl.querySelector('[data-mc-count-number]');
-        var applyCount = sectionEl.querySelector('[data-mc-apply-count]');
         if (!drawer) return;
+
+        var pieceLabels = {
+          zero: {{ 'collection.see_pieces.zero' | t | json }},
+          one: {{ 'collection.see_pieces.one' | t: count: 1 | json }},
+          other: {{ 'collection.see_pieces.other' | t: count: 0 | json }}
+        };
 
         var closeEscape = drawer.dataset.closeEscape === 'true';
         var closeOverlay = drawer.dataset.closeOverlay === 'true';
@@ -899,12 +951,20 @@
           return m[0].replace(/[\s  ]/g, '');
         }
 
+        function formatApply(count) {
+          if (count === 0) return pieceLabels.zero;
+          if (count === 1) return pieceLabels.one.replace('1', String(count));
+          return pieceLabels.other.replace('0', String(count));
+        }
         function syncCounts() {
           if (!countMirror) return;
-          var n = extractCount(countMirror.textContent);
-          if (n === null) return;
-          if (countNumber) countNumber.textContent = n;
-          if (applyCount) applyCount.textContent = n;
+          var nStr = extractCount(countMirror.textContent);
+          if (nStr === null) return;
+          var n = parseInt(nStr, 10);
+          if (isNaN(n)) return;
+          if (countNumber) countNumber.textContent = String(n);
+          if (applyText) applyText.textContent = formatApply(n);
+          if (apply) apply.setAttribute('data-empty', n === 0 ? 'true' : 'false');
         }
         if (countMirror) {
           var mo = new MutationObserver(syncCounts);
@@ -1203,6 +1263,7 @@
     { "type": "checkbox", "id": "show_bar_bottom_border", "default": false, "label": "Afficher le trait en dessous de la barre filtres" },
 
     { "type": "header", "content": "Dropdown tri — Phase 16.9" },
+    { "type": "text", "id": "sort_label_text", "default": "TRIER PAR", "label": "Libellé du dropdown de tri" },
     { "type": "checkbox", "id": "sort_show_current_value", "default": false, "label": "Afficher la valeur de tri à côté du label" },
     { "type": "range", "id": "sort_chevron_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8, "label": "Espace entre 'TRIER PAR' et le chevron" },
     { "type": "color", "id": "sort_dropdown_bg", "default": "#F5F0E8", "label": "Couleur de fond du menu déroulant" },
@@ -1219,10 +1280,28 @@
     },
     { "type": "range", "id": "bar_padding_top", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding haut de la barre" },
     { "type": "range", "id": "bar_padding_bottom", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding bas de la barre" },
-    { "type": "range", "id": "title_to_bar_gap", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Espace titre → barre" },
+    { "type": "range", "id": "title_to_bar_gap", "min": 0, "max": 96, "step": 8, "unit": "px", "default": 0, "label": "Espace titre → barre filtres" },
     { "type": "range", "id": "bar_to_grid_gap", "min": 16, "max": 80, "step": 8, "unit": "px", "default": 24, "label": "Espace barre → grille" },
 
     { "type": "header", "content": "Drawer filtres — Phase 16.7" },
+    {
+      "type": "select",
+      "id": "drawer_height_mode",
+      "label": "Hauteur du drawer filtres",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto (contenu)" },
+        { "value": "fullscreen", "label": "Plein écran" }
+      ]
+    },
+    { "type": "range", "id": "drawer_top_offset", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80, "label": "Décalage du drawer depuis le haut" },
+    { "type": "range", "id": "drawer_max_height_vh", "min": 60, "max": 100, "step": 5, "unit": "vh", "default": 85, "label": "Hauteur max du drawer (% écran)" },
+    { "type": "color", "id": "drawer_divider_color", "default": "#E8E4DD", "label": "Couleur des séparateurs dans le drawer" },
+    { "type": "range", "id": "filter_title_size_desktop", "min": 14, "max": 24, "step": 1, "unit": "px", "default": 18, "label": "Taille 'FILTRES' desktop" },
+    { "type": "range", "id": "filter_title_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 16, "label": "Taille 'FILTRES' mobile" },
+    { "type": "range", "id": "filter_section_label_size_desktop", "min": 11, "max": 18, "step": 1, "unit": "px", "default": 14, "label": "Taille noms d'accordéons desktop" },
+    { "type": "range", "id": "filter_section_label_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12, "label": "Taille noms d'accordéons mobile" },
+    { "type": "checkbox", "id": "show_clear_all_top", "default": false, "label": "Afficher 'Tout effacer' en haut du drawer (en plus du bas)" },
     { "type": "range", "id": "drawer_width_desktop", "min": 320, "max": 480, "step": 20, "unit": "px", "default": 400, "label": "Largeur drawer (desktop)" },
     {
       "type": "select",

@@ -21,6 +21,13 @@
   assign intro_style = section.settings.intro_text_style | default: 'italic'
   assign breadcrumb_font = section.settings.breadcrumb_font_family | default: 'cormorant_italic'
   assign breadcrumb_align = section.settings.breadcrumb_alignment | default: 'left'
+  assign breadcrumb_all_label = section.settings.breadcrumb_all_products_label | default: 'Produits'
+  assign breadcrumb_home_label = 'general.breadcrumb.home' | t
+  if collection.handle == 'all'
+    assign breadcrumb_collection_label = breadcrumb_all_label
+  else
+    assign breadcrumb_collection_label = collection.title
+  endif
 
   assign intro_text = ''
   if collection.metafields.maison_coeur.intro_editorial != blank
@@ -34,8 +41,9 @@
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --mcch-pt: {{ section.settings.nav_to_content_gap | default: 24 }}px;
-    --mcch-pb: {{ section.settings.header_padding_bottom | default: 16 }}px;
+    --mcch-pt: {{ section.settings.nav_to_content_gap_desktop | default: 24 }}px;
+    --mcch-pt-mobile: {{ section.settings.nav_to_content_gap_mobile | default: 16 }}px;
+    --mcch-pb: {{ section.settings.header_padding_bottom | default: 0 }}px;
     --mcch-title-size: {{ section.settings.title_size_desktop | default: 60 }}px;
     --mcch-title-size-mobile: {{ section.settings.title_size_mobile | default: 40 }}px;
     --mcch-intro-size: {{ section.settings.intro_text_size_desktop | default: 18 }}px;
@@ -56,9 +64,9 @@
 
     {%- if show_breadcrumb -%}
       <nav class="mc-collection-header__breadcrumb mc-collection-header__breadcrumb--{{ breadcrumb_font }}" aria-label="Fil d'Ariane">
-        <a href="{{ routes.root_url }}">Accueil</a>
+        <a href="{{ routes.root_url }}">{{ breadcrumb_home_label }}</a>
         <span aria-hidden="true"> — </span>
-        <span>{{ collection.title | escape }}</span>
+        <span>{{ breadcrumb_collection_label | escape }}</span>
       </nav>
     {%- endif -%}
 
@@ -163,6 +171,9 @@
   .mc-collection-header__intro > * + * { margin-top: 8px; }
 
   @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-collection-header {
+      padding-top: var(--mcch-pt-mobile, 16px);
+    }
     .mc-collection-header__title {
       font-size: var(--mcch-title-size-mobile, 40px);
     }
@@ -180,6 +191,7 @@
     { "type": "header", "content": "Affichage titre + fil d'Ariane" },
     { "type": "checkbox", "id": "show_collection_title", "default": false, "label": "Afficher le titre de la catégorie" },
     { "type": "checkbox", "id": "show_breadcrumb", "default": true, "label": "Afficher le fil d'Ariane" },
+    { "type": "text", "id": "breadcrumb_all_products_label", "default": "Produits", "label": "Libellé pour la page tous les produits" },
     { "type": "checkbox", "id": "show_eyebrow", "default": false, "label": "Afficher l'eyebrow au-dessus du titre" },
     { "type": "text", "id": "eyebrow_default_text", "default": "COLLECTION", "label": "Texte eyebrow" },
     { "type": "checkbox", "id": "show_product_count_in_eyebrow", "default": true, "label": "Afficher le nombre de pièces dans l'eyebrow" },
@@ -269,8 +281,9 @@
     },
 
     { "type": "header", "content": "Espacements" },
-    { "type": "range", "id": "nav_to_content_gap", "min": 8, "max": 80, "step": 4, "unit": "px", "default": 24, "label": "Espace menu navigation → contenu" },
-    { "type": "range", "id": "header_padding_bottom", "min": 0, "max": 96, "step": 8, "unit": "px", "default": 16, "label": "Padding bas en-tête" },
+    { "type": "range", "id": "nav_to_content_gap_desktop", "min": 8, "max": 80, "step": 4, "unit": "px", "default": 24, "label": "Espace menu nav → contenu (desktop)" },
+    { "type": "range", "id": "nav_to_content_gap_mobile", "min": 4, "max": 48, "step": 4, "unit": "px", "default": 16, "label": "Espace menu nav → contenu (mobile)" },
+    { "type": "range", "id": "header_padding_bottom", "min": 0, "max": 96, "step": 8, "unit": "px", "default": 0, "label": "Padding bas en-tête" },
 
     {
       "type": "color_scheme",

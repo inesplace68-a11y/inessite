@@ -14,6 +14,7 @@
       "settings": {
         "show_collection_title": false,
         "show_breadcrumb": true,
+        "breadcrumb_all_products_label": "Produits",
         "show_eyebrow": false,
         "eyebrow_default_text": "MIROIRS",
         "show_product_count_in_eyebrow": true,
@@ -30,7 +31,8 @@
         "intro_text_style": "italic",
         "intro_alignment": "center",
         "show_collection_description": true,
-        "nav_to_content_gap": 16,
+        "nav_to_content_gap_desktop": 16,
+        "nav_to_content_gap_mobile": 16,
         "header_padding_bottom": 8,
         "color_scheme": "scheme-1"
       }
@@ -67,6 +69,7 @@
         "show_product_count": false,
         "show_bar_top_border": false,
         "show_bar_bottom_border": false,
+        "sort_label_text": "TRIER PAR",
         "sort_show_current_value": false,
         "sort_chevron_gap": 8,
         "sort_dropdown_bg": "#f5f0e8",
@@ -75,6 +78,15 @@
         "bar_padding_bottom": 8,
         "title_to_bar_gap": 16,
         "bar_to_grid_gap": 16,
+        "drawer_height_mode": "auto",
+        "drawer_top_offset": 80,
+        "drawer_max_height_vh": 85,
+        "drawer_divider_color": "#E8E4DD",
+        "filter_title_size_desktop": 18,
+        "filter_title_size_mobile": 16,
+        "filter_section_label_size_desktop": 14,
+        "filter_section_label_size_mobile": 12,
+        "show_clear_all_top": false,
         "drawer_width_desktop": 400,
         "drawer_side": "left",
         "drawer_animation_duration": 350,
@@ -85,7 +97,7 @@
         "close_on_apply": true,
         "close_on_escape": true,
         "close_on_overlay_click": true,
-        "padding_top": 8,
+        "padding_top": 0,
         "padding_bottom": 64
       }
     }

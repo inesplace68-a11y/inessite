@@ -37,6 +37,14 @@
     font-size: {{ section.settings.nav_font_size }}px;
     letter-spacing: {{ section.settings.nav_letter_spacing }}em;
   }
+  #shopify-section-{{ section.id }} .mc-hd-nav__link.is-active {
+    color: {{ section.settings.active_nav_color | default: '#8C6D3F' }};
+    {%- if section.settings.active_nav_underline -%}
+    text-decoration: underline;
+    text-underline-offset: {{ section.settings.active_nav_underline_offset | default: 6 }}px;
+    text-decoration-thickness: {{ section.settings.active_nav_underline_thickness | default: 1 }}px;
+    {%- endif -%}
+  }
   #shopify-section-{{ section.id }} .mc-hd-nav {
     padding-top: {{ section.settings.nav_top_spacing }}px;
     padding-bottom: {{ section.settings.header_padding_bottom }}px;
@@ -154,9 +162,22 @@
   <!-- ZONE 3 : Menu navigation -->
   <nav class="mc-hd-nav" aria-label="Navigation principale">
     <ul class="mc-hd-nav__list">
+      {%- assign current_path = request.path -%}
       {%- for link in linklists['main-menu'].links -%}
+        {%- assign link_active = false -%}
+        {%- if link.url == current_path -%}
+          {%- assign link_active = true -%}
+        {%- elsif link.object.url == current_path -%}
+          {%- assign link_active = true -%}
+        {%- elsif link.type == 'collection_link' and link.object.url == current_path -%}
+          {%- assign link_active = true -%}
+        {%- endif -%}
         <li class="mc-hd-nav__item">
-          <a href="{{ link.url }}" class="mc-hd-nav__link">{{ link.title | upcase }}</a>
+          <a
+            href="{{ link.url }}"
+            class="mc-hd-nav__link{% if link_active %} is-active{% endif %}"
+            {% if link_active %}aria-current="page"{% endif %}
+          >{{ link.title | upcase }}</a>
         </li>
       {%- endfor -%}
     </ul>
@@ -442,6 +463,14 @@
       "unit": "em",
       "default": 0.2
     },
+    {
+      "type": "header",
+      "content": "Item de menu actif"
+    },
+    { "type": "color", "id": "active_nav_color", "default": "#8C6D3F", "label": "Couleur de l'item actif" },
+    { "type": "checkbox", "id": "active_nav_underline", "default": true, "label": "Souligner l'item actif" },
+    { "type": "range", "id": "active_nav_underline_offset", "min": 2, "max": 12, "step": 1, "unit": "px", "default": 6, "label": "Distance du soulignement sous le texte" },
+    { "type": "range", "id": "active_nav_underline_thickness", "min": 1, "max": 3, "step": 1, "unit": "px", "default": 1, "label": "Épaisseur du soulignement" },
     {
       "type": "header",
       "content": "Bandeau crème"

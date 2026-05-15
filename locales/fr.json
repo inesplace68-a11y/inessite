@@ -64,6 +64,17 @@
       "next_slide": "Faire glisser vers la droite",
       "previous_slide": "Faire glisser vers la gauche",
       "name": "Carrousel"
+    },
+    "breadcrumb": {
+      "all_products": "Produits",
+      "home": "Accueil"
+    }
+  },
+  "collection": {
+    "see_pieces": {
+      "zero": "AUCUNE PIÈCE",
+      "one": "VOIR LA {{ count }} PIÈCE",
+      "other": "VOIR LES {{ count }} PIÈCES"
     }
   },
   "newsletter": {
@@ -222,7 +233,7 @@
       },
       "reset": "Réinitialiser",
       "sort_button": "Trier",
-      "sort_by_label": "Trier par :",
+      "sort_by_label": "Trier par",
       "to": "Destination",
       "clear_filter": "Supprimer le filtre",
       "filter_selected_accessibility": "{{ type }} ({{ count }} filtres sélectionnés)",
