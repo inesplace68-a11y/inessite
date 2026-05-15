@@ -237,12 +237,12 @@
         "pdp_tags_mb": 16,
         "pdp_title_mb": 24,
         "pdp_gap_price_taxes": 2,
-        "pdp_price_mb": 10,
+        "pdp_price_mb": 15,
         "pdp_description_mb": 24,
-        "pdp_gap_description_more": 8,
+        "pdp_gap_description_more": 6,
         "pdp_availability_mb": 4,
         "pdp_gap_cta_wishlist": 4,
-        "pdp_favoris_mb": 24,
+        "pdp_favoris_mb": 12,
         "pdp_trust_mb": 48,
         "pdp_cartel_mb": 48,
         "pdp_ref_mt": 36,
@@ -250,7 +250,7 @@
         "pdp_tags_letter_spacing": 0.2,
         "pdp_tags_border_width": 0.5,
         "pdp_tags_show_border": true,
-        "pdp_gap_cta_section_to_details": 12
+        "pdp_gap_cta_section_to_details": 8
       }
     },
     "mc_editorial": {
