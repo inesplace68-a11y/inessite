@@ -45,6 +45,32 @@
     color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
     opacity: 0.75;
   }
+  /* Phase 16.3.2 — contour rectangulaire du sélecteur pays/devise.
+     Le bouton hérite par défaut du black foreground via .link--text,
+     d'une UA-border <button>, et de l'outline focus Dawn. On force
+     currentColor sur tous les états (border + outline + dropdown wrapper)
+     pour que le contour soit toujours aligné sur la couleur consolidée
+     du sélecteur. text-decoration: none neutralise l'underline .link. */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select {
+    border-color: currentColor !important;
+    outline-color: currentColor !important;
+    text-decoration: none !important;
+  }
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:hover,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus-visible,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button[aria-expanded='true'],
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:hover,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus-visible {
+    border-color: currentColor !important;
+    outline-color: currentColor !important;
+  }
+  /* Dropdown popup quand le sélecteur est ouvert — border noir Dawn par défaut */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__list-wrapper {
+    border-color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
+  }
   #shopify-section-{{ section.id }} .mc-fz-nl__btn {
     height: {{ section.settings.newsletter_btn_height | default: 40 }}px;
     line-height: 1;
