@@ -1762,14 +1762,14 @@ a.product__text {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 20px;
-  border: 0.5px solid #1A1A1A;
+  padding: 5px 12px;
+  border: var(--pdp-tags-border, 0.5px) solid #1A1A1A;
   background: transparent;
   color: #1A1A1A;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
-  font-size: 12px;
-  letter-spacing: 0.22em;
+  font-size: var(--pdp-tags-size, 10px);
+  letter-spacing: var(--pdp-tags-ls, 0.2em);
   text-transform: uppercase;
   text-decoration: none;
   line-height: 1;
@@ -1832,31 +1832,37 @@ a.mc-pdp-tag:hover { opacity: 0.7; }
   line-height: 1.3;
 }
 
-/* §4 — Module Disponibilité · phrase italique FR */
+/* §4 — Module Disponibilité — Phase 15.11
+   Refonte unifiée : tout en Cormorant italique minuscule (préfixe + séparateur +
+   phrase). Plus de label eyebrow Jost CAPS. Alignement et taille pilotés en
+   Customizer. */
 .mc-availability,
 p.delivery-estimate {
   margin: 0 0 var(--pdp-av-mb, 30px) 0;
   font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
-  font-size: 16px;
-  letter-spacing: 0.01em;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--pdp-avail-size, 15px);
+  letter-spacing: 0;
   color: #1A1A1A;
   line-height: 1.5;
+  text-align: var(--pdp-avail-align, center);
 }
 .mc-availability__prefix,
 .delivery-estimate .stock {
-  font-family: 'Jost', system-ui, sans-serif;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: inherit;
+  letter-spacing: 0;
+  text-transform: none;
   color: #1A1A1A;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 .mc-availability__sep,
 .delivery-estimate .sep {
   color: #1A1A1A;
-  margin: 0 8px 0 0;
+  margin: 0 6px 0 0;
 }
 .mc-availability__phrase,
 .delivery-estimate .delivery-phrase,
@@ -1943,7 +1949,10 @@ p.delivery-estimate {
 
 /* §7 — Description corps long */
 .product__description--mc {
-  margin: 0 0 var(--pdp-desc-mb, 24px) 0;
+  /* Phase 15.11 — margin-top piloté par --pdp-gap-cta-to-details (cf. override
+     .product__info-container .product__description--mc plus bas pour la règle
+     spécificité gagnante). */
+  margin: var(--pdp-gap-cta-to-details, 32px) 0 var(--pdp-desc-mb, 24px) 0;
   font-family: 'Jost', system-ui, sans-serif;
   font-weight: 300;
   font-style: normal;
@@ -2110,7 +2119,10 @@ p.delivery-estimate {
   margin-bottom: 0;
 }
 .product__info-container .product__description--mc {
-  margin: 0 0 var(--pdp-desc-mb, 24px) 0;
+  /* Phase 15.11 — gap "actions → détails" piloté par --pdp-gap-cta-to-details
+     pour marquer la transition entre cluster CTA (panier + sélection + paiement)
+     et le bloc descriptif. */
+  margin: var(--pdp-gap-cta-to-details, 32px) 0 var(--pdp-desc-mb, 24px) 0;
 }
 
 /* §11 — Photo éditoriale pleine largeur (full bleed) */

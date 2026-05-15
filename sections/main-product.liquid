@@ -114,6 +114,13 @@
       --pdp-gap-price-taxes: {{ section.settings.pdp_gap_price_taxes | default: 6 }}px;
       --pdp-gap-description-more: {{ section.settings.pdp_gap_description_more | default: 8 }}px;
       --pdp-gap-cta-wishlist: {{ section.settings.pdp_gap_cta_wishlist | default: 16 }}px;
+      /* Phase 15.11 — tags caleés sur eyebrow header + gap CTA→détails + dispo refonte */
+      --pdp-tags-size: {{ section.settings.pdp_tags_size | default: 10 }}px;
+      --pdp-tags-ls: {{ section.settings.pdp_tags_letter_spacing | default: 0.2 }}em;
+      --pdp-tags-border: {%- if section.settings.pdp_tags_show_border -%}{{ section.settings.pdp_tags_border_width | default: 0.5 }}px{%- else -%}0px{%- endif -%};
+      --pdp-gap-cta-to-details: {{ section.settings.pdp_gap_cta_section_to_details | default: 32 }}px;
+      --pdp-avail-size: {{ section.settings.pdp_avail_size | default: 15 }}px;
+      --pdp-avail-align: {{ section.settings.pdp_avail_alignment | default: 'center' }};
     }
     #MainProduct-{{ section.id }}.section-{{ section.id }}-padding {
       padding-top: var(--pdp-hero-py);
@@ -932,7 +939,7 @@
                       assign d2 = max_day | append: ' ' | append: fr_months[max_month_idx]
                       assign phrase_template = section.settings.pdp_delivery_phrase | default: 'Chez vous entre le {date_min} et le {date_max}'
                       assign mc_av_phrase = phrase_template | replace: '{date_min}', d1 | replace: '{date_max}', d2 | replace: '[date1]', d1 | replace: '[date2]', d2
-                      assign mc_av_label = section.settings.pdp_availability_label | default: 'DISPONIBLE'
+                      assign mc_av_label = section.settings.pdp_avail_label_prefix | default: 'Disponible immédiatement'
                     -%}
                     <p
                       class="delivery-estimate mc-availability"
@@ -3061,8 +3068,10 @@
     { "type": "checkbox", "id": "pdp_cursor_zoom", "default": true, "label": "Activer curseur loupe au survol image principale" },
     { "type": "checkbox", "id": "pdp_tag_show", "default": true, "label": "Afficher les tags" },
     { "type": "checkbox", "id": "pdp_show_availability", "default": true, "label": "Afficher le module disponibilité" },
-    { "type": "text", "id": "pdp_availability_label", "default": "DISPONIBLE", "label": "Libellé disponibilité (eyebrow)" },
+    { "type": "text", "id": "pdp_avail_label_prefix", "default": "Disponible immédiatement", "label": "Libellé disponibilité (préfixe)" },
     { "type": "text", "id": "pdp_delivery_phrase", "default": "Chez vous entre le {date_min} et le {date_max}", "label": "Phrase livraison", "info": "Utiliser {date_min} et {date_max} comme placeholders." },
+    { "type": "range", "id": "pdp_avail_size", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 15, "label": "Dispo — taille" },
+    { "type": "select", "id": "pdp_avail_alignment", "default": "center", "label": "Dispo — alignement", "options": [ { "value": "left", "label": "Gauche" }, { "value": "center", "label": "Centré" }, { "value": "right", "label": "Droite" } ] },
     { "type": "checkbox", "id": "pdp_cartel_show", "default": true, "label": "Afficher le cartel dimensions" },
     { "type": "checkbox", "id": "pdp_ref_show", "default": true, "label": "Afficher la référence inventaire" },
     { "type": "header", "content": "PDP — Une question ?" },
@@ -3082,7 +3091,14 @@
     { "type": "range", "id": "pdp_favoris_mb", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 36, "label": "Marge basse — Favoris" },
     { "type": "range", "id": "pdp_trust_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Trust strip" },
     { "type": "range", "id": "pdp_cartel_mb", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 48, "label": "Marge basse — Cartel" },
-    { "type": "range", "id": "pdp_ref_mt", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36, "label": "Marge haute — Référence" }
+    { "type": "range", "id": "pdp_ref_mt", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36, "label": "Marge haute — Référence" },
+    { "type": "header", "content": "PDP — Tags (Phase 15.11)" },
+    { "type": "range", "id": "pdp_tags_size", "min": 8, "max": 14, "step": 1, "unit": "px", "default": 10, "label": "Tags — taille" },
+    { "type": "range", "id": "pdp_tags_letter_spacing", "min": 0, "max": 0.4, "step": 0.1, "unit": "em", "default": 0.2, "label": "Tags — letter-spacing" },
+    { "type": "range", "id": "pdp_tags_border_width", "min": 0, "max": 1.5, "step": 0.5, "unit": "px", "default": 0.5, "label": "Tags — épaisseur bordure" },
+    { "type": "checkbox", "id": "pdp_tags_show_border", "default": true, "label": "Tags — afficher la bordure" },
+    { "type": "header", "content": "PDP — Gap CTA → détails (Phase 15.11)" },
+    { "type": "range", "id": "pdp_gap_cta_section_to_details", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32, "label": "Espace Paiement ↔ Description" }
   ]
 }
 {% endschema %}
