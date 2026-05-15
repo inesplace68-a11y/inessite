@@ -13,33 +13,37 @@
     padding-top: {{ section.settings.footer_bottom_padding_y }}px;
     padding-bottom: {{ section.settings.footer_bottom_padding_y }}px;
   }
+  /* Phase 16.3 — UN setting consolidé `footer_localization_color` pilote la
+     couleur du sélecteur pays/devise (texte + chevron SVG) ET du copyright +
+     mentions légales. Les icônes social (Instagram, Pinterest) sont
+     volontairement HORS scope (elles restent rendues via .mc-footer color: #fff
+     du registre maison-coeur.css). */
   #shopify-section-{{ section.id }} .mc-footer-bar-copy,
-  #shopify-section-{{ section.id }} .mc-footer-bar-legal a {
-    font-size: {{ section.settings.footer_bottom_font_size }}px;
-  }
+  #shopify-section-{{ section.id }} .mc-footer-bar-legal a,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button > span,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select > span {
-    font-size: {{ section.settings.footer_bottom_font_size }}px;
-    color: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
+    font-size: {{ section.settings.footer_bottom_font_size | default: 12 }}px !important;
+    color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
   }
-  /* Phase 16.2 — couleur unifiée pour TOUTES les icônes du footer (caret,
-     selectors, social, etc.) pour éviter qu'un SVG hérite d'un color black
-     via une règle Dawn avec specificity plus haute. */
-  #shopify-section-{{ section.id }} .mc-footer svg,
-  #shopify-section-{{ section.id }} .mc-footer svg path,
   #shopify-section-{{ section.id }} .mc-footer-bar svg,
   #shopify-section-{{ section.id }} .mc-footer-bar svg path {
-    color: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
+    color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
   }
-  #shopify-section-{{ section.id }} .mc-footer svg [fill]:not([fill="none"]),
   #shopify-section-{{ section.id }} .mc-footer-bar svg [fill]:not([fill="none"]) {
-    fill: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
+    fill: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
   }
-  #shopify-section-{{ section.id }} .mc-footer svg [stroke]:not([stroke="none"]),
   #shopify-section-{{ section.id }} .mc-footer-bar svg [stroke]:not([stroke="none"]) {
-    stroke: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
+    stroke: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
+  }
+  /* Hover : on garde la couleur consolidée pleine opacité (au lieu du rgba 0.7
+     hardcoded de maison-coeur.css) pour ne pas avoir d'effet de "passe en noir". */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:hover,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:hover,
+  #shopify-section-{{ section.id }} .mc-footer-bar-legal a:hover {
+    color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
+    opacity: 0.75;
   }
   #shopify-section-{{ section.id }} .mc-fz-nl__btn {
     height: {{ section.settings.newsletter_btn_height | default: 40 }}px;
@@ -315,17 +319,6 @@
     },
     {
       "type": "header",
-      "content": "Icônes footer (Phase 16.2)"
-    },
-    {
-      "type": "color",
-      "id": "mc_footer_icon_color",
-      "label": "Couleur des icônes footer",
-      "info": "Phase 16.2 — couleur appliquée à TOUTES les icônes SVG du footer (caret sélecteur, social, etc.). Crème par défaut pour lisibilité sur fond marron.",
-      "default": "#F5F0E8"
-    },
-    {
-      "type": "header",
       "content": "Bouton S'abonner (newsletter)"
     },
     {
@@ -357,9 +350,9 @@
     {
       "type": "color",
       "id": "footer_localization_color",
-      "label": "Couleur sélecteur devise",
-      "info": "Phase 13 — couleur du texte du sélecteur pays/devise (et de la flèche). Blanc recommandé sur fond marron.",
-      "default": "#FFFFFF"
+      "label": "Couleur du sélecteur pays/devise et copyright",
+      "info": "Phase 16.3 — couleur unifiée appliquée au sélecteur pays/devise (texte + chevron), au copyright et aux mentions légales. Les icônes social Instagram/Pinterest ne sont PAS affectées. Crème par défaut pour lisibilité sur fond marron.",
+      "default": "#F5F0E8"
     },
     {
       "type": "range",
@@ -376,12 +369,12 @@
       "type": "range",
       "id": "footer_bottom_font_size",
       "label": "Taille typo dernière ligne",
-      "info": "Taille du texte pour le sélecteur, le copyright et les mentions légales",
-      "min": 9,
-      "max": 14,
+      "info": "Phase 16.3 — taille du texte pour le sélecteur pays/devise, le copyright et les mentions légales. Range étendu 8-20px.",
+      "min": 8,
+      "max": 20,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 12
     },
     {
       "type": "range",
