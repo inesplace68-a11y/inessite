@@ -954,11 +954,12 @@
                       class="delivery-estimate mc-availability"
                       {{ block.shopify_attributes }}
                     >
-                      {%- if block.settings.show_prefix and mc_av_label != blank -%}
-                        <span class="stock mc-availability__prefix">{{ mc_av_label }}</span>
-                        <span class="sep mc-availability__sep">{{ block.settings.separator | default: '·' }}</span>
-                      {%- endif -%}
-                      <em class="delivery-phrase mc-availability__phrase">{{ mc_av_phrase }}</em>
+                      <span class="mc-availability__line">
+                        {%- if block.settings.show_prefix and mc_av_label != blank -%}
+                          {{ mc_av_label }} {{ block.settings.separator | default: '·' }}
+                        {% endif -%}
+                        {{ mc_av_phrase }}
+                      </span>
                     </p>
                   {%- endif -%}
                 {%- endif -%}
