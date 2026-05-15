@@ -1,0 +1,25 @@
+{%- comment -%}
+  Phase 16.7 — Traduction française des libellés de filtres Shopify
+  Shopify renvoie les libellés de filtres dans la langue de configuration
+  du store admin (souvent EN). On les force en FR ici sans toucher au
+  paramètre `value` envoyé au serveur.
+
+  Usage :
+    {% capture filter_label_fr %}{% render 'mc-filter-label', text: filter.label %}{% endcapture %}
+{%- endcomment -%}
+{%- case text -%}
+  {%- when 'Availability' -%}Disponibilité
+  {%- when 'Color' -%}Couleur
+  {%- when 'Colour' -%}Couleur
+  {%- when 'Material' -%}Matière
+  {%- when 'Origin' -%}Origine
+  {%- when 'Period' -%}Période
+  {%- when 'Price' -%}Prix
+  {%- when 'Brand' -%}Marque
+  {%- when 'Size' -%}Taille
+  {%- when 'Product type' -%}Type
+  {%- when 'Vendor' -%}Marque
+  {%- when 'In stock' -%}En stock
+  {%- when 'Out of stock' -%}Épuisé
+  {%- else -%}{{ text }}
+{%- endcase -%}

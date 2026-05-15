@@ -36,6 +36,7 @@
   }
 
   /* Phase 16.6 — variables grille + vignette pilotées par Customizer */
+  /* Phase 16.7 — variables barre filtres/tri + drawer */
   #shopify-section-{{ section.id }} {
     --mcg-card-gap-desktop: {{ section.settings.card_gap_desktop | default: 20 }}px;
     --mcg-card-gap-mobile: {{ section.settings.card_gap_mobile | default: 12 }}px;
@@ -43,6 +44,14 @@
     --mcg-card-price-size: {{ section.settings.card_price_size | default: 14 }}px;
     --mcg-image-zoom: {{ section.settings.image_zoom_amount | default: 102 }};
     --mcg-wishlist-color: {{ section.settings.wishlist_color | default: '#1A1814' }};
+    --mc-bar-pt: {{ section.settings.bar_padding_top | default: 20 }}px;
+    --mc-bar-pb: {{ section.settings.bar_padding_bottom | default: 20 }}px;
+    --mc-title-gap: {{ section.settings.title_to_bar_gap | default: 32 }}px;
+    --mc-grid-gap: {{ section.settings.bar_to_grid_gap | default: 24 }}px;
+    --mc-drawer-w: {{ section.settings.drawer_width_desktop | default: 400 }}px;
+    --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
+    --mc-drawer-bg: {{ section.settings.drawer_bg_color | default: '#F5F0E8' }};
+    --mc-overlay-op: {{ section.settings.overlay_opacity | default: 0.4 }};
   }
   /* Grille — gap configurable */
   #shopify-section-{{ section.id }} .grid--quarter-max,
@@ -118,161 +127,642 @@
       gap: var(--mcg-card-gap-mobile, 12px);
     }
   }
+
+  /* === Phase 16.7 — Barre filtres/tri + drawer === */
+
+  /* Toolbar */
+  #shopify-section-{{ section.id }} .mc-collection-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: var(--mc-title-gap, 32px);
+    margin-bottom: var(--mc-grid-gap, 24px);
+    padding-top: var(--mc-bar-pt, 20px);
+    padding-bottom: var(--mc-bar-pb, 20px);
+    border-top: 1px solid rgba(26, 24, 20, 0.10);
+    border-bottom: 1px solid rgba(26, 24, 20, 0.10);
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__filter-trigger {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 6px 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1A1814;
+    transition: color 200ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__filter-trigger:hover,
+  #shopify-section-{{ section.id }} .mc-toolbar__filter-trigger:focus-visible {
+    color: #8C6D3F;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__icon {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    color: currentColor;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__icon svg {
+    width: 100%;
+    height: 100%;
+    color: currentColor;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__count {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    color: rgba(26, 24, 20, 0.70);
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__sep {
+    color: rgba(26, 24, 20, 0.35);
+    font-size: 12px;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__sort form {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__sort-label {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1A1814;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__select-input {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 4px 22px 4px 4px;
+    margin: 0;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #1A1814;
+    cursor: pointer;
+    outline: none;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__select-input:hover,
+  #shopify-section-{{ section.id }} .mc-toolbar__select-input:focus-visible {
+    color: #8C6D3F;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__caret {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 12px;
+    height: 12px;
+    display: inline-flex;
+    color: #1A1814;
+  }
+  #shopify-section-{{ section.id }} .mc-toolbar__caret svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Overlay */
+  #shopify-section-{{ section.id }} .mc-filter-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 24, 20, var(--mc-overlay-op, 0.4));
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--mc-drawer-dur, 350ms) ease-out, visibility var(--mc-drawer-dur, 350ms) ease-out;
+    z-index: 90;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-overlay[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Drawer */
+  #shopify-section-{{ section.id }} .mc-filter-drawer {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: var(--mc-drawer-w, 400px);
+    max-width: 100vw;
+    background: var(--mc-drawer-bg, #F5F0E8);
+    box-shadow: 2px 0 24px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    transition: transform var(--mc-drawer-dur, 350ms) ease-out;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer--left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer--right {
+    right: 0;
+    transform: translateX(100%);
+    box-shadow: -2px 0 24px rgba(0, 0, 0, 0.08);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer[data-open='true'] {
+    transform: translateX(0);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid rgba(26, 24, 20, 0.10);
+    flex: 0 0 auto;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__title {
+    margin: 0;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #1A1814;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__close {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 6px;
+    margin: -6px;
+    cursor: pointer;
+    color: #1A1814;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 200ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__close:hover {
+    color: #8C6D3F;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__close svg {
+    width: 16px;
+    height: 16px;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 28px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__footer {
+    flex: 0 0 auto;
+    padding: 16px 28px 24px;
+    border-top: 1px solid rgba(26, 24, 20, 0.10);
+    background: var(--mc-drawer-bg, #F5F0E8);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__clear {
+    align-self: center;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1A1814;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 200ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__clear:hover {
+    color: #8C6D3F;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__apply {
+    appearance: none;
+    width: 100%;
+    padding: 14px 20px;
+    background: transparent;
+    border: 1px solid #1A1814;
+    color: #1A1814;
+    cursor: pointer;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer__apply:hover,
+  #shopify-section-{{ section.id }} .mc-filter-drawer__apply:focus-visible {
+    background: #1A1814;
+    color: #F5F0E8;
+  }
+
+  /* Override facets snippet styles when inside the drawer (force full width / single column) */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets {
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets.small-hide {
+    display: block !important;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__form-vertical {
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets-wrapper {
+    padding-right: 0 !important;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets-vertical {
+    display: block;
+  }
+  /* Hide the heading of the facets snippet — we have our own drawer title */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__heading--vertical {
+    display: none;
+  }
+  /* Hide the legacy mobile menu-drawer (we now own the drawer UX) */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mobile-facets__wrapper {
+    display: none !important;
+  }
+  /* Hide the duplicate mobile product count rendered by the facets snippet */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .product-count.light {
+    display: none !important;
+  }
+  /* Make sure facet summaries adopt our typography */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary-label {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    color: #1A1814;
+  }
+
+  /* Body/html scroll lock when drawer open */
+  html.mc-filters-open,
+  body.mc-filters-open {
+    overflow: hidden;
+  }
+
+  /* Tighten vertical spacing between banner and grid */
+  #shopify-section-{{ section.id }} .product-grid-container {
+    margin-top: 0;
+  }
+
+  /* Mobile: full-width drawer */
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-filter-drawer {
+      width: 100vw;
+      max-width: 100vw;
+    }
+    #shopify-section-{{ section.id }} .mc-collection-toolbar {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #shopify-section-{{ section.id }} .mc-toolbar__sort-label {
+      display: none;
+    }
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
-    {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
-    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
-      <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
-        <form class="facets-vertical-form" id="FacetSortForm">
-          <div class="facet-filters sorting caption">
-            <div class="facet-filters__field">
-              <h2 class="facet-filters__label caption-large text-body">
-                <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-              </h2>
-              <div class="select">
-                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+    {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+    {%- liquid
+      assign filter_btn_label = section.settings.filter_button_label | default: 'AFFICHER LES FILTRES'
+      assign show_filter_icon = section.settings.show_filter_icon
+      assign icon_style = section.settings.filter_icon_style | default: 'curseurs'
+      assign show_count = section.settings.show_product_count
+      assign drawer_side = section.settings.drawer_side | default: 'left'
+      assign apply_text = section.settings.apply_button_text | default: 'VOIR LES X PIÈCES'
+      assign clear_all_text = section.settings.clear_all_text | default: 'Tout effacer'
+      assign close_on_apply = section.settings.close_on_apply
+      assign close_on_escape = section.settings.close_on_escape
+      assign close_on_overlay = section.settings.close_on_overlay_click
+      assign sort_by = collection.sort_by | default: collection.default_sort_by
+      assign apply_prefix = apply_text | split: 'X' | first | strip
+      assign apply_suffix = apply_text | split: 'X' | last
+      if apply_suffix == apply_text
+        assign apply_suffix = ''
+      else
+        assign apply_suffix = apply_suffix | strip
+      endif
+    -%}
+
+    {% comment %} === Toolbar (filtres + tri) — Phase 16.7 === {% endcomment %}
+    <div class="mc-collection-toolbar page-width" data-mc-toolbar>
+      {%- if section.settings.enable_filtering -%}
+        <button
+          type="button"
+          class="mc-toolbar__filter-trigger"
+          data-mc-filter-open
+          aria-controls="MCFilterDrawer-{{ section.id }}"
+          aria-expanded="false"
+        >
+          {%- if show_filter_icon -%}
+            <span class="mc-toolbar__icon" aria-hidden="true">
+              {%- case icon_style -%}
+                {%- when 'lignes' -%}
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <line x1="2" y1="6" x2="18" y2="6" stroke="currentColor" stroke-width="1"/>
+                    <line x1="2" y1="14" x2="18" y2="14" stroke="currentColor" stroke-width="1"/>
+                  </svg>
+                {%- when 'plus' -%}
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <line x1="10" y1="3" x2="10" y2="17" stroke="currentColor" stroke-width="1"/>
+                    <line x1="3" y1="10" x2="17" y2="10" stroke="currentColor" stroke-width="1"/>
+                  </svg>
+                {%- else -%}
+                  {{- 'icon-filter.svg' | inline_asset_content -}}
+              {%- endcase -%}
+            </span>
+          {%- endif -%}
+          <span class="mc-toolbar__filter-label">{{ filter_btn_label }}</span>
+        </button>
+      {%- endif -%}
+
+      <div class="mc-toolbar__right">
+        {%- if show_count -%}
+          <span class="mc-toolbar__count" data-mc-toolbar-count>
+            <span data-mc-count-number>{{ collection.products_count }}</span>&nbsp;pièces
+          </span>
+          {%- if section.settings.enable_sorting -%}<span class="mc-toolbar__sep" aria-hidden="true">·</span>{%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.enable_sorting -%}
+          <facet-filters-form class="mc-toolbar__sort">
+            <form id="FacetSortForm">
+              <label class="mc-toolbar__sort-label" for="SortBy">
+                {{- 'products.facets.sort_by_label' | t | replace: ' :', '' -}}
+              </label>
+              <div class="mc-toolbar__select">
                 <select
                   name="sort_by"
-                  class="facet-filters__sort select__select caption-large"
                   id="SortBy"
+                  class="mc-toolbar__select-input"
                   aria-describedby="a11y-refresh-page-message"
                 >
                   {%- for option in collection.sort_options -%}
-                    <option
-                      value="{{ option.value | escape }}"
-                      {% if option.value == sort_by %}
-                        selected="selected"
-                      {% endif %}
-                    >
-                      {{ option.name | escape }}
+                    <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                      {{- option.name | escape -}}
                     </option>
                   {%- endfor -%}
                 </select>
-                <span class="svg-wrapper">
+                <span class="mc-toolbar__caret" aria-hidden="true">
                   {{- 'icon-caret.svg' | inline_asset_content -}}
                 </span>
               </div>
-            </div>
-          </div>
-
-          <div class="product-count-vertical light" role="status">
-            <h2 class="product-count__text text-body">
-              <span id="ProductCountDesktop">
-                {%- if collection.results_count -%}
-                  {{
-                    'templates.search.results_with_count'
-                    | t: terms: collection.terms, count: collection.results_count
-                  }}
-                {%- elsif collection.products_count == collection.all_products_count -%}
-                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
-                {%- else -%}
-                  {{
-                    'products.facets.product_count'
-                    | t: product_count: collection.products_count, count: collection.all_products_count
-                  }}
-                {%- endif -%}
-              </span>
-            </h2>
-            {%- render 'loading-spinner' -%}
-          </div>
-        </form>
-      </facet-filters-form>
-    {%- endif -%}
-
-    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
-      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-        <aside
-          aria-labelledby="verticalTitle"
-          class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-          id="main-collection-filters"
-          data-id="{{ section.id }}"
-        >
-          {% render 'facets',
-            results: collection,
-            enable_filtering: section.settings.enable_filtering,
-            enable_sorting: section.settings.enable_sorting,
-            filter_type: section.settings.filter_type,
-            paginate: paginate
-          %}
-        </aside>
-      {%- endif -%}
-
-      <div
-        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-        id="ProductGridContainer"
-        {% if settings.animations_reveal_on_scroll %}
-          data-cascade
-        {% endif %}
-      >
-        {%- if collection.products.size == 0 -%}
-          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
-            <div class="loading-overlay gradient"></div>
-            <div class="title-wrapper center">
-              <h2 class="title title--primary">
-                {{ 'sections.collection_template.empty' | t -}}
-                <br>
-                {{
-                  'sections.collection_template.use_fewer_filters_html'
-                  | t: link: collection.url, class: 'underlined-link link'
-                }}
-              </h2>
-            </div>
-          </div>
-        {%- else -%}
-          <div
-            class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-          >
-            <div class="loading-overlay gradient"></div>
-            <ul
-              id="product-grid"
-              data-id="{{ section.id }}"
-              class="
-                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-                grid--{{ section.settings.columns_desktop }}-col-desktop
-                {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
-              "
-            >
-              {% assign skip_card_product_styles = false %}
-              {%- for product in collection.products -%}
-                {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
-                  {%- assign lazy_load = true -%}
-                {%- endif -%}
-                <li
-                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                  {% if settings.animations_reveal_on_scroll %}
-                    data-cascade
-                    style="--animation-order: {{ forloop.index }};"
-                  {% endif %}
-                >
-                  {% render 'card-product',
-                    card_product: product,
-                    media_aspect_ratio: section.settings.image_ratio,
-                    image_shape: section.settings.image_shape,
-                    show_secondary_image: section.settings.show_secondary_image,
-                    show_vendor: section.settings.show_vendor,
-                    show_rating: section.settings.show_rating,
-                    lazy_load: lazy_load,
-                    skip_styles: skip_card_product_styles,
-                    quick_add: section.settings.quick_add,
-                    section_id: section.id
-                  %}
-                </li>
-                {%- assign skip_card_product_styles = true -%}
-              {%- endfor -%}
-            </ul>
-
-            {%- if paginate.pages > 1 -%}
-              {% render 'pagination', paginate: paginate, anchor: '' %}
-            {%- endif -%}
-          </div>
+            </form>
+          </facet-filters-form>
         {%- endif -%}
       </div>
+
+      {% comment %} Hidden mirror for facets.js compatibility (renderProductCount writes here) {% endcomment %}
+      <span id="ProductCountDesktop" class="visually-hidden" data-mc-count-mirror role="status">
+        {%- if collection.results_count -%}
+          {{ 'templates.search.results_with_count' | t: terms: collection.terms, count: collection.results_count }}
+        {%- elsif collection.products_count == collection.all_products_count -%}
+          {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+        {%- else -%}
+          {{ 'products.facets.product_count' | t: product_count: collection.products_count, count: collection.all_products_count }}
+        {%- endif -%}
+      </span>
     </div>
+
+    {% comment %} === Overlay + Drawer === {% endcomment %}
+    {%- if section.settings.enable_filtering -%}
+      <div class="mc-filter-overlay" data-mc-filter-overlay aria-hidden="true"></div>
+      <aside
+        id="MCFilterDrawer-{{ section.id }}"
+        class="mc-filter-drawer mc-filter-drawer--{{ drawer_side }}"
+        data-mc-filter-drawer
+        data-close-escape="{{ close_on_escape }}"
+        data-close-overlay="{{ close_on_overlay }}"
+        data-close-apply="{{ close_on_apply }}"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="MCFilterDrawerTitle-{{ section.id }}"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <div class="mc-filter-drawer__inner">
+          <header class="mc-filter-drawer__header">
+            <h2 id="MCFilterDrawerTitle-{{ section.id }}" class="mc-filter-drawer__title">FILTRES</h2>
+            <button
+              type="button"
+              class="mc-filter-drawer__close"
+              data-mc-filter-close
+              aria-label="Fermer les filtres"
+            >
+              {{- 'icon-close.svg' | inline_asset_content -}}
+            </button>
+          </header>
+          <div class="mc-filter-drawer__body">
+            {% render 'facets',
+              results: collection,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: false,
+              filter_type: 'vertical',
+              paginate: paginate
+            %}
+          </div>
+          <footer class="mc-filter-drawer__footer">
+            <a href="{{ collection.url }}" class="mc-filter-drawer__clear">{{ clear_all_text }}</a>
+            <button type="button" class="mc-filter-drawer__apply" data-mc-filter-apply>
+              {%- if apply_prefix != blank -%}<span class="mc-apply-prefix">{{ apply_prefix }}&nbsp;</span>{%- endif -%}
+              <span data-mc-apply-count>{{ collection.products_count }}</span>
+              {%- if apply_suffix != blank -%}<span class="mc-apply-suffix">&nbsp;{{ apply_suffix }}</span>{%- endif -%}
+            </button>
+          </footer>
+        </div>
+      </aside>
+    {%- endif -%}
+
+    {% comment %} === Product grid === {% endcomment %}
+    <div
+      class="product-grid-container page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      id="ProductGridContainer"
+      {% if settings.animations_reveal_on_scroll %}
+        data-cascade
+      {% endif %}
+    >
+      {%- if collection.products.size == 0 -%}
+        <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
+          <div class="loading-overlay gradient"></div>
+          <div class="title-wrapper center">
+            <h2 class="title title--primary">
+              {{ 'sections.collection_template.empty' | t -}}
+              <br>
+              {{
+                'sections.collection_template.use_fewer_filters_html'
+                | t: link: collection.url, class: 'underlined-link link'
+              }}
+            </h2>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="collection">
+          <div class="loading-overlay gradient"></div>
+          <ul
+            id="product-grid"
+            data-id="{{ section.id }}"
+            class="
+              grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+              grid--{{ section.settings.columns_desktop }}-col-desktop
+              {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
+            "
+          >
+            {% assign skip_card_product_styles = false %}
+            {%- for product in collection.products -%}
+              {% assign lazy_load = false %}
+              {%- if forloop.index > 2 -%}
+                {%- assign lazy_load = true -%}
+              {%- endif -%}
+              <li
+                class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {% if settings.animations_reveal_on_scroll %}
+                  data-cascade
+                  style="--animation-order: {{ forloop.index }};"
+                {% endif %}
+              >
+                {% render 'card-product',
+                  card_product: product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  lazy_load: lazy_load,
+                  skip_styles: skip_card_product_styles,
+                  quick_add: section.settings.quick_add,
+                  section_id: section.id
+                %}
+              </li>
+              {%- assign skip_card_product_styles = true -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate, anchor: '' %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {% comment %} === Drawer interactions (Phase 16.7) === {% endcomment %}
+    <script>
+      (function () {
+        var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+        if (!sectionEl) return;
+        var drawer = sectionEl.querySelector('[data-mc-filter-drawer]');
+        var overlay = sectionEl.querySelector('[data-mc-filter-overlay]');
+        var openers = sectionEl.querySelectorAll('[data-mc-filter-open]');
+        var closers = sectionEl.querySelectorAll('[data-mc-filter-close]');
+        var apply = sectionEl.querySelector('[data-mc-filter-apply]');
+        var countMirror = sectionEl.querySelector('[data-mc-count-mirror]');
+        var countNumber = sectionEl.querySelector('[data-mc-count-number]');
+        var applyCount = sectionEl.querySelector('[data-mc-apply-count]');
+        if (!drawer) return;
+
+        var closeEscape = drawer.dataset.closeEscape === 'true';
+        var closeOverlay = drawer.dataset.closeOverlay === 'true';
+        var closeApply = drawer.dataset.closeApply === 'true';
+
+        function openDrawer() {
+          drawer.setAttribute('data-open', 'true');
+          drawer.setAttribute('aria-hidden', 'false');
+          if (overlay) {
+            overlay.setAttribute('data-open', 'true');
+            overlay.setAttribute('aria-hidden', 'false');
+          }
+          openers.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
+          document.body.classList.add('mc-filters-open');
+          document.documentElement.classList.add('mc-filters-open');
+        }
+        function closeDrawer() {
+          drawer.removeAttribute('data-open');
+          drawer.setAttribute('aria-hidden', 'true');
+          if (overlay) {
+            overlay.removeAttribute('data-open');
+            overlay.setAttribute('aria-hidden', 'true');
+          }
+          openers.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+          document.body.classList.remove('mc-filters-open');
+          document.documentElement.classList.remove('mc-filters-open');
+        }
+
+        openers.forEach(function (b) { b.addEventListener('click', openDrawer); });
+        closers.forEach(function (b) { b.addEventListener('click', closeDrawer); });
+        if (overlay && closeOverlay) {
+          overlay.addEventListener('click', closeDrawer);
+        }
+        if (closeEscape) {
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && drawer.getAttribute('data-open') === 'true') {
+              closeDrawer();
+            }
+          });
+        }
+        if (apply && closeApply) {
+          apply.addEventListener('click', closeDrawer);
+        }
+
+        function extractCount(text) {
+          if (!text) return null;
+          var m = String(text).match(/\d[\d\s  ]*/);
+          if (!m) return null;
+          return m[0].replace(/[\s  ]/g, '');
+        }
+
+        function syncCounts() {
+          if (!countMirror) return;
+          var n = extractCount(countMirror.textContent);
+          if (n === null) return;
+          if (countNumber) countNumber.textContent = n;
+          if (applyCount) applyCount.textContent = n;
+        }
+        if (countMirror) {
+          var mo = new MutationObserver(syncCounts);
+          mo.observe(countMirror, { childList: true, characterData: true, subtree: true });
+        }
+      })();
+    </script>
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
@@ -480,6 +970,48 @@
     { "type": "header", "content": "Effet image — Phase 16.6" },
     { "type": "checkbox", "id": "enable_image_zoom_on_hover", "default": true, "label": "Zoom léger image au survol" },
     { "type": "range", "id": "image_zoom_amount", "min": 100, "max": 110, "step": 1, "unit": "%", "default": 102, "label": "Niveau de zoom (%)", "info": "100 = sans zoom, 110 = +10% au survol" },
+
+    { "type": "header", "content": "Barre filtres/tri — Phase 16.7" },
+    { "type": "text", "id": "filter_button_label", "default": "AFFICHER LES FILTRES", "label": "Libellé bouton filtres" },
+    { "type": "checkbox", "id": "show_filter_icon", "default": true, "label": "Afficher l'icône à gauche du libellé" },
+    {
+      "type": "select",
+      "id": "filter_icon_style",
+      "label": "Style d'icône filtres",
+      "default": "curseurs",
+      "options": [
+        { "value": "curseurs", "label": "Curseurs (sliders)" },
+        { "value": "lignes", "label": "Lignes horizontales" },
+        { "value": "plus", "label": "Plus (+)" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_product_count", "default": true, "label": "Afficher le compteur de pièces" },
+    { "type": "range", "id": "bar_padding_top", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding haut de la barre" },
+    { "type": "range", "id": "bar_padding_bottom", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Padding bas de la barre" },
+    { "type": "range", "id": "title_to_bar_gap", "min": 16, "max": 96, "step": 8, "unit": "px", "default": 32, "label": "Espace titre → barre" },
+    { "type": "range", "id": "bar_to_grid_gap", "min": 16, "max": 80, "step": 8, "unit": "px", "default": 24, "label": "Espace barre → grille" },
+
+    { "type": "header", "content": "Drawer filtres — Phase 16.7" },
+    { "type": "range", "id": "drawer_width_desktop", "min": 320, "max": 480, "step": 20, "unit": "px", "default": 400, "label": "Largeur drawer (desktop)" },
+    {
+      "type": "select",
+      "id": "drawer_side",
+      "label": "Côté d'ouverture",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "right", "label": "Droite" }
+      ]
+    },
+    { "type": "range", "id": "drawer_animation_duration", "min": 200, "max": 600, "step": 50, "unit": "ms", "default": 350, "label": "Durée animation" },
+    { "type": "color", "id": "drawer_bg_color", "default": "#F5F0E8", "label": "Couleur de fond du drawer" },
+    { "type": "range", "id": "overlay_opacity", "min": 0.2, "max": 0.7, "step": 0.1, "default": 0.4, "label": "Opacité du voile" },
+    { "type": "text", "id": "apply_button_text", "default": "VOIR LES X PIÈCES", "label": "Texte bouton appliquer", "info": "X est remplacé par le nombre de pièces filtrées." },
+    { "type": "text", "id": "clear_all_text", "default": "Tout effacer", "label": "Lien tout effacer" },
+    { "type": "checkbox", "id": "close_on_apply", "default": true, "label": "Fermer après application" },
+    { "type": "checkbox", "id": "close_on_escape", "default": true, "label": "Fermer avec la touche Échap" },
+    { "type": "checkbox", "id": "close_on_overlay_click", "default": true, "label": "Fermer en cliquant sur le voile" },
+
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
