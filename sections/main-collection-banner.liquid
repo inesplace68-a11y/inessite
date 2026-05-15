@@ -99,8 +99,12 @@
 </header>
 
 {%- style -%}
-  .mc-collection-header {
-    background-color: var(--mc-bg, #F7F5F1);
+  /* Continuité visuelle du fond crème — neutralise le bg de la color-scheme appliquée par Dawn */
+  #shopify-section-{{ section.id }} .mc-collection-header,
+  #shopify-section-{{ section.id }} .mc-collection-header.color-scheme-1,
+  #shopify-section-{{ section.id }} .mc-collection-header[class*='color-'] {
+    background: transparent;
+    background-color: transparent;
   }
   .mc-collection-header__inner {
     text-align: var(--mcch-title-align, center);
@@ -190,7 +194,7 @@
   "settings": [
     { "type": "header", "content": "Affichage titre + fil d'Ariane" },
     { "type": "checkbox", "id": "show_collection_title", "default": false, "label": "Afficher le titre de la catégorie" },
-    { "type": "checkbox", "id": "show_breadcrumb", "default": true, "label": "Afficher le fil d'Ariane" },
+    { "type": "checkbox", "id": "show_breadcrumb", "default": false, "label": "Afficher le fil d'Ariane" },
     { "type": "text", "id": "breadcrumb_all_products_label", "default": "Produits", "label": "Libellé pour la page tous les produits" },
     { "type": "checkbox", "id": "show_eyebrow", "default": false, "label": "Afficher l'eyebrow au-dessus du titre" },
     { "type": "text", "id": "eyebrow_default_text", "default": "COLLECTION", "label": "Texte eyebrow" },
