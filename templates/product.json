@@ -236,7 +236,7 @@
         "pdp_questions_faq_label": "Consulter notre FAQ",
         "pdp_tags_mb": 16,
         "pdp_title_mb": 24,
-        "pdp_gap_price_taxes": 1,
+        "pdp_gap_price_taxes": 0,
         "pdp_price_mb": 15,
         "pdp_description_mb": 24,
         "pdp_gap_description_more": 6,
