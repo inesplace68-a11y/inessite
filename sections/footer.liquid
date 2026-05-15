@@ -4,6 +4,11 @@
   #shopify-section-{{ section.id }} .mc-footer-inner {
     padding-top: {{ section.settings.footer_top_padding | default: 48 }}px;
   }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-footer-inner {
+      padding-top: {{ section.settings.footer_top_padding_mobile | default: 32 }}px;
+    }
+  }
   #shopify-section-{{ section.id }} .mc-footer-bar-inner {
     padding-top: {{ section.settings.footer_bottom_padding_y }}px;
     padding-bottom: {{ section.settings.footer_bottom_padding_y }}px;
@@ -19,10 +24,22 @@
     font-size: {{ section.settings.footer_bottom_font_size }}px;
     color: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
   }
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button svg,
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select svg {
-    color: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
-    fill: {{ section.settings.footer_localization_color | default: '#FFFFFF' }} !important;
+  /* Phase 16.2 — couleur unifiée pour TOUTES les icônes du footer (caret,
+     selectors, social, etc.) pour éviter qu'un SVG hérite d'un color black
+     via une règle Dawn avec specificity plus haute. */
+  #shopify-section-{{ section.id }} .mc-footer svg,
+  #shopify-section-{{ section.id }} .mc-footer svg path,
+  #shopify-section-{{ section.id }} .mc-footer-bar svg,
+  #shopify-section-{{ section.id }} .mc-footer-bar svg path {
+    color: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
+  }
+  #shopify-section-{{ section.id }} .mc-footer svg [fill]:not([fill="none"]),
+  #shopify-section-{{ section.id }} .mc-footer-bar svg [fill]:not([fill="none"]) {
+    fill: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
+  }
+  #shopify-section-{{ section.id }} .mc-footer svg [stroke]:not([stroke="none"]),
+  #shopify-section-{{ section.id }} .mc-footer-bar svg [stroke]:not([stroke="none"]) {
+    stroke: {{ section.settings.mc_footer_icon_color | default: '#F5F0E8' }} !important;
   }
   #shopify-section-{{ section.id }} .mc-fz-nl__btn {
     height: {{ section.settings.newsletter_btn_height | default: 40 }}px;
@@ -277,13 +294,35 @@
     {
       "type": "range",
       "id": "footer_top_padding",
-      "label": "Marge supérieure footer",
-      "info": "Phase 13 — espace au-dessus du logo footer. Default 48px compact.",
+      "label": "Marge supérieure footer (desktop)",
+      "info": "Phase 13/16.2 — espace au-dessus du logo footer. Default 48px compact.",
       "min": 0,
       "max": 160,
       "step": 4,
       "unit": "px",
       "default": 48
+    },
+    {
+      "type": "range",
+      "id": "footer_top_padding_mobile",
+      "label": "Marge supérieure footer (mobile)",
+      "info": "Phase 16.2 — espace au-dessus du logo footer en mobile.",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Icônes footer (Phase 16.2)"
+    },
+    {
+      "type": "color",
+      "id": "mc_footer_icon_color",
+      "label": "Couleur des icônes footer",
+      "info": "Phase 16.2 — couleur appliquée à TOUTES les icônes SVG du footer (caret sélecteur, social, etc.). Crème par défaut pour lisibilité sur fond marron.",
+      "default": "#F5F0E8"
     },
     {
       "type": "header",
