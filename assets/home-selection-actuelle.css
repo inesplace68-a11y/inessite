@@ -286,19 +286,15 @@
   color: inherit;
 }
 
-.home-selection__tease-line {
+/* Phase 16.54 — Flèche éditoriale unifiée (SVG inline d'un seul tracé : trait + pointe) */
+.home-selection__tease-arrow-svg {
   display: inline-block;
-  width: 40px;
-  height: 1px;
-  background-color: currentColor;
+  color: inherit;
+  opacity: 0.7;
+  transition: transform 0.3s ease;
 }
 
-.home-selection__tease-arrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
-
-.home-selection__card--tease:hover .home-selection__tease-arrow {
+.home-selection__card--tease:hover .home-selection__tease-arrow-svg {
   transform: translateX(3px);
 }
 
@@ -392,7 +388,7 @@
   .home-selection__card--tease-desktop:hover {
     transform: translateY(-4px);
   }
-  .home-selection__card--tease-desktop:hover .home-selection__tease-arrow {
+  .home-selection__card--tease-desktop:hover .home-selection__tease-arrow-svg {
     transform: translateX(3px);
   }
   /* Le bandeau .home-selection__controls (compteur) s'aligne sur la largeur du scroll-area, pas de la section entière */
