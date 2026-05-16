@@ -54,6 +54,8 @@
     --mc-drawer-text-size: {{ section.settings.filter_drawer_text_size | default: 12 }}px;
     --mc-sort-text-size: {{ section.settings.sort_dropdown_text_size | default: 12 }}px;
     --mc-page-width: {{ section.settings.collection_max_width | default: 1600 }}px;
+    --mc-slider-thumb-color: {{ section.settings.filter_slider_thumb_color | default: '#1A1814' }};
+    --mc-toggle-active-color: {{ section.settings.filter_toggle_active_color | default: '#1A1814' }};
     --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
     --mc-drawer-bg: {{ section.settings.drawer_bg_color | default: '#F5F0E8' }};
     --mc-overlay-op: {{ section.settings.overlay_opacity | default: 0.4 }};
@@ -648,6 +650,164 @@
     }
   }
 
+  /* === Phase 16.7 — Curseur prix à 2 poignées =====================
+     Cible : .mc-price-slider rendu par snippets/price-facet.liquid
+     Scope : à l'intérieur du drawer FILTRES uniquement. */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider {
+    position: relative;
+    height: 36px;
+    margin: 16px 0 0;
+    padding: 0 7px;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__track {
+    position: absolute;
+    top: 17px;
+    left: 7px;
+    right: 7px;
+    height: 1px;
+    background: var(--mc-drawer-divider, #E8E4DD);
+    pointer-events: none;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__range {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #1A1814;
+  }
+  /* Les 2 inputs range sont superposés, pointer-events filtré par CSS */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--mc-slider-thumb-color, #1A1814);
+    border: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+    transition: background-color 200ms ease, transform 150ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--mc-slider-thumb-color, #1A1814);
+    border: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+    transition: background-color 200ms ease, transform 150ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:hover::-webkit-slider-thumb,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:active::-webkit-slider-thumb,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:focus::-webkit-slider-thumb {
+    background: #8C6D3F;
+    transform: scale(1.08);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:hover::-moz-range-thumb,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:active::-moz-range-thumb,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:focus::-moz-range-thumb {
+    background: #8C6D3F;
+    transform: scale(1.08);
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input:focus {
+    outline: none;
+  }
+  /* Track natif transparent : on utilise notre track custom */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input::-webkit-slider-runnable-track {
+    background: transparent;
+    height: 16px;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__input::-moz-range-track {
+    background: transparent;
+    height: 16px;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__display {
+    margin-top: 8px;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0;
+    color: #1A1814;
+  }
+  /* Cache les <label> Dawn (from/to) et currency hérités du snippet original */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__price .field-currency,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__price .field {
+    display: none;
+  }
+  /* Cache aussi le summary "max price" Dawn (on l'a remplacé par le display) */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__header-vertical .facets__selected {
+    display: none;
+  }
+
+  /* === Phase 16.7 — Toggle "Disponibilité immédiate" ==============
+     Transforme la liste de checkboxes availability (filter.v.availability)
+     en un toggle on/off unique. Injection markup + binding via JS au
+     sein de la section ; CSS scopé au drawer. */
+  #shopify-section-{{ section.id }} .mc-availability-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .mc-availability-toggle__label {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0;
+    color: #1A1814;
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .mc-availability-toggle__switch {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 16px;
+    background: var(--mc-drawer-divider, #E8E4DD);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 200ms ease;
+    flex: 0 0 auto;
+  }
+  #shopify-section-{{ section.id }} .mc-availability-toggle__switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #F5F0E8;
+    transition: transform 200ms ease;
+  }
+  #shopify-section-{{ section.id }} .mc-availability-toggle__switch[aria-checked='true'] {
+    background: var(--mc-toggle-active-color, #1A1814);
+  }
+  #shopify-section-{{ section.id }} .mc-availability-toggle__switch[aria-checked='true']::after {
+    transform: translateX(12px);
+  }
+  /* Quand notre toggle est actif, on cache la liste checkbox native availability */
+  #shopify-section-{{ section.id }} .mc-filter-drawer [data-mc-availability-hidden] {
+    display: none;
+  }
+
   /* === Phase 16.21 — Sidebar inline (desktop >= 990px) ============
      Le drawer devient une sidebar dans le flow du document, ancrée
      à gauche d'un layout flex contenant la grille. Au repos, la
@@ -1086,6 +1246,105 @@
         }
       })();
 
+      /* === Phase 16.7 — Price slider (2 poignées) + Availability toggle === */
+      (function () {
+        var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+        if (!sectionEl) return;
+
+        function initPriceSliders(root) {
+          root.querySelectorAll('[data-mc-price-slider]').forEach(function (slider) {
+            if (slider.dataset.mcPriceInit === '1') return;
+            slider.dataset.mcPriceInit = '1';
+
+            var minInput = slider.querySelector('[data-mc-min]');
+            var maxInput = slider.querySelector('[data-mc-max]');
+            var range = slider.querySelector('[data-mc-range]');
+            var minDisp = slider.querySelector('[data-mc-min-display]');
+            var maxDisp = slider.querySelector('[data-mc-max-display]');
+            if (!minInput || !maxInput || !range) return;
+            var max = parseFloat(slider.dataset.max) || 0;
+            if (max <= 0) return;
+
+            function paint() {
+              var lo = parseFloat(minInput.value);
+              var hi = parseFloat(maxInput.value);
+              if (lo > hi) { lo = hi; minInput.value = String(lo); }
+              if (hi < lo) { hi = lo; maxInput.value = String(hi); }
+              var loPct = (lo / max) * 100;
+              var hiPct = (hi / max) * 100;
+              range.style.left = loPct + '%';
+              range.style.right = (100 - hiPct) + '%';
+              if (minDisp) minDisp.textContent = String(lo);
+              if (maxDisp) maxDisp.textContent = String(hi);
+            }
+            // Live visual update pendant le drag
+            minInput.addEventListener('input', paint);
+            maxInput.addEventListener('input', paint);
+            paint();
+            // Le 'change' natif au release est attrapé par <price-range>
+            // qui propage via FacetFiltersForm — pas besoin de submit manuel.
+          });
+        }
+
+        function transformAvailabilityToggle(root) {
+          // Cherche le filter availability dans le drawer par son param_name dans l'ID
+          var details = root.querySelector('[id*="availability"]');
+          if (!details || details.dataset.mcAvailInit === '1') return;
+          // Trouve la checkbox "in stock" (value="1") et "out of stock" (value="0")
+          var inStock = details.querySelector('input[value="1"]');
+          var outStock = details.querySelector('input[value="0"]');
+          if (!inStock) return;
+          details.dataset.mcAvailInit = '1';
+
+          // Cache la liste native de checkboxes
+          var list = details.querySelector('ul, fieldset');
+          if (list) list.setAttribute('data-mc-availability-hidden', '');
+
+          // Crée le toggle
+          var toggle = document.createElement('div');
+          toggle.className = 'mc-availability-toggle';
+          toggle.innerHTML = '<label class="mc-availability-toggle__label" id="MCAvLabel-{{ section.id }}">Disponibilité immédiate</label>' +
+            '<button type="button" class="mc-availability-toggle__switch" ' +
+            'role="switch" aria-checked="' + (inStock.checked ? 'true' : 'false') + '" ' +
+            'aria-labelledby="MCAvLabel-{{ section.id }}"></button>';
+          var insertAfter = list || details.querySelector('summary');
+          if (insertAfter && insertAfter.parentNode) {
+            insertAfter.parentNode.insertBefore(toggle, insertAfter.nextSibling);
+          }
+
+          var sw = toggle.querySelector('.mc-availability-toggle__switch');
+          var label = toggle.querySelector('.mc-availability-toggle__label');
+          function onToggle() {
+            var checked = sw.getAttribute('aria-checked') === 'true';
+            var next = !checked;
+            sw.setAttribute('aria-checked', next ? 'true' : 'false');
+            // Synchronise la checkbox native "in stock"
+            inStock.checked = next;
+            // Décoche "out of stock" si on veut juste "en stock"
+            if (outStock) outStock.checked = false;
+            // Trigger le change natif → FacetFiltersForm reprend la main
+            inStock.dispatchEvent(new Event('input', { bubbles: true }));
+            inStock.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          sw.addEventListener('click', onToggle);
+          if (label) label.addEventListener('click', onToggle);
+        }
+
+        function refresh() {
+          initPriceSliders(sectionEl);
+          transformAvailabilityToggle(sectionEl);
+        }
+
+        refresh();
+        // Le snippet facets est re-rendu après chaque filter update.
+        // On observe le drawer body pour ré-initialiser nos widgets.
+        var drawerBody = sectionEl.querySelector('.mc-filter-drawer__body');
+        if (drawerBody) {
+          var obs = new MutationObserver(function () { refresh(); });
+          obs.observe(drawerBody, { childList: true, subtree: true });
+        }
+      })();
+
       /* === Sort dropdown — Phase 16.9 === */
       (function () {
         var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
@@ -1424,6 +1683,8 @@
     { "type": "checkbox", "id": "show_clear_all_top", "default": false, "label": "Afficher 'Tout effacer' en haut du drawer (en plus du bas)" },
     { "type": "range", "id": "drawer_width_desktop", "min": 320, "max": 480, "step": 20, "unit": "px", "default": 400, "label": "Largeur drawer (desktop)" },
     { "type": "range", "id": "filter_drawer_width", "min": 280, "max": 500, "step": 10, "unit": "px", "default": 360, "label": "Largeur de la sidebar des filtres", "info": "Largeur du panneau qui s'ouvre quand on clique sur FILTRES" },
+    { "type": "color", "id": "filter_slider_thumb_color", "default": "#1A1814", "label": "Couleur des poignées du curseur prix" },
+    { "type": "color", "id": "filter_toggle_active_color", "default": "#1A1814", "label": "Couleur du toggle actif (Disponibilité immédiate)" },
     { "type": "range", "id": "filter_drawer_text_size", "min": 10, "max": 16, "step": 0.5, "unit": "px", "default": 12, "label": "Taille du texte dans la sidebar des filtres", "info": "Taille des options de filtre (En stock, etc.)" },
     { "type": "range", "id": "sort_dropdown_text_size", "min": 10, "max": 16, "step": 0.5, "unit": "px", "default": 12, "label": "Taille du texte du menu Trier par" },
     {

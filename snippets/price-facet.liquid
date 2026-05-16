@@ -1,45 +1,72 @@
-<span class="field-currency">{{ cart.currency.symbol }}</span>
+{%- comment -%}
+  Phase 16.7 — Filtre prix en curseur range à 2 poignées (Maison Coeur).
 
-<div class="field">
+  Markup HTML uniquement : la logique JS (synchronisation poignées,
+  display, debounce submit) est centralisée dans le bloc <script>
+  de sections/main-collection-product-grid.liquid pour éviter la
+  duplication quand le snippet est re-rendu à chaque update facets.
+
+  Les inputs `type="range"` conservent les `name` Shopify natifs
+  (filter.v.price.gte / .lte) ; leur événement `change` est attrapé
+  par le web component <price-range> et propagé au form parent
+  via FacetFiltersForm (assets/facets.js).
+
+  Échelle : on travaille en euros entiers (cents / 100). Shopify
+  accepte un entier d'euros pour le param de prix.
+
+  Params :
+    filter      : filter object Liquid (results.filters[i])
+    id_prefix   : 'Filter-' (desktop/drawer) ou 'Mobile-Filter-'
+    filter_type : 'vertical' (drawer) ou 'horizontal'
+{%- endcomment -%}
+
+{%- liquid
+  assign max_in_cents = filter.range_max
+  assign max_eur = max_in_cents | divided_by: 100
+
+  assign min_v_cents = filter.min_value.value | default: 0
+  assign max_v_cents = filter.max_value.value | default: max_in_cents
+  assign min_v_eur = min_v_cents | divided_by: 100
+  assign max_v_eur = max_v_cents | divided_by: 100
+
+  assign currency_symbol = cart.currency.symbol
+-%}
+
+<div
+  class="mc-price-slider"
+  data-mc-price-slider
+  data-max="{{ max_eur }}"
+  data-currency="{{ currency_symbol }}"
+>
+  <div class="mc-price-slider__track">
+    <div class="mc-price-slider__range" data-mc-range></div>
+  </div>
   <input
-    class="field__input"
+    class="mc-price-slider__input mc-price-slider__input--min"
+    type="range"
     name="{{ filter.min_value.param_name }}"
     id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
-    {%- if filter.min_value.value -%}
-      value="{{ filter.min_value.value | money_without_currency }}"
-    {%- endif -%}
-    type="text"
-    inputmode="decimal"
-    placeholder="0"
-    data-pattern="\d| |,|\."
-    data-min="0"
-    data-max="{{ filter.range_max | money_without_currency }}"
+    min="0"
+    max="{{ max_eur }}"
+    step="1"
+    value="{{ min_v_eur }}"
+    aria-label="Prix minimum"
+    data-mc-min
   >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-GTE">
-    {{- 'products.facets.from' | t -}}
-  </label>
-</div>
-
-{%- if filter_type != 'vertical' -%}
-  <span class="field-currency">{{ cart.currency.symbol }}</span>
-{%- endif -%}
-
-<div class="field">
   <input
-    class="field__input"
+    class="mc-price-slider__input mc-price-slider__input--max"
+    type="range"
     name="{{ filter.max_value.param_name }}"
     id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
-    {%- if filter.max_value.value -%}
-      value="{{ filter.max_value.value | money_without_currency }}"
-    {%- endif -%}
-    type="text"
-    inputmode="decimal"
-    placeholder="{{ filter.range_max | money_without_currency }}"
-    data-pattern="\d| |,|\."
-    data-min="0"
-    data-max="{{ filter.range_max | money_without_currency }}"
+    min="0"
+    max="{{ max_eur }}"
+    step="1"
+    value="{{ max_v_eur }}"
+    aria-label="Prix maximum"
+    data-mc-max
   >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-LTE">
-    {{- 'products.facets.to' | t -}}
-  </label>
+  <div class="mc-price-slider__display">
+    Entre <span data-mc-min-display>{{ min_v_eur }}</span> {{ currency_symbol }}
+    et <span data-mc-max-display>{{ max_v_eur }}</span> {{ currency_symbol }}
+  </div>
 </div>
