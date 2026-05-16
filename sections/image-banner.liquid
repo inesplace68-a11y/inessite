@@ -131,6 +131,111 @@
     outline-offset: 3px;
     box-shadow: none !important;
   }
+
+  {%- liquid
+    assign overlay_r = section.settings.hero_overlay_color | color_extract: 'red'
+    assign overlay_g = section.settings.hero_overlay_color | color_extract: 'green'
+    assign overlay_b = section.settings.hero_overlay_color | color_extract: 'blue'
+    assign overlay_alpha = section.settings.hero_overlay_opacity_pct | divided_by: 100.0
+
+    assign scroll_r = section.settings.hero_scroll_indicator_color | color_extract: 'red'
+    assign scroll_g = section.settings.hero_scroll_indicator_color | color_extract: 'green'
+    assign scroll_b = section.settings.hero_scroll_indicator_color | color_extract: 'blue'
+
+    assign kb_amp = section.settings.hero_kenburns_amplitude_pct | divided_by: 100.0 | plus: 1
+  -%}
+
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}:not(.banner--adapt) {
+      min-height: {{ section.settings.hero_height_vh }}vh !important;
+    }
+  }
+
+  #Banner-{{ section.id }}::after {
+    background: rgb({{ overlay_r }}, {{ overlay_g }}, {{ overlay_b }}) !important;
+    opacity: {{ overlay_alpha }} !important;
+  }
+
+  #Banner-{{ section.id }} .banner__box .banner__heading + .banner__text,
+  #Banner-{{ section.id }} .banner__box > .banner__heading + .banner__text {
+    margin-top: {{ section.settings.hero_spacing_title_to_subtitle }}px !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner__box > * + .banner__text {
+      margin-top: {{ section.settings.hero_spacing_title_to_subtitle }}px !important;
+    }
+  }
+
+  #Banner-{{ section.id }} .banner__box > * + .banner__buttons,
+  #Banner-{{ section.id }} .banner__box .banner__text + .banner__buttons {
+    margin-top: {{ section.settings.hero_spacing_subtitle_to_cta }}px !important;
+  }
+
+  {%- if section.settings.hero_kenburns_enabled -%}
+    @keyframes mc-hero-kenburns-{{ section.id }} {
+      0%   { transform: scale(1); }
+      50%  { transform: scale({{ kb_amp }}); }
+      100% { transform: scale(1); }
+    }
+    #Banner-{{ section.id }} .banner__media > img,
+    #Banner-{{ section.id }} .banner__media > svg {
+      animation: mc-hero-kenburns-{{ section.id }} {{ section.settings.hero_kenburns_duration }}s ease-in-out infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #Banner-{{ section.id }} .banner__media > img,
+      #Banner-{{ section.id }} .banner__media > svg {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+  {%- endif -%}
+
+  .mc-hero-scroll-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 2.4rem;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 3;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .mc-hero-scroll-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: rgb({{ scroll_r }}, {{ scroll_g }}, {{ scroll_b }});
+    opacity: {{ section.settings.hero_scroll_indicator_opacity }};
+    animation: mc-hero-scroll-pulse-{{ section.id }} 2s ease-in-out infinite;
+  }
+  .mc-hero-scroll-indicator:focus { outline: 0; }
+  .mc-hero-scroll-indicator:focus-visible {
+    outline: 2px solid rgba({{ scroll_r }}, {{ scroll_g }}, {{ scroll_b }}, 0.5);
+    outline-offset: 4px;
+  }
+  @keyframes mc-hero-scroll-pulse-{{ section.id }} {
+    0%   { opacity: {{ section.settings.hero_scroll_indicator_opacity | times: 0.4 }}; transform: translateY(0); }
+    50%  { opacity: {{ section.settings.hero_scroll_indicator_opacity }}; transform: translateY(6px); }
+    100% { opacity: {{ section.settings.hero_scroll_indicator_opacity | times: 0.4 }}; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mc-hero-scroll-indicator::before {
+      animation: none !important;
+      opacity: {{ section.settings.hero_scroll_indicator_opacity }};
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -232,6 +337,15 @@
       }}
     </div>
   {%- endif -%}
+  {%- if section.settings.hero_scroll_indicator_enabled -%}
+    <button
+      type="button"
+      class="mc-hero-scroll-indicator"
+      data-mc-hero-scroll
+      data-banner-id="Banner-{{ section.id }}"
+      aria-label="Faire défiler vers la section suivante"
+    ></button>
+  {%- endif -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}
@@ -282,6 +396,25 @@
     </div>
   </div>
 </div>
+
+{%- if section.settings.hero_scroll_indicator_enabled -%}
+  <script>
+    (function () {
+      var btn = document.querySelector('[data-mc-hero-scroll][data-banner-id="Banner-{{ section.id }}"]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var banner = document.getElementById('Banner-{{ section.id }}');
+        if (!banner) return;
+        var holder = banner.closest('.shopify-section') || banner;
+        var next = holder.nextElementSibling;
+        while (next && next.offsetHeight === 0) next = next.nextElementSibling;
+        if (next && typeof next.scrollIntoView === 'function') {
+          next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -406,6 +539,129 @@
       "label": "Opacité du bouton au survol",
       "info": "Présence du bouton rempli. 1 = pleine présence, valeurs plus basses = effet voilé.",
       "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Hauteur du hero"
+    },
+    {
+      "type": "range",
+      "id": "hero_height_vh",
+      "min": 60,
+      "max": 100,
+      "step": 2,
+      "unit": "vh",
+      "label": "Hauteur du hero (en % de l'écran)",
+      "info": "100 = pleine page. ~88 recommandé pour faire apparaître le début de la section suivante en bas d'écran et inviter au scroll.",
+      "default": 88
+    },
+    {
+      "type": "header",
+      "content": "Voile sur l'image"
+    },
+    {
+      "type": "color",
+      "id": "hero_overlay_color",
+      "label": "Couleur du voile sur l'image",
+      "info": "Voile très discret qui assombrit légèrement l'image pour faire ressortir le texte. Default noir.",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "hero_overlay_opacity_pct",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "label": "Intensité du voile",
+      "info": "0 = aucun voile (image brute). 50 = voile très marqué. Recommandé : 5 à 15 (= 0.05–0.15) pour un effet imperceptible mais lisibilité accrue.",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Rythme titre / sous-titre / CTA"
+    },
+    {
+      "type": "range",
+      "id": "hero_spacing_title_to_subtitle",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espace entre le titre et le sous-titre",
+      "info": "Air vertical entre le grand titre et la ligne descriptive en dessous.",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "hero_spacing_subtitle_to_cta",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espace entre le sous-titre et le bouton",
+      "info": "Air vertical entre la ligne descriptive et le bouton DÉCOUVRIR LA SÉLECTION.",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Indicateur de scroll"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_scroll_indicator_enabled",
+      "label": "Afficher l'indicateur de scroll",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "hero_scroll_indicator_color",
+      "label": "Couleur de l'indicateur",
+      "info": "À aligner sur la couleur du texte du hero pour cohérence.",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "hero_scroll_indicator_opacity",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "label": "Présence de l'indicateur",
+      "info": "Discrétion de l'indicateur. 1 = pleine présence, valeurs plus basses = plus discret.",
+      "default": 0.6
+    },
+    {
+      "type": "header",
+      "content": "Animation lente (Ken Burns)"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_kenburns_enabled",
+      "label": "Activer l'animation lente de l'image hero",
+      "info": "Effet de zoom très discret qui donne une respiration cinématographique. Désactivé automatiquement si l'utilisateur a activé la réduction de mouvement.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "hero_kenburns_duration",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "s",
+      "label": "Durée du cycle d'animation",
+      "info": "Temps pour un cycle zoom complet (aller-retour). Plus long = plus discret.",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "hero_kenburns_amplitude_pct",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "%",
+      "label": "Amplitude du zoom",
+      "info": "Zoom maximal en pourcentage. 0 = pas de zoom, 5 = zoom de 5%, 10 = zoom de 10%. Recommandé : 4 à 6 pour un effet imperceptible.",
+      "default": 5
     },
     {
       "type": "select",
