@@ -3595,30 +3595,3 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
-
-/* Fix bande blanche page collection - force crème continu sur main et tous les wrappers */
-body,
-main,
-#MainContent,
-.shopify-section,
-.shopify-section-group-header-group,
-.shopify-section-group-footer-group,
-.shopify-section--main-collection,
-.shopify-section--main-collection-banner,
-.shopify-section--main-collection-product-grid,
-.page-width,
-.container,
-.section,
-.section-padding {
-  background-color: var(--mc-cream, #F5F0E8) !important;
-}
-
-/* Exceptions explicites (zones qui doivent rester blanches) */
-.cart-drawer,
-.modal,
-.popup-modal,
-.predictive-search,
-.quick-add-modal,
-.quick-add-content {
-  background-color: #FFFFFF !important;
-}
