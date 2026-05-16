@@ -63,6 +63,8 @@
     --mc-filter-title-size-m: {{ section.settings.filter_title_size_mobile | default: 16 }}px;
     --mc-filter-label-size: {{ section.settings.filter_section_label_size_desktop | default: 14 }}px;
     --mc-filter-label-size-m: {{ section.settings.filter_section_label_size_mobile | default: 12 }}px;
+    --mc-label-size: {{ section.settings.filter_sort_label_size | default: 12 }}px;
+    --mc-label-color: {{ section.settings.filter_sort_label_color | default: '#6B6660' }};
   }
   /* Grille — gap configurable */
   #shopify-section-{{ section.id }} .grid--quarter-max,
@@ -205,10 +207,10 @@
     gap: 10px;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: var(--mc-label-size, 12px);
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #1A1814;
+    color: var(--mc-label-color, #6B6660);
     transition: color 200ms ease;
   }
   #shopify-section-{{ section.id }} .mc-toolbar__filter-trigger:hover,
@@ -285,10 +287,10 @@
     gap: var(--mc-sort-gap, 8px);
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: var(--mc-label-size, 12px);
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #1A1814;
+    color: var(--mc-label-color, #6B6660);
     transition: color 200ms ease;
   }
   #shopify-section-{{ section.id }} .mc-sort__trigger:hover,
@@ -335,10 +337,10 @@
     cursor: pointer;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: var(--mc-label-size, 12px);
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #1A1814;
+    color: var(--mc-label-color, #6B6660);
     transition: background-color 180ms ease, color 180ms ease;
     display: block;
     position: relative;
@@ -618,6 +620,70 @@
       min-width: 200px;
     }
   }
+
+  /* === Phase 16.21 — Sidebar inline (desktop >= 990px) ============
+     Le drawer devient une sidebar dans le flow du document, ancrée
+     à gauche d'un layout flex contenant la grille. Au repos, la
+     sidebar a une largeur de 0 (invisible, pas de place réservée).
+     À l'ouverture, elle s'étend à 400px et la grille se compresse
+     en passant de 4 à 3 colonnes. Pas d'overlay desktop, pas de
+     scroll lock, la grille reste cliquable.
+     Mobile (< 990px) : comportement drawer overlay inchangé. */
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .mc-collection-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+    #shopify-section-{{ section.id }} .mc-collection-layout .product-grid-container {
+      flex: 1 1 auto;
+      min-width: 0;
+      transition: padding-left var(--mc-drawer-dur, 350ms) ease-out;
+    }
+    /* Drawer en mode sidebar : passe dans le flow normal */
+    #shopify-section-{{ section.id }} .mc-collection-layout .mc-filter-drawer {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      height: auto;
+      max-height: none;
+      flex: 0 0 0;
+      width: 0;
+      transform: none;
+      box-shadow: none;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        flex-basis var(--mc-drawer-dur, 350ms) ease-out,
+        width var(--mc-drawer-dur, 350ms) ease-out,
+        opacity var(--mc-drawer-dur, 350ms) ease-out,
+        margin var(--mc-drawer-dur, 350ms) ease-out;
+      margin-right: 0;
+    }
+    #shopify-section-{{ section.id }} .mc-collection-layout .mc-filter-drawer[data-open='true'] {
+      flex: 0 0 var(--mc-drawer-w, 400px);
+      width: var(--mc-drawer-w, 400px);
+      opacity: 1;
+      margin-right: 32px;
+    }
+    /* Pas d'overlay desktop */
+    #shopify-section-{{ section.id }} .mc-collection-layout .mc-filter-overlay {
+      display: none;
+    }
+    /* Pas de scroll lock du body sur desktop quand sidebar ouverte
+       (override la règle html.mc-filters-open / body.mc-filters-open
+       qui sert au drawer overlay mobile) */
+    html.mc-filters-open,
+    body.mc-filters-open {
+      overflow: auto;
+    }
+    /* Grille en 3 colonnes quand sidebar ouverte (override .grid--4-col-desktop) */
+    #shopify-section-{{ section.id }} .mc-collection-layout:has(.mc-filter-drawer[data-open='true']) .grid--4-col-desktop .grid__item {
+      width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+      max-width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    }
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
@@ -772,6 +838,11 @@
       </span>
     </div>
 
+    {% comment %} === Layout wrapper (Phase 16.21) : flex container desktop
+                     pour transformer le drawer en sidebar inline ;
+                     mobile < 990px conserve un comportement drawer overlay
+                     classique (le drawer s'extrait visuellement via fixed). === {% endcomment %}
+    <div class="mc-collection-layout">
     {% comment %} === Overlay + Drawer === {% endcomment %}
     {%- if section.settings.enable_filtering -%}
       <div class="mc-filter-overlay" data-mc-filter-overlay aria-hidden="true"></div>
@@ -894,6 +965,7 @@
         </div>
       {%- endif -%}
     </div>
+    </div>{% comment %} /.mc-collection-layout (Phase 16.21) {% endcomment %}
 
     {% comment %} === Drawer interactions (Phase 16.7) === {% endcomment %}
     <script>
@@ -1278,6 +1350,8 @@
     { "type": "checkbox", "id": "show_product_count", "default": false, "label": "Afficher le nombre de pièces" },
     { "type": "checkbox", "id": "show_bar_top_border", "default": false, "label": "Afficher le trait au-dessus de la barre filtres" },
     { "type": "checkbox", "id": "show_bar_bottom_border", "default": false, "label": "Afficher le trait en dessous de la barre filtres" },
+    { "type": "range", "id": "filter_sort_label_size", "min": 10, "max": 18, "step": 0.5, "unit": "px", "default": 12, "label": "Taille des libellés Filtres et Tri", "info": "Taille des mots FILTRES et TRIER PAR en haut de la grille" },
+    { "type": "color", "id": "filter_sort_label_color", "default": "#6B6660", "label": "Couleur des libellés Filtres et Tri", "info": "S'applique aux libellés et aux icônes associées" },
 
     { "type": "header", "content": "Dropdown tri — Phase 16.9" },
     { "type": "text", "id": "sort_label_text", "default": "TRIER PAR", "label": "Libellé du dropdown de tri" },
