@@ -2020,3 +2020,23 @@ button.mc-hd-icon {
   position: relative;
 }
 
+/* ============================================================
+   Phase 16.17 — Fix bande blanche page collection (scopé)
+   ============================================================
+   Cause racine : <body class="gradient"> force
+   background: rgb(var(--color-background)) = #FFFFFF (assets/base.css:2934),
+   ce qui bat en spécificité la règle body { background-color: var(--mc-bg) }
+   de ce fichier (ligne ~49).
+
+   Solution : override le fond du body UNIQUEMENT sur les pages qui
+   contiennent une section main-collection-* (= page collection,
+   templates collection.json + collection.gallery.json), via :has().
+   Spécificité body:has([id*=...]) = (0,1,1) > .gradient (0,1,0).
+
+   :has() est supporté par Chrome 105+, Safari 15.4+, Firefox 121+.
+   Aucune autre page n'est touchée (home, PDP, panier, footer).
+   ============================================================ */
+body:has([id*="main-collection-product-grid"]),
+body:has([id*="main-collection"]) {
+  background-color: var(--mc-cream, #F5F0E8);
+}
