@@ -9,9 +9,14 @@
       padding-top: {{ section.settings.footer_top_padding_mobile | default: 32 }}px;
     }
   }
+  /* Phase 16.43 — épaisseur de la bande copyright : padding-top/bottom
+     du conteneur interne .mc-footer-bar-inner, piloté par
+     footer_last_row_inner_padding (anciennement footer_bottom_padding_y,
+     renommé pour clarifier qu'il s'agit du rembourrage interne et non
+     d'une marge externe). Va à 0 pour compresser la bande au maximum. */
   #shopify-section-{{ section.id }} .mc-footer-bar-inner {
-    padding-top: {{ section.settings.footer_bottom_padding_y }}px;
-    padding-bottom: {{ section.settings.footer_bottom_padding_y }}px;
+    padding-top: {{ section.settings.footer_last_row_inner_padding | default: 0 }}px !important;
+    padding-bottom: {{ section.settings.footer_last_row_inner_padding | default: 0 }}px !important;
   }
   /* Phase 16.3 — UN setting consolidé `footer_localization_color` pilote la
      couleur du sélecteur pays/devise (texte + chevron SVG) ET du copyright +
@@ -142,6 +147,25 @@
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
+  }
+  /* Phase 16.43 — chevron sélecteur pays/devise repositionné en flux
+     flex normal (annule position: absolute de Dawn dans
+     component-localization-form.css l.79-85). Cause initiale du
+     chevauchement : Phase 16.40 a retiré le padding-right du bouton
+     qui réservait l'espace où le chevron en position absolute venait
+     se loger. Solution : laisser le SVG s'inscrire dans le
+     display: inline-flex; gap: 6px déjà appliqué par
+     maison-coeur.css:873-875 → écart de 6px exact entre "EUR €" et
+     le chevron, sans réintroduction de padding (qui raviverait la
+     box visible neutralisée Phase 16.42). */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button .icon-caret,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select .icon-caret,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button svg,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select svg {
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+    margin: 0 !important;
   }
 {%- endstyle -%}
 
@@ -447,14 +471,14 @@
     },
     {
       "type": "range",
-      "id": "footer_bottom_padding_y",
-      "label": "Marge verticale de la dernière ligne",
-      "info": "Phase 16.3.3 — espace au-dessus et en dessous du sélecteur pays/devise et des mentions légales. Min abaissé à 0 pour resserrement total.",
+      "id": "footer_last_row_inner_padding",
+      "label": "Épaisseur de la bande copyright",
+      "info": "Air au-dessus et en dessous du texte, à l'intérieur de la bande copyright. Min 0 pour la bande la plus compacte possible.",
       "min": 0,
-      "max": 60,
-      "step": 4,
+      "max": 80,
+      "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 0
     },
     {
       "type": "range",

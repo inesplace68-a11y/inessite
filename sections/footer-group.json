@@ -24,7 +24,7 @@
         "newsletter_btn_height": 40,
         "newsletter_btn_padding": 12,
         "footer_localization_color": "#f5f0e8",
-        "footer_bottom_padding_y": 0,
+        "footer_last_row_inner_padding": 0,
         "footer_bottom_font_size": 8,
         "footer_bottom_selector_padding_y": 1,
         "hide_localization_selector": false
