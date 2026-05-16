@@ -972,12 +972,35 @@
       assign sort_show_current = section.settings.sort_show_current_value
       assign sort_active_indicator = section.settings.sort_active_indicator | default: 'bronze'
       assign sort_label_text = section.settings.sort_label_text | default: 'TRIER PAR'
+
+      # Phase 16.32 — Whitelist d'options Shopify natives à garder dans
+      # le dropdown TRIER PAR. Toutes les autres (manual, best-selling,
+      # title-*, created-ascending, relevance) sont filtrées.
+      assign mc_sort_whitelist = 'created-descending,price-ascending,price-descending' | split: ','
+
+      # Option custom "Les plus convoitées" — basée sur metafield
+      # maison_coeur.wishlist_count desc (à câbler côté Search & Discovery).
+      # Devient l'option active par défaut si l'URL n'a pas de sort_by.
+      assign convoitees_value = 'wishlist_count-desc'
+      assign convoitees_active = false
+      if collection.sort_by == blank or collection.sort_by == convoitees_value
+        assign convoitees_active = true
+      endif
+
+      # Label texte de l'option active (utilisé si sort_show_current).
       assign sort_current_label = ''
-      for option in collection.sort_options
-        if option.value == sort_by
-          assign sort_current_label = option.name
-        endif
-      endfor
+      if convoitees_active
+        assign sort_current_label = 'Les plus convoitées'
+      else
+        case sort_by
+          when 'created-descending'
+            assign sort_current_label = 'Nouveautés'
+          when 'price-ascending'
+            assign sort_current_label = 'Prix croissant'
+          when 'price-descending'
+            assign sort_current_label = 'Prix décroissant'
+        endcase
+      endif
       assign apply_prefix = apply_text | split: 'X' | first | strip
       assign apply_suffix = apply_text | split: 'X' | last
       if apply_suffix == apply_text
@@ -1039,9 +1062,20 @@
                 aria-describedby="a11y-refresh-page-message"
                 tabindex="-1"
               >
+                {%- comment -%} Phase 16.32 — Option custom "Les plus convoitées" en tête {%- endcomment -%}
+                <option value="{{ convoitees_value }}" {% if convoitees_active %}selected="selected"{% endif %}>
+                  Les plus convoitées
+                </option>
                 {%- for option in collection.sort_options -%}
-                  <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
-                    {{- option.name | escape -}}
+                  {%- unless mc_sort_whitelist contains option.value -%}{%- continue -%}{%- endunless -%}
+                  {%- assign mc_display_name = option.name -%}
+                  {%- case option.value -%}
+                    {%- when 'created-descending' -%}{%- assign mc_display_name = 'Nouveautés' -%}
+                    {%- when 'price-ascending' -%}{%- assign mc_display_name = 'Prix croissant' -%}
+                    {%- when 'price-descending' -%}{%- assign mc_display_name = 'Prix décroissant' -%}
+                  {%- endcase -%}
+                  <option value="{{ option.value | escape }}" {% if option.value == sort_by and convoitees_active == false %}selected="selected"{% endif %}>
+                    {{- mc_display_name | escape -}}
                   </option>
                 {%- endfor -%}
               </select>
@@ -1072,16 +1106,37 @@
                   aria-label="{{ sort_label_text }}"
                   hidden
                 >
+                  {%- comment -%} Phase 16.32 — Option custom "Les plus convoitées" en tête {%- endcomment -%}
+                  <li>
+                    <button
+                      type="button"
+                      role="option"
+                      class="mc-sort__option{% if convoitees_active %} is-active is-active--{{ sort_active_indicator }}{% endif %}"
+                      data-value="{{ convoitees_value }}"
+                      aria-selected="{% if convoitees_active %}true{% else %}false{% endif %}"
+                    >
+                      Les plus convoitées
+                    </button>
+                  </li>
                   {%- for option in collection.sort_options -%}
+                    {%- unless mc_sort_whitelist contains option.value -%}{%- continue -%}{%- endunless -%}
+                    {%- assign mc_display_name = option.name -%}
+                    {%- case option.value -%}
+                      {%- when 'created-descending' -%}{%- assign mc_display_name = 'Nouveautés' -%}
+                      {%- when 'price-ascending' -%}{%- assign mc_display_name = 'Prix croissant' -%}
+                      {%- when 'price-descending' -%}{%- assign mc_display_name = 'Prix décroissant' -%}
+                    {%- endcase -%}
+                    {%- assign mc_is_active = false -%}
+                    {%- if option.value == sort_by and convoitees_active == false -%}{%- assign mc_is_active = true -%}{%- endif -%}
                     <li>
                       <button
                         type="button"
                         role="option"
-                        class="mc-sort__option{% if option.value == sort_by %} is-active is-active--{{ sort_active_indicator }}{% endif %}"
+                        class="mc-sort__option{% if mc_is_active %} is-active is-active--{{ sort_active_indicator }}{% endif %}"
                         data-value="{{ option.value | escape }}"
-                        aria-selected="{% if option.value == sort_by %}true{% else %}false{% endif %}"
+                        aria-selected="{% if mc_is_active %}true{% else %}false{% endif %}"
                       >
-                        {{- option.name | escape -}}
+                        {{- mc_display_name | escape -}}
                       </button>
                     </li>
                   {%- endfor -%}
