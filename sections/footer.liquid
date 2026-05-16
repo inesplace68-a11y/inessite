@@ -109,6 +109,40 @@
     align-items: center;
     justify-content: center;
   }
+  /* Phase 16.42 — BRUTE-FORCE suppression définitive du rectangle visible
+     autour de "FRANCE · EUR €". Root cause identifiée : Dawn dessine la
+     bordure via un box-shadow ring sur le pseudo-élément
+     .localization-form__select:after (base.css l.1611-1624) — NEUTRALISÉ
+     par les phases 16.34/35/37 sur le bouton mais PAS sur son ::after.
+     De plus .disclosure__button.localization-form__select pose un
+     background opaque (color-background) qui crée un rectangle clair.
+     On exclut explicitement .disclosure__list-wrapper (dropdown popup
+     ouvert) qui doit conserver sa bordure. */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-selector,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure::before,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure::after,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button::before,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button::after,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select::before,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select::after,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-selector::before,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-selector::after {
+    border: 0 !important;
+    border-color: transparent !important;
+    border-style: none !important;
+    border-width: 0 !important;
+    outline: 0 !important;
+    outline-color: transparent !important;
+    outline-style: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
 {%- endstyle -%}
 
 <footer class="mc-footer">
