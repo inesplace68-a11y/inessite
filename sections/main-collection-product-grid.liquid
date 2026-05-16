@@ -442,7 +442,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px 14px;
+    padding: 14px 20px;
     border-bottom: 1px solid var(--mc-drawer-divider, #E8E4DD);
     flex: 0 0 auto;
   }
@@ -562,7 +562,9 @@
   #shopify-section-{{ section.id }} .mc-filter-drawer .product-count.light {
     display: none !important;
   }
-  /* Make sure facet summaries adopt our typography (Phase 16.23 : sentence case) */
+  /* Make sure facet summaries adopt our typography (Phase 16.23 : sentence case)
+     Phase 16.32 : padding symétrique 14px haut/bas pour centrer
+     verticalement le label entre les border-bottom des accordéons. */
   #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary,
   #shopify-section-{{ section.id }} .mc-filter-drawer .facets__summary-label {
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
@@ -571,7 +573,9 @@
     letter-spacing: 0;
     font-size: 11px;
     color: #1A1814;
-    margin-bottom: 0.75rem;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    margin: 0;
   }
   /* Options checkbox + texte interne — Phase 16.22/16.23 */
   #shopify-section-{{ section.id }} .mc-filter-drawer .facets__label,
@@ -871,13 +875,16 @@
     display: none;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer .mc-availability-toggle--top {
-    margin: 0 0 12px;
-    padding-bottom: 0;
+    margin: 0;
+    padding: 14px 0;
     /* Phase 16.30 — border-bottom retiré : le séparateur entre le
        toggle et l'accordéon Prix est désormais assuré par le
        border-bottom natif du .facets__disclosure-vertical (qui
        sépare déjà tous les accordéons entre eux). Évite le doublon
-       de trait perçu en Phase 16.29. */
+       de trait perçu en Phase 16.29.
+       Phase 16.32 — padding 14px haut/bas pour centrer verticalement
+       le label "Disponibilité immédiate" comme les summary des
+       accordéons (cohérence visuelle). */
   }
 
   /* === Phase 16.21 — Sidebar inline (desktop >= 990px) ============

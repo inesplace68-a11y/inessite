@@ -73,7 +73,7 @@
   "collection": {
     "see_pieces": {
       "zero": "AUCUNE PIÈCE",
-      "one": "VOIR LA {{ count }} PIÈCE",
+      "one": "VOIR LA PIÈCE",
       "other": "VOIR LES {{ count }} PIÈCES"
     }
   },
