@@ -93,7 +93,7 @@
         "main_text_size": 26,
         "section_padding_top": 80,
         "section_padding_bottom": 80,
-        "section_max_width": 1600
+        "section_max_width": 800
       }
     }
   },
