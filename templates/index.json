@@ -58,7 +58,7 @@
         "hero_aspect_ratio": "5/2",
         "hero_max_height_vh": 90,
         "hero_overlay_color": "#000000",
-        "hero_overlay_opacity_pct": 12,
+        "hero_overlay_opacity_pct": 17,
         "hero_spacing_title_to_subtitle": 16,
         "hero_spacing_subtitle_to_cta": 20,
         "hero_scroll_indicator_enabled": true,
