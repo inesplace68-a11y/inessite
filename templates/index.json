@@ -85,7 +85,7 @@
       "settings": {
         "show_eyebrow": true,
         "title_eyebrow": "NOS NOUVEAUTÉS",
-        "title_alignment": "center",
+        "title_alignment": "left",
         "header_bottom_gap": 40,
         "featured_collection": "miroirs",
         "sort_by": "created-descending",
