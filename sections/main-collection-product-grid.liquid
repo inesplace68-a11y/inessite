@@ -104,6 +104,19 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
+  /* Phase 16.20 — Hover titre carte produit : transition couleur + no underline */
+  #shopify-section-{{ section.id }} .card__heading,
+  #shopify-section-{{ section.id }} .card__heading a {
+    transition: color {{ section.settings.card_title_hover_transition | default: 0.5 }}s ease;
+    text-decoration: none;
+  }
+  #shopify-section-{{ section.id }} .card-wrapper:hover .card__heading,
+  #shopify-section-{{ section.id }} .card-wrapper:hover .card__heading a,
+  #shopify-section-{{ section.id }} .card-wrapper:focus-within .card__heading,
+  #shopify-section-{{ section.id }} .card-wrapper:focus-within .card__heading a {
+    color: {{ section.settings.card_title_hover_color | default: '#8C6D3F' }};
+    text-decoration: none;
+  }
   #shopify-section-{{ section.id }} .card__information,
   #shopify-section-{{ section.id }} .card-information {
     min-width: 0;
@@ -1236,6 +1249,8 @@
     { "type": "range", "id": "card_title_size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 16, "label": "Taille titre vignette" },
     { "type": "range", "id": "card_title_max_lines", "min": 1, "max": 4, "step": 1, "default": 2, "label": "Lignes maximum du titre produit" },
     { "type": "range", "id": "card_price_size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14, "label": "Taille prix vignette" },
+    { "type": "color", "id": "card_title_hover_color", "default": "#8C6D3F", "label": "Couleur du titre des cartes produit au survol", "info": "S'applique au passage de la souris sur le titre d'une carte produit" },
+    { "type": "range", "id": "card_title_hover_transition", "min": 0, "max": 1, "step": 0.1, "unit": "s", "default": 0.5, "label": "Durée de transition au survol", "info": "Plus la valeur est élevée, plus le changement de couleur est lent" },
 
     { "type": "header", "content": "Coeur wishlist — Phase 16.6" },
     { "type": "checkbox", "id": "show_wishlist_heart", "default": true, "label": "Afficher le coeur wishlist sur les vignettes" },
