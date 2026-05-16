@@ -14,18 +14,24 @@
   padding: 0 var(--content-gutter-desktop, 64px);
 }
 
-/* ----------------- Header de section (titre + CTA même ligne) ----------------- */
+/* ----------------- Header de section (titre + CTA même ligne) -----------------
+   Le titre utilise .mc-section-heading (défini dans maison-coeur.css)
+   pour cohérence stricte avec NOTRE SÉLECTION (Phase 16.52). */
 .home-selection__header {
   display: flex;
   align-items: center;
-  margin: 0 0 var(--hs-header-bottom, 32px);
+  margin: 0 0 var(--hs-header-bottom, 40px);
+}
+
+.home-selection__header .mc-section-heading {
+  margin: 0;
 }
 
 .home-selection__header--left {
   justify-content: space-between;
 }
 
-.home-selection__header--left .home-selection__eyebrow {
+.home-selection__header--left .mc-section-heading {
   text-align: left;
 }
 
@@ -35,7 +41,7 @@
   align-items: center;
 }
 
-.home-selection__header--center .home-selection__eyebrow {
+.home-selection__header--center .mc-section-heading {
   grid-column: 2;
   text-align: center;
 }
@@ -43,17 +49,6 @@
 .home-selection__header--center .home-selection__cta {
   grid-column: 3;
   justify-self: end;
-}
-
-/* ----------------- Eyebrow ----------------- */
-.home-selection__eyebrow {
-  font-family: var(--mc-font-sans, 'Jost', sans-serif);
-  font-weight: 300;
-  font-size: var(--type-h5, 12px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--mc-dark, #1A1614);
-  margin: 0;
 }
 
 /* ----------------- Carousel wrapper ----------------- */
@@ -278,12 +273,12 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    margin-bottom: var(--hs-header-bottom-mobile, 24px);
+    margin-bottom: var(--hs-header-bottom-mobile, 28px);
     grid-template-columns: none;
   }
-  .home-selection__header .home-selection__eyebrow,
-  .home-selection__header--left .home-selection__eyebrow,
-  .home-selection__header--center .home-selection__eyebrow {
+  .home-selection__header .mc-section-heading,
+  .home-selection__header--left .mc-section-heading,
+  .home-selection__header--center .mc-section-heading {
     text-align: center;
     grid-column: auto;
   }

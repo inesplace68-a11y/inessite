@@ -61,7 +61,7 @@
   <div class="home-selection__inner">
     {%- if section.settings.show_eyebrow and section.settings.title_eyebrow != blank -%}
       <div class="home-selection__header home-selection__header--{{ title_alignment }}{% if cta_active %} home-selection__header--with-cta{% endif %}">
-        <p class="home-selection__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+        <h2 class="mc-section-heading">{{ section.settings.title_eyebrow | escape }}</h2>
         {%- if cta_active -%}
           <a class="home-selection__cta" href="{{ section.settings.cta_link }}">
             <span class="home-selection__cta-label">{{ section.settings.cta_text | escape }}</span>
@@ -271,8 +271,8 @@
       "step": 4,
       "unit": "px",
       "label": "Espace entre le header et le carrousel",
-      "info": "Air vertical entre la ligne titre+CTA et la première rangée du carrousel.",
-      "default": 32
+      "info": "Air vertical entre la ligne titre+CTA et la première rangée du carrousel. Default 40 px = aligné sur NOTRE SÉLECTION.",
+      "default": 40
     },
     { "type": "header", "content": "Source produits" },
     {
@@ -331,7 +331,7 @@
     { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Padding bas section (mobile)" },
 
     { "type": "header", "content": "Rythme vertical interne" },
-    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Espace header → carrousel (mobile)" },
+    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 28, "label": "Espace header → carrousel (mobile)" },
     { "type": "range", "id": "image_to_name_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18, "label": "Gap vertical image → nom" },
     { "type": "range", "id": "name_to_price_gap", "min": 2, "max": 20, "step": 2, "unit": "px", "default": 6, "label": "Gap vertical nom → prix" }
   ],
