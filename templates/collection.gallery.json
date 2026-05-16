@@ -1,0 +1,96 @@
+/*
+ * ------------------------------------------------------------
+ * Template collection.gallery.json
+ *
+ * Version refonte propre : grille produits seule, sans banner
+ * section. Reprend toutes les settings validées du drawer filtres
+ * + tri Maison Coeur (label "FILTRES", "TRIER PAR" sans deux-points,
+ * marqueur tri actif bronze, drawer crème, 4 colonnes desktop,
+ * portrait, heart wishlist hover, etc.).
+ *
+ * L'ancien templates/collection.json est conservé en parallèle
+ * comme fallback temporaire ; il contient en plus la section
+ * "main-collection-banner" (fil d'Ariane / eyebrow / titre)
+ * actuellement masquée mais source de wrappers parasites.
+ *
+ * Bascule manuelle requise par Ines :
+ *   Shopify Admin → Collections → [collection] → Theme template →
+ *   sélectionner "gallery".
+ *
+ * Les settings ci-dessous sont copiées telles quelles depuis
+ * collection.json (section product-grid) pour garantir la
+ * conformité avec le schema de sections/main-collection-product-grid.liquid.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "card_gap_desktop": 20,
+        "card_gap_mobile": 12,
+        "card_title_size": 16,
+        "card_title_max_lines": 2,
+        "card_price_size": 14,
+        "show_wishlist_heart": true,
+        "wishlist_hover_only": true,
+        "wishlist_color": "#1a1814",
+        "enable_image_zoom_on_hover": true,
+        "image_zoom_amount": 102,
+        "filter_button_label": "FILTRES",
+        "show_filter_icon": true,
+        "filter_icon_style": "curseurs",
+        "show_product_count": false,
+        "show_bar_top_border": false,
+        "show_bar_bottom_border": false,
+        "sort_label_text": "TRIER PAR",
+        "sort_show_current_value": false,
+        "sort_chevron_gap": 8,
+        "sort_dropdown_bg": "#f5f0e8",
+        "sort_active_indicator": "bronze",
+        "bar_padding_top": 8,
+        "bar_padding_bottom": 8,
+        "collection_padding_top_desktop": 8,
+        "collection_padding_top_mobile": 8,
+        "bar_to_grid_gap": 16,
+        "drawer_height_mode": "auto",
+        "drawer_top_offset": 80,
+        "drawer_max_height_vh": 85,
+        "drawer_divider_color": "#e8e4dd",
+        "filter_title_size_desktop": 18,
+        "filter_title_size_mobile": 16,
+        "filter_section_label_size_desktop": 14,
+        "filter_section_label_size_mobile": 12,
+        "show_clear_all_top": false,
+        "drawer_width_desktop": 400,
+        "drawer_side": "left",
+        "drawer_animation_duration": 350,
+        "drawer_bg_color": "#f5f0e8",
+        "overlay_opacity": 0.4,
+        "apply_button_text": "VOIR LES X PIÈCES",
+        "clear_all_text": "Tout effacer",
+        "close_on_apply": true,
+        "close_on_escape": true,
+        "close_on_overlay_click": true,
+        "padding_top": 0,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "product-grid"
+  ]
+}
