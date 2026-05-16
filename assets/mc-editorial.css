@@ -90,38 +90,12 @@
   margin: 0;
 }
 
-/* CTA — bouton rectangulaire bordered (cohérent avec hero button) */
+/* CTA — Phase 16.58 : styles mutualisés via la classe globale
+   .mc-cta-primary (assets/maison-coeur.css). La classe résiduelle
+   .mc-editorial__cta sert uniquement de hook pour le margin-top
+   éditorial et l'override no-image. */
 .mc-editorial__cta {
-  display: inline-block;
-  font-family: var(--mc-font-sans, 'Jost', sans-serif);
-  font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--mce-button-color, #FFFFFF);
-  background: transparent;
-  border: 1px solid var(--mce-button-color, #FFFFFF);
-  padding: 14px 36px;
-  text-decoration: none;
-  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
   margin-top: 8px;
-}
-
-.mc-editorial__cta:hover {
-  background-color: var(--mce-button-color, #FFFFFF);
-  color: var(--mc-dark, #1A1614);
-}
-
-/* Sans image : sur pierre crème, default white button est invisible ;
-   on bascule sur palette sombre tout en respectant l'override Customizer. */
-.mc-editorial--no-image .mc-editorial__cta {
-  color: var(--mc-dark, #1A1614);
-  border-color: var(--mc-dark, #1A1614);
-}
-
-.mc-editorial--no-image .mc-editorial__cta:hover {
-  background-color: var(--mc-dark, #1A1614);
-  color: var(--mc-bg, #F7F5F1);
 }
 
 /* ----------------- Mobile ----------------- */
@@ -137,9 +111,5 @@
   .mc-editorial__heading {
     font-size: clamp(24px, 8vw, 36px);
     max-width: 14ch;
-  }
-  .mc-editorial__cta {
-    padding: 12px 28px;
-    font-size: 12px;
   }
 }

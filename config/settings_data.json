@@ -122,6 +122,11 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
+    "mc_cta_primary_color_rest": "#ffffff",
+    "mc_cta_primary_opacity_rest": 1,
+    "mc_cta_primary_bg_hover": "#ffffff",
+    "mc_cta_primary_color_hover": "#332821",
+    "mc_cta_primary_opacity_hover": 0.6,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

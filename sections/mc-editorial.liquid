@@ -49,7 +49,7 @@
     {%- if section.settings.cta_label != blank -%}
       <a
         href="{{ section.settings.cta_link | default: '/pages/la-maison' }}"
-        class="mc-editorial__cta"
+        class="mc-cta-primary mc-editorial__cta"
         {% if section.settings.cta_link == blank %}aria-disabled="false"{% endif %}
       >
         {{ section.settings.cta_label | escape }}

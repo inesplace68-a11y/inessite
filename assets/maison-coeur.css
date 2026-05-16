@@ -255,6 +255,82 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
+   CTA PRIMAIRE ÉDITORIAL — mutualisé (Phase 16.58)
+   Classe utilitaire commune appliquée à tous les CTA primaires
+   éditoriaux de la home (hero « DÉCOUVRIR LA SÉLECTION », section
+   histoire « NOTRE HISTOIRE », et tout futur bouton éditorial
+   primaire). Pilotée par 5 settings globaux dans settings_schema.json
+   sous « CTA éditoriaux (home) ». Variables injectées sur :root
+   depuis layout/theme.liquid.
+
+   Override agressif (!important) pour défaite la base Dawn .button
+   quand la classe co-existe avec .button .button--primary (cas du
+   hero rendu via le bloc 'buttons' du image-banner).
+   ============================================================ */
+.mc-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(12rem + 2px);
+  min-height: calc(4.5rem + 2px);
+  padding: 0 3rem;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgba(var(--mc-cta-primary-rest-rgb, 255, 255, 255), var(--mc-cta-primary-rest-alpha, 1)) !important;
+  border: 1px solid rgba(var(--mc-cta-primary-rest-rgb, 255, 255, 255), var(--mc-cta-primary-rest-alpha, 1)) !important;
+  border-radius: 0 !important;
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 1.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Supprime le halo Dawn (::before/::after) quand .mc-cta-primary
+   est appliqué sur un .button (cas du hero). */
+.mc-cta-primary::before,
+.mc-cta-primary::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+.mc-cta-primary:hover,
+.mc-cta-primary:active,
+.mc-cta-primary:focus,
+.mc-cta-primary.focused {
+  background-color: rgba(var(--mc-cta-primary-hover-bg-rgb, 245, 240, 232), var(--mc-cta-primary-hover-alpha, 1)) !important;
+  border-color: rgba(var(--mc-cta-primary-hover-bg-rgb, 245, 240, 232), var(--mc-cta-primary-hover-alpha, 1)) !important;
+  color: rgba(var(--mc-cta-primary-hover-color-rgb, 51, 40, 33), var(--mc-cta-primary-hover-alpha, 1)) !important;
+  box-shadow: none !important;
+}
+
+.mc-cta-primary:focus:not(:focus-visible):not(.focused) {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.mc-cta-primary:focus-visible {
+  outline: 2px solid rgba(var(--mc-cta-primary-rest-rgb, 255, 255, 255), 0.5);
+  outline-offset: 3px;
+  box-shadow: none !important;
+}
+
+@media (max-width: 749px) {
+  .mc-cta-primary {
+    min-height: calc(4.2rem + 2px);
+    padding: 0 2.4rem;
+    font-size: 1.3rem;
+  }
+}
+
+/* ============================================================
    GRILLE NOTRE SÉLECTION (mc-collection-grid)
    Phase 11 : retour pierre crème — exposé en Customizer pour
    bascule libre par Ines (default #F7F5F1).
