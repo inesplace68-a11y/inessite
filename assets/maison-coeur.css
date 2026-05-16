@@ -321,11 +321,23 @@ h1, h2, h3, h4,
   transition: opacity 300ms ease, height 300ms ease;
 }
 
+/* Caption (titre + flèche) — centré horizontalement en bas (Phase 16.57)
+   La flèche est en position absolute hors flux pour que le titre reste
+   parfaitement centré dans le caption au repos. */
+.mc-cat-card__caption {
+  position: absolute;
+  bottom: var(--mc-cat-caption-bottom, 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* Titre superposé — Jost CAPS au repos */
 .mc-cat-card__title {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
   margin: 0;
   font-family: var(--mc-font-sans);
   font-weight: 300;
@@ -333,7 +345,7 @@ h1, h2, h3, h4,
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--mc-cat-text-color, #F7F5F1);
-  z-index: 2;
+  white-space: nowrap;
   transition:
     font-family 0ms 200ms,
     font-style 200ms ease,
@@ -342,30 +354,22 @@ h1, h2, h3, h4,
     text-transform 0ms 200ms;
 }
 
-/* Flèche superposée — bottom-right, glisse au hover */
+/* Flèche — révélée au hover, glisse à droite du titre.
+   position: absolute hors flux pour ne pas décaler le titre au repos. */
 .mc-cat-card__arrow {
   position: absolute;
-  bottom: 18px;
-  right: 14px;
-  width: 20px;
-  height: 8px;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  display: inline-flex;
+  align-items: center;
   color: var(--mc-cat-text-color, #F7F5F1);
-  z-index: 2;
-  transition: transform 300ms ease;
+  opacity: 0;
+  transition: opacity 350ms ease, transform 350ms ease;
 }
 
-/* Trait fin sous le titre — masqué au repos, apparaît au hover */
-.mc-cat-card__hover-decor {
-  position: absolute;
-  bottom: 8px;
-  left: 14px;
-  width: 22px;
-  height: 0.5px;
-  background-color: var(--mc-cat-text-color, #F7F5F1);
-  opacity: 0;
-  z-index: 2;
-  transition: opacity 300ms ease;
-  pointer-events: none;
+.mc-cat-card__arrow svg {
+  display: block;
 }
 
 /* --- Hover éditorial (gated par .mc-collection-grid--hover) -- */
@@ -398,12 +402,9 @@ h1, h2, h3, h4,
   text-transform: uppercase;
 }
 
-.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__hover-decor {
-  opacity: 1;
-}
-
 .mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__arrow {
-  transform: translateX(3px);
+  opacity: 1;
+  transform: translateY(-50%) translateX(8px);
 }
 
 /* ============================================================

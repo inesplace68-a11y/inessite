@@ -3,6 +3,7 @@
   assign cat_veil_color = section.settings.selection_cat_veil_color | default: '#1A1814'
   assign cat_veil_intensity = section.settings.selection_cat_veil_intensity | default: 55
   assign cat_veil_height = section.settings.selection_cat_veil_height | default: 60
+  assign cat_caption_bottom = section.settings.selection_cat_caption_bottom | default: 18
   assign cat_hover_class = ''
   if section.settings.selection_cat_hover_enabled
     assign cat_hover_class = ' mc-collection-grid--hover'
@@ -24,6 +25,7 @@
     --mc-cat-veil-color: {{ cat_veil_color }};
     --mc-cat-veil-intensity: {{ cat_veil_intensity }}%;
     --mc-cat-veil-height: {{ cat_veil_height }}%;
+    --mc-cat-caption-bottom: {{ cat_caption_bottom }}px;
     padding-top: var(--mcg-pt);
     padding-bottom: var(--mcg-pb);
   }
@@ -79,14 +81,15 @@
                 <span class="mc-cat-card__veil" aria-hidden="true"></span>
 
                 {%- if block.settings.title != blank -%}
-                  <p class="mc-cat-card__title">{{ block.settings.title }}</p>
+                  <div class="mc-cat-card__caption">
+                    <span class="mc-cat-card__title">{{ block.settings.title }}</span>
+                    <span class="mc-cat-card__arrow" aria-hidden="true">
+                      <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 4H19M12 1L19 4L12 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
+                      </svg>
+                    </span>
+                  </div>
                 {%- endif -%}
-
-                <span class="mc-cat-card__hover-decor" aria-hidden="true"></span>
-
-                <svg class="mc-cat-card__arrow" width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M0 4H19M14 1L19 4L14 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
-                </svg>
               </div>
             </a>
           </div>
@@ -171,8 +174,19 @@
       "type": "checkbox",
       "id": "selection_cat_hover_enabled",
       "label": "Activer l'effet de survol editorial",
-      "info": "Au survol d'une carte : leger zoom de l'image, titre passe en italique, trait fin apparait, fleche glisse a droite. Decocher pour rendu statique.",
+      "info": "Au survol d'une carte : leger zoom de l'image, titre passe en italique, fleche apparait a droite du titre via fade-in. Decocher pour rendu statique.",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "selection_cat_caption_bottom",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Distance du titre par rapport au bas de la carte",
+      "info": "Espace vertical entre le bas de l'image et le titre centre. Permet d'ajuster selon vos visuels.",
+      "default": 18
     },
 
     { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },
