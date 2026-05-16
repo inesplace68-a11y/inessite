@@ -65,7 +65,6 @@
         "filter_section_label_size_desktop": 14,
         "filter_section_label_size_mobile": 12,
         "show_clear_all_top": false,
-        "drawer_width_desktop": 400,
         "filter_drawer_width": 280,
         "filter_drawer_text_size": 12,
         "sort_dropdown_text_size": 12,

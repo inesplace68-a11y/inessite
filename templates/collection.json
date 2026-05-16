@@ -89,7 +89,6 @@
         "filter_section_label_size_desktop": 14,
         "filter_section_label_size_mobile": 12,
         "show_clear_all_top": false,
-        "drawer_width_desktop": 400,
         "drawer_side": "left",
         "drawer_animation_duration": 350,
         "drawer_bg_color": "#f5f0e8",
