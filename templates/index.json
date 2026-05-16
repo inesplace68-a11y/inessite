@@ -15,14 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Reflets du temps",
+            "heading": "Les reflets du temps",
             "heading_size": "hxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Miroirs anciens XIXe",
+            "text": "Miroirs anciens pour demeures intemporelles",
             "text_style": "subtitle"
           }
         },
@@ -30,7 +30,7 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "Découvrir la sélection",
-            "button_link_1": "shopify://collections/all",
+            "button_link_1": "shopify://collections/miroirs",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -68,18 +68,18 @@
         "show_eyebrow": true,
         "title_eyebrow": "NOS NOUVEAUTÉS",
         "featured_collection": "miroirs",
-        "products_count": 9,
+        "products_count": 8,
         "visible_desktop": 4,
         "visible_mobile": 1.2,
         "image_ratio": "4-5",
         "card_gap": 20,
         "show_arrows": true,
-        "arrows_color": "#1A1814",
-        "section_padding_top": 56,
-        "section_padding_bottom": 56,
+        "arrows_color": "#1a1814",
+        "section_padding_top": 64,
+        "section_padding_bottom": 64,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 32,
-        "eyebrow_to_grid": 24,
+        "eyebrow_to_grid": 32,
         "title_to_product_gap_mobile": 20,
         "image_to_name_gap": 14,
         "name_to_price_gap": 6
