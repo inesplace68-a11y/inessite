@@ -50,7 +50,7 @@
     --mc-title-gap: {{ section.settings.collection_padding_top_desktop | default: 32 }}px;
     --mc-title-gap-mobile: {{ section.settings.collection_padding_top_mobile | default: 20 }}px;
     --mc-grid-gap: {{ section.settings.bar_to_grid_gap | default: 32 }}px;
-    --mc-drawer-w: {{ section.settings.filter_drawer_width | default: section.settings.drawer_width_desktop | default: 360 }}px;
+    --mc-drawer-w: {{ section.settings.filter_drawer_width | default: 360 }}px;
     --mc-drawer-text-size: {{ section.settings.filter_drawer_text_size | default: 12 }}px;
     --mc-sort-text-size: {{ section.settings.sort_dropdown_text_size | default: 12 }}px;
     --mc-page-width: {{ section.settings.collection_max_width | default: 1600 }}px;
@@ -408,7 +408,7 @@
     height: auto;
     max-height: min(var(--mc-drawer-maxh, 85vh), calc(100vh - var(--mc-drawer-top, 80px) - 16px));
     {%- endif -%}
-    width: var(--mc-drawer-w, 360px);
+    width: {{ section.settings.filter_drawer_width | default: 360 }}px;
     max-width: 100vw;
     background: var(--mc-bg, #F7F5F1);
     box-shadow: none;
@@ -689,8 +689,8 @@
       margin-right: 0;
     }
     #shopify-section-{{ section.id }} .mc-collection-layout .mc-filter-drawer[data-open='true'] {
-      flex: 0 0 var(--mc-drawer-w, 400px);
-      width: var(--mc-drawer-w, 400px);
+      flex: 0 0 {{ section.settings.filter_drawer_width | default: 360 }}px;
+      width: {{ section.settings.filter_drawer_width | default: 360 }}px;
       opacity: 1;
       margin-right: 32px;
     }
