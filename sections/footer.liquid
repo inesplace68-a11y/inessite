@@ -71,9 +71,10 @@
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus-visible {
     text-decoration: none !important;
     box-shadow: none !important;
-    outline: 1px solid currentColor !important;
-    outline-offset: 2px !important;
-    border-color: currentColor !important;
+    /* Phase 16.34 — une seule bordure (au lieu de outline + border qui
+       créaient un doublon décalé de 2px via outline-offset). */
+    outline: none !important;
+    border: 1px solid currentColor !important;
   }
   /* Dropdown popup quand le sélecteur est ouvert — border noir Dawn par défaut */
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__list-wrapper {
