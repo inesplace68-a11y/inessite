@@ -250,31 +250,35 @@
   <div class="mc-footer-bar">
     <div class="mc-footer-bar-inner">
 
-      {%- comment -%} Sélecteurs pays/devise + langue (natif Shopify) — gauche {%- endcomment -%}
-      {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-        <div class="mc-footer-bar-localization">
-          {%- if localization.available_countries.size > 1 -%}
-            <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
-              {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
-                <div>
-                  <h2 class="visually-hidden" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                  {%- render 'country-localization', localPosition: 'FooterCountry' -%}
-                </div>
-              {%- endform -%}
-            </localization-form>
-          {%- endif -%}
-          {%- if localization.available_languages.size > 1 -%}
-            <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
-              {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
-                <div>
-                  <h2 class="visually-hidden" id="FooterLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                  {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
-                </div>
-              {%- endform -%}
-            </localization-form>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      {%- comment -%} Sélecteurs pays/devise + langue (natif Shopify) — gauche.
+           Phase 16.38 : conditionné par le toggle `hide_localization_selector`
+           pour permettre un masquage total sans laisser de trace dans le DOM. {%- endcomment -%}
+      {%- unless section.settings.hide_localization_selector -%}
+        {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+          <div class="mc-footer-bar-localization">
+            {%- if localization.available_countries.size > 1 -%}
+              <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
+                {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+                  <div>
+                    <h2 class="visually-hidden" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                    {%- render 'country-localization', localPosition: 'FooterCountry' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            {%- endif -%}
+            {%- if localization.available_languages.size > 1 -%}
+              <localization-form class="mc-footer-bar-localization__form" data-prevent-hide>
+                {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
+                  <div>
+                    <h2 class="visually-hidden" id="FooterLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                    {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endunless -%}
 
       <p class="mc-footer-bar-copy">&copy; {{ 'now' | date: '%Y' }} Maison Coeur — Tous droits réservés.</p>
 
@@ -423,7 +427,7 @@
       "type": "range",
       "id": "footer_bottom_selector_padding_y",
       "label": "Padding vertical du sélecteur pays/devise",
-      "min": 4,
+      "min": 1,
       "max": 16,
       "step": 1,
       "unit": "px",
@@ -438,6 +442,13 @@
       "step": 1,
       "unit": "px",
       "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_localization_selector",
+      "label": "Masquer le sélecteur pays/devise",
+      "default": false,
+      "info": "Cocher pour cacher complètement le sélecteur dans le footer"
     }
   ]
 }
