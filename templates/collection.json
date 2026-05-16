@@ -11,6 +11,7 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
         "show_collection_title": false,
         "show_breadcrumb": false,
@@ -76,8 +77,8 @@
         "sort_active_indicator": "bronze",
         "bar_padding_top": 8,
         "bar_padding_bottom": 8,
-        "collection_padding_top_desktop": 8,
-        "collection_padding_top_mobile": 8,
+        "collection_padding_top_desktop": 0,
+        "collection_padding_top_mobile": 0,
         "bar_to_grid_gap": 16,
         "drawer_height_mode": "auto",
         "drawer_top_offset": 80,
