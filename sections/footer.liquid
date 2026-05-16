@@ -88,6 +88,16 @@
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__list-wrapper {
     border-color: {{ section.settings.footer_localization_color | default: '#F5F0E8' }} !important;
   }
+  /* Phase 16.39 — câblage padding vertical + horizontal du sélecteur
+     pays/devise (settings footer_bottom_selector_padding_y / _x étaient
+     orphelins : présents dans le schema mais non connectés au CSS). */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select {
+    padding-top: {{ section.settings.footer_bottom_selector_padding_y | default: 6 }}px !important;
+    padding-bottom: {{ section.settings.footer_bottom_selector_padding_y | default: 6 }}px !important;
+    padding-left: {{ section.settings.footer_bottom_selector_padding_x | default: 12 }}px !important;
+    padding-right: {{ section.settings.footer_bottom_selector_padding_x | default: 12 }}px !important;
+  }
   #shopify-section-{{ section.id }} .mc-fz-nl__btn {
     height: {{ section.settings.newsletter_btn_height | default: 40 }}px;
     line-height: 1;
