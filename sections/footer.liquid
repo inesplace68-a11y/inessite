@@ -56,25 +56,33 @@
     border-color: currentColor !important;
     outline-color: currentColor !important;
   }
-  /* Bouton sélecteur : neutralise text-decoration .link + box-shadow focus
-     Dawn. Force un outline 1px solid cream toujours visible pour matérialiser
-     proprement le contour rectangulaire (au lieu de laisser un fantôme du
-     focus-visible box-shadow Dawn). */
+  /* Phase 16.35 — Zéro bordure visible : le sélecteur "FRANCE · EUR €"
+     se fond complètement dans le fond brun du footer. Neutralise border,
+     outline, box-shadow et background (Dawn pose un bg blanc sur le
+     bouton via .disclosure__button.localization-form__select). */
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:hover,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus,
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus-visible,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button[aria-expanded='true'],
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:hover,
-  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus,
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus {
+    text-decoration: none !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  /* Focus clavier uniquement (Tab) — marqueur d'accessibilité discret,
+     pas visible au clic souris. */
+  #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__button:focus-visible,
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .localization-form__select:focus-visible {
     text-decoration: none !important;
+    border: 0 !important;
+    background: transparent !important;
     box-shadow: none !important;
-    /* Phase 16.34 — une seule bordure (au lieu de outline + border qui
-       créaient un doublon décalé de 2px via outline-offset). */
-    outline: none !important;
-    border: 1px solid currentColor !important;
+    outline: 1px dotted currentColor !important;
+    outline-offset: 2px !important;
   }
   /* Dropdown popup quand le sélecteur est ouvert — border noir Dawn par défaut */
   #shopify-section-{{ section.id }} .mc-footer-bar-localization .disclosure__list-wrapper {
