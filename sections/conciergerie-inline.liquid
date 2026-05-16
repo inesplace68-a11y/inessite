@@ -55,7 +55,10 @@
     margin: 0 auto 40px;
     /* Phase 16.39 — max-width hardcoded retiré ; la largeur du texte
        suit désormais .mc-conciergerie__inner (= section_max_width)
-       pour que le slider customizer ait un effet visuel observable. */
+       pour que le slider customizer ait un effet visuel observable.
+       Phase 16.41 — white-space: pre-line pour respecter les retours
+       à la ligne saisis dans le customizer (en complément du <br>). */
+    white-space: pre-line;
   }
   #shopify-section-{{ section.id }} .mc-conciergerie__text > * {
     margin: 0;
@@ -117,7 +120,7 @@
   "settings": [
     { "type": "header", "content": "Contenu" },
     { "type": "text", "id": "eyebrow_text", "default": "CONCIERGERIE", "label": "Eyebrow (capitales espacées)" },
-    { "type": "richtext", "id": "main_text", "default": "<p>Une pièce particulière que vous ne trouvez pas ici ? Notre conciergerie la cherche pour vous, partout dans le monde.</p>", "label": "Texte principal" },
+    { "type": "richtext", "id": "main_text", "default": "<p>Une pièce particulière que vous ne trouvez pas ici ?<br>Notre conciergerie la cherche pour vous, partout dans le monde.</p>", "label": "Texte principal" },
     { "type": "text", "id": "cta_text", "default": "CONFIER UNE RECHERCHE", "label": "Libellé bouton CTA" },
     { "type": "url", "id": "cta_url", "label": "Lien du bouton CTA", "info": "Par défaut : /pages/conciergerie" },
 

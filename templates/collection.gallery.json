@@ -87,7 +87,7 @@
       "type": "conciergerie-inline",
       "settings": {
         "eyebrow_text": "CONCIERGERIE",
-        "main_text": "<p>Une pièce particulière que vous ne trouvez pas ici ? Notre conciergerie la cherche pour vous, partout dans le monde.</p>",
+        "main_text": "<p>Une pièce particulière que vous ne trouvez pas ici ?<br/>Notre conciergerie la cherche pour vous, partout dans le monde.</p>",
         "cta_text": "CONFIER UNE RECHERCHE",
         "cta_url": "/pages/conciergerie",
         "main_text_size": 26,
