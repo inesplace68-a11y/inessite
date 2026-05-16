@@ -9,35 +9,6 @@
  */
 {
   "sections": {
-    "banner": {
-      "type": "main-collection-banner",
-      "disabled": true,
-      "settings": {
-        "show_collection_title": false,
-        "show_breadcrumb": false,
-        "breadcrumb_all_products_label": "Produits",
-        "show_eyebrow": false,
-        "eyebrow_default_text": "MIROIRS",
-        "show_product_count_in_eyebrow": true,
-        "breadcrumb_font_family": "cormorant_italic",
-        "breadcrumb_size_desktop": 14,
-        "breadcrumb_alignment": "left",
-        "breadcrumb_color": "#8c6d3f",
-        "title_size_desktop": 60,
-        "title_size_mobile": 40,
-        "title_style": "italic",
-        "title_alignment": "center",
-        "intro_default_text": "",
-        "intro_text_size_desktop": 18,
-        "intro_text_style": "italic",
-        "intro_alignment": "center",
-        "show_collection_description": true,
-        "nav_to_content_gap_desktop": 0,
-        "nav_to_content_gap_mobile": 0,
-        "header_padding_bottom": 0,
-        "color_scheme": "scheme-1"
-      }
-    },
     "product-grid": {
       "type": "main-collection-product-grid",
       "settings": {
@@ -59,6 +30,8 @@
         "card_title_size": 16,
         "card_title_max_lines": 2,
         "card_price_size": 14,
+        "card_title_hover_color": "#8c6d3f",
+        "card_title_hover_transition": 0.5,
         "show_wishlist_heart": true,
         "wishlist_hover_only": true,
         "wishlist_color": "#1a1814",
@@ -70,6 +43,8 @@
         "show_product_count": false,
         "show_bar_top_border": false,
         "show_bar_bottom_border": false,
+        "filter_sort_label_size": 12,
+        "filter_sort_label_color": "#6b6660",
         "sort_label_text": "TRIER PAR",
         "sort_show_current_value": false,
         "sort_chevron_gap": 8,
@@ -80,6 +55,7 @@
         "collection_padding_top_desktop": 0,
         "collection_padding_top_mobile": 0,
         "bar_to_grid_gap": 16,
+        "collection_max_width": 1600,
         "drawer_height_mode": "auto",
         "drawer_top_offset": 80,
         "drawer_max_height_vh": 85,
@@ -89,6 +65,11 @@
         "filter_section_label_size_desktop": 14,
         "filter_section_label_size_mobile": 12,
         "show_clear_all_top": false,
+        "filter_drawer_width": 200,
+        "filter_slider_thumb_color": "#1a1814",
+        "filter_toggle_active_color": "#1a1814",
+        "filter_drawer_text_size": 12,
+        "sort_dropdown_text_size": 12,
         "drawer_side": "left",
         "drawer_animation_duration": 350,
         "drawer_bg_color": "#f5f0e8",
@@ -104,7 +85,6 @@
     }
   },
   "order": [
-    "banner",
     "product-grid"
   ]
 }
