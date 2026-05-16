@@ -50,7 +50,9 @@
     --mc-title-gap: {{ section.settings.collection_padding_top_desktop | default: 8 }}px;
     --mc-title-gap-mobile: {{ section.settings.collection_padding_top_mobile | default: 8 }}px;
     --mc-grid-gap: {{ section.settings.bar_to_grid_gap | default: 24 }}px;
-    --mc-drawer-w: {{ section.settings.drawer_width_desktop | default: 400 }}px;
+    --mc-drawer-w: {{ section.settings.filter_drawer_width | default: section.settings.drawer_width_desktop | default: 360 }}px;
+    --mc-drawer-text-size: {{ section.settings.filter_drawer_text_size | default: 12 }}px;
+    --mc-sort-text-size: {{ section.settings.sort_dropdown_text_size | default: 12 }}px;
     --mc-drawer-dur: {{ section.settings.drawer_animation_duration | default: 350 }}ms;
     --mc-drawer-bg: {{ section.settings.drawer_bg_color | default: '#F5F0E8' }};
     --mc-overlay-op: {{ section.settings.overlay_opacity | default: 0.4 }};
@@ -315,13 +317,14 @@
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    min-width: 220px;
-    max-width: 320px;
-    background: var(--mc-sort-bg, #F5F0E8);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    min-width: 200px;
+    max-width: 300px;
+    width: max-content;
+    background: var(--mc-bg, #F7F5F1);
+    box-shadow: none;
     list-style: none;
     margin: 0;
-    padding: 8px 0;
+    padding: 6px 0;
     z-index: 50;
   }
   #shopify-section-{{ section.id }} .mc-sort__menu[hidden] {
@@ -333,11 +336,11 @@
     border: 0;
     width: 100%;
     text-align: left;
-    padding: 10px 22px;
+    padding: 7px 18px;
     cursor: pointer;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: var(--mc-label-size, 12px);
+    font-size: var(--mc-sort-text-size, 12px);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--mc-label-color, #6B6660);
@@ -404,10 +407,10 @@
     height: auto;
     max-height: min(var(--mc-drawer-maxh, 85vh), calc(100vh - var(--mc-drawer-top, 80px) - 16px));
     {%- endif -%}
-    width: var(--mc-drawer-w, 400px);
+    width: var(--mc-drawer-w, 360px);
     max-width: 100vw;
-    background: var(--mc-drawer-bg, #F5F0E8);
-    box-shadow: 2px 0 24px rgba(0, 0, 0, 0.08);
+    background: var(--mc-bg, #F7F5F1);
+    box-shadow: none;
     z-index: 100;
     transition: transform var(--mc-drawer-dur, 350ms) ease-out;
     display: flex;
@@ -421,7 +424,7 @@
   #shopify-section-{{ section.id }} .mc-filter-drawer--right {
     right: 0;
     transform: translateX(100%);
-    box-shadow: -2px 0 24px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer[data-open='true'] {
     transform: translateX(0);
@@ -436,7 +439,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 28px 20px;
+    padding: 16px 20px 14px;
     border-bottom: 1px solid var(--mc-drawer-divider, #E8E4DD);
     flex: 0 0 auto;
   }
@@ -444,7 +447,7 @@
     margin: 0;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 300;
-    font-size: var(--mc-filter-title-size, 18px);
+    font-size: 14px;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #1A1814;
@@ -474,18 +477,18 @@
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 8px 28px 16px;
+    padding: 6px 20px 12px;
     -webkit-overflow-scrolling: touch;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer__footer {
     flex: 0 0 auto;
-    padding: 16px 28px 24px;
+    padding: 12px 20px 16px;
     border-top: 1px solid var(--mc-drawer-divider, #E8E4DD);
-    background: var(--mc-drawer-bg, #F5F0E8);
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
+    gap: 10px;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer__clear {
     align-self: center;
@@ -563,7 +566,22 @@
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    font-size: var(--mc-filter-label-size, 14px);
+    font-size: var(--mc-drawer-text-size, 12px);
+    color: #1A1814;
+    margin-bottom: 1rem;
+  }
+  /* Options checkbox + texte interne — Phase 16.22 */
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__label,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facet-checkbox,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facet-checkbox__text,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facet-checkbox__text-label,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__item label,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__price,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .facets__price input {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: var(--mc-drawer-text-size, 12px);
+    letter-spacing: 0.06em;
     color: #1A1814;
   }
   /* Drawer accordion dividers — pierre */
@@ -1395,6 +1413,9 @@
     { "type": "range", "id": "filter_section_label_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12, "label": "Taille noms d'accordéons mobile" },
     { "type": "checkbox", "id": "show_clear_all_top", "default": false, "label": "Afficher 'Tout effacer' en haut du drawer (en plus du bas)" },
     { "type": "range", "id": "drawer_width_desktop", "min": 320, "max": 480, "step": 20, "unit": "px", "default": 400, "label": "Largeur drawer (desktop)" },
+    { "type": "range", "id": "filter_drawer_width", "min": 280, "max": 500, "step": 10, "unit": "px", "default": 360, "label": "Largeur de la sidebar des filtres", "info": "Largeur du panneau qui s'ouvre quand on clique sur FILTRES" },
+    { "type": "range", "id": "filter_drawer_text_size", "min": 10, "max": 16, "step": 0.5, "unit": "px", "default": 12, "label": "Taille du texte dans la sidebar des filtres", "info": "Taille des options de filtre (En stock, etc.)" },
+    { "type": "range", "id": "sort_dropdown_text_size", "min": 10, "max": 16, "step": 0.5, "unit": "px", "default": 12, "label": "Taille du texte du menu Trier par" },
     {
       "type": "select",
       "id": "drawer_side",
