@@ -14,6 +14,37 @@
   padding: 0 var(--content-gutter-desktop, 64px);
 }
 
+/* ----------------- Header de section (titre + CTA même ligne) ----------------- */
+.home-selection__header {
+  display: flex;
+  align-items: center;
+  margin: 0 0 var(--hs-header-bottom, 32px);
+}
+
+.home-selection__header--left {
+  justify-content: space-between;
+}
+
+.home-selection__header--left .home-selection__eyebrow {
+  text-align: left;
+}
+
+.home-selection__header--center {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.home-selection__header--center .home-selection__eyebrow {
+  grid-column: 2;
+  text-align: center;
+}
+
+.home-selection__header--center .home-selection__cta {
+  grid-column: 3;
+  justify-self: end;
+}
+
 /* ----------------- Eyebrow ----------------- */
 .home-selection__eyebrow {
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
@@ -21,9 +52,8 @@
   font-size: var(--type-h5, 12px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  text-align: center;
   color: var(--mc-dark, #1A1614);
-  margin: 0 0 var(--hs-eyebrow-to-grid, 32px);
+  margin: 0;
 }
 
 /* ----------------- Carousel wrapper ----------------- */
@@ -186,13 +216,7 @@
   display: none;
 }
 
-/* ----------------- CTA centered below carousel ----------------- */
-.home-selection__cta-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--hs-cta-gap, 32px);
-}
-
+/* ----------------- CTA (haut-droite du header) ----------------- */
 .home-selection__cta {
   display: inline-flex;
   align-items: center;
@@ -247,8 +271,26 @@
   .home-selection__inner {
     padding: 0 20px;
   }
-  .home-selection__eyebrow {
-    margin-bottom: var(--hs-eyebrow-to-grid-mobile, 24px);
+  .home-selection__header,
+  .home-selection__header--center,
+  .home-selection__header--left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--hs-header-bottom-mobile, 24px);
+    grid-template-columns: none;
+  }
+  .home-selection__header .home-selection__eyebrow,
+  .home-selection__header--left .home-selection__eyebrow,
+  .home-selection__header--center .home-selection__eyebrow {
+    text-align: center;
+    grid-column: auto;
+  }
+  .home-selection__header .home-selection__cta,
+  .home-selection__header--center .home-selection__cta {
+    grid-column: auto;
+    justify-self: center;
   }
   .home-selection__card {
     flex: 0 0 calc((100% - (var(--hs-card-gap, 16px) * (var(--hs-visible-mobile, 1.3) - 1))) / var(--hs-visible-mobile, 1.3));

@@ -38,8 +38,8 @@
     --hs-padding-bottom: {{ section.settings.section_padding_bottom | default: 80 }}px;
     --hs-padding-top-mobile: {{ section.settings.padding_top_mobile | default: 40 }}px;
     --hs-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-    --hs-eyebrow-to-grid: {{ section.settings.eyebrow_to_grid | default: 32 }}px;
-    --hs-eyebrow-to-grid-mobile: {{ section.settings.title_to_product_gap_mobile | default: 24 }}px;
+    --hs-header-bottom: {{ section.settings.header_bottom_gap | default: 32 }}px;
+    --hs-header-bottom-mobile: {{ section.settings.title_to_product_gap_mobile | default: 24 }}px;
     --hs-image-to-name: {{ section.settings.image_to_name_gap | default: 18 }}px;
     --hs-name-to-price: {{ section.settings.name_to_price_gap | default: 6 }}px;
     --hs-visible-desktop: {{ visible_desktop }};
@@ -48,14 +48,27 @@
     --hs-image-aspect: {{ image_aspect }};
     --hs-arrow-color: {{ section.settings.arrows_color | default: '#1A1814' }};
     --hs-controls-gap: {{ section.settings.controls_top_gap | default: 28 }}px;
-    --hs-cta-gap: {{ section.settings.cta_top_gap | default: 32 }}px;
   }
 {%- endstyle -%}
+
+{%- assign title_alignment = section.settings.title_alignment | default: 'left' -%}
+{%- assign cta_active = false -%}
+{%- if section.settings.show_cta and section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+  {%- assign cta_active = true -%}
+{%- endif -%}
 
 <section class="home-selection">
   <div class="home-selection__inner">
     {%- if section.settings.show_eyebrow and section.settings.title_eyebrow != blank -%}
-      <p class="home-selection__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+      <div class="home-selection__header home-selection__header--{{ title_alignment }}{% if cta_active %} home-selection__header--with-cta{% endif %}">
+        <p class="home-selection__eyebrow">{{ section.settings.title_eyebrow | escape }}</p>
+        {%- if cta_active -%}
+          <a class="home-selection__cta" href="{{ section.settings.cta_link }}">
+            <span class="home-selection__cta-label">{{ section.settings.cta_text | escape }}</span>
+            <span class="home-selection__cta-arrow" aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
     {%- if coll != blank and coll.products.size > 0 -%}
@@ -143,15 +156,6 @@
           </div>
         {%- endif -%}
       </div>
-
-      {%- if section.settings.show_cta and section.settings.cta_text != blank and section.settings.cta_link != blank -%}
-        <div class="home-selection__cta-wrap">
-          <a class="home-selection__cta" href="{{ section.settings.cta_link }}">
-            <span class="home-selection__cta-label">{{ section.settings.cta_text | escape }}</span>
-            <span class="home-selection__cta-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      {%- endif -%}
     {%- else -%}
       <p class="home-selection__empty">
         Sélectionnez une collection dans les réglages pour afficher la sélection actuelle.
@@ -248,6 +252,28 @@
       "label": "Eyebrow (CAPS)",
       "default": "NOS NOUVEAUTÉS"
     },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Position du titre de section",
+      "info": "Place le titre à gauche (aligné avec le CTA à droite, signature gallery éditoriale) ou au centre. Le CTA reste toujours à droite.",
+      "options": [
+        { "value": "left", "label": "À gauche (recommandé — signature gallery)" },
+        { "value": "center", "label": "Au centre" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_gap",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espace entre le header et le carrousel",
+      "info": "Air vertical entre la ligne titre+CTA et la première rangée du carrousel.",
+      "default": 32
+    },
     { "type": "header", "content": "Source produits" },
     {
       "type": "collection",
@@ -293,11 +319,10 @@
     { "type": "color", "id": "arrows_color", "default": "#1A1814", "label": "Couleur des flèches et du compteur" },
     { "type": "range", "id": "controls_top_gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 16, "label": "Espace carrousel → flèches/compteur" },
 
-    { "type": "header", "content": "CTA fin de section" },
+    { "type": "header", "content": "CTA section (haut-droite)" },
     { "type": "checkbox", "id": "show_cta", "default": true, "label": "Afficher le lien « Voir toutes les nouveautés »" },
     { "type": "text", "id": "cta_text", "label": "Texte du lien", "default": "VOIR TOUTES LES NOUVEAUTÉS" },
     { "type": "url", "id": "cta_link", "label": "Destination du lien", "info": "Page vers laquelle le lien renvoie. Généralement la page collection /collections/nouveautes." },
-    { "type": "range", "id": "cta_top_gap", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 20, "label": "Espace carrousel → CTA" },
 
     { "type": "header", "content": "Épaisseur section (calée sur NOTRE SÉLECTION)" },
     { "type": "range", "id": "section_padding_top", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 40, "label": "Padding haut section" },
@@ -306,8 +331,7 @@
     { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Padding bas section (mobile)" },
 
     { "type": "header", "content": "Rythme vertical interne" },
-    { "type": "range", "id": "eyebrow_to_grid", "min": 16, "max": 96, "step": 4, "unit": "px", "default": 32, "label": "Espace eyebrow → grille" },
-    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Espace eyebrow → grille (mobile)" },
+    { "type": "range", "id": "title_to_product_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "label": "Espace header → carrousel (mobile)" },
     { "type": "range", "id": "image_to_name_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18, "label": "Gap vertical image → nom" },
     { "type": "range", "id": "name_to_price_gap", "min": 2, "max": 20, "step": 2, "unit": "px", "default": 6, "label": "Gap vertical nom → prix" }
   ],
