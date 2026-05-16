@@ -133,27 +133,40 @@
   }
 
   {%- liquid
-    assign overlay_r = section.settings.hero_overlay_color | color_extract: 'red'
-    assign overlay_g = section.settings.hero_overlay_color | color_extract: 'green'
-    assign overlay_b = section.settings.hero_overlay_color | color_extract: 'blue'
-    assign overlay_alpha = section.settings.hero_overlay_opacity_pct | divided_by: 100.0
+    assign overlay_color = section.settings.hero_overlay_color | default: '#000000'
+    assign overlay_r = overlay_color | color_extract: 'red'
+    assign overlay_g = overlay_color | color_extract: 'green'
+    assign overlay_b = overlay_color | color_extract: 'blue'
+    assign overlay_pct = section.settings.hero_overlay_opacity_pct | default: 8
+    assign overlay_alpha = overlay_pct | divided_by: 100.0
 
-    assign scroll_r = section.settings.hero_scroll_indicator_color | color_extract: 'red'
-    assign scroll_g = section.settings.hero_scroll_indicator_color | color_extract: 'green'
-    assign scroll_b = section.settings.hero_scroll_indicator_color | color_extract: 'blue'
+    assign scroll_color = section.settings.hero_scroll_indicator_color | default: '#FFFFFF'
+    assign scroll_r = scroll_color | color_extract: 'red'
+    assign scroll_g = scroll_color | color_extract: 'green'
+    assign scroll_b = scroll_color | color_extract: 'blue'
+    assign scroll_opacity = section.settings.hero_scroll_indicator_opacity | default: 1
+    assign scroll_height = section.settings.hero_scroll_indicator_height | default: 50
 
     assign kb_amp = section.settings.hero_kenburns_amplitude_pct | divided_by: 100.0 | plus: 1
+    assign aspect_ratio = section.settings.hero_aspect_ratio | default: '16/9'
+    assign max_height_vh = section.settings.hero_max_height_vh | default: 90
   -%}
 
   @media screen and (min-width: 750px) {
     #Banner-{{ section.id }}:not(.banner--adapt) {
-      min-height: {{ section.settings.hero_height_vh }}vh !important;
+      width: 100% !important;
+      aspect-ratio: {{ aspect_ratio }} !important;
+      max-height: {{ max_height_vh }}vh !important;
+      min-height: 0 !important;
+      height: auto !important;
     }
   }
 
   #Banner-{{ section.id }}::after {
-    background: rgb({{ overlay_r }}, {{ overlay_g }}, {{ overlay_b }}) !important;
-    opacity: {{ overlay_alpha }} !important;
+    background-color: rgba({{ overlay_r }}, {{ overlay_g }}, {{ overlay_b }}, {{ overlay_alpha }}) !important;
+    background-color: color-mix(in srgb, {{ overlay_color }} {{ overlay_pct }}%, transparent) !important;
+    background-image: none !important;
+    opacity: 1 !important;
   }
 
   #Banner-{{ section.id }} .banner__box .banner__heading + .banner__text,
@@ -198,8 +211,8 @@
     left: 50%;
     bottom: 2.4rem;
     transform: translateX(-50%);
-    width: 1px;
-    height: 30px;
+    width: 1.5px;
+    height: {{ scroll_height }}px;
     padding: 0;
     margin: 0;
     border: 0;
@@ -214,10 +227,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 1px;
+    width: 1.5px;
     height: 100%;
     background: rgb({{ scroll_r }}, {{ scroll_g }}, {{ scroll_b }});
-    opacity: {{ section.settings.hero_scroll_indicator_opacity }};
+    opacity: {{ scroll_opacity }};
     animation: mc-hero-scroll-pulse-{{ section.id }} 2s ease-in-out infinite;
   }
   .mc-hero-scroll-indicator:focus { outline: 0; }
@@ -226,14 +239,14 @@
     outline-offset: 4px;
   }
   @keyframes mc-hero-scroll-pulse-{{ section.id }} {
-    0%   { opacity: {{ section.settings.hero_scroll_indicator_opacity | times: 0.4 }}; transform: translateY(0); }
-    50%  { opacity: {{ section.settings.hero_scroll_indicator_opacity }}; transform: translateY(6px); }
-    100% { opacity: {{ section.settings.hero_scroll_indicator_opacity | times: 0.4 }}; transform: translateY(0); }
+    0%   { opacity: {{ scroll_opacity | times: 0.6 }}; transform: translateY(0); }
+    50%  { opacity: {{ scroll_opacity }}; transform: translateY(9px); }
+    100% { opacity: {{ scroll_opacity | times: 0.6 }}; transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .mc-hero-scroll-indicator::before {
       animation: none !important;
-      opacity: {{ section.settings.hero_scroll_indicator_opacity }};
+      opacity: {{ scroll_opacity }};
     }
   }
 {%- endstyle -%}
@@ -542,18 +555,31 @@
     },
     {
       "type": "header",
-      "content": "Hauteur du hero"
+      "content": "Format du hero (aspect-ratio)"
+    },
+    {
+      "type": "select",
+      "id": "hero_aspect_ratio",
+      "label": "Format du hero",
+      "info": "Ratio largeur/hauteur de l'image hero. 16:9 = standard cinéma (recommandé, équivalent Invisible Collection). 21:9 = panoramique large. 2:1 = large. 3:1 = bande très panoramique.",
+      "options": [
+        { "value": "16/9", "label": "16:9 (cinéma — recommandé)" },
+        { "value": "21/9", "label": "21:9 (panoramique)" },
+        { "value": "2/1", "label": "2:1 (large)" },
+        { "value": "3/1", "label": "3:1 (très panoramique, ne montre qu'une bande)" }
+      ],
+      "default": "16/9"
     },
     {
       "type": "range",
-      "id": "hero_height_vh",
-      "min": 60,
+      "id": "hero_max_height_vh",
+      "min": 50,
       "max": 100,
-      "step": 2,
+      "step": 5,
       "unit": "vh",
-      "label": "Hauteur du hero (en % de l'écran)",
-      "info": "100 = pleine page. ~88 recommandé pour faire apparaître le début de la section suivante en bas d'écran et inviter au scroll.",
-      "default": 88
+      "label": "Hauteur maximale du hero (% écran)",
+      "info": "Limite haute pour éviter un hero trop grand sur écrans très larges. 90 par défaut.",
+      "default": 90
     },
     {
       "type": "header",
@@ -628,7 +654,18 @@
       "step": 0.1,
       "label": "Présence de l'indicateur",
       "info": "Discrétion de l'indicateur. 1 = pleine présence, valeurs plus basses = plus discret.",
-      "default": 0.6
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "hero_scroll_indicator_height",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Hauteur de l'indicateur de scroll",
+      "info": "Longueur visuelle du trait vertical sous le hero. Plus la valeur est haute, plus l'indicateur est visible.",
+      "default": 50
     },
     {
       "type": "header",
