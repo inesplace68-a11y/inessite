@@ -64,15 +64,6 @@
     --mc-filter-label-size: {{ section.settings.filter_section_label_size_desktop | default: 14 }}px;
     --mc-filter-label-size-m: {{ section.settings.filter_section_label_size_mobile | default: 12 }}px;
   }
-  /* Phase 16.16 — bande blanche éliminée : aligne le fond du wrapper
-     de section (.gradient → blanc pur quand color_scheme est vide)
-     sur le crème du header .mc-hd-wrap (#F5F0E8) pour assurer la
-     continuité visuelle entre la fin du menu nav et le toolbar.
-     Scope : #shopify-section-{{ section.id }} (unique par instance,
-     ne touche aucune autre section du site). */
-  #shopify-section-{{ section.id }} > .section-{{ section.id }}-padding {
-    background: #F5F0E8;
-  }
   /* Grille — gap configurable */
   #shopify-section-{{ section.id }} .grid--quarter-max,
   #shopify-section-{{ section.id }} .product-grid {
