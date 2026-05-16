@@ -1,0 +1,132 @@
+{%- comment -%}
+  Phase 16.36 — Module Conciergerie inline (bas page collection).
+
+  Porte de sortie commerciale pour les visiteurs qui ne trouvent pas
+  leur pièce dans la collection courante. Calibrage The Oblist /
+  Hermès / Sotheby's : eyebrow CAPS espacé + phrase éditoriale
+  Cormorant italic + CTA bordured rectangulaire.
+
+  Wordings figés (mémoire utilisateur) :
+    - Eyebrow      : CONCIERGERIE
+    - Texte        : "Une pièce particulière que vous ne trouvez pas
+                     ici ? Notre conciergerie la cherche pour vous,
+                     partout dans le monde."
+    - CTA          : CONFIER UNE RECHERCHE
+    - CTA URL      : /pages/conciergerie
+
+  Tous les libellés et URL sont overrides via le customizer.
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow_text | default: 'CONCIERGERIE'
+  assign main_text = section.settings.main_text
+  assign cta_text = section.settings.cta_text | default: 'CONFIER UNE RECHERCHE'
+  assign cta_url = section.settings.cta_url | default: '/pages/conciergerie'
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .mc-conciergerie {
+    background: #F7F5F1;
+    padding-top: {{ section.settings.section_padding_top | default: 80 }}px;
+    padding-bottom: {{ section.settings.section_padding_bottom | default: 80 }}px;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__inner {
+    max-width: {{ section.settings.section_max_width | default: 1600 }}px;
+    margin: 0 auto;
+    padding: 0 32px;
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__eyebrow {
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #6B6660;
+    margin: 0 0 24px;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__text {
+    font-family: 'Cormorant Garamond', Cormorant, Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: {{ section.settings.main_text_size | default: 26 }}px;
+    line-height: 1.4;
+    color: #1A1814;
+    margin: 0 auto 40px;
+    max-width: 600px;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__text > * {
+    margin: 0;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__cta {
+    display: inline-block;
+    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1A1814;
+    background: transparent;
+    border: 1px solid #1A1814;
+    padding: 16px 32px;
+    text-decoration: none;
+    transition: background-color 300ms ease, color 300ms ease;
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .mc-conciergerie__cta:hover,
+  #shopify-section-{{ section.id }} .mc-conciergerie__cta:focus-visible {
+    background: #8C6D3F;
+    color: #F7F5F1;
+    outline: none;
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-conciergerie {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #shopify-section-{{ section.id }} .mc-conciergerie__inner {
+      padding: 0 20px;
+    }
+    #shopify-section-{{ section.id }} .mc-conciergerie__text {
+      font-size: 22px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="mc-conciergerie" aria-labelledby="MCConciergerieEyebrow-{{ section.id }}">
+  <div class="mc-conciergerie__inner">
+    {%- if eyebrow != blank -%}
+      <p id="MCConciergerieEyebrow-{{ section.id }}" class="mc-conciergerie__eyebrow">{{ eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if main_text != blank -%}
+      <div class="mc-conciergerie__text rte">{{ main_text }}</div>
+    {%- endif -%}
+    {%- if cta_text != blank and cta_url != blank -%}
+      <a href="{{ cta_url }}" class="mc-conciergerie__cta">{{ cta_text | escape }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Conciergerie",
+  "tag": "section",
+  "class": "shopify-section--conciergerie",
+  "settings": [
+    { "type": "header", "content": "Contenu" },
+    { "type": "text", "id": "eyebrow_text", "default": "CONCIERGERIE", "label": "Eyebrow (capitales espacées)" },
+    { "type": "richtext", "id": "main_text", "default": "<p>Une pièce particulière que vous ne trouvez pas ici ? Notre conciergerie la cherche pour vous, partout dans le monde.</p>", "label": "Texte principal" },
+    { "type": "text", "id": "cta_text", "default": "CONFIER UNE RECHERCHE", "label": "Libellé bouton CTA" },
+    { "type": "url", "id": "cta_url", "label": "Lien du bouton CTA", "info": "Par défaut : /pages/conciergerie" },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "main_text_size", "min": 18, "max": 32, "step": 1, "unit": "px", "default": 26, "label": "Taille texte principal (desktop)" },
+    { "type": "range", "id": "section_padding_top", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 80, "label": "Padding haut" },
+    { "type": "range", "id": "section_padding_bottom", "min": 40, "max": 160, "step": 10, "unit": "px", "default": 80, "label": "Padding bas" },
+    { "type": "range", "id": "section_max_width", "min": 800, "max": 1920, "step": 20, "unit": "px", "default": 1600, "label": "Largeur maximale" }
+  ],
+  "presets": [
+    { "name": "Conciergerie" }
+  ]
+}
+{% endschema %}
