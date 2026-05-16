@@ -7,30 +7,6 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-/*
- * ------------------------------------------------------------
- * Template collection.gallery.json
- *
- * Version refonte propre : grille produits seule, sans banner
- * section. Reprend toutes les settings validées du drawer filtres
- * + tri Maison Coeur (label "FILTRES", "TRIER PAR" sans deux-points,
- * marqueur tri actif bronze, drawer crème, 4 colonnes desktop,
- * portrait, heart wishlist hover, etc.).
- *
- * L'ancien templates/collection.json est conservé en parallèle
- * comme fallback temporaire ; il contient en plus la section
- * "main-collection-banner" (fil d'Ariane / eyebrow / titre)
- * actuellement masquée mais source de wrappers parasites.
- *
- * Bascule manuelle requise par Ines :
- *   Shopify Admin → Collections → [collection] → Theme template →
- *   sélectionner "gallery".
- *
- * Les settings ci-dessous sont copiées telles quelles depuis
- * collection.json (section product-grid) pour garantir la
- * conformité avec le schema de sections/main-collection-product-grid.liquid.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "product-grid": {
@@ -72,8 +48,8 @@
         "sort_active_indicator": "bronze",
         "bar_padding_top": 8,
         "bar_padding_bottom": 8,
-        "collection_padding_top_desktop": 8,
-        "collection_padding_top_mobile": 8,
+        "collection_padding_top_desktop": 0,
+        "collection_padding_top_mobile": 0,
         "bar_to_grid_gap": 16,
         "drawer_height_mode": "auto",
         "drawer_top_offset": 80,
