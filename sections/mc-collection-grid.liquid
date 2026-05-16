@@ -20,10 +20,12 @@
   }
   #shopify-section-{{ section.id }} .mc-collection-grid .mc-section-heading {
     margin-bottom: var(--mcg-title-gap);
+    text-align: {{ section.settings.selection_title_alignment | default: 'left' }};
   }
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .mc-collection-grid .mc-section-heading {
       margin-bottom: var(--mcg-title-gap-mobile);
+      text-align: center;
     }
   }
   #shopify-section-{{ section.id }} .mc-collection-grid__image-wrap {
@@ -94,6 +96,17 @@
       "id": "title",
       "label": "Titre de section",
       "default": "NOTRE SÉLECTION"
+    },
+    {
+      "type": "select",
+      "id": "selection_title_alignment",
+      "label": "Position du titre de section",
+      "info": "Place le titre à gauche (cohérence avec NOS NOUVEAUTÉS, signature gallery éditoriale) ou au centre. Sur mobile, le titre reste toujours centré pour lisibilité.",
+      "options": [
+        { "value": "left", "label": "À gauche (recommandé)" },
+        { "value": "center", "label": "Au centre" }
+      ],
+      "default": "left"
     },
     { "type": "header", "content": "Apparence" },
     {
