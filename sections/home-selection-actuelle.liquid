@@ -48,26 +48,22 @@
     --hs-image-aspect: {{ image_aspect }};
     --hs-arrow-color: {{ section.settings.arrows_color | default: '#1A1814' }};
     --hs-controls-gap: {{ section.settings.controls_top_gap | default: 28 }}px;
+    --hs-tease-bg: {{ section.settings.tease_card_bg_color | default: '#F5F0E8' }};
+    --hs-tease-text: {{ section.settings.tease_card_text_color | default: '#1A1814' }};
   }
 {%- endstyle -%}
 
 {%- assign title_alignment = section.settings.title_alignment | default: 'left' -%}
-{%- assign cta_active = false -%}
-{%- if section.settings.show_cta and section.settings.cta_text != blank and section.settings.cta_link != blank -%}
-  {%- assign cta_active = true -%}
+{%- assign tease_active = false -%}
+{%- if section.settings.tease_card_enabled and section.settings.tease_card_link != blank -%}
+  {%- assign tease_active = true -%}
 {%- endif -%}
 
 <section class="home-selection">
   <div class="home-selection__inner">
     {%- if section.settings.show_eyebrow and section.settings.title_eyebrow != blank -%}
-      <div class="home-selection__header home-selection__header--{{ title_alignment }}{% if cta_active %} home-selection__header--with-cta{% endif %}">
+      <div class="home-selection__header home-selection__header--{{ title_alignment }}">
         <h2 class="mc-section-heading">{{ section.settings.title_eyebrow | escape }}</h2>
-        {%- if cta_active -%}
-          <a class="home-selection__cta" href="{{ section.settings.cta_link }}">
-            <span class="home-selection__cta-label">{{ section.settings.cta_text | escape }}</span>
-            <span class="home-selection__cta-arrow" aria-hidden="true">→</span>
-          </a>
-        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -75,6 +71,10 @@
       {%- assign limit = products_count -%}
       {%- if coll.products_count < limit -%}
         {%- assign limit = coll.products_count -%}
+      {%- endif -%}
+      {%- assign total_slides = limit -%}
+      {%- if tease_active -%}
+        {%- assign total_slides = limit | plus: 1 -%}
       {%- endif -%}
 
       <div class="home-selection__carousel">
@@ -84,7 +84,7 @@
           aria-label="{{ section.settings.title_eyebrow | default: 'Sélection actuelle' | escape }}"
           tabindex="0"
           data-home-selection-track
-          data-total="{{ limit }}"
+          data-total="{{ total_slides }}"
         >
           {%- for product in products_list limit: limit -%}
             <a class="home-selection__card" href="{{ product.url }}">
@@ -120,6 +120,23 @@
               </p>
             </a>
           {%- endfor -%}
+
+          {%- if tease_active -%}
+            <a class="home-selection__card home-selection__card--tease" href="{{ section.settings.tease_card_link }}">
+              <div class="home-selection__tease-content">
+                {%- if section.settings.tease_card_eyebrow != blank -%}
+                  <p class="home-selection__tease-eyebrow">{{ section.settings.tease_card_eyebrow | escape }}</p>
+                {%- endif -%}
+                {%- if section.settings.tease_card_title != blank -%}
+                  <h3 class="home-selection__tease-title">{{ section.settings.tease_card_title | escape }}</h3>
+                {%- endif -%}
+                <div class="home-selection__tease-decor" aria-hidden="true">
+                  <span class="home-selection__tease-line"></span>
+                  <span class="home-selection__tease-arrow">→</span>
+                </div>
+              </div>
+            </a>
+          {%- endif -%}
         </div>
 
         {%- if section.settings.show_counter or section.settings.show_arrows -%}
@@ -319,10 +336,42 @@
     { "type": "color", "id": "arrows_color", "default": "#1A1814", "label": "Couleur des flèches et du compteur" },
     { "type": "range", "id": "controls_top_gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 16, "label": "Espace carrousel → flèches/compteur" },
 
-    { "type": "header", "content": "CTA section (haut-droite)" },
-    { "type": "checkbox", "id": "show_cta", "default": true, "label": "Afficher le lien « Voir toutes les nouveautés »" },
-    { "type": "text", "id": "cta_text", "label": "Texte du lien", "default": "VOIR TOUTES LES NOUVEAUTÉS" },
-    { "type": "url", "id": "cta_link", "label": "Destination du lien", "info": "Page vers laquelle le lien renvoie. Généralement la page collection /collections/nouveautes." },
+    { "type": "header", "content": "Carte tease « Toutes les nouveautés »" },
+    { "type": "checkbox", "id": "tease_card_enabled", "default": true, "label": "Afficher la carte tease à la fin du carrousel" },
+    {
+      "type": "text",
+      "id": "tease_card_eyebrow",
+      "label": "Eyebrow de la carte (au-dessus du titre)",
+      "info": "Petit texte en capitales au-dessus du titre principal.",
+      "default": "DÉCOUVRIR"
+    },
+    {
+      "type": "text",
+      "id": "tease_card_title",
+      "label": "Titre principal de la carte (en italique)",
+      "info": "Titre principal de la carte, rendu en Cormorant Garamond italique.",
+      "default": "Toutes les nouveautés"
+    },
+    {
+      "type": "url",
+      "id": "tease_card_link",
+      "label": "Lien de destination de la carte tease",
+      "info": "Page vers laquelle la carte renvoie. Généralement la page collection /collections/nouveautes."
+    },
+    {
+      "type": "color",
+      "id": "tease_card_bg_color",
+      "label": "Couleur de fond de la carte tease",
+      "info": "Default crème pour une carte lumineuse cohérente. Tester aussi en marron foncé pour un contraste signature.",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "color",
+      "id": "tease_card_text_color",
+      "label": "Couleur du texte de la carte tease",
+      "info": "Doit contraster avec le fond pour lisibilité. Marron foncé sur fond crème (default), ou crème sur fond marron foncé.",
+      "default": "#1A1814"
+    },
 
     { "type": "header", "content": "Épaisseur section (calée sur NOTRE SÉLECTION)" },
     { "type": "range", "id": "section_padding_top", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 40, "label": "Padding haut section" },
