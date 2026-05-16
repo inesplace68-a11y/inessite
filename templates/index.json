@@ -54,7 +54,7 @@
         "hero_button_opacity_rest": 1,
         "hero_button_bg_hover": "#ffffff",
         "hero_button_color_hover": "#332821",
-        "hero_button_opacity_hover": 0.5,
+        "hero_button_opacity_hover": 0.6,
         "image_height": "large",
         "image_height_desktop_custom": 50,
         "image_behavior": "none",
