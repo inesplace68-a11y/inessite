@@ -258,6 +258,10 @@ h1, h2, h3, h4,
    GRILLE NOTRE SÉLECTION (mc-collection-grid)
    Phase 11 : retour pierre crème — exposé en Customizer pour
    bascule libre par Ines (default #F7F5F1).
+   Phase 16.56 : refonte cartes catégories — titre superposé
+   directement sur l'image (signature fashion editorial), hover
+   éditorial (zoom + voile renforcé + titre italique + trait fin
+   + flèche glissée).
    ============================================================ */
 .mc-collection-grid {
   background-color: var(--mcg-bg, #F7F5F1);
@@ -277,72 +281,129 @@ h1, h2, h3, h4,
   .mc-collection-grid__grid { grid-template-columns: 1fr; gap: 16px; }
 }
 
-.mc-collection-grid__link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--mc-dark);
+/* --- Carte catégorie : image conteneur + overlays ------------ */
+.mc-cat-card {
+  display: block;
+  color: var(--mc-cat-text-color, #F7F5F1);
+  text-decoration: none;
 }
 
-/* Image carrée — ratio 1:1 comme le mockup */
-.mc-collection-grid__image-wrap {
+.mc-cat-card__media {
+  position: relative;
   overflow: hidden;
   aspect-ratio: 1 / 1;
   width: 100%;
-  background: #E8E5E0;
-  margin-bottom: 14px;
+  background-color: var(--mc-creme, #F7F5F1);
 }
 
-.mc-collection-grid__image-wrap img,
-.mc-collection-grid__image-wrap svg {
+.mc-cat-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.65s ease;
+  transition: transform 400ms ease;
 }
 
-.mc-collection-grid__link:hover .mc-collection-grid__image-wrap img {
-  transform: scale(1.04);
+/* Voile dégradé en bas de carte pour lisibilité du titre */
+.mc-cat-card__veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--mc-cat-veil-height, 60%);
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--mc-cat-veil-color, #1A1814) var(--mc-cat-veil-intensity, 55%), transparent) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 300ms ease, height 300ms ease;
 }
 
-/* Nom de catégorie — small caps espacés */
-.mc-collection-grid__label {
-  font-family: var(--mc-font-sans);
-  font-weight: 400;
-  font-size: 1.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--mc-dark);
-  margin: 0 0 6px;
-  text-align: center;
-}
-
-/* Lien DÉCOUVRIR sous chaque catégorie — Phase 9 : style cohérent liens secondaires services */
-.mc-collection-grid__discover {
+/* Titre superposé — Jost CAPS au repos */
+.mc-cat-card__title {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  margin: 0;
   font-family: var(--mc-font-sans);
   font-weight: 300;
-  font-size: 1.2rem;
+  font-size: clamp(11px, 1.1vw, 14px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--mc-dark);
-  margin: 0;
-  text-align: center;
-  border-bottom: 1px solid var(--mc-dark);
-  padding: 4px 0;
-  transition: opacity var(--mc-transition);
+  color: var(--mc-cat-text-color, #F7F5F1);
+  z-index: 2;
+  transition:
+    font-family 0ms 200ms,
+    font-style 200ms ease,
+    font-size 300ms ease,
+    letter-spacing 300ms ease,
+    text-transform 0ms 200ms;
 }
 
-@supports (border-bottom-width: 0.5px) {
-  .mc-collection-grid__discover { border-bottom-width: 0.5px; }
+/* Flèche superposée — bottom-right, glisse au hover */
+.mc-cat-card__arrow {
+  position: absolute;
+  bottom: 18px;
+  right: 14px;
+  width: 20px;
+  height: 8px;
+  color: var(--mc-cat-text-color, #F7F5F1);
+  z-index: 2;
+  transition: transform 300ms ease;
 }
 
-.mc-collection-grid__discover-arrow {
-  display: inline-block;
+/* Trait fin sous le titre — masqué au repos, apparaît au hover */
+.mc-cat-card__hover-decor {
+  position: absolute;
+  bottom: 8px;
+  left: 14px;
+  width: 22px;
+  height: 0.5px;
+  background-color: var(--mc-cat-text-color, #F7F5F1);
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 300ms ease;
+  pointer-events: none;
 }
 
-.mc-collection-grid__link:hover .mc-collection-grid__discover {
-  opacity: 0.65;
+/* --- Hover éditorial (gated par .mc-collection-grid--hover) -- */
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__image {
+  transform: scale(1.03);
+}
+
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__veil {
+  height: calc(var(--mc-cat-veil-height, 60%) + 10%);
+  opacity: 1.2;
+}
+
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(14px, 1.4vw, 18px);
+  letter-spacing: 0;
+  text-transform: lowercase;
+  transition:
+    font-family 0ms,
+    font-style 300ms ease,
+    font-size 300ms ease,
+    letter-spacing 300ms ease,
+    text-transform 0ms;
+}
+
+/* Sentence case : "LUMINAIRES" devient "Luminaires" au hover */
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__title::first-letter {
+  text-transform: uppercase;
+}
+
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__hover-decor {
+  opacity: 1;
+}
+
+.mc-collection-grid--hover .mc-cat-card:hover .mc-cat-card__arrow {
+  transform: translateX(3px);
 }
 
 /* ============================================================

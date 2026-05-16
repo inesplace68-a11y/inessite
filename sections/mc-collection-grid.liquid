@@ -1,3 +1,14 @@
+{%- liquid
+  assign cat_text_color = section.settings.selection_cat_text_color | default: '#F7F5F1'
+  assign cat_veil_color = section.settings.selection_cat_veil_color | default: '#1A1814'
+  assign cat_veil_intensity = section.settings.selection_cat_veil_intensity | default: 55
+  assign cat_veil_height = section.settings.selection_cat_veil_height | default: 60
+  assign cat_hover_class = ''
+  if section.settings.selection_cat_hover_enabled
+    assign cat_hover_class = ' mc-collection-grid--hover'
+  endif
+-%}
+
 {%- style -%}
   #shopify-section-{{ section.id }} .mc-collection-grid {
     --mcg-bg: {{ section.settings.background_color | default: '#F7F5F1' }};
@@ -9,6 +20,10 @@
     --mcg-title-gap-mobile: {{ section.settings.title_to_grid_gap_mobile | default: 28 }}px;
     --mcg-image-to-label: {{ section.settings.image_to_label_gap | default: 18 }}px;
     --mcg-label-to-link: {{ section.settings.label_to_link_gap | default: 8 }}px;
+    --mc-cat-text-color: {{ cat_text_color }};
+    --mc-cat-veil-color: {{ cat_veil_color }};
+    --mc-cat-veil-intensity: {{ cat_veil_intensity }}%;
+    --mc-cat-veil-height: {{ cat_veil_height }}%;
     padding-top: var(--mcg-pt);
     padding-bottom: var(--mcg-pb);
   }
@@ -28,15 +43,9 @@
       text-align: center;
     }
   }
-  #shopify-section-{{ section.id }} .mc-collection-grid__image-wrap {
-    margin-bottom: var(--mcg-image-to-label);
-  }
-  #shopify-section-{{ section.id }} .mc-collection-grid__label {
-    margin-bottom: var(--mcg-label-to-link);
-  }
 {%- endstyle -%}
 
-<section class="mc-section mc-collection-grid">
+<section class="mc-section mc-collection-grid{{ cat_hover_class }}">
   <div class="mc-container">
     {%- if section.settings.title != blank -%}
       <h2 class="mc-section-heading">{{ section.settings.title }}</h2>
@@ -48,32 +57,37 @@
           <div class="mc-collection-grid__item" {{ block.shopify_attributes }}>
             <a
               href="{{ block.settings.collection_link | default: '#' }}"
-              class="mc-collection-grid__link"
+              class="mc-cat-card"
               {% if block.settings.collection_link == blank %}aria-disabled="true"{% endif %}
+              aria-label="{{ block.settings.title | default: 'Catégorie' | escape }}"
             >
-              <div class="mc-collection-grid__image-wrap">
+              <div class="mc-cat-card__media">
                 {%- if block.settings.image != blank -%}
                   {{
                     block.settings.image
                     | image_url: width: 800
                     | image_tag:
                       loading: 'lazy',
-                      class: 'mc-collection-grid__image',
+                      class: 'mc-cat-card__image',
                       widths: '400, 600, 800',
                       sizes: '(min-width: 990px) 25vw, 50vw'
                   }}
                 {%- else -%}
-                  {{ 'collection-1' | placeholder_svg_tag: 'mc-collection-grid__image placeholder-svg' }}
+                  {{ 'collection-1' | placeholder_svg_tag: 'mc-cat-card__image placeholder-svg' }}
                 {%- endif -%}
+
+                <span class="mc-cat-card__veil" aria-hidden="true"></span>
+
+                {%- if block.settings.title != blank -%}
+                  <p class="mc-cat-card__title">{{ block.settings.title }}</p>
+                {%- endif -%}
+
+                <span class="mc-cat-card__hover-decor" aria-hidden="true"></span>
+
+                <svg class="mc-cat-card__arrow" width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M0 4H19M14 1L19 4L14 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
+                </svg>
               </div>
-
-              {%- if block.settings.title != blank -%}
-                <p class="mc-collection-grid__label">{{ block.settings.title }}</p>
-              {%- endif -%}
-
-              <p class="mc-collection-grid__discover">
-                {{- block.settings.discover_label | default: 'Découvrir' | upcase -}}<span class="mc-collection-grid__discover-arrow" aria-hidden="true">&nbsp;→</span>
-              </p>
             </a>
           </div>
         {%- endfor -%}
@@ -116,6 +130,51 @@
       "default": "#F7F5F1"
     },
 
+    { "type": "header", "content": "Cartes catégories — titre superposé (Phase 16.56)" },
+    {
+      "type": "color",
+      "id": "selection_cat_text_color",
+      "label": "Couleur du texte superposé sur les cartes",
+      "info": "Couleur du titre de catégorie et de la flèche, superposés sur l'image. Default crème claire pour lisibilité sur image moyennement contrastée.",
+      "default": "#F7F5F1"
+    },
+    {
+      "type": "color",
+      "id": "selection_cat_veil_color",
+      "label": "Couleur du voile sur les cartes",
+      "info": "Voile dégradé qui assombrit le bas de l'image pour faire ressortir le titre. Default noir.",
+      "default": "#1A1814"
+    },
+    {
+      "type": "range",
+      "id": "selection_cat_veil_intensity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Intensité du voile sur les cartes",
+      "info": "0 = aucun voile (image brute, titre peut être illisible). 100 = voile très opaque. Recommandé entre 40 et 70 selon vos images.",
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "selection_cat_veil_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Hauteur du voile (% de la carte)",
+      "info": "Proportion de la carte couverte par le voile degrade. Plus haute = plus de l'image est assombrie.",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "selection_cat_hover_enabled",
+      "label": "Activer l'effet de survol editorial",
+      "info": "Au survol d'une carte : leger zoom de l'image, titre passe en italique, trait fin apparait, fleche glisse a droite. Decocher pour rendu statique.",
+      "default": true
+    },
+
     { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },
     { "type": "range", "id": "padding_top_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 56, "label": "Marge haute desktop" },
     { "type": "range", "id": "padding_bottom_desktop", "min": 16, "max": 200, "step": 4, "unit": "px", "default": 80, "label": "Marge basse desktop" },
@@ -148,7 +207,7 @@
         {
           "type": "text",
           "id": "discover_label",
-          "label": "Libellé lien",
+          "label": "Libellé lien (réservé — non affiché en Phase 16.56)",
           "default": "Découvrir"
         },
         {
