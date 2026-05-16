@@ -3,8 +3,8 @@
    ============================================================ */
 
 .home-selection {
-  padding-top: var(--hs-padding-top, 64px);
-  padding-bottom: var(--hs-padding-bottom, 48px);
+  padding-top: var(--hs-padding-top, 56px);
+  padding-bottom: var(--hs-padding-bottom, 80px);
   background-color: var(--mc-bg, #F7F5F1);
 }
 
@@ -14,7 +14,7 @@
   padding: 0 var(--content-gutter-desktop, 64px);
 }
 
-/* ----------------- Eyebrow (Niveau 5 — Jost CAPS letter-spaced) ----------------- */
+/* ----------------- Eyebrow ----------------- */
 .home-selection__eyebrow {
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
@@ -33,7 +33,7 @@
 
 .home-selection__track {
   display: flex;
-  gap: var(--hs-card-gap, 28px);
+  gap: var(--hs-card-gap, 24px);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -47,7 +47,7 @@
 
 /* ----------------- Card ----------------- */
 .home-selection__card {
-  flex: 0 0 calc((100% - (var(--hs-card-gap, 20px) * (var(--hs-visible-desktop, 4) - 1))) / var(--hs-visible-desktop, 4));
+  flex: 0 0 calc((100% - (var(--hs-card-gap, 24px) * (var(--hs-visible-desktop, 3) - 1))) / var(--hs-visible-desktop, 3));
   scroll-snap-align: start;
   display: block;
   color: inherit;
@@ -56,8 +56,6 @@
   min-width: 0;
 }
 
-/* Carte unique : centrage horizontal dans la bande (en attendant l'enrichissement
-   de la collection). Multi-cartes : flex-start standard préservé. */
 .home-selection__card:only-child {
   margin-inline: auto;
 }
@@ -86,10 +84,10 @@
 
 .home-selection__card:hover .home-selection__image {
   opacity: 0.85;
+  transform: translateY(-2px);
 }
 
-/* Niveau 4 — Titre fonctionnel : Cormorant regular non-italique (Phase 10 revert).
-   Phase 16.5 — 1 ligne avec ellipse si dépassement. */
+/* Card title */
 .home-selection__name {
   font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: normal;
@@ -117,26 +115,48 @@
   letter-spacing: 0.02em;
 }
 
-/* ----------------- Flèches navigation — registre Hermès / Oblist / RV74 :
-   trait fin, sans fond, sans bordure, discrètes ----------------- */
+/* ----------------- Controls (counter + arrows) bottom-right ----------------- */
+.home-selection__controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+  margin-top: var(--hs-controls-gap, 28px);
+}
+
+.home-selection__counter {
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hs-arrow-color, #1A1814);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-right: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-selection__counter-sep {
+  opacity: 0.6;
+}
+
 .home-selection__nav {
-  position: absolute;
-  top: var(--hs-photo-mid, 35%);
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
+  position: static;
+  width: 24px;
+  height: 24px;
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   color: var(--hs-arrow-color, #1A1814);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  z-index: 2;
-  opacity: 0.5;
+  opacity: 1;
   transition: opacity 0.2s ease;
   -webkit-appearance: none;
   appearance: none;
@@ -149,29 +169,59 @@
   stroke: currentColor;
 }
 
-.home-selection__nav--prev {
-  left: -36px;
-}
-
-.home-selection__nav--next {
-  right: -36px;
-}
-
 .home-selection__nav:not(:disabled):hover,
 .home-selection__nav:not(:disabled):focus-visible {
-  opacity: 1;
+  opacity: 0.7;
   background: transparent;
   outline: none;
 }
 
 .home-selection__nav:disabled {
-  opacity: 0.15;
+  opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 .home-selection__nav[hidden] {
   display: none;
+}
+
+/* ----------------- CTA centered below carousel ----------------- */
+.home-selection__cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--hs-cta-gap, 32px);
+}
+
+.home-selection__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-dark, #1A1814);
+  text-decoration: none;
+  border-bottom: 0.5px solid currentColor;
+  padding: 4px 0;
+  transition: opacity 0.2s ease;
+}
+
+.home-selection__cta:hover,
+.home-selection__cta:focus-visible {
+  opacity: 0.7;
+  outline: none;
+}
+
+.home-selection__cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.home-selection__cta:hover .home-selection__cta-arrow {
+  transform: translateX(3px);
 }
 
 .home-selection__empty {
@@ -183,10 +233,16 @@
 }
 
 /* ----------------- Responsive ----------------- */
+@media (max-width: 989px) and (min-width: 750px) {
+  .home-selection__card {
+    flex: 0 0 calc((100% - (var(--hs-card-gap, 24px) * 1.3)) / 2.3);
+  }
+}
+
 @media (max-width: 749px) {
   .home-selection {
     padding-top: var(--hs-padding-top-mobile, 40px);
-    padding-bottom: var(--hs-padding-bottom-mobile, 32px);
+    padding-bottom: var(--hs-padding-bottom-mobile, 48px);
   }
   .home-selection__inner {
     padding: 0 20px;
@@ -194,12 +250,13 @@
   .home-selection__eyebrow {
     margin-bottom: var(--hs-eyebrow-to-grid-mobile, 24px);
   }
-  /* Phase 16.5 — peek du suivant : visible_mobile = 1.2 par défaut → la carte
-     courante prend ~83% de la largeur viewport, le bord de la suivante apparaît. */
   .home-selection__card {
-    flex: 0 0 calc((100% - (var(--hs-card-gap, 20px) * (var(--hs-visible-mobile, 1.2) - 1))) / var(--hs-visible-mobile, 1.2));
+    flex: 0 0 calc((100% - (var(--hs-card-gap, 16px) * (var(--hs-visible-mobile, 1.3) - 1))) / var(--hs-visible-mobile, 1.3));
   }
-  .home-selection__nav {
-    display: none !important;
+  .home-selection__controls {
+    gap: 14px;
+  }
+  .home-selection__counter {
+    font-size: 12px;
   }
 }

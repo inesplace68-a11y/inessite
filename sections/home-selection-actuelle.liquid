@@ -2,9 +2,9 @@
 
 {%- liquid
   assign coll = collections[section.settings.featured_collection]
-  assign products_count = section.settings.products_count | default: 8
-  assign visible_desktop = section.settings.visible_desktop | default: 4
-  assign visible_mobile = section.settings.visible_mobile | default: 1.2
+  assign products_count = section.settings.products_count | default: 12
+  assign visible_desktop = section.settings.visible_desktop | default: 3
+  assign visible_mobile = section.settings.visible_mobile | default: 1.3
   assign image_ratio = section.settings.image_ratio | default: '4-5'
   case image_ratio
     when '1-1'
@@ -13,26 +13,42 @@
       assign image_aspect = '3 / 4'
     when '2-3'
       assign image_aspect = '2 / 3'
+    when '5-4'
+      assign image_aspect = '5 / 4'
     else
       assign image_aspect = '4 / 5'
   endcase
+
+  assign sort_by = section.settings.sort_by | default: 'created-descending'
+  if coll != blank
+    case sort_by
+      when 'created-descending'
+        assign products_list = coll.products | sort: 'created_at' | reverse
+      when 'created-ascending'
+        assign products_list = coll.products | sort: 'created_at'
+      else
+        assign products_list = coll.products
+    endcase
+  endif
 -%}
 
 {%- style -%}
   #shopify-section-{{ section.id }} {
-    --hs-padding-top: {{ section.settings.section_padding_top | default: 64 }}px;
-    --hs-padding-bottom: {{ section.settings.section_padding_bottom | default: 64 }}px;
+    --hs-padding-top: {{ section.settings.section_padding_top | default: 56 }}px;
+    --hs-padding-bottom: {{ section.settings.section_padding_bottom | default: 80 }}px;
     --hs-padding-top-mobile: {{ section.settings.padding_top_mobile | default: 40 }}px;
-    --hs-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 32 }}px;
+    --hs-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
     --hs-eyebrow-to-grid: {{ section.settings.eyebrow_to_grid | default: 32 }}px;
     --hs-eyebrow-to-grid-mobile: {{ section.settings.title_to_product_gap_mobile | default: 24 }}px;
     --hs-image-to-name: {{ section.settings.image_to_name_gap | default: 18 }}px;
     --hs-name-to-price: {{ section.settings.name_to_price_gap | default: 6 }}px;
     --hs-visible-desktop: {{ visible_desktop }};
     --hs-visible-mobile: {{ visible_mobile }};
-    --hs-card-gap: {{ section.settings.card_gap | default: 20 }}px;
+    --hs-card-gap: {{ section.settings.card_gap | default: 24 }}px;
     --hs-image-aspect: {{ image_aspect }};
     --hs-arrow-color: {{ section.settings.arrows_color | default: '#1A1814' }};
+    --hs-controls-gap: {{ section.settings.controls_top_gap | default: 28 }}px;
+    --hs-cta-gap: {{ section.settings.cta_top_gap | default: 32 }}px;
   }
 {%- endstyle -%}
 
@@ -43,6 +59,11 @@
     {%- endif -%}
 
     {%- if coll != blank and coll.products.size > 0 -%}
+      {%- assign limit = products_count -%}
+      {%- if coll.products_count < limit -%}
+        {%- assign limit = coll.products_count -%}
+      {%- endif -%}
+
       <div class="home-selection__carousel">
         <div
           class="home-selection__track"
@@ -50,13 +71,9 @@
           aria-label="{{ section.settings.title_eyebrow | default: 'Sélection actuelle' | escape }}"
           tabindex="0"
           data-home-selection-track
+          data-total="{{ limit }}"
         >
-          {%- assign limit = products_count -%}
-          {%- if coll.products_count < limit -%}
-            {%- assign limit = coll.products_count -%}
-          {%- endif -%}
-
-          {%- for product in coll.products limit: limit -%}
+          {%- for product in products_list limit: limit -%}
             <a class="home-selection__card" href="{{ product.url }}">
               <div class="home-selection__media">
                 {%- if product.featured_image != blank -%}
@@ -64,7 +81,7 @@
                     class="home-selection__image"
                     src="{{ product.featured_image | image_url: width: 800 }}"
                     srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
-                    sizes="(max-width: 749px) 88vw, (max-width: 989px) 44vw, 23vw"
+                    sizes="(max-width: 749px) 76vw, (max-width: 989px) 44vw, 30vw"
                     alt="{{ product.featured_image.alt | default: product.title | escape }}"
                     loading="lazy"
                     width="{{ product.featured_image.width }}"
@@ -84,7 +101,7 @@
                   else
                     assign hs_price_str = product.price | money
                   endif
-                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
+                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
                 -%}
                 {{ hs_price_str }}
               </p>
@@ -92,29 +109,49 @@
           {%- endfor -%}
         </div>
 
-        {%- if section.settings.show_arrows -%}
-        <button
-          type="button"
-          class="home-selection__nav home-selection__nav--prev"
-          data-home-selection-prev
-          aria-label="Voir les pièces précédentes"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="home-selection__nav home-selection__nav--next"
-          data-home-selection-next
-          aria-label="Voir les pièces suivantes"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        {%- if section.settings.show_counter or section.settings.show_arrows -%}
+          <div class="home-selection__controls">
+            {%- if section.settings.show_counter -%}
+              <span class="home-selection__counter" data-home-selection-counter aria-live="polite">
+                <span data-home-selection-counter-current>01</span>
+                <span class="home-selection__counter-sep" aria-hidden="true"> / </span>
+                <span data-home-selection-counter-total>{% if limit < 10 %}0{% endif %}{{ limit }}</span>
+              </span>
+            {%- endif -%}
+            {%- if section.settings.show_arrows -%}
+              <button
+                type="button"
+                class="home-selection__nav home-selection__nav--prev"
+                data-home-selection-prev
+                aria-label="Voir les pièces précédentes"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button
+                type="button"
+                class="home-selection__nav home-selection__nav--next"
+                data-home-selection-next
+                aria-label="Voir les pièces suivantes"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            {%- endif -%}
+          </div>
         {%- endif -%}
       </div>
+
+      {%- if section.settings.show_cta and section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+        <div class="home-selection__cta-wrap">
+          <a class="home-selection__cta" href="{{ section.settings.cta_link }}">
+            <span class="home-selection__cta-label">{{ section.settings.cta_text | escape }}</span>
+            <span class="home-selection__cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      {%- endif -%}
     {%- else -%}
       <p class="home-selection__empty">
         Sélectionnez une collection dans les réglages pour afficher la sélection actuelle.
@@ -131,6 +168,10 @@
     if (!track) return;
     var prev = root.querySelector('[data-home-selection-prev]');
     var next = root.querySelector('[data-home-selection-next]');
+    var counterCurrent = root.querySelector('[data-home-selection-counter-current]');
+    var total = parseInt(track.getAttribute('data-total') || '0', 10) || 0;
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
     function cardStep() {
       var card = track.querySelector('.home-selection__card');
@@ -138,6 +179,15 @@
       var styles = window.getComputedStyle(track);
       var gap = parseFloat(styles.columnGap || styles.gap || '0');
       return card.getBoundingClientRect().width + gap;
+    }
+
+    function activeIndex() {
+      var step = cardStep();
+      if (step <= 0) return 1;
+      var idx = Math.round(track.scrollLeft / step) + 1;
+      if (idx < 1) idx = 1;
+      if (idx > total) idx = total;
+      return idx;
     }
 
     function updateNav() {
@@ -151,10 +201,8 @@
         next.hidden = !hasOverflow;
         next.disabled = track.scrollLeft >= maxScroll - 1;
       }
-
-      var media = track.querySelector('.home-selection__media');
-      if (media) {
-        root.style.setProperty('--hs-photo-mid', (media.getBoundingClientRect().height / 2) + 'px');
+      if (counterCurrent && total > 0) {
+        counterCurrent.textContent = pad(activeIndex());
       }
     }
 
@@ -198,42 +246,64 @@
       "type": "text",
       "id": "title_eyebrow",
       "label": "Eyebrow (CAPS)",
-      "default": "NOUVEAUTÉS"
+      "default": "NOS NOUVEAUTÉS"
     },
-    { "type": "header", "content": "Contenu" },
+    { "type": "header", "content": "Source produits" },
     {
       "type": "collection",
       "id": "featured_collection",
-      "label": "Collection à afficher"
+      "label": "Collection à afficher",
+      "info": "Collection Shopify utilisée comme source des produits. Tri appliqué selon le réglage ci-dessous."
     },
-    { "type": "range", "id": "products_count", "min": 4, "max": 16, "step": 1, "unit": "pcs", "default": 8, "label": "Nombre de pièces affichées" },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Tri des produits",
+      "info": "Tri appliqué côté Liquid. Pour 'Les plus vendus' (non disponible en Liquid), utiliser le tri natif de la collection dans l'admin Shopify et choisir 'Tri manuel' ici.",
+      "options": [
+        { "value": "created-descending", "label": "Par date d'ajout (plus récents d'abord)" },
+        { "value": "created-ascending", "label": "Par date d'ajout (plus anciens d'abord)" },
+        { "value": "manual", "label": "Tri manuel (selon admin Shopify)" }
+      ],
+      "default": "created-descending"
+    },
+    { "type": "range", "id": "products_count", "min": 4, "max": 24, "step": 1, "unit": "pcs", "default": 12, "label": "Nombre de produits à afficher" },
 
-    { "type": "header", "content": "Carrousel (Phase 16.5)" },
-    { "type": "range", "id": "visible_desktop", "min": 2, "max": 6, "step": 1, "unit": "pcs", "default": 4, "label": "Pièces visibles desktop" },
-    { "type": "range", "id": "visible_mobile", "min": 1.0, "max": 3.0, "step": 0.1, "unit": "pcs", "default": 1.2, "label": "Pièces visibles mobile" },
+    { "type": "header", "content": "Carrousel" },
+    { "type": "range", "id": "visible_desktop", "min": 2, "max": 5, "step": 1, "unit": "pcs", "default": 3, "label": "Cartes visibles sur desktop" },
+    { "type": "range", "id": "visible_mobile", "min": 1.0, "max": 3.0, "step": 0.1, "unit": "pcs", "default": 1.3, "label": "Cartes visibles sur mobile" },
     {
       "type": "select",
       "id": "image_ratio",
-      "label": "Format image",
+      "label": "Format des cartes",
       "options": [
+        { "value": "4-5", "label": "4:5 (portrait — recommandé)" },
+        { "value": "3-4", "label": "3:4 (portrait plus marqué)" },
+        { "value": "2-3", "label": "2:3 (portrait haut)" },
         { "value": "1-1", "label": "1:1 (carré)" },
-        { "value": "4-5", "label": "4:5 (portrait Maison Coeur)" },
-        { "value": "3-4", "label": "3:4 (portrait standard)" },
-        { "value": "2-3", "label": "2:3 (portrait haut)" }
+        { "value": "5-4", "label": "5:4 (paysage léger)" }
       ],
       "default": "4-5"
     },
-    { "type": "range", "id": "card_gap", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 20, "label": "Espace entre vignettes" },
+    { "type": "range", "id": "card_gap", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24, "label": "Espace entre les cartes" },
 
-    { "type": "header", "content": "Flèches navigation (Phase 16.5)" },
-    { "type": "checkbox", "id": "show_arrows", "default": true, "label": "Afficher les flèches" },
-    { "type": "color", "id": "arrows_color", "default": "#1A1814", "label": "Couleur des flèches" },
+    { "type": "header", "content": "Compteur et flèches" },
+    { "type": "checkbox", "id": "show_counter", "default": true, "label": "Afficher le compteur (01 / 12)" },
+    { "type": "checkbox", "id": "show_arrows", "default": true, "label": "Afficher les flèches de navigation" },
+    { "type": "color", "id": "arrows_color", "default": "#1A1814", "label": "Couleur des flèches et du compteur" },
+    { "type": "range", "id": "controls_top_gap", "min": 12, "max": 64, "step": 4, "unit": "px", "default": 28, "label": "Espace carrousel → flèches/compteur" },
 
-    { "type": "header", "content": "Espacements section" },
-    { "type": "range", "id": "section_padding_top", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 64, "label": "Padding haut section" },
-    { "type": "range", "id": "section_padding_bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 64, "label": "Padding bas section" },
+    { "type": "header", "content": "CTA fin de section" },
+    { "type": "checkbox", "id": "show_cta", "default": true, "label": "Afficher le lien « Voir toutes les nouveautés »" },
+    { "type": "text", "id": "cta_text", "label": "Texte du lien", "default": "VOIR TOUTES LES NOUVEAUTÉS" },
+    { "type": "url", "id": "cta_link", "label": "Destination du lien", "info": "Page vers laquelle le lien renvoie. Généralement la page collection /collections/nouveautes." },
+    { "type": "range", "id": "cta_top_gap", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 32, "label": "Espace carrousel → CTA" },
+
+    { "type": "header", "content": "Épaisseur section (calée sur NOTRE SÉLECTION)" },
+    { "type": "range", "id": "section_padding_top", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 56, "label": "Padding haut section" },
+    { "type": "range", "id": "section_padding_bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 80, "label": "Padding bas section" },
     { "type": "range", "id": "padding_top_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 40, "label": "Padding haut section (mobile)" },
-    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 32, "label": "Padding bas section (mobile)" },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "label": "Padding bas section (mobile)" },
 
     { "type": "header", "content": "Rythme vertical interne" },
     { "type": "range", "id": "eyebrow_to_grid", "min": 16, "max": 96, "step": 4, "unit": "px", "default": 32, "label": "Espace eyebrow → grille" },
