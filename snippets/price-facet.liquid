@@ -38,35 +38,36 @@
   data-max="{{ max_eur }}"
   data-currency="{{ currency_symbol }}"
 >
-  <div class="mc-price-slider__track">
-    <div class="mc-price-slider__range" data-mc-range></div>
-  </div>
-  <input
-    class="mc-price-slider__input mc-price-slider__input--min"
-    type="range"
-    name="{{ filter.min_value.param_name }}"
-    id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
-    min="0"
-    max="{{ max_eur }}"
-    step="1"
-    value="{{ min_v_eur }}"
-    aria-label="Prix minimum"
-    data-mc-min
-  >
-  <input
-    class="mc-price-slider__input mc-price-slider__input--max"
-    type="range"
-    name="{{ filter.max_value.param_name }}"
-    id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
-    min="0"
-    max="{{ max_eur }}"
-    step="1"
-    value="{{ max_v_eur }}"
-    aria-label="Prix maximum"
-    data-mc-max
-  >
   <div class="mc-price-slider__display">
-    Entre <span data-mc-min-display>{{ min_v_eur }}</span> {{ currency_symbol }}
-    et <span data-mc-max-display>{{ max_v_eur }}</span> {{ currency_symbol }}
+    <span class="mc-price-slider__display-prep">Entre </span><span class="mc-price-slider__display-value" data-mc-min-display>{{ min_v_eur }}</span><span class="mc-price-slider__display-currency"> {{ currency_symbol }}</span><span class="mc-price-slider__display-prep"> et </span><span class="mc-price-slider__display-value" data-mc-max-display>{{ max_v_eur }}</span><span class="mc-price-slider__display-currency"> {{ currency_symbol }}</span>
+  </div>
+  <div class="mc-price-slider__rail">
+    <div class="mc-price-slider__track">
+      <div class="mc-price-slider__range" data-mc-range></div>
+    </div>
+    <input
+      class="mc-price-slider__input mc-price-slider__input--min"
+      type="range"
+      name="{{ filter.min_value.param_name }}"
+      id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
+      min="0"
+      max="{{ max_eur }}"
+      step="1"
+      value="{{ min_v_eur }}"
+      aria-label="Prix minimum"
+      data-mc-min
+    >
+    <input
+      class="mc-price-slider__input mc-price-slider__input--max"
+      type="range"
+      name="{{ filter.max_value.param_name }}"
+      id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
+      min="0"
+      max="{{ max_eur }}"
+      step="1"
+      value="{{ max_v_eur }}"
+      aria-label="Prix maximum"
+      data-mc-max
+    >
   </div>
 </div>

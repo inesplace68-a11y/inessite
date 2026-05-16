@@ -650,27 +650,37 @@
     }
   }
 
-  /* === Phase 16.7 / 16.27 — Curseur prix à 2 poignées =============
+  /* === Phase 16.7 / 16.29 — Curseur prix à 2 poignées =============
      Cible : .mc-price-slider rendu par snippets/price-facet.liquid
      Scope : à l'intérieur du drawer FILTRES uniquement.
-     Layout : bloc autonome avec padding latéral 7px (= rayon thumb)
-     pour que les poignées ne débordent jamais du contenant. Display
-     "Entre X € et Y €" en bloc séparé sous le slider. */
+
+     Layout (Phase 16.29) :
+       1. Display "Entre X € et Y €" au-dessus du rail, valeurs en
+          gras noir, "Entre"/"et" en gris (calibrage The Oblist).
+       2. Rail autonome (.mc-price-slider__rail) avec padding latéral
+          = rayon thumb pour empêcher tout débordement.
+       3. Track 2px noir (avec range "selected" même couleur, donc
+          rendu identique : pas de portion "sélectionnée" colorée
+          différemment ; le slider montre uniquement les bornes via
+          les poignées). */
   #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider {
-    position: relative;
     display: block;
-    height: 14px;
-    margin: 6px 7px 0;
+    margin: 4px 0 0;
     padding: 0;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__rail {
+    position: relative;
+    height: 14px;
+    margin: 0 7px;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__track {
     position: absolute;
     top: 50%;
     left: 0;
     right: 0;
-    height: 1px;
-    margin-top: -0.5px;
-    background: var(--mc-drawer-divider, #E8E4DD);
+    height: 2px;
+    margin-top: -1px;
+    background: #1A1814;
     pointer-events: none;
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__range {
@@ -745,13 +755,20 @@
   }
   #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__display {
     display: block;
-    margin: 18px 0 4px;
-    padding: 0 7px;
+    margin: 0 0 16px;
+    padding: 0;
     font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-    font-weight: 300;
     font-size: 12px;
     letter-spacing: 0;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__display-prep {
+    font-weight: 300;
     color: #6B6660;
+  }
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__display-value,
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-price-slider__display-currency {
+    font-weight: 500;
+    color: #1A1814;
   }
   /* Cache les <label> Dawn (from/to) et currency hérités du snippet original */
   #shopify-section-{{ section.id }} .mc-filter-drawer .facets__price .field-currency,
@@ -828,39 +845,17 @@
     display: none;
   }
 
-  /* === Phase 16.27 — Sortir le filtre Prix de l'accordéon =========
-     Le <details id="Details-filter.v.price-..."> reste, mais on cache
-     son <summary> cliquable et on force open via JS. On garde un
-     label "Prix" sobre via le span déjà rendu par facets.liquid. */
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary {
-    list-style: none;
-    cursor: default;
-    pointer-events: none;
-    padding: 0 0 6px;
-    margin: 0;
-  }
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary::-webkit-details-marker {
+  /* === Phase 16.29 — Disponibilité hors accordéon =================
+     L'accordéon natif "Disponibilité" est entièrement caché ; le
+     toggle "Disponibilité immédiate" est extrait par JS et inséré
+     en haut du panel filtres (avant <facet-filters-form>). */
+  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="availability"] {
     display: none;
   }
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary .svg-wrapper,
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary svg {
-    display: none;
-  }
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary > div {
-    display: block;
-  }
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary span {
-    font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    color: #6B6660;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-  /* Pas de hover underline sur le summary désactivé */
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary:hover .facets__summary-label,
-  #shopify-section-{{ section.id }} .mc-filter-drawer details[id*="filter.v.price"] > summary:hover span {
-    text-decoration: none;
+  #shopify-section-{{ section.id }} .mc-filter-drawer .mc-availability-toggle--top {
+    margin: 0 0 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--mc-drawer-divider, #E8E4DD);
   }
 
   /* === Phase 16.21 — Sidebar inline (desktop >= 990px) ============
@@ -1342,48 +1337,43 @@
         }
 
         function transformAvailabilityToggle(root) {
-          // Cherche le filter availability dans le drawer par son param_name dans l'ID
+          // Phase 16.29 — Le toggle "Disponibilité immédiate" est sorti
+          // de son accordéon natif et placé EN HAUT du panel filtres,
+          // hors du <facet-filters-form> pour survivre aux re-renders.
+          var drawerBody = root.querySelector('.mc-filter-drawer__body');
+          if (!drawerBody) return;
+          if (drawerBody.querySelector('.mc-availability-toggle--top')) return;
+
           var details = root.querySelector('[id*="availability"]');
-          if (!details || details.dataset.mcAvailInit === '1') return;
-          // Trouve la checkbox "in stock" (value="1") et "out of stock" (value="0")
-          var inStock = details.querySelector('input[value="1"]');
-          var outStock = details.querySelector('input[value="0"]');
-          if (!inStock) return;
-          details.dataset.mcAvailInit = '1';
+          if (!details) return;
+          // Le details natif est caché via CSS — on s'en sert juste
+          // pour lire l'état initial.
+          var initialIn = details.querySelector('input[value="1"]');
+          var initialChecked = initialIn ? initialIn.checked : false;
 
-          // Cache TOUT le contenu natif (parent-display = wrapper Dawn qui
-          // englobe fieldset + ul + checkboxes), garde uniquement summary
-          // visible.
-          var nativeContent = details.querySelector('.parent-display, .facets__display-vertical, .facets__display');
-          if (nativeContent) {
-            nativeContent.setAttribute('data-mc-availability-hidden', '');
-          }
-
-          // Crée le toggle et l'insère après le summary
           var toggle = document.createElement('div');
-          toggle.className = 'mc-availability-toggle';
+          toggle.className = 'mc-availability-toggle mc-availability-toggle--top';
           toggle.innerHTML = '<label class="mc-availability-toggle__label" id="MCAvLabel-{{ section.id }}">Disponibilité immédiate</label>' +
             '<button type="button" class="mc-availability-toggle__switch" ' +
-            'role="switch" aria-checked="' + (inStock.checked ? 'true' : 'false') + '" ' +
+            'role="switch" aria-checked="' + (initialChecked ? 'true' : 'false') + '" ' +
             'aria-labelledby="MCAvLabel-{{ section.id }}"></button>';
-          var summary = details.querySelector('summary');
-          if (summary && summary.parentNode) {
-            summary.parentNode.insertBefore(toggle, summary.nextSibling);
-          } else {
-            details.appendChild(toggle);
-          }
+          // Insère en premier enfant du body (avant <facet-filters-form>)
+          drawerBody.insertBefore(toggle, drawerBody.firstChild);
 
           var sw = toggle.querySelector('.mc-availability-toggle__switch');
           var label = toggle.querySelector('.mc-availability-toggle__label');
+
           function onToggle() {
             var checked = sw.getAttribute('aria-checked') === 'true';
             var next = !checked;
             sw.setAttribute('aria-checked', next ? 'true' : 'false');
-            // Synchronise la checkbox native "in stock"
+            // Re-query la checkbox live (peut avoir été recréée par
+            // un re-render Shopify entre temps).
+            var inStock = root.querySelector('[id*="availability"] input[value="1"]');
+            var outStock = root.querySelector('[id*="availability"] input[value="0"]');
+            if (!inStock) return;
             inStock.checked = next;
-            // Décoche "out of stock" si on veut juste "en stock"
             if (outStock) outStock.checked = false;
-            // Trigger le change natif → FacetFiltersForm reprend la main
             inStock.dispatchEvent(new Event('input', { bubbles: true }));
             inStock.dispatchEvent(new Event('change', { bubbles: true }));
           }
@@ -1391,19 +1381,19 @@
           if (label) label.addEventListener('click', onToggle);
         }
 
-        function forcePriceAlwaysOpen(root) {
-          // Phase 16.27 — sortir le filtre Prix de l'accordéon en le
-          // forçant à rester ouvert ; le summary est rendu non-cliquable
-          // via CSS (pointer-events: none) et son chevron caché.
-          root.querySelectorAll('.mc-filter-drawer details[id*="filter.v.price"]').forEach(function (d) {
-            if (!d.hasAttribute('open')) d.setAttribute('open', '');
-          });
+        function syncAvailabilityToggleState(root) {
+          // Re-synchronise l'aria-checked du toggle avec l'état de la
+          // checkbox native après chaque re-render des facets.
+          var sw = root.querySelector('.mc-availability-toggle--top .mc-availability-toggle__switch');
+          var inStock = root.querySelector('[id*="availability"] input[value="1"]');
+          if (!sw || !inStock) return;
+          sw.setAttribute('aria-checked', inStock.checked ? 'true' : 'false');
         }
 
         function refresh() {
           initPriceSliders(sectionEl);
           transformAvailabilityToggle(sectionEl);
-          forcePriceAlwaysOpen(sectionEl);
+          syncAvailabilityToggleState(sectionEl);
         }
 
         refresh();
