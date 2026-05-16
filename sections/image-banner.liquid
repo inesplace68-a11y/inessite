@@ -67,6 +67,70 @@
       font-size: clamp(32px, 7vw, {{ hero_title_mobile }}px) !important;
     }
   }
+
+  {%- liquid
+    assign btn_rest_r = section.settings.hero_button_color_rest | color_extract: 'red'
+    assign btn_rest_g = section.settings.hero_button_color_rest | color_extract: 'green'
+    assign btn_rest_b = section.settings.hero_button_color_rest | color_extract: 'blue'
+    assign btn_rest_a = section.settings.hero_button_opacity_rest | default: 1
+
+    assign btn_bg_h_r = section.settings.hero_button_bg_hover | color_extract: 'red'
+    assign btn_bg_h_g = section.settings.hero_button_bg_hover | color_extract: 'green'
+    assign btn_bg_h_b = section.settings.hero_button_bg_hover | color_extract: 'blue'
+
+    assign btn_tx_h_r = section.settings.hero_button_color_hover | color_extract: 'red'
+    assign btn_tx_h_g = section.settings.hero_button_color_hover | color_extract: 'green'
+    assign btn_tx_h_b = section.settings.hero_button_color_hover | color_extract: 'blue'
+    assign btn_hover_a = section.settings.hero_button_opacity_hover | default: 1
+  -%}
+  #Banner-{{ section.id }} {
+    --mc-hero-btn-rest-rgb: {{ btn_rest_r }}, {{ btn_rest_g }}, {{ btn_rest_b }};
+    --mc-hero-btn-rest-alpha: {{ btn_rest_a }};
+    --mc-hero-btn-hover-bg-rgb: {{ btn_bg_h_r }}, {{ btn_bg_h_g }}, {{ btn_bg_h_b }};
+    --mc-hero-btn-hover-color-rgb: {{ btn_tx_h_r }}, {{ btn_tx_h_g }}, {{ btn_tx_h_b }};
+    --mc-hero-btn-hover-alpha: {{ btn_hover_a }};
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: rgba(var(--mc-hero-btn-rest-rgb), var(--mc-hero-btn-rest-alpha)) !important;
+    border: 1px solid rgba(var(--mc-hero-btn-rest-rgb), var(--mc-hero-btn-rest-alpha)) !important;
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 300;
+    transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease !important;
+    box-shadow: none !important;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button::before,
+  #Banner-{{ section.id }} .banner__buttons .button::after {
+    display: none !important;
+    content: none !important;
+    box-shadow: none !important;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button:hover,
+  #Banner-{{ section.id }} .banner__buttons .button:active,
+  #Banner-{{ section.id }} .banner__buttons .button:focus,
+  #Banner-{{ section.id }} .banner__buttons .button.focused {
+    background-color: rgba(var(--mc-hero-btn-hover-bg-rgb), var(--mc-hero-btn-hover-alpha)) !important;
+    border-color: rgba(var(--mc-hero-btn-hover-bg-rgb), var(--mc-hero-btn-hover-alpha)) !important;
+    color: rgba(var(--mc-hero-btn-hover-color-rgb), var(--mc-hero-btn-hover-alpha)) !important;
+    box-shadow: none !important;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button:focus:not(:focus-visible):not(.focused) {
+    outline: 0;
+    box-shadow: none !important;
+  }
+
+  #Banner-{{ section.id }} .banner__buttons .button:focus-visible {
+    outline: 2px solid rgba(var(--mc-hero-btn-rest-rgb), 0.5);
+    outline-offset: 3px;
+    box-shadow: none !important;
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -297,6 +361,51 @@
       "label": "Taille du titre hero (px)",
       "info": "Taille du titre Cormorant italique. Clamp adaptatif appliqué entre mobile et desktop.",
       "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Bouton CTA du hero"
+    },
+    {
+      "type": "color",
+      "id": "hero_button_color_rest",
+      "label": "Couleur du bouton au repos (contour et texte)",
+      "info": "Couleur du contour et du texte avant survol. À aligner sur la couleur du sous-titre du hero pour cohérence visuelle.",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "hero_button_opacity_rest",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacité du bouton au repos",
+      "info": "Présence du contour et du texte avant survol. 1 = pleine présence, valeurs plus basses = bouton plus discret.",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "hero_button_bg_hover",
+      "label": "Couleur de fond au survol",
+      "info": "Couleur qui remplit le bouton quand la souris passe dessus. Default crème pour une inversion douce.",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "color",
+      "id": "hero_button_color_hover",
+      "label": "Couleur du texte au survol",
+      "info": "Couleur du texte quand le bouton est rempli. Default marron pour cohérence avec la palette.",
+      "default": "#332821"
+    },
+    {
+      "type": "range",
+      "id": "hero_button_opacity_hover",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacité du bouton au survol",
+      "info": "Présence du bouton rempli. 1 = pleine présence, valeurs plus basses = effet voilé.",
+      "default": 1
     },
     {
       "type": "select",
