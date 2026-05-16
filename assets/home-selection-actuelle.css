@@ -51,6 +51,10 @@
   position: relative;
 }
 
+.home-selection__scroll-area {
+  position: relative;
+}
+
 .home-selection__track {
   display: flex;
   gap: var(--hs-card-gap, 24px);
@@ -62,6 +66,11 @@
 }
 
 .home-selection__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Variante tease desktop : masquée par défaut (mobile/tablette < 1024px), activée en flex sibling à droite via media query ci-dessous */
+.home-selection__card--tease-desktop {
   display: none;
 }
 
@@ -135,15 +144,7 @@
   letter-spacing: 0.02em;
 }
 
-/* ----------------- Controls (counter + arrows) bottom-right ----------------- */
-.home-selection__controls {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 18px;
-  margin-top: var(--hs-controls-gap, 28px);
-}
-
+/* ----------------- Counter (bandeau .home-selection__controls défini plus bas) ----------------- */
 .home-selection__counter {
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
@@ -162,10 +163,13 @@
   opacity: 0.6;
 }
 
+/* Flèches latérales (Phase 16.54) : absolute sur les bords de .home-selection__scroll-area, mi-hauteur des cartes, sans cercle de fond */
 .home-selection__nav {
-  position: static;
-  width: 24px;
-  height: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -175,35 +179,51 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 0;
-  opacity: 1;
+  padding: 6px;
+  opacity: 0.7;
+  z-index: 3;
   transition: opacity 0.2s ease;
   -webkit-appearance: none;
   appearance: none;
 }
 
+.home-selection__nav--prev {
+  left: 8px;
+}
+
+.home-selection__nav--next {
+  right: 8px;
+}
+
 .home-selection__nav svg {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   display: block;
   stroke: currentColor;
 }
 
 .home-selection__nav:not(:disabled):hover,
 .home-selection__nav:not(:disabled):focus-visible {
-  opacity: 0.7;
+  opacity: 1;
   background: transparent;
   outline: none;
 }
 
 .home-selection__nav:disabled {
-  opacity: 0.3;
+  opacity: 0.2;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 .home-selection__nav[hidden] {
   display: none;
+}
+
+/* Bandeau .home-selection__controls : ne contient plus que le compteur (les flèches sont remontées sur les bords du scroll-area). */
+.home-selection__controls {
+  margin-top: var(--hs-controls-gap, 28px);
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* ----------------- Carte tease « Toutes les nouveautés » (Phase 16.53) ----------------- */
@@ -329,5 +349,54 @@
   }
   .home-selection__counter {
     font-size: 12px;
+  }
+  /* Mobile : flèches latérales masquées (le swipe natif suffit) */
+  .home-selection__nav {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   Phase 16.54 — Desktop ≥ 1024px : carrousel scrollable à gauche + carte tease fixée à droite
+   ============================================================ */
+@media (min-width: 1024px) {
+  .home-selection__carousel {
+    display: flex;
+    gap: var(--hs-card-gap, 12px);
+    align-items: stretch;
+  }
+  .home-selection__scroll-area {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  /* La tease-mobile (dans le track) est masquée — la tease-desktop la remplace en sibling à droite */
+  .home-selection__card--tease-mobile {
+    display: none !important;
+  }
+  .home-selection__card--tease-desktop {
+    display: flex;
+    flex: 0 0 var(--mc-tease-width, 25%);
+    align-self: stretch;
+    aspect-ratio: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    background-color: var(--hs-tease-bg, #F5F0E8);
+    color: var(--hs-tease-text, #1A1814);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .home-selection__card--tease-desktop:hover {
+    transform: translateY(-4px);
+  }
+  .home-selection__card--tease-desktop:hover .home-selection__tease-arrow {
+    transform: translateX(3px);
+  }
+  /* Le bandeau .home-selection__controls (compteur) s'aligne sur la largeur du scroll-area, pas de la section entière */
+  .home-selection__controls {
+    width: calc(100% - var(--mc-tease-width, 25%) - var(--hs-card-gap, 12px));
   }
 }

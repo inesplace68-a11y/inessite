@@ -50,6 +50,7 @@
     --hs-controls-gap: {{ section.settings.controls_top_gap | default: 28 }}px;
     --hs-tease-bg: {{ section.settings.tease_card_bg_color | default: '#F5F0E8' }};
     --hs-tease-text: {{ section.settings.tease_card_text_color | default: '#1A1814' }};
+    --mc-tease-width: {{ section.settings.tease_width_desktop | default: 25 }}%;
   }
 {%- endstyle -%}
 
@@ -78,98 +79,119 @@
       {%- endif -%}
 
       <div class="home-selection__carousel">
-        <div
-          class="home-selection__track"
-          role="region"
-          aria-label="{{ section.settings.title_eyebrow | default: 'Sélection actuelle' | escape }}"
-          tabindex="0"
-          data-home-selection-track
-          data-total="{{ total_slides }}"
-        >
-          {%- for product in products_list limit: limit -%}
-            <a class="home-selection__card" href="{{ product.url }}">
-              <div class="home-selection__media">
-                {%- if product.featured_image != blank -%}
-                  <img
-                    class="home-selection__image"
-                    src="{{ product.featured_image | image_url: width: 800 }}"
-                    srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
-                    sizes="(max-width: 749px) 76vw, (max-width: 989px) 44vw, 30vw"
-                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                    loading="lazy"
-                    width="{{ product.featured_image.width }}"
-                    height="{{ product.featured_image.height }}"
-                  >
-                {%- else -%}
-                  <div class="home-selection__image home-selection__image--placeholder"></div>
-                {%- endif -%}
-              </div>
+        <div class="home-selection__scroll-area">
+          {%- if section.settings.show_arrows -%}
+            <button
+              type="button"
+              class="home-selection__nav home-selection__nav--prev"
+              data-home-selection-prev
+              aria-label="Voir les pièces précédentes"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          {%- endif -%}
 
-              <h3 class="home-selection__name">{{ product.title }}</h3>
-
-              <p class="home-selection__price">
-                {%- liquid
-                  if product.price_varies
-                    assign hs_price_str = 'products.product.from_price_html' | t: price: product.price_min
-                  else
-                    assign hs_price_str = product.price | money
-                  endif
-                  assign hs_price_str = hs_price_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
-                -%}
-                {{ hs_price_str }}
-              </p>
-            </a>
-          {%- endfor -%}
-
-          {%- if tease_active -%}
-            <a class="home-selection__card home-selection__card--tease" href="{{ section.settings.tease_card_link }}">
-              <div class="home-selection__tease-content">
-                {%- if section.settings.tease_card_eyebrow != blank -%}
-                  <p class="home-selection__tease-eyebrow">{{ section.settings.tease_card_eyebrow | escape }}</p>
-                {%- endif -%}
-                {%- if section.settings.tease_card_title != blank -%}
-                  <h3 class="home-selection__tease-title">{{ section.settings.tease_card_title | escape }}</h3>
-                {%- endif -%}
-                <div class="home-selection__tease-decor" aria-hidden="true">
-                  <span class="home-selection__tease-line"></span>
-                  <span class="home-selection__tease-arrow">→</span>
+          <div
+            class="home-selection__track"
+            role="region"
+            aria-label="{{ section.settings.title_eyebrow | default: 'Sélection actuelle' | escape }}"
+            tabindex="0"
+            data-home-selection-track
+            data-total="{{ total_slides }}"
+          >
+            {%- for product in products_list limit: limit -%}
+              <a class="home-selection__card" href="{{ product.url }}">
+                <div class="home-selection__media">
+                  {%- if product.featured_image != blank -%}
+                    <img
+                      class="home-selection__image"
+                      src="{{ product.featured_image | image_url: width: 800 }}"
+                      srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+                      sizes="(max-width: 749px) 76vw, (max-width: 989px) 44vw, 22vw"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                      loading="lazy"
+                      width="{{ product.featured_image.width }}"
+                      height="{{ product.featured_image.height }}"
+                    >
+                  {%- else -%}
+                    <div class="home-selection__image home-selection__image--placeholder"></div>
+                  {%- endif -%}
                 </div>
-              </div>
-            </a>
+
+                <h3 class="home-selection__name">{{ product.title }}</h3>
+
+                <p class="home-selection__price">
+                  {%- liquid
+                    if product.price_varies
+                      assign hs_price_str = 'products.product.from_price_html' | t: price: product.price_min
+                    else
+                      assign hs_price_str = product.price | money
+                    endif
+                    assign hs_price_str = hs_price_str | replace: '&nbsp;€', '€' | replace: ' €', '€' | replace: ' €', '€' | replace: '€', ' €'
+                  -%}
+                  {{ hs_price_str }}
+                </p>
+              </a>
+            {%- endfor -%}
+
+            {%- if tease_active -%}
+              <a class="home-selection__card home-selection__card--tease home-selection__card--tease-mobile" href="{{ section.settings.tease_card_link }}">
+                <div class="home-selection__tease-content">
+                  {%- if section.settings.tease_card_eyebrow != blank -%}
+                    <p class="home-selection__tease-eyebrow">{{ section.settings.tease_card_eyebrow | escape }}</p>
+                  {%- endif -%}
+                  {%- if section.settings.tease_card_title != blank -%}
+                    <h3 class="home-selection__tease-title">{{ section.settings.tease_card_title | escape }}</h3>
+                  {%- endif -%}
+                  <div class="home-selection__tease-decor" aria-hidden="true">
+                    <span class="home-selection__tease-line"></span>
+                    <span class="home-selection__tease-arrow">→</span>
+                  </div>
+                </div>
+              </a>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.show_arrows -%}
+            <button
+              type="button"
+              class="home-selection__nav home-selection__nav--next"
+              data-home-selection-next
+              aria-label="Voir les pièces suivantes"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           {%- endif -%}
         </div>
 
-        {%- if section.settings.show_counter or section.settings.show_arrows -%}
+        {%- if tease_active -%}
+          <a class="home-selection__card--tease home-selection__card--tease-desktop" href="{{ section.settings.tease_card_link }}">
+            <div class="home-selection__tease-content">
+              {%- if section.settings.tease_card_eyebrow != blank -%}
+                <p class="home-selection__tease-eyebrow">{{ section.settings.tease_card_eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if section.settings.tease_card_title != blank -%}
+                <h3 class="home-selection__tease-title">{{ section.settings.tease_card_title | escape }}</h3>
+              {%- endif -%}
+              <div class="home-selection__tease-decor" aria-hidden="true">
+                <span class="home-selection__tease-line"></span>
+                <span class="home-selection__tease-arrow">→</span>
+              </div>
+            </div>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_counter -%}
           <div class="home-selection__controls">
-            {%- if section.settings.show_counter -%}
-              <span class="home-selection__counter" data-home-selection-counter aria-live="polite">
-                <span data-home-selection-counter-current>01</span>
-                <span class="home-selection__counter-sep" aria-hidden="true"> / </span>
-                <span data-home-selection-counter-total>{% if limit < 10 %}0{% endif %}{{ limit }}</span>
-              </span>
-            {%- endif -%}
-            {%- if section.settings.show_arrows -%}
-              <button
-                type="button"
-                class="home-selection__nav home-selection__nav--prev"
-                data-home-selection-prev
-                aria-label="Voir les pièces précédentes"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="home-selection__nav home-selection__nav--next"
-                data-home-selection-next
-                aria-label="Voir les pièces suivantes"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-            {%- endif -%}
+            <span class="home-selection__counter" data-home-selection-counter aria-live="polite">
+              <span data-home-selection-counter-current>01</span>
+              <span class="home-selection__counter-sep" aria-hidden="true"> / </span>
+              <span data-home-selection-counter-total>{% if limit < 10 %}0{% endif %}{{ limit }}</span>
+            </span>
           </div>
         {%- endif -%}
       </div>
@@ -313,7 +335,8 @@
     { "type": "range", "id": "products_count", "min": 4, "max": 24, "step": 1, "unit": "pcs", "default": 12, "label": "Nombre de produits à afficher" },
 
     { "type": "header", "content": "Carrousel" },
-    { "type": "range", "id": "visible_desktop", "min": 2, "max": 7, "step": 1, "unit": "pcs", "default": 5, "label": "Cartes visibles sur desktop" },
+    { "type": "range", "id": "visible_desktop", "min": 2, "max": 7, "step": 1, "unit": "pcs", "default": 4, "label": "Cartes visibles sur desktop", "info": "Nombre de cartes produits visibles dans la zone scrollable à gauche (la carte tease occupe la zone droite fixée à part)." },
+    { "type": "range", "id": "tease_width_desktop", "min": 15, "max": 35, "step": 5, "unit": "%", "default": 25, "label": "Largeur de la carte tease (desktop)", "info": "Proportion de la section réservée à la carte tease 'Toutes les nouveautés' à droite. Le carrousel des produits occupe le reste. Actif uniquement à partir de 1024px de large." },
     { "type": "range", "id": "visible_mobile", "min": 1.0, "max": 3.0, "step": 0.1, "unit": "pcs", "default": 1.3, "label": "Cartes visibles sur mobile" },
     {
       "type": "select",
