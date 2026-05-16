@@ -26,8 +26,9 @@
         "footer_localization_color": "#f5f0e8",
         "footer_bottom_padding_y": 0,
         "footer_bottom_font_size": 8,
-        "footer_bottom_selector_padding_y": 4,
-        "footer_bottom_selector_padding_x": 12
+        "footer_bottom_selector_padding_y": 1,
+        "footer_bottom_selector_padding_x": 12,
+        "hide_localization_selector": false
       }
     }
   },
