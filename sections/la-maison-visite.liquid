@@ -1,0 +1,78 @@
+{%- comment -%}
+  Phase 24 — Page La maison · Visiter Maison Coeur
+  Clone structurel d'authenticite-question : eyebrow + intro +
+  email mailto Cormorant italic underlined centré.
+{%- endcomment -%}
+
+{{ 'section-la-maison-visite.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="la-maison-visite"
+  style="
+    --visite-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --visite-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --visite-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --visite-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --visite-intro-size: {{ section.settings.intro_size }}px;
+    --visite-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --visite-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --visite-intro-color: {{ section.settings.intro_color }};
+    --visite-intro-margin-bottom: {{ section.settings.intro_margin_bottom }}px;
+    --visite-email-size: {{ section.settings.email_size }}px;
+    --visite-email-color: {{ section.settings.email_color }};
+    --visite-padding-top: {{ section.settings.padding_top }}px;
+    --visite-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="la-maison-visite__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="la-maison-visite__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="la-maison-visite__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.email_text != blank -%}
+      <a class="la-maison-visite__email" href="mailto:{{ section.settings.email_text }}">
+        {{ section.settings.email_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "La maison · Visite",
+  "tag": "section",
+  "class": "shopify-section--la-maison-visite",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "VISITER MAISON COEUR" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 12 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 22 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "label": "Marge bas eyebrow", "default": 28 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C8882" },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Maison Coeur reçoit sur rendez-vous. Les modalités et le lieu de la rencontre vous sont communiqués à la prise de contact. Pour toute acquisition, recherche curatoriale, ou souhait de découvrir la sélection en personne, écrivez à</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 16 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 720 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_bottom", "min": 12, "max": 60, "step": 2, "unit": "px", "label": "Marge intro → email", "default": 24 },
+
+    { "type": "header", "content": "Email (mailto)" },
+    { "type": "text", "id": "email_text", "label": "Adresse email", "default": "hello@maisoncoeur.fr" },
+    { "type": "range", "id": "email_size", "min": 14, "max": 32, "step": 1, "unit": "px", "label": "Taille email", "default": 18 },
+    { "type": "color", "id": "email_color", "label": "Couleur email", "default": "#1A1614" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 80 }
+  ],
+  "presets": [
+    { "name": "La maison · Visite" }
+  ]
+}
+{% endschema %}

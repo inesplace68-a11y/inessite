@@ -1,23 +1,40 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
+    "hero": {
+      "type": "la-maison-hero",
+      "settings": {}
+    },
+    "manifeste": {
+      "type": "la-maison-manifeste",
+      "settings": {}
+    },
+    "fondatrice": {
+      "type": "la-maison-fondatrice",
+      "settings": {}
+    },
+    "presentation": {
+      "type": "la-maison-presentation",
+      "blocks": {
+        "p1": {
+          "type": "paragraphe",
+          "settings": {
+            "body": "<p>Maison Coeur est une galerie parisienne. Sa sélection — mobilier vintage, design, art — se fait au fil d'un sourcing entre la France et l'international, dans une exigence de rareté, de singularité et de justesse.</p><p>Un service de conciergerie répond aux demandes sur mesure — pour les particuliers comme pour les professionnels : architectes, décorateurs.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraphe",
+          "settings": {
+            "body": "<p>Maison Coeur expédie depuis Paris dans le monde entier. Chaque pièce voyage vers son nouvel intérieur, avec la minutie que mérite ce qui doit durer.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2"],
+      "settings": {}
+    },
+    "visite": {
+      "type": "la-maison-visite",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "manifeste", "fondatrice", "presentation", "visite"]
 }
