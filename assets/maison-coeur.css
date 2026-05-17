@@ -232,10 +232,15 @@ h1, h2, h3, h4,
   font-size: 1.5rem !important;
 }
 
-/* CTA hero : outline fin blanc */
-.banner__buttons .button,
-.banner__buttons .button--primary,
-.banner__buttons .button--secondary {
+/* CTA hero : outline fin blanc — legacy pre-Phase 16.58.
+   Phase 16.63 : exclusion explicite de .mc-cta-primary pour éviter la
+   guerre de spécificité avec le bloc CTA primaire mutualisé. Cette
+   règle continue à styler les boutons hero SECONDAIRES (sans la classe
+   .mc-cta-primary) ; les primaires sont entièrement portés par le bloc
+   .mc-cta-primary (settings scopés Phase 16.62). */
+.banner__buttons .button:not(.mc-cta-primary),
+.banner__buttons .button--primary:not(.mc-cta-primary),
+.banner__buttons .button--secondary:not(.mc-cta-primary) {
   background: transparent !important;
   color: #fff !important;
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
@@ -249,7 +254,7 @@ h1, h2, h3, h4,
   transition: all var(--mc-transition) !important;
 }
 
-.banner__buttons .button:hover {
+.banner__buttons .button:not(.mc-cta-primary):hover {
   background: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(255, 255, 255, 0.9) !important;
 }
