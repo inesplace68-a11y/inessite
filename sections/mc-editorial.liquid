@@ -7,6 +7,16 @@
   assign padding_top = section.settings.padding_top | default: 0
   assign padding_bottom_desktop = section.settings.padding_bottom_desktop | default: 64
   assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 40
+
+  assign heading_size = section.settings.heading_size | default: 52
+  assign heading_min = heading_size | times: 60 | divided_by: 100
+  if heading_min < 24
+    assign heading_min = 24
+  endif
+  assign heading_mobile = heading_size | times: 70 | divided_by: 100
+  if heading_mobile < 24
+    assign heading_mobile = 24
+  endif
 -%}
 
 {%- style -%}
@@ -25,6 +35,18 @@
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} {
       padding-bottom: var(--mce-pb-mobile);
+    }
+  }
+
+  /* Phase 16.59 — font-size titre éditorial customizable.
+     Scope strict sur cette section uniquement (id) : aucun effet sur
+     le hero ou d'autres titres. */
+  #shopify-section-{{ section.id }} .mc-editorial__heading {
+    font-size: clamp({{ heading_min }}px, 4.5vw, {{ heading_size }}px);
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-editorial__heading {
+      font-size: clamp(24px, 7vw, {{ heading_mobile }}px);
     }
   }
 {%- endstyle -%}
@@ -97,6 +119,17 @@
       "id": "heading",
       "label": "Titre éditorial",
       "default": "<p>Une galerie où chaque pièce raconte une histoire.</p>"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Taille du titre éditorial (px)",
+      "info": "Police, italique, graisse, interligne et letter-spacing identiques au titre hero (Phase 16.59). Seule la taille reste indépendante — le texte étant plus long que le hero, elle peut être réduite. Le clamp adapte automatiquement mobile/desktop.",
+      "default": 52
     },
     {
       "type": "text",

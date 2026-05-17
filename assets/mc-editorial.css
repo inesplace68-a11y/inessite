@@ -72,14 +72,20 @@
   opacity: 0.92;
 }
 
-/* Niveau 2 — Titre éditorial Cormorant italique */
+/* Niveau 2 — Titre éditorial Cormorant italique.
+   Phase 16.59 : alignement typographique strict sur le titre hero
+   (.banner__heading dans maison-coeur.css). font-family / font-style /
+   font-weight / letter-spacing / line-height / color identiques au
+   hero. Seule la font-size reste indépendante (pilotée par le setting
+   heading_size, injectée par le liquid section-scoped — fallback
+   clamp ici si la variable n'est pas définie). */
 .mc-editorial__heading {
   font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
   font-style: italic;
   font-weight: 400;
   font-size: clamp(28px, 4.5vw, 52px);
-  line-height: 1.15;
-  letter-spacing: 0.005em;
+  line-height: 1.05;
+  letter-spacing: 0.015em;
   color: inherit;
   margin: 0;
   max-width: 18ch;
