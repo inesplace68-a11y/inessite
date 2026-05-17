@@ -1,23 +1,60 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
+    "hero": {
+      "type": "retours-hero",
+      "settings": {}
+    },
+    "modalites": {
+      "type": "retours-modalites",
+      "blocks": {
+        "m1": {
+          "type": "modalite",
+          "settings": {
+            "eyebrow": "PIÈCES DU CATALOGUE · PARTICULIERS",
+            "title": "Droit de rétractation 14 jours",
+            "body": "<p>Conformément à l'article L221-18 du Code de la consommation, vous disposez d'un délai de 14 jours à compter de la réception de la pièce pour exercer votre droit de rétractation.</p><p>La pièce doit être retournée dans son état d'origine, accompagnée de son dossier de provenance. Les frais de retour sont à votre charge, sauf en cas de défaut ou de non-conformité.</p><p>Le remboursement intervient sous 14 jours après réception du retour et vérification de l'état de la pièce.</p>"
+          }
+        },
+        "m2": {
+          "type": "modalite",
+          "settings": {
+            "eyebrow": "PIÈCES SOURCÉES VIA LA CONCIERGERIE",
+            "title": "Non retournables",
+            "body": "<p>Les pièces recherchées et acquises spécifiquement pour vous via le service de Conciergerie sont non retournables. Cette exclusion est conforme à l'article L221-28 du Code de la consommation, qui exclut le droit de rétractation pour les biens nettement personnalisés.</p><p>Exception : si la pièce arrive endommagée ou présente un défaut caché, le remboursement intégral est garanti.</p>"
+          }
+        },
+        "m3": {
+          "type": "modalite",
+          "settings": {
+            "eyebrow": "PROGRAMME PRO",
+            "title": "Termes au cas par cas",
+            "body": "<p>Les modalités de retour pour les acquisitions effectuées dans le cadre du Programme Pro sont définies au cas par cas avec votre interlocuteur curatorial. La protection consommateur ne s'applique pas aux achats professionnels.</p>"
+          }
+        },
+        "m4": {
+          "type": "modalite",
+          "settings": {
+            "eyebrow": "PIÈCE ENDOMMAGÉE OU NON CONFORME",
+            "title": "Remboursement intégral garanti",
+            "body": "<p>Si une pièce arrive endommagée pendant le transport ou ne correspond pas à sa description, le remboursement intégral est garanti, qu'il s'agisse d'une acquisition du catalogue, d'une pièce sourcée, ou d'un achat Programme Pro.</p><p>Signalez le problème sous 48 heures après réception, photographies à l'appui, à l'adresse hello@maisoncoeur.fr.</p>"
+          }
+        },
+        "m5": {
+          "type": "modalite",
+          "settings": {
+            "eyebrow": "PROCÉDURE",
+            "title": "Comment exercer un retour",
+            "body": "<p>Écrivez à hello@maisoncoeur.fr en précisant le numéro de votre commande et le motif. Les modalités précises de retour vous sont communiquées sous 48 heures ouvrées.</p>"
+          }
+        }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5"],
+      "settings": {}
+    },
+    "contact": {
+      "type": "retours-contact",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "modalites", "contact"]
 }

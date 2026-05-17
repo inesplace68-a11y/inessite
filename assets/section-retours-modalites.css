@@ -1,0 +1,92 @@
+/* ============================================================
+   Phase 22 — Page Retours · Modalités
+   Clone strict de section-livraisons-tarifs.css (préfixe renommé).
+   Body richtext : margin-top entre paragraphes via > * + *.
+   ============================================================ */
+
+.retours-modalites {
+  background-color: var(--mc-bg);
+  padding-top: var(--modalites-padding-top, 40px);
+  padding-bottom: var(--modalites-padding-bottom, 56px);
+  width: 100%;
+}
+
+.retours-modalites__inner {
+  max-width: var(--modalites-content-max-width, 720px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.retours-modalites__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.retours-modalites__item {
+  display: block;
+  padding-top: var(--modalites-divider-margin, 28px);
+  margin-top: var(--modalites-block-margin-bottom, 60px);
+  border-top: 1px solid var(--modalites-divider-color, var(--mc-divider));
+}
+
+.retours-modalites__item:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.retours-modalites__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--modalites-eyebrow-size, 11px);
+  letter-spacing: var(--modalites-eyebrow-tracking, 0.28em);
+  text-transform: uppercase;
+  color: var(--modalites-eyebrow-color, var(--mc-whisper));
+  margin: 0 0 var(--modalites-eyebrow-margin-bottom, 14px);
+}
+
+.retours-modalites__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--modalites-title-size, 22px);
+  line-height: 1.25;
+  color: var(--modalites-title-color, var(--mc-dark));
+  margin: 0 0 var(--modalites-title-margin-bottom, 16px);
+}
+
+.retours-modalites__body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--modalites-body-size, 14px);
+  line-height: var(--modalites-body-line-height, 1.75);
+  color: var(--modalites-body-color, var(--mc-ink-soft));
+}
+
+.retours-modalites__body > * {
+  margin: 0;
+}
+
+.retours-modalites__body > * + * {
+  margin-top: 0.9em;
+}
+
+@media (max-width: 767px) {
+  .retours-modalites {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+  .retours-modalites__inner {
+    padding: 0 20px;
+  }
+  .retours-modalites__item {
+    margin-top: calc(var(--modalites-block-margin-bottom, 60px) * 0.75);
+    padding-top: calc(var(--modalites-divider-margin, 28px) * 0.85);
+  }
+  .retours-modalites__title {
+    font-size: calc(var(--modalites-title-size, 22px) * 0.95);
+  }
+}
