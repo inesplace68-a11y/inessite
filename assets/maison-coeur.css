@@ -272,34 +272,18 @@ h1, h2, h3, h4,
    quand la classe co-existe avec .button .button--primary (cas du
    hero rendu via le bloc 'buttons' du image-banner).
    ============================================================ */
-/* Phase 16.67 — Force brute taille bouton CTA hero.
-   Escalade spécificité (cascade jusqu'à 0,3,0 + contexte .banner__buttons)
-   et !important localisé sur les 4 propriétés de taille (font-size,
-   line-height, padding-block, padding-inline) + neutralisation
-   min-height/height (le min-height calc(4.5rem + 2px) interne absorbait
-   le padding-block et empêchait la réduction visuelle de la hauteur).
-   line-height resserré à 1.15 (vs Dawn 1.2 hérité, vs Phase 16.66 1.3). */
-.mc-cta-primary,
-.button.mc-cta-primary,
-.button.button--primary.mc-cta-primary,
-.banner__buttons .mc-cta-primary,
-.banner__buttons .button.mc-cta-primary,
-.banner__buttons .button.button--primary.mc-cta-primary {
+.mc-cta-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: calc(12rem + 2px);
-  /* Phase 16.67 — neutralisation min-height/height Dawn pour laisser
-     padding-block piloter la hauteur réelle. */
-  min-height: auto !important;
-  height: auto !important;
+  min-height: calc(4.5rem + 2px);
   /* Phase 16.64 — Taille & padding pilotables par variables CSS
      scopées (injectées en style inline sur le bouton hero par
      image-banner.liquid). Fallback sur les valeurs historiques
-     pour préserver le rendu des autres CTA primaires (Notre histoire).
-     Phase 16.67 — !important pour vaincre Dawn .button { padding: 0 3rem }. */
-  padding-block: var(--mc-cta-primary-padding-vertical, 0) !important;
-  padding-inline: var(--mc-cta-primary-padding-horizontal, 3rem) !important;
+     pour préserver le rendu des autres CTA primaires (Notre histoire). */
+  padding-block: var(--mc-cta-primary-padding-vertical, 0);
+  padding-inline: var(--mc-cta-primary-padding-horizontal, 3rem);
   background: transparent !important;
   background-color: transparent !important;
   color: rgba(var(--mc-cta-primary-rest-rgb, 255, 255, 255), var(--mc-cta-primary-rest-alpha, 1)) !important;
@@ -307,12 +291,12 @@ h1, h2, h3, h4,
   border-radius: 0 !important;
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
-  /* Phase 16.67 — !important pour vaincre Dawn .button { font-size: 1.5rem }. */
-  font-size: var(--mc-cta-primary-font-size, 1.5rem) !important;
-  /* Phase 16.67 — line-height 1.15 (vs Dawn calc(1 + 0.2 / --font-body-scale) ≈ 1.2,
-     vs Phase 16.66 1.3). !important pour vaincre Dawn sélecteur multi-cible
-     (.button, .button-label, .shopify-challenge__button, .customer button). */
-  line-height: 1.15 !important;
+  font-size: var(--mc-cta-primary-font-size, 1.5rem);
+  /* Phase 16.66 — line-height resserré (vs Dawn .button line-height 1.2
+     hérité). Spécificité égale, cascade ordonnée maison-coeur.css après
+     base.css → on gagne sans !important. Affecte aussi le bouton Notre
+     histoire (cohérence rythme typographique entre CTA primaires). */
+  line-height: 1.3;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
