@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "hero": {
+      "type": "protection-hero",
+      "settings": {}
+    },
+    "garanties": {
+      "type": "protection-garanties",
+      "blocks": {
+        "g1": {
+          "type": "garantie",
+          "settings": {
+            "eyebrow": "GARANTIE D'AUTHENTICITÉ",
+            "title": "Remboursement intégral en cas de défaut avéré",
+            "body": "<p>Chaque pièce vendue est garantie authentique. En cas de défaut d'authenticité avéré, le remboursement intégral est garanti à l'acquéreur. La méthode de vérification, le détail des justificatifs et la procédure complète sont décrits sur la page Authenticité.</p>"
+          }
+        },
+        "g2": {
+          "type": "garantie",
+          "settings": {
+            "eyebrow": "PAIEMENT SÉCURISÉ",
+            "title": "Stripe et PayPal · 3D Secure",
+            "body": "<p>Les paiements sont traités par les plateformes Stripe et PayPal, conformes aux standards PCI-DSS et 3D Secure. Aucune donnée bancaire n'est conservée par Maison Coeur. Pour les acquisitions importantes, des facilités de paiement peuvent être organisées sur demande.</p>"
+          }
+        },
+        "g3": {
+          "type": "garantie",
+          "settings": {
+            "eyebrow": "ASSURANCE TRANSPORT",
+            "title": "Couverture intégrale pendant l'acheminement",
+            "body": "<p>Chaque pièce est assurée pendant le transport pour sa valeur déclarée. En cas de bris ou de perte pendant l'acheminement, le remboursement intégral est garanti après constat photographique sous 48 heures.</p>"
+          }
+        },
+        "g4": {
+          "type": "garantie",
+          "settings": {
+            "eyebrow": "GARANTIES LÉGALES",
+            "title": "Code de la consommation et vices cachés",
+            "body": "<p>En tant qu'acheteur, vous bénéficiez des garanties légales prévues par le Code de la consommation : garantie légale de conformité (article L217-4 et suivants) et garantie contre les vices cachés (articles 1641 à 1649 du Code civil). Ces garanties s'appliquent quelle que soit la garantie commerciale ou contractuelle proposée.</p>"
+          }
+        }
+      },
+      "block_order": ["g1", "g2", "g3", "g4"],
+      "settings": {}
+    },
+    "contact": {
+      "type": "protection-contact",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "garanties", "contact"]
+}
