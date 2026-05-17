@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 23 — Page FAQ · Contact
+   Clone strict de section-livraisons-contact.css (préfixe renommé).
+   ============================================================ */
+
+.faq-contact {
+  background-color: var(--mc-bg);
+  padding-top: var(--faq-contact-padding-top, 48px);
+  padding-bottom: var(--faq-contact-padding-bottom, 80px);
+  width: 100%;
+  text-align: center;
+}
+
+.faq-contact__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.faq-contact__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--faq-contact-intro-size, 14px);
+  line-height: var(--faq-contact-intro-line-height, 1.7);
+  color: var(--faq-contact-intro-color, var(--mc-ink-soft));
+  max-width: var(--faq-contact-intro-max-width, 600px);
+  margin: 0 auto var(--faq-contact-intro-margin-bottom, 24px);
+}
+
+.faq-contact__intro > * {
+  margin: 0;
+}
+
+.faq-contact__intro > * + * {
+  margin-top: 0.6em;
+}
+
+.faq-contact__email {
+  display: inline-block;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--faq-contact-email-size, 13px);
+  letter-spacing: var(--faq-contact-email-tracking, 0.18em);
+  text-transform: uppercase;
+  color: var(--faq-contact-email-color, var(--mc-dark));
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.faq-contact__email:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 749px) {
+  .faq-contact {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+  .faq-contact__inner {
+    padding: 0 20px;
+  }
+}

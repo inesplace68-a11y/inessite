@@ -1,23 +1,90 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
+    "hero": {
+      "type": "faq-hero",
+      "settings": {}
+    },
+    "questions": {
+      "type": "faq-questions",
+      "blocks": {
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment savoir si une pièce est authentique ?",
+            "answer": "<p>Chaque pièce du catalogue fait l'objet d'une recherche d'origine documentée — provenance, époque, auteur, atelier. Pour certaines pièces, un certificat d'expertise tierce est joint. La méthode complète est détaillée sur la page Authenticité.</p>"
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "question": "Quels sont les délais d'expédition ?",
+            "answer": "<p>Variables selon le format de la pièce et la destination — de 3 jours ouvrés pour les petits objets envoyés en France, à 15 jours ouvrés pour le mobilier grand format expédié à l'international. Voir le détail sur la page Livraisons.</p>"
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment se passe la livraison d'une grande pièce ?",
+            "answer": "<p>Le mobilier et les pièces fragiles sont expédiés via Convelio, transporteur spécialisé. Une option white-glove est disponible : manutentionnaires professionnels, déballage et installation chez vous.</p>"
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "question": "Puis-je retourner une pièce ?",
+            "answer": "<p>Pour les pièces du catalogue achetées par un particulier, vous disposez de 14 jours après réception. Les pièces sourcées via la Conciergerie ne sont pas retournables. Le détail est sur la page Retours.</p>"
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment fonctionne la Conciergerie ?",
+            "answer": "<p>Vous décrivez la pièce que vous recherchez. Maison Coeur active son réseau de marchands, salles des ventes et collectionneurs privés pour identifier les pièces correspondantes. Voir la page Conciergerie pour la procédure complète.</p>"
+          }
+        },
+        "q6": {
+          "type": "qa",
+          "settings": {
+            "question": "Quelles sont les conditions du Programme Pro ?",
+            "answer": "<p>Le Programme Pro est destiné aux architectes, décorateurs, hôteliers et restaurateurs. Il offre tarification professionnelle, sourcing prioritaire et conseil curatorial. Voir la page Programme Pro pour s'inscrire.</p>"
+          }
+        },
+        "q7": {
+          "type": "qa",
+          "settings": {
+            "question": "Proposez-vous des facilités de paiement ?",
+            "answer": "<p>Pour les acquisitions importantes, le paiement fractionné — virement bancaire ou Stripe en plusieurs fois — peut être organisé sur demande. Écrivez à hello@maisoncoeur.fr.</p>"
+          }
+        },
+        "q8": {
+          "type": "qa",
+          "settings": {
+            "question": "Puis-je venir voir une pièce au showroom ?",
+            "answer": "<p>Oui, sur rendez-vous. Les modalités et le lieu de la rencontre vous sont communiqués à la prise de contact via hello@maisoncoeur.fr.</p>"
+          }
+        },
+        "q9": {
+          "type": "qa",
+          "settings": {
+            "question": "Expédiez-vous à l'international ?",
+            "answer": "<p>Oui, dans toute l'Europe et le reste du monde. Les délais et les frais sont calculés au moment de la commande selon la destination.</p>"
+          }
+        },
+        "q10": {
+          "type": "qa",
+          "settings": {
+            "question": "Que se passe-t-il si une pièce arrive endommagée ?",
+            "answer": "<p>Signalez le problème sous 48 heures après réception, photographies à l'appui. Le remboursement intégral est garanti en cas de dommage transport ou de non-conformité.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"],
+      "settings": {}
+    },
+    "contact": {
+      "type": "faq-contact",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "questions", "contact"]
 }

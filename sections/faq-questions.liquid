@@ -1,0 +1,90 @@
+{%- comment -%}
+  Phase 23 — Page FAQ · Questions/Réponses
+  Variante simplifiée de livraisons-tarifs : column centrée max-w
+  720, N blocs "qa" empilés (question Cormorant italic + answer
+  richtext Jost Light), divider fin entre blocs. Pas d'eyebrow.
+{%- endcomment -%}
+
+{{ 'section-faq-questions.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="faq-questions"
+  style="
+    --faq-content-max-width: {{ section.settings.content_max_width }}px;
+    --faq-block-margin-bottom: {{ section.settings.block_margin_bottom }}px;
+    --faq-divider-color: {{ section.settings.divider_color }};
+    --faq-divider-margin: {{ section.settings.divider_margin }}px;
+    --faq-question-size: {{ section.settings.question_size }}px;
+    --faq-question-color: {{ section.settings.question_color }};
+    --faq-question-margin-bottom: {{ section.settings.question_margin_bottom }}px;
+    --faq-body-size: {{ section.settings.body_size }}px;
+    --faq-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --faq-body-color: {{ section.settings.body_color }};
+    --faq-padding-top: {{ section.settings.padding_top }}px;
+    --faq-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="faq-questions__inner">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="faq-questions__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'qa' -%}
+            <li class="faq-questions__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.question != blank -%}
+                <h2 class="faq-questions__question">{{ block.settings.question | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.answer != blank -%}
+                <div class="faq-questions__answer rte">{{ block.settings.answer }}</div>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ · Questions",
+  "tag": "section",
+  "class": "shopify-section--faq-questions",
+  "max_blocks": 30,
+  "settings": [
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 500, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max contenu", "default": 720 },
+    { "type": "range", "id": "block_margin_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Espace vertical entre blocs", "default": 60 },
+
+    { "type": "header", "content": "Divider entre blocs" },
+    { "type": "color", "id": "divider_color", "label": "Couleur divider", "default": "#D2C8B4" },
+    { "type": "range", "id": "divider_margin", "min": 16, "max": 80, "step": 4, "unit": "px", "label": "Marge top divider (à l'intérieur du bloc)", "default": 28 },
+
+    { "type": "header", "content": "Question (Cormorant italic)" },
+    { "type": "range", "id": "question_size", "min": 18, "max": 36, "step": 1, "unit": "px", "label": "Taille question", "default": 22 },
+    { "type": "color", "id": "question_color", "label": "Couleur question", "default": "#1A1614" },
+    { "type": "range", "id": "question_margin_bottom", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Marge question → réponse", "default": 16 },
+
+    { "type": "header", "content": "Réponse (Jost Light richtext)" },
+    { "type": "range", "id": "body_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Taille réponse", "default": 14 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne réponse", "default": 175 },
+    { "type": "color", "id": "body_color", "label": "Couleur réponse", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question/Réponse",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question (Cormorant italic)", "default": "Comment savoir si une pièce est authentique ?" },
+        { "type": "richtext", "id": "answer", "label": "Réponse (richtext)", "default": "<p>Chaque pièce du catalogue fait l'objet d'une recherche d'origine documentée — provenance, époque, auteur, atelier.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "FAQ · Questions" }
+  ]
+}
+{% endschema %}

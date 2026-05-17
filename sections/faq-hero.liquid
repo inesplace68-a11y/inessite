@@ -1,0 +1,60 @@
+{%- comment -%}
+  Phase 23 — Page FAQ · Hero
+  Clone structurel strict de livraisons-hero. Seule la copie change.
+{%- endcomment -%}
+
+{{ 'section-faq-hero.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="faq-hero"
+  style="
+    --faq-hero-title-size: {{ section.settings.title_size }}px;
+    --faq-hero-title-color: {{ section.settings.title_color }};
+    --faq-hero-intro-size: {{ section.settings.intro_size }}px;
+    --faq-hero-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --faq-hero-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --faq-hero-intro-color: {{ section.settings.intro_color }};
+    --faq-hero-intro-margin-top: {{ section.settings.intro_margin_top }}px;
+    --faq-hero-padding-top: {{ section.settings.padding_top }}px;
+    --faq-hero-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="faq-hero__inner">
+    {%- if section.settings.title_text != blank -%}
+      <h1 class="faq-hero__title">{{ section.settings.title_text | escape }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="faq-hero__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ · Hero",
+  "tag": "section",
+  "class": "shopify-section--faq-hero",
+  "settings": [
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_text", "label": "Titre", "default": "Questions fréquentes" },
+    { "type": "range", "id": "title_size", "min": 40, "max": 140, "step": 2, "unit": "px", "label": "Taille titre", "default": 60 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Les questions les plus fréquentes — sur l'authenticité, l'expédition, les retours, le sourcing sur mesure, et le Programme Pro.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Taille intro", "default": 16 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 720 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_top", "min": 8, "max": 120, "step": 2, "unit": "px", "label": "Marge titre → intro", "default": 32 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 48 }
+  ],
+  "presets": [
+    { "name": "FAQ · Hero" }
+  ]
+}
+{% endschema %}
