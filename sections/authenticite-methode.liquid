@@ -1,0 +1,142 @@
+{%- comment -%}
+  Phase 19 — Page Authenticité · Notre Méthode
+  Clone structurel de conciergerie-deroule : N rangées alternées
+  image/texte via forloop.index0 | modulo: 2.
+  Bloc index 0 (I) : image gauche, texte droite.
+  Bloc index 1 (II) : texte gauche, image droite. Etc.
+{%- endcomment -%}
+
+{{ 'section-authenticite-methode.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="authenticite-methode"
+  style="
+    --methode-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --methode-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --methode-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --methode-content-max-width: {{ section.settings.content_max_width }}px;
+    --methode-image-width: {{ section.settings.image_width }}px;
+    --methode-image-height: {{ section.settings.image_height }}px;
+    --methode-column-gap: {{ section.settings.column_gap }}px;
+    --methode-row-gap: {{ section.settings.row_gap }}px;
+    --methode-numeral-size: {{ section.settings.numeral_size }}px;
+    --methode-numeral-color: {{ section.settings.numeral_color }};
+    --methode-title-size: {{ section.settings.title_size }}px;
+    --methode-body-size: {{ section.settings.body_size }}px;
+    --methode-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --methode-padding-top: {{ section.settings.padding_top }}px;
+    --methode-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="authenticite-methode__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="authenticite-methode__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    <div class="authenticite-methode__rows">
+      {%- for block in section.blocks -%}
+        {%- assign row_position = forloop.index0 | modulo: 2 -%}
+        <div
+          class="authenticite-methode__row{% if row_position == 1 %} authenticite-methode__row--reverse{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="authenticite-methode__image-wrap">
+            {%- if block.settings.step_image != blank -%}
+              <img
+                class="authenticite-methode__image"
+                src="{{ block.settings.step_image | image_url: width: 1080 }}"
+                srcset="{{ block.settings.step_image | image_url: width: 540 }} 540w, {{ block.settings.step_image | image_url: width: 1080 }} 1080w"
+                sizes="(min-width: 1024px) {{ section.settings.image_width }}px, 100vw"
+                alt="{{ block.settings.step_image.alt | default: block.settings.title | escape }}"
+                loading="lazy"
+                width="540"
+                height="380"
+              >
+            {%- else -%}
+              <div class="authenticite-methode__placeholder" role="img" aria-label="{{ block.settings.step_image_placeholder_caption | default: block.settings.title | escape }}">
+                <span class="authenticite-methode__placeholder-label">PHOTO À VENIR</span>
+                {%- if block.settings.step_image_placeholder_caption != blank -%}
+                  <span class="authenticite-methode__placeholder-caption">{{ block.settings.step_image_placeholder_caption | escape }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="authenticite-methode__text">
+            {%- if block.settings.numeral != blank -%}
+              <p class="authenticite-methode__numeral">{{ block.settings.numeral | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h2 class="authenticite-methode__title">{{ block.settings.title | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="authenticite-methode__body rte">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Authenticité · Méthode",
+  "tag": "section",
+  "class": "shopify-section--authenticite-methode",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow (CAPS)", "default": "NOTRE MÉTHODE" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 28 },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max contenu", "default": 1160 },
+    { "type": "range", "id": "image_width", "min": 240, "max": 700, "step": 10, "unit": "px", "label": "Largeur image", "default": 560 },
+    { "type": "range", "id": "image_height", "min": 160, "max": 560, "step": 10, "unit": "px", "label": "Hauteur image", "default": 200 },
+    { "type": "range", "id": "column_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace image / texte", "default": 40 },
+    { "type": "range", "id": "row_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace entre étapes", "default": 36 },
+
+    { "type": "header", "content": "Numéral" },
+    { "type": "range", "id": "numeral_size", "min": 24, "max": 60, "step": 1, "unit": "px", "label": "Taille numéral", "default": 32 },
+    { "type": "color", "id": "numeral_color", "label": "Couleur numéral", "default": "#8C826E" },
+
+    { "type": "header", "content": "Titre étape" },
+    { "type": "range", "id": "title_size", "min": 20, "max": 50, "step": 1, "unit": "px", "label": "Taille titre", "default": 26 },
+
+    { "type": "header", "content": "Corps de texte" },
+    { "type": "range", "id": "body_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille body", "default": 15 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne body", "default": 170 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 20, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "min": 20, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "etape",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "numeral", "label": "Numéral (I, II, III…)", "default": "I" },
+        { "type": "text", "id": "title", "label": "Titre étape", "default": "Sourcing" },
+        { "type": "richtext", "id": "body", "label": "Corps de texte", "default": "<p>Les pièces de Maison Coeur proviennent de salles des ventes publiques, de marchands professionnels établis, et de collectionneurs privés — en France comme à l'international.</p>" },
+        { "type": "image_picker", "id": "step_image", "label": "Image étape (vide = placeholder)" },
+        { "type": "text", "id": "step_image_placeholder_caption", "label": "Caption placeholder", "default": "Salle des ventes parisienne (Drouot, Christie's, Sotheby's)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Authenticité · Méthode",
+      "blocks": [
+        { "type": "etape", "settings": { "numeral": "I", "title": "Sourcing", "body": "<p>Les pièces de Maison Coeur proviennent de salles des ventes publiques, de marchands professionnels établis, et de collectionneurs privés — en France comme à l'international. Pour celles acquises via des canaux moins formels, une estimation préalable est sollicitée auprès d'un commissaire-priseur, qui constitue dans le même temps une expertise tierce sur l'attribution.</p>", "step_image_placeholder_caption": "Salle des ventes parisienne (Drouot, Christie's, Sotheby's)" } },
+        { "type": "etape", "settings": { "numeral": "II", "title": "Attribution", "body": "<p>L'auteur d'une pièce est confirmé par la présence d'une estampille, d'une étiquette d'éditeur ou d'une signature, croisée avec l'expertise d'un spécialiste lorsque l'œuvre le justifie. Pour les designers édités en série limitée ou par des manufactures historiques, le numéro de série et le millésime sont vérifiés.</p>", "step_image_placeholder_caption": "Estampille d'éditeur — détail (gros plan d'une marque de fabrique)" } },
+        { "type": "etape", "settings": { "numeral": "III", "title": "Documentation transmise", "body": "<p>Lorsque l'objet s'accompagne de documents d'origine — bordereau de salle des ventes, papier d'éditeur, certificat d'expertise ancien — ces justificatifs sont transmis à l'acquéreur au moment de l'expédition, par voie numérique et, sur demande, sous forme imprimée.</p>", "step_image_placeholder_caption": "Bordereau de vente posé près d'une pièce (scan stylisé ou photo nature morte)" } },
+        { "type": "etape", "settings": { "numeral": "IV", "title": "Restaurations", "body": "<p>Toute intervention de restauration — tapisserie refaite, revernissage, remplacement d'un élément technique — est explicitement mentionnée dans la description du produit, en ligne comme à l'expédition. Les objets demeurés dans leur état d'origine sont également signalés.</p>", "step_image_placeholder_caption": "Détail de restauration — tapisserie ou revernissage (avant / après ou gros plan)" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
