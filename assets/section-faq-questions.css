@@ -1,0 +1,82 @@
+/* ============================================================
+   Phase 23 — Page FAQ · Questions/Réponses
+   Column centrée 720, N blocs qa empilés. Question Cormorant
+   italic + answer Jost Light richtext. Divider 1px ENTRE blocs.
+   ============================================================ */
+
+.faq-questions {
+  background-color: var(--mc-bg);
+  padding-top: var(--faq-padding-top, 40px);
+  padding-bottom: var(--faq-padding-bottom, 56px);
+  width: 100%;
+}
+
+.faq-questions__inner {
+  max-width: var(--faq-content-max-width, 720px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.faq-questions__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-questions__item {
+  display: block;
+  padding-top: var(--faq-divider-margin, 28px);
+  margin-top: var(--faq-block-margin-bottom, 60px);
+  border-top: 1px solid var(--faq-divider-color, var(--mc-divider));
+}
+
+.faq-questions__item:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.faq-questions__question {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--faq-question-size, 22px);
+  line-height: 1.25;
+  color: var(--faq-question-color, var(--mc-dark));
+  margin: 0 0 var(--faq-question-margin-bottom, 16px);
+}
+
+.faq-questions__answer {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--faq-body-size, 14px);
+  line-height: var(--faq-body-line-height, 1.75);
+  color: var(--faq-body-color, var(--mc-ink-soft));
+}
+
+.faq-questions__answer > * {
+  margin: 0;
+}
+
+.faq-questions__answer > * + * {
+  margin-top: 0.9em;
+}
+
+@media (max-width: 767px) {
+  .faq-questions {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+  .faq-questions__inner {
+    padding: 0 20px;
+  }
+  .faq-questions__item {
+    margin-top: calc(var(--faq-block-margin-bottom, 60px) * 0.75);
+    padding-top: calc(var(--faq-divider-margin, 28px) * 0.85);
+  }
+  .faq-questions__question {
+    font-size: calc(var(--faq-question-size, 22px) * 0.95);
+  }
+}
