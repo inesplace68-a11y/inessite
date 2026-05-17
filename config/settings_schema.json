@@ -198,15 +198,15 @@
       {
         "type": "color",
         "id": "mc_cta_primary_bg_hover",
-        "label": "Couleur de fond au survol",
-        "info": "Couleur qui remplit le bouton quand la souris passe dessus. Default crème pour inversion douce.",
-        "default": "#F5F0E8"
+        "label": "Couleur de fond au survol et au clic",
+        "info": "Couleur de fond au survol et au clic. Default blanc pour rendu gallery sur image.",
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "mc_cta_primary_color_hover",
-        "label": "Couleur du texte au survol",
-        "info": "Couleur du texte quand le bouton est rempli. Default marron foncé pour cohérence avec la palette.",
+        "label": "Couleur du texte au survol et au clic",
+        "info": "Couleur du texte au survol et au clic. Default marron foncé pour lisibilité sur fond blanc.",
         "default": "#332821"
       },
       {
@@ -215,8 +215,8 @@
         "min": 0.2,
         "max": 1,
         "step": 0.1,
-        "label": "Opacité du bouton au survol",
-        "info": "Présence du bouton rempli. 1 = pleine présence, valeurs plus basses = effet voilé.",
+        "label": "Opacité au survol et au clic",
+        "info": "Présence du bouton rempli (survol + clic). 1 = pleine présence, valeurs plus basses = effet voilé.",
         "default": 1
       }
     ]
