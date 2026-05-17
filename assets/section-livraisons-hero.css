@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 20 — Page Livraisons · Hero
+   Titre Cormorant italic centré + intro Jost Light centrée.
+   ============================================================ */
+
+.livraisons-hero {
+  background-color: var(--mc-bg);
+  padding-top: var(--livraisons-hero-padding-top, 80px);
+  padding-bottom: var(--livraisons-hero-padding-bottom, 48px);
+  width: 100%;
+  text-align: center;
+}
+
+.livraisons-hero__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.livraisons-hero__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--livraisons-hero-title-size, 60px);
+  line-height: 1.1;
+  color: var(--livraisons-hero-title-color, var(--mc-dark));
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.livraisons-hero__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--livraisons-hero-intro-size, 16px);
+  line-height: var(--livraisons-hero-intro-line-height, 1.7);
+  color: var(--livraisons-hero-intro-color, var(--mc-ink-soft));
+  max-width: var(--livraisons-hero-intro-max-width, 720px);
+  margin: var(--livraisons-hero-intro-margin-top, 32px) auto 0;
+}
+
+.livraisons-hero__intro > * {
+  margin: 0;
+}
+
+.livraisons-hero__intro > * + * {
+  margin-top: 0.8em;
+}
+
+@media (max-width: 749px) {
+  .livraisons-hero {
+    padding-top: 56px;
+    padding-bottom: 36px;
+  }
+  .livraisons-hero__inner {
+    padding: 0 20px;
+  }
+  .livraisons-hero__title {
+    font-size: calc(var(--livraisons-hero-title-size, 60px) * 0.72);
+  }
+  .livraisons-hero__intro {
+    font-size: calc(var(--livraisons-hero-intro-size, 16px) * 0.95);
+    margin-top: calc(var(--livraisons-hero-intro-margin-top, 32px) * 0.75);
+  }
+}
