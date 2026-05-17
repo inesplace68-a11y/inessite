@@ -1,0 +1,173 @@
+/* ============================================================
+   Phase 17.3 — Page Conciergerie · Le Déroulé
+   Rangées alternées image/texte (grid 2 colonnes, ordre inversé
+   sur les rangées impaires via .conciergerie-deroule__row--reverse).
+   ============================================================ */
+.conciergerie-deroule {
+  background-color: var(--mc-bg);
+  padding-top: var(--deroule-padding-top, 0);
+  padding-bottom: var(--deroule-padding-bottom, 140px);
+  width: 100%;
+}
+
+.conciergerie-deroule__inner {
+  max-width: var(--deroule-content-max-width, 1160px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.conciergerie-deroule__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--deroule-eyebrow-size, 13px);
+  letter-spacing: var(--deroule-eyebrow-tracking, 0.30em);
+  text-transform: uppercase;
+  color: var(--mc-whisper);
+  text-align: center;
+  margin: 0 0 var(--deroule-eyebrow-margin-bottom, 100px);
+}
+
+.conciergerie-deroule__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--deroule-row-gap, 80px);
+}
+
+.conciergerie-deroule__row {
+  display: grid;
+  grid-template-columns: var(--deroule-image-width, 540px) 1fr;
+  gap: var(--deroule-column-gap, 80px);
+  align-items: center;
+}
+
+.conciergerie-deroule__row--reverse {
+  grid-template-columns: 1fr var(--deroule-image-width, 540px);
+}
+
+.conciergerie-deroule__row--reverse .conciergerie-deroule__image-wrap {
+  order: 2;
+}
+
+.conciergerie-deroule__row--reverse .conciergerie-deroule__text {
+  order: 1;
+}
+
+.conciergerie-deroule__image,
+.conciergerie-deroule__placeholder {
+  display: block;
+  width: 100%;
+  height: var(--deroule-image-height, 380px);
+  object-fit: cover;
+}
+
+.conciergerie-deroule__placeholder {
+  background-color: var(--mc-cream-darker);
+  border: 1px solid var(--mc-divider);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--mc-whisper);
+  text-align: center;
+  padding: 24px;
+}
+
+.conciergerie-deroule__placeholder-label {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.conciergerie-deroule__placeholder-caption {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--mc-ink-soft);
+  max-width: 360px;
+}
+
+.conciergerie-deroule__text {
+  padding: 0;
+}
+
+.conciergerie-deroule__numeral {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--deroule-numeral-size, 36px);
+  line-height: 1;
+  color: var(--deroule-numeral-color, var(--mc-whisper));
+  margin: 0 0 18px;
+}
+
+.conciergerie-deroule__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--deroule-title-size, 28px);
+  line-height: 1.2;
+  color: var(--mc-dark);
+  margin: 0 0 20px;
+}
+
+.conciergerie-deroule__body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--deroule-body-size, 16px);
+  line-height: var(--deroule-body-line-height, 1.75);
+  color: var(--mc-ink-soft);
+}
+
+.conciergerie-deroule__body > * {
+  margin: 0;
+}
+
+.conciergerie-deroule__body > * + * {
+  margin-top: 1em;
+}
+
+@media (max-width: 1023px) {
+  .conciergerie-deroule__row,
+  .conciergerie-deroule__row--reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .conciergerie-deroule__row--reverse .conciergerie-deroule__image-wrap {
+    order: 0;
+  }
+  .conciergerie-deroule__row--reverse .conciergerie-deroule__text {
+    order: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .conciergerie-deroule {
+    padding-bottom: 80px;
+  }
+  .conciergerie-deroule__inner {
+    padding: 0 20px;
+  }
+  .conciergerie-deroule__eyebrow {
+    margin-bottom: 56px;
+  }
+  .conciergerie-deroule__rows {
+    gap: 56px;
+  }
+  .conciergerie-deroule__image,
+  .conciergerie-deroule__placeholder {
+    height: calc(var(--deroule-image-height, 380px) * 0.7);
+  }
+  .conciergerie-deroule__numeral {
+    font-size: calc(var(--deroule-numeral-size, 36px) * 0.85);
+  }
+  .conciergerie-deroule__title {
+    font-size: calc(var(--deroule-title-size, 28px) * 0.85);
+  }
+  .conciergerie-deroule__body {
+    font-size: 15px;
+  }
+}
