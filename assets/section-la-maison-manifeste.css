@@ -1,0 +1,41 @@
+/* ============================================================
+   Phase 24 — Page La maison · Manifeste
+   Clone strict de section-conciergerie-manifeste.css (préfixe
+   renommé, padding_top default 64 au lieu de 0 pour conformité
+   minimum 28-40px).
+   ============================================================ */
+.la-maison-manifeste {
+  background-color: var(--mc-bg);
+  padding-top: var(--la-maison-manifeste-padding-top, 64px);
+  padding-bottom: var(--la-maison-manifeste-padding-bottom, 64px);
+  width: 100%;
+  text-align: center;
+}
+
+.la-maison-manifeste__text {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--la-maison-manifeste-size, 42px);
+  line-height: var(--la-maison-manifeste-line-height, 1.3);
+  color: var(--la-maison-manifeste-color, var(--mc-dark));
+  max-width: var(--la-maison-manifeste-max-width, 900px);
+  margin: 0 auto;
+  padding: 0 24px;
+  letter-spacing: 0;
+}
+
+.la-maison-manifeste__text > * {
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .la-maison-manifeste {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .la-maison-manifeste__text {
+    font-size: calc(var(--la-maison-manifeste-size, 42px) * 0.65);
+    padding: 0 20px;
+  }
+}
