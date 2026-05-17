@@ -1,0 +1,66 @@
+{%- comment -%}
+  Phase 20 — Page Livraisons · Contact
+  Intro Jost Light centré + email rendu en CAPS underlined tracked
+  centré. Email stocké en minuscules (validité mailto), rendu
+  uppercase via CSS.
+{%- endcomment -%}
+
+{{ 'section-livraisons-contact.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="livraisons-contact"
+  style="
+    --livraisons-contact-intro-size: {{ section.settings.intro_size }}px;
+    --livraisons-contact-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --livraisons-contact-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --livraisons-contact-intro-color: {{ section.settings.intro_color }};
+    --livraisons-contact-intro-margin-bottom: {{ section.settings.intro_margin_bottom }}px;
+    --livraisons-contact-email-size: {{ section.settings.email_size }}px;
+    --livraisons-contact-email-tracking: {{ section.settings.email_tracking | divided_by: 100.0 }}em;
+    --livraisons-contact-email-color: {{ section.settings.email_color }};
+    --livraisons-contact-padding-top: {{ section.settings.padding_top }}px;
+    --livraisons-contact-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="livraisons-contact__inner">
+    {%- if section.settings.intro_text != blank -%}
+      <div class="livraisons-contact__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.email_text != blank -%}
+      <a class="livraisons-contact__email" href="mailto:{{ section.settings.email_text }}">
+        {{ section.settings.email_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Livraisons · Contact",
+  "tag": "section",
+  "class": "shopify-section--livraisons-contact",
+  "settings": [
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Pour toute question sur l'expédition d'une pièce spécifique :</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 14 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 600 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_bottom", "min": 12, "max": 60, "step": 2, "unit": "px", "label": "Marge intro → email", "default": 24 },
+
+    { "type": "header", "content": "Email (mailto, rendu CAPS)" },
+    { "type": "text", "id": "email_text", "label": "Adresse email (minuscules)", "default": "hello@maisoncoeur.fr", "info": "Stocké en minuscules pour la validité du mailto. Le rendu visuel applique uppercase + tracking via CSS." },
+    { "type": "range", "id": "email_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Taille email", "default": 13 },
+    { "type": "range", "id": "email_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing email", "default": 18 },
+    { "type": "color", "id": "email_color", "label": "Couleur email", "default": "#1A1614" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 80 }
+  ],
+  "presets": [
+    { "name": "Livraisons · Contact" }
+  ]
+}
+{% endschema %}

@@ -1,23 +1,60 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
+    "hero": {
+      "type": "livraisons-hero",
+      "settings": {}
+    },
+    "tarifs": {
+      "type": "livraisons-tarifs",
+      "blocks": {
+        "t1": {
+          "type": "tarif",
+          "settings": {
+            "eyebrow": "PETITS OBJETS",
+            "title": "Moins de 2 kg",
+            "body": "<p>Pour les pièces légères et peu fragiles — bougies, accessoires, petites céramiques, livres — expédition Colissimo suivi en France métropolitaine (3 à 5 jours ouvrés) et Colissimo International pour le reste du monde (7 à 14 jours selon destination).</p>"
+          }
+        },
+        "t2": {
+          "type": "tarif",
+          "settings": {
+            "eyebrow": "PIÈCES STANDARDS",
+            "title": "De 2 à 30 kg",
+            "body": "<p>Pour les luminaires, miroirs moyens, objets d'art décoratif et mobilier léger : Chronopost en France (livraison J+1 ouvré) et UPS Express pour l'Europe et l'international (3 à 7 jours selon destination). Toutes les pièces sont assurées contre le bris et la perte pour leur valeur déclarée.</p>"
+          }
+        },
+        "t3": {
+          "type": "tarif",
+          "settings": {
+            "eyebrow": "GRAND FORMAT ET PIÈCES FRAGILES",
+            "title": "Mobilier, miroirs grand format, sculptures",
+            "body": "<p>Transport spécialisé via Convelio, partenaire des galeries de design de collection. Délais variables selon destination, généralement 5 à 15 jours ouvrés. Option white-glove disponible : manutentionnaires spécialisés, déballage et installation chez vous.</p>"
+          }
+        },
+        "t4": {
+          "type": "tarif",
+          "settings": {
+            "eyebrow": "FRAIS DE PORT",
+            "title": "Calcul au panier",
+            "body": "<p>Les frais sont calculés en temps réel au moment de la commande, selon le poids, les dimensions et la destination de la pièce. Pour les acquisitions importantes ou les projets multi-pièces, un devis sur mesure peut être établi — contactez la galerie.</p>"
+          }
+        },
+        "t5": {
+          "type": "tarif",
+          "settings": {
+            "eyebrow": "RETRAIT AU SHOWROOM",
+            "title": "Région parisienne",
+            "body": "<p>Pour les particuliers et les professionnels situés en région parisienne, une remise en main propre peut être organisée sur rendez-vous au showroom.</p>"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "settings": {}
+    },
+    "contact": {
+      "type": "livraisons-contact",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "tarifs", "contact"]
 }
