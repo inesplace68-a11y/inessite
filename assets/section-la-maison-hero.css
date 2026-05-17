@@ -1,0 +1,80 @@
+/* ============================================================
+   Phase 24 — Page La maison · Hero
+   Titre Cormorant italic centré + tagline italic intermédiaire +
+   intro Jost Light centrée.
+   ============================================================ */
+
+.la-maison-hero {
+  background-color: var(--mc-bg);
+  padding-top: var(--la-maison-hero-padding-top, 80px);
+  padding-bottom: var(--la-maison-hero-padding-bottom, 56px);
+  width: 100%;
+  text-align: center;
+}
+
+.la-maison-hero__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.la-maison-hero__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--la-maison-hero-title-size, 60px);
+  line-height: 1.1;
+  color: var(--la-maison-hero-title-color, var(--mc-dark));
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.la-maison-hero__tagline {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--la-maison-hero-tagline-size, 18px);
+  line-height: 1.4;
+  color: var(--la-maison-hero-tagline-color, var(--mc-ink-soft));
+  max-width: var(--la-maison-hero-tagline-max-width, 720px);
+  margin: var(--la-maison-hero-tagline-margin-top, 24px) auto var(--la-maison-hero-tagline-margin-bottom, 28px);
+}
+
+.la-maison-hero__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--la-maison-hero-intro-size, 15px);
+  line-height: var(--la-maison-hero-intro-line-height, 1.7);
+  color: var(--la-maison-hero-intro-color, var(--mc-ink-soft));
+  max-width: var(--la-maison-hero-intro-max-width, 680px);
+  margin: 0 auto;
+}
+
+.la-maison-hero__intro > * {
+  margin: 0;
+}
+
+.la-maison-hero__intro > * + * {
+  margin-top: 0.8em;
+}
+
+@media (max-width: 749px) {
+  .la-maison-hero {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+  .la-maison-hero__inner {
+    padding: 0 20px;
+  }
+  .la-maison-hero__title {
+    font-size: calc(var(--la-maison-hero-title-size, 60px) * 0.72);
+  }
+  .la-maison-hero__tagline {
+    font-size: calc(var(--la-maison-hero-tagline-size, 18px) * 0.92);
+    margin-top: calc(var(--la-maison-hero-tagline-margin-top, 24px) * 0.8);
+    margin-bottom: calc(var(--la-maison-hero-tagline-margin-bottom, 28px) * 0.8);
+  }
+  .la-maison-hero__intro {
+    font-size: calc(var(--la-maison-hero-intro-size, 15px) * 0.95);
+  }
+}
