@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 22 — Page Retours · Contact
+   Clone strict de section-livraisons-contact.css (préfixe renommé).
+   ============================================================ */
+
+.retours-contact {
+  background-color: var(--mc-bg);
+  padding-top: var(--retours-contact-padding-top, 48px);
+  padding-bottom: var(--retours-contact-padding-bottom, 80px);
+  width: 100%;
+  text-align: center;
+}
+
+.retours-contact__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.retours-contact__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--retours-contact-intro-size, 14px);
+  line-height: var(--retours-contact-intro-line-height, 1.7);
+  color: var(--retours-contact-intro-color, var(--mc-ink-soft));
+  max-width: var(--retours-contact-intro-max-width, 600px);
+  margin: 0 auto var(--retours-contact-intro-margin-bottom, 24px);
+}
+
+.retours-contact__intro > * {
+  margin: 0;
+}
+
+.retours-contact__intro > * + * {
+  margin-top: 0.6em;
+}
+
+.retours-contact__email {
+  display: inline-block;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--retours-contact-email-size, 13px);
+  letter-spacing: var(--retours-contact-email-tracking, 0.18em);
+  text-transform: uppercase;
+  color: var(--retours-contact-email-color, var(--mc-dark));
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.retours-contact__email:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 749px) {
+  .retours-contact {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+  .retours-contact__inner {
+    padding: 0 20px;
+  }
+}
