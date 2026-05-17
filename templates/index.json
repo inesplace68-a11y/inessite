@@ -54,7 +54,7 @@
         "hero_cta_opacity_rest": 1,
         "hero_cta_bg_hover": "#ffffff",
         "hero_cta_color_hover": "#332821",
-        "hero_cta_opacity_hover": 0.8,
+        "hero_cta_opacity_hover": 0.7,
         "hero_aspect_ratio": "3/1",
         "hero_max_height_vh": 90,
         "hero_overlay_color": "#000000",
