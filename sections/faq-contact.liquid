@@ -1,0 +1,66 @@
+{%- comment -%}
+  Phase 23 — Page FAQ · Contact
+  Clone structurel strict de livraisons-contact (intro centré +
+  email CAPS underlined tracked centré). Email stocké lowercase,
+  rendu uppercase via CSS.
+{%- endcomment -%}
+
+{{ 'section-faq-contact.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="faq-contact"
+  style="
+    --faq-contact-intro-size: {{ section.settings.intro_size }}px;
+    --faq-contact-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --faq-contact-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --faq-contact-intro-color: {{ section.settings.intro_color }};
+    --faq-contact-intro-margin-bottom: {{ section.settings.intro_margin_bottom }}px;
+    --faq-contact-email-size: {{ section.settings.email_size }}px;
+    --faq-contact-email-tracking: {{ section.settings.email_tracking | divided_by: 100.0 }}em;
+    --faq-contact-email-color: {{ section.settings.email_color }};
+    --faq-contact-padding-top: {{ section.settings.padding_top }}px;
+    --faq-contact-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="faq-contact__inner">
+    {%- if section.settings.intro_text != blank -%}
+      <div class="faq-contact__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.email_text != blank -%}
+      <a class="faq-contact__email" href="mailto:{{ section.settings.email_text }}">
+        {{ section.settings.email_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ · Contact",
+  "tag": "section",
+  "class": "shopify-section--faq-contact",
+  "settings": [
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Vous n'avez pas trouvé votre réponse ?</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 14 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 600 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_bottom", "min": 12, "max": 60, "step": 2, "unit": "px", "label": "Marge intro → email", "default": 24 },
+
+    { "type": "header", "content": "Email (mailto, rendu CAPS)" },
+    { "type": "text", "id": "email_text", "label": "Adresse email (minuscules)", "default": "hello@maisoncoeur.fr", "info": "Stocké en minuscules pour la validité du mailto. Le rendu visuel applique uppercase + tracking via CSS." },
+    { "type": "range", "id": "email_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Taille email", "default": 13 },
+    { "type": "range", "id": "email_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing email", "default": 18 },
+    { "type": "color", "id": "email_color", "label": "Couleur email", "default": "#1A1614" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 80 }
+  ],
+  "presets": [
+    { "name": "FAQ · Contact" }
+  ]
+}
+{% endschema %}
