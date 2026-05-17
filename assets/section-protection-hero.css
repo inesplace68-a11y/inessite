@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 21 — Page Protection acheteur · Hero
+   Clone strict de section-livraisons-hero.css (préfixe renommé).
+   ============================================================ */
+
+.protection-hero {
+  background-color: var(--mc-bg);
+  padding-top: var(--protection-hero-padding-top, 80px);
+  padding-bottom: var(--protection-hero-padding-bottom, 48px);
+  width: 100%;
+  text-align: center;
+}
+
+.protection-hero__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.protection-hero__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--protection-hero-title-size, 60px);
+  line-height: 1.1;
+  color: var(--protection-hero-title-color, var(--mc-dark));
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.protection-hero__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--protection-hero-intro-size, 16px);
+  line-height: var(--protection-hero-intro-line-height, 1.7);
+  color: var(--protection-hero-intro-color, var(--mc-ink-soft));
+  max-width: var(--protection-hero-intro-max-width, 720px);
+  margin: var(--protection-hero-intro-margin-top, 32px) auto 0;
+}
+
+.protection-hero__intro > * {
+  margin: 0;
+}
+
+.protection-hero__intro > * + * {
+  margin-top: 0.8em;
+}
+
+@media (max-width: 749px) {
+  .protection-hero {
+    padding-top: 56px;
+    padding-bottom: 36px;
+  }
+  .protection-hero__inner {
+    padding: 0 20px;
+  }
+  .protection-hero__title {
+    font-size: calc(var(--protection-hero-title-size, 60px) * 0.72);
+  }
+  .protection-hero__intro {
+    font-size: calc(var(--protection-hero-intro-size, 16px) * 0.95);
+    margin-top: calc(var(--protection-hero-intro-margin-top, 32px) * 0.75);
+  }
+}
