@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "hero": {
+      "type": "presse-hero",
+      "settings": {}
+    },
+    "echos": {
+      "type": "presse-echos",
+      "blocks": {
+        "m1": {
+          "type": "mention",
+          "settings": {
+            "title": "MARIE CLAIRE MAISON",
+            "subtitle": "[ Mois  Année ]",
+            "body": "<p>Un papier consacré à [sujet de l'article] présente une pièce de la galerie, créditée en pied de cliché.</p>",
+            "cta_label": "VOIR LE PAPIER"
+          }
+        },
+        "m2": {
+          "type": "mention",
+          "settings": {
+            "title": "PIERRE FREY",
+            "subtitle": "Paris Design Week · Septembre 2025",
+            "body": "<p>Présentation de notre miroir Dune au showroom parisien de Pierre Frey, relayée sur leurs canaux officiels.</p>",
+            "cta_label": "VOIR LE POST"
+          }
+        }
+      },
+      "block_order": ["m1", "m2"],
+      "settings": {}
+    },
+    "dossier": {
+      "type": "presse-dossier",
+      "settings": {}
+    },
+    "contact": {
+      "type": "presse-contact",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "echos", "dossier", "contact"]
+}
