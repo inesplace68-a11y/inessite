@@ -1,0 +1,108 @@
+{%- comment -%}
+  Phase 24 — Page La maison · La fondatrice
+  Layout : portrait image GAUCHE + colonne texte DROITE
+  (lettre multi-paragraphes + signature Cormorant italic + sous-titre).
+  Mobile < 768px : portrait au-dessus du texte.
+{%- endcomment -%}
+
+{{ 'section-la-maison-fondatrice.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="la-maison-fondatrice"
+  style="
+    --fondatrice-portrait-width: {{ section.settings.portrait_width }}px;
+    --fondatrice-portrait-height: {{ section.settings.portrait_height }}px;
+    --fondatrice-column-gap: {{ section.settings.column_gap }}px;
+    --fondatrice-letter-size: {{ section.settings.letter_size }}px;
+    --fondatrice-letter-line-height: {{ section.settings.letter_line_height | divided_by: 100.0 }};
+    --fondatrice-letter-color: {{ section.settings.letter_color }};
+    --fondatrice-letter-max-width: {{ section.settings.letter_max_width }}px;
+    --fondatrice-signature-size: {{ section.settings.signature_size }}px;
+    --fondatrice-signature-color: {{ section.settings.signature_color }};
+    --fondatrice-signature-margin-top: {{ section.settings.signature_margin_top }}px;
+    --fondatrice-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --fondatrice-subtitle-tracking: {{ section.settings.subtitle_tracking | divided_by: 100.0 }}em;
+    --fondatrice-subtitle-color: {{ section.settings.subtitle_color }};
+    --fondatrice-padding-top: {{ section.settings.padding_top }}px;
+    --fondatrice-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="la-maison-fondatrice__inner">
+    <div class="la-maison-fondatrice__portrait-wrap">
+      {%- if section.settings.portrait_image != blank -%}
+        <img
+          class="la-maison-fondatrice__portrait"
+          src="{{ section.settings.portrait_image | image_url: width: 960 }}"
+          srcset="{{ section.settings.portrait_image | image_url: width: 480 }} 480w, {{ section.settings.portrait_image | image_url: width: 960 }} 960w, {{ section.settings.portrait_image | image_url: width: 1440 }} 1440w"
+          sizes="(min-width: 768px) {{ section.settings.portrait_width }}px, 100vw"
+          alt="{{ section.settings.portrait_image.alt | default: section.settings.signature_text | escape }}"
+          loading="lazy"
+          width="480"
+          height="620"
+        >
+      {%- else -%}
+        <div class="la-maison-fondatrice__placeholder" role="img" aria-label="Portrait d'Ines Belhaj">
+          <span class="la-maison-fondatrice__placeholder-label">PHOTO À VENIR</span>
+          <span class="la-maison-fondatrice__placeholder-caption">Portrait d'Ines Belhaj (plan poitrine, lumière douce, registre éditorial)</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="la-maison-fondatrice__text">
+      {%- if section.settings.letter_text != blank -%}
+        <div class="la-maison-fondatrice__letter rte">{{ section.settings.letter_text }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature_text != blank -%}
+        <p class="la-maison-fondatrice__signature">— {{ section.settings.signature_text | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle_text != blank -%}
+        <p class="la-maison-fondatrice__subtitle">{{ section.settings.subtitle_text | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "La maison · Fondatrice",
+  "tag": "section",
+  "class": "shopify-section--la-maison-fondatrice",
+  "settings": [
+    { "type": "header", "content": "Portrait" },
+    { "type": "image_picker", "id": "portrait_image", "label": "Portrait (vide = placeholder)" },
+    { "type": "range", "id": "portrait_width", "min": 300, "max": 700, "step": 10, "unit": "px", "label": "Largeur portrait", "default": 480 },
+    { "type": "range", "id": "portrait_height", "min": 400, "max": 900, "step": 10, "unit": "px", "label": "Hauteur portrait", "default": 620 },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "column_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace portrait / texte", "default": 80 },
+
+    { "type": "header", "content": "Lettre (richtext multi-paragraphes)" },
+    { "type": "richtext", "id": "letter_text", "label": "Texte lettre", "default": "<p>Mon métier consiste à discerner ce qu'une pièce porte : la présence, l'histoire, la technique, l'attention portée à chaque détail de l'ouvrage. Préserver et transmettre les savoir-faire qui l'ont façonnée procède du même geste.</p><p>Au-delà de ces critères, mon approche curatoriale laisse place à l'intuition — à l'aura qu'une pièce dégage, à l'émotion qu'elle suscite, à l'imaginaire qu'elle ouvre.</p><p>Les miroirs anciens tiennent une place à part dans mon travail. Ce sont des objets chargés de mémoire — ils portent en eux le secret des vies qu'ils ont accompagnées. Leur nature même les destine à un double mouvement : ils renvoient le reflet, et ils invitent à la réflexion.</p>" },
+    { "type": "range", "id": "letter_size", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Taille lettre", "default": 16 },
+    { "type": "range", "id": "letter_line_height", "min": 130, "max": 220, "step": 5, "unit": "%", "label": "Interligne lettre", "default": 175 },
+    { "type": "color", "id": "letter_color", "label": "Couleur lettre", "default": "#5A5446" },
+    { "type": "range", "id": "letter_max_width", "min": 300, "max": 700, "step": 10, "unit": "px", "label": "Largeur max lettre", "default": 480 },
+
+    { "type": "header", "content": "Signature (Cormorant italic)" },
+    { "type": "text", "id": "signature_text", "label": "Nom signature", "default": "Ines Belhaj" },
+    { "type": "range", "id": "signature_size", "min": 14, "max": 32, "step": 1, "unit": "px", "label": "Taille signature", "default": 20 },
+    { "type": "color", "id": "signature_color", "label": "Couleur signature", "default": "#1A1614" },
+    { "type": "range", "id": "signature_margin_top", "min": 16, "max": 100, "step": 4, "unit": "px", "label": "Marge lettre → signature", "default": 36 },
+
+    { "type": "header", "content": "Sous-titre" },
+    { "type": "text", "id": "subtitle_text", "label": "Sous-titre", "default": "Fondatrice de Maison Coeur" },
+    { "type": "range", "id": "subtitle_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Taille sous-titre", "default": 12 },
+    { "type": "range", "id": "subtitle_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing sous-titre", "default": 20 },
+    { "type": "color", "id": "subtitle_color", "label": "Couleur sous-titre", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 64 }
+  ],
+  "presets": [
+    { "name": "La maison · Fondatrice" }
+  ]
+}
+{% endschema %}

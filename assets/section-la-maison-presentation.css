@@ -1,0 +1,67 @@
+/* ============================================================
+   Phase 24 — Page La maison · Présentation
+   N paragraphes Jost Light centrés, séparés par dividers courts
+   centrés (placés AVANT chaque paragraphe sauf le premier).
+   ============================================================ */
+
+.la-maison-presentation {
+  background-color: var(--mc-bg);
+  padding-top: var(--presentation-padding-top, 64px);
+  padding-bottom: var(--presentation-padding-bottom, 64px);
+  width: 100%;
+  text-align: center;
+}
+
+.la-maison-presentation__inner {
+  max-width: var(--presentation-content-max-width, 720px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.la-maison-presentation__paragraphs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.la-maison-presentation__paragraph {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presentation-paragraph-size, 15px);
+  line-height: var(--presentation-paragraph-line-height, 1.75);
+  color: var(--presentation-paragraph-color, var(--mc-ink-soft));
+  max-width: var(--presentation-content-max-width, 720px);
+  margin: 0 auto;
+}
+
+.la-maison-presentation__paragraph > * {
+  margin: 0;
+}
+
+.la-maison-presentation__paragraph > * + * {
+  margin-top: 0.9em;
+}
+
+.la-maison-presentation__divider {
+  border: 0;
+  height: 1px;
+  width: var(--presentation-divider-width, 60px);
+  background-color: var(--presentation-divider-color, var(--mc-divider));
+  margin: var(--presentation-divider-margin, 50px) auto;
+}
+
+@media (max-width: 767px) {
+  .la-maison-presentation {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .la-maison-presentation__inner {
+    padding: 0 20px;
+  }
+  .la-maison-presentation__paragraph {
+    font-size: calc(var(--presentation-paragraph-size, 15px) * 0.95);
+  }
+  .la-maison-presentation__divider {
+    margin: calc(var(--presentation-divider-margin, 50px) * 0.75) auto;
+  }
+}

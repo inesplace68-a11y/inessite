@@ -1,0 +1,46 @@
+{%- comment -%}
+  Phase 24 — Page La maison · Manifeste
+  Clone structurel strict de conciergerie-manifeste : statement
+  Cormorant italic monumental centré.
+{%- endcomment -%}
+
+{{ 'section-la-maison-manifeste.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="la-maison-manifeste"
+  style="
+    --la-maison-manifeste-size: {{ section.settings.manifeste_size }}px;
+    --la-maison-manifeste-max-width: {{ section.settings.manifeste_max_width }}px;
+    --la-maison-manifeste-line-height: {{ section.settings.manifeste_line_height | divided_by: 100.0 }};
+    --la-maison-manifeste-color: {{ section.settings.manifeste_color }};
+    --la-maison-manifeste-padding-top: {{ section.settings.padding_top }}px;
+    --la-maison-manifeste-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {%- if section.settings.manifeste_text != blank -%}
+    <div class="la-maison-manifeste__text rte">{{ section.settings.manifeste_text }}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "La maison · Manifeste",
+  "tag": "section",
+  "class": "shopify-section--la-maison-manifeste",
+  "settings": [
+    { "type": "header", "content": "Manifeste" },
+    { "type": "richtext", "id": "manifeste_text", "label": "Texte manifeste (Cormorant italic)", "default": "<p>Les coups de coeur ne se revendent pas. Ils se transmettent.</p>" },
+    { "type": "range", "id": "manifeste_size", "min": 32, "max": 80, "step": 2, "unit": "px", "label": "Taille manifeste", "default": 42 },
+    { "type": "range", "id": "manifeste_max_width", "min": 600, "max": 1300, "step": 20, "unit": "px", "label": "Largeur max", "default": 900 },
+    { "type": "range", "id": "manifeste_line_height", "min": 110, "max": 180, "step": 5, "unit": "%", "label": "Interligne", "default": 130 },
+    { "type": "color", "id": "manifeste_color", "label": "Couleur", "default": "#1A1614" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 64 }
+  ],
+  "presets": [
+    { "name": "La maison · Manifeste" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,79 @@
+{%- comment -%}
+  Phase 24 — Page La maison · Présentation
+  Variante simplifiée d'authenticite-engagement (sans statement
+  Cormorant italic en tête). N paragraphes Jost Light centrés
+  max-w 720, séparés par dividers fins courts horizontaux centrés.
+{%- endcomment -%}
+
+{{ 'section-la-maison-presentation.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="la-maison-presentation"
+  style="
+    --presentation-content-max-width: {{ section.settings.content_max_width }}px;
+    --presentation-paragraph-size: {{ section.settings.paragraph_size }}px;
+    --presentation-paragraph-line-height: {{ section.settings.paragraph_line_height | divided_by: 100.0 }};
+    --presentation-paragraph-color: {{ section.settings.paragraph_color }};
+    --presentation-divider-color: {{ section.settings.divider_color }};
+    --presentation-divider-width: {{ section.settings.divider_width }}px;
+    --presentation-divider-margin: {{ section.settings.divider_margin }}px;
+    --presentation-padding-top: {{ section.settings.padding_top }}px;
+    --presentation-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="la-maison-presentation__inner">
+    {%- if section.blocks.size > 0 -%}
+      <div class="la-maison-presentation__paragraphs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'paragraphe' -%}
+            {%- unless forloop.first -%}
+              <hr class="la-maison-presentation__divider" aria-hidden="true">
+            {%- endunless -%}
+            <div class="la-maison-presentation__paragraph rte" {{ block.shopify_attributes }}>
+              {{ block.settings.body }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "La maison · Présentation",
+  "tag": "section",
+  "class": "shopify-section--la-maison-presentation",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 500, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max contenu", "default": 720 },
+
+    { "type": "header", "content": "Paragraphes" },
+    { "type": "range", "id": "paragraph_size", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Taille paragraphes", "default": 15 },
+    { "type": "range", "id": "paragraph_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne paragraphes", "default": 175 },
+    { "type": "color", "id": "paragraph_color", "label": "Couleur paragraphes", "default": "#5A5446" },
+
+    { "type": "header", "content": "Dividers (entre paragraphes)" },
+    { "type": "color", "id": "divider_color", "label": "Couleur divider", "default": "#D2C8B4" },
+    { "type": "range", "id": "divider_width", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Largeur divider", "default": 60 },
+    { "type": "range", "id": "divider_margin", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Marge verticale autour divider", "default": 48 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "paragraphe",
+      "name": "Paragraphe",
+      "settings": [
+        { "type": "richtext", "id": "body", "label": "Texte paragraphe (richtext multi-paragraphes)", "default": "<p>Maison Coeur est une galerie parisienne.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "La maison · Présentation" }
+  ]
+}
+{% endschema %}

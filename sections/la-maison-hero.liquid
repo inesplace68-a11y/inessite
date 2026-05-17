@@ -1,0 +1,77 @@
+{%- comment -%}
+  Phase 24 — Page La maison · Hero
+  Titre Cormorant italic centré + tagline italic intermédiaire +
+  intro Jost Light centrée. Variante du hero standard (Presse,
+  Authenticité, Livraisons) qui ajoute une tagline entre les deux.
+{%- endcomment -%}
+
+{{ 'section-la-maison-hero.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="la-maison-hero"
+  style="
+    --la-maison-hero-title-size: {{ section.settings.title_size }}px;
+    --la-maison-hero-title-color: {{ section.settings.title_color }};
+    --la-maison-hero-tagline-size: {{ section.settings.tagline_size }}px;
+    --la-maison-hero-tagline-color: {{ section.settings.tagline_color }};
+    --la-maison-hero-tagline-margin-top: {{ section.settings.tagline_margin_top }}px;
+    --la-maison-hero-tagline-margin-bottom: {{ section.settings.tagline_margin_bottom }}px;
+    --la-maison-hero-tagline-max-width: {{ section.settings.tagline_max_width }}px;
+    --la-maison-hero-intro-size: {{ section.settings.intro_size }}px;
+    --la-maison-hero-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --la-maison-hero-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --la-maison-hero-intro-color: {{ section.settings.intro_color }};
+    --la-maison-hero-padding-top: {{ section.settings.padding_top }}px;
+    --la-maison-hero-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="la-maison-hero__inner">
+    {%- if section.settings.title_text != blank -%}
+      <h1 class="la-maison-hero__title">{{ section.settings.title_text | escape }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.tagline_text != blank -%}
+      <p class="la-maison-hero__tagline">{{ section.settings.tagline_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="la-maison-hero__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "La maison · Hero",
+  "tag": "section",
+  "class": "shopify-section--la-maison-hero",
+  "settings": [
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_text", "label": "Titre", "default": "La maison" },
+    { "type": "range", "id": "title_size", "min": 40, "max": 140, "step": 2, "unit": "px", "label": "Taille titre", "default": 60 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+
+    { "type": "header", "content": "Tagline (Cormorant italic intermédiaire)" },
+    { "type": "text", "id": "tagline_text", "label": "Tagline", "default": "Une galerie parisienne dédiée aux pièces qui portent une histoire." },
+    { "type": "range", "id": "tagline_size", "min": 14, "max": 32, "step": 1, "unit": "px", "label": "Taille tagline", "default": 18 },
+    { "type": "color", "id": "tagline_color", "label": "Couleur tagline", "default": "#5A5446" },
+    { "type": "range", "id": "tagline_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max tagline", "default": 720 },
+    { "type": "range", "id": "tagline_margin_top", "min": 8, "max": 60, "step": 2, "unit": "px", "label": "Marge titre → tagline", "default": 24 },
+    { "type": "range", "id": "tagline_margin_bottom", "min": 8, "max": 60, "step": 2, "unit": "px", "label": "Marge tagline → intro", "default": 28 },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Chaque pièce est choisie pour sa présence et sa durée — pour le temps qu'elle traversera, les murs où elle reposera, les regards qu'elle croisera.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 15 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 680 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 56 }
+  ],
+  "presets": [
+    { "name": "La maison · Hero" }
+  ]
+}
+{% endschema %}
