@@ -1,0 +1,105 @@
+{%- comment -%}
+  Phase 20 — Page Livraisons · Tarifs
+  Column centrée max-w ~720, N blocs empilés verticalement.
+  Chaque bloc : eyebrow CAPS gauche + titre Cormorant italic gauche
+  + body Jost Light gauche. Divider fin horizontal ENTRE blocs
+  (border-top sur tous sauf :first-child).
+{%- endcomment -%}
+
+{{ 'section-livraisons-tarifs.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="livraisons-tarifs"
+  style="
+    --tarifs-content-max-width: {{ section.settings.content_max_width }}px;
+    --tarifs-block-margin-bottom: {{ section.settings.block_margin_bottom }}px;
+    --tarifs-divider-color: {{ section.settings.divider_color }};
+    --tarifs-divider-margin: {{ section.settings.divider_margin }}px;
+    --tarifs-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --tarifs-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --tarifs-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --tarifs-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --tarifs-title-size: {{ section.settings.title_size }}px;
+    --tarifs-title-color: {{ section.settings.title_color }};
+    --tarifs-title-margin-bottom: {{ section.settings.title_margin_bottom }}px;
+    --tarifs-body-size: {{ section.settings.body_size }}px;
+    --tarifs-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --tarifs-body-color: {{ section.settings.body_color }};
+    --tarifs-padding-top: {{ section.settings.padding_top }}px;
+    --tarifs-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="livraisons-tarifs__inner">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="livraisons-tarifs__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tarif' -%}
+            <li class="livraisons-tarifs__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="livraisons-tarifs__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h2 class="livraisons-tarifs__title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="livraisons-tarifs__body rte">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Livraisons · Tarifs",
+  "tag": "section",
+  "class": "shopify-section--livraisons-tarifs",
+  "max_blocks": 15,
+  "settings": [
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 500, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max contenu", "default": 720 },
+    { "type": "range", "id": "block_margin_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Espace vertical entre blocs", "default": 60 },
+
+    { "type": "header", "content": "Divider entre blocs" },
+    { "type": "color", "id": "divider_color", "label": "Couleur divider", "default": "#D2C8B4" },
+    { "type": "range", "id": "divider_margin", "min": 16, "max": 80, "step": 4, "unit": "px", "label": "Marge top divider (à l'intérieur du bloc)", "default": 28 },
+
+    { "type": "header", "content": "Eyebrow (CAPS)" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 11 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 28 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C826E" },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 4, "max": 32, "step": 1, "unit": "px", "label": "Marge eyebrow → titre", "default": 14 },
+
+    { "type": "header", "content": "Titre (Cormorant italic)" },
+    { "type": "range", "id": "title_size", "min": 18, "max": 36, "step": 1, "unit": "px", "label": "Taille titre", "default": 22 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+    { "type": "range", "id": "title_margin_bottom", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Marge titre → body", "default": 16 },
+
+    { "type": "header", "content": "Corps (Jost Light)" },
+    { "type": "range", "id": "body_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Taille body", "default": 14 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne body", "default": 175 },
+    { "type": "color", "id": "body_color", "label": "Couleur body", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "tarif",
+      "name": "Tarif",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (CAPS)", "default": "PETITS OBJETS" },
+        { "type": "text", "id": "title", "label": "Titre (Cormorant italic)", "default": "Moins de 2 kg" },
+        { "type": "richtext", "id": "body", "label": "Corps", "default": "<p>Pour les pièces légères et peu fragiles — bougies, accessoires, petites céramiques, livres — expédition Colissimo suivi en France métropolitaine (3 à 5 jours ouvrés) et Colissimo International pour le reste du monde (7 à 14 jours selon destination).</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Livraisons · Tarifs" }
+  ]
+}
+{% endschema %}

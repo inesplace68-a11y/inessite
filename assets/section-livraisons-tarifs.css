@@ -1,0 +1,92 @@
+/* ============================================================
+   Phase 20 — Page Livraisons · Tarifs
+   Column centrée, N blocs empilés. Divider fin horizontal ENTRE
+   blocs (border-top sur tous sauf :first-child).
+   ============================================================ */
+
+.livraisons-tarifs {
+  background-color: var(--mc-bg);
+  padding-top: var(--tarifs-padding-top, 40px);
+  padding-bottom: var(--tarifs-padding-bottom, 56px);
+  width: 100%;
+}
+
+.livraisons-tarifs__inner {
+  max-width: var(--tarifs-content-max-width, 720px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.livraisons-tarifs__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.livraisons-tarifs__item {
+  display: block;
+  padding-top: var(--tarifs-divider-margin, 28px);
+  margin-top: var(--tarifs-block-margin-bottom, 60px);
+  border-top: 1px solid var(--tarifs-divider-color, var(--mc-divider));
+}
+
+.livraisons-tarifs__item:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.livraisons-tarifs__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--tarifs-eyebrow-size, 11px);
+  letter-spacing: var(--tarifs-eyebrow-tracking, 0.28em);
+  text-transform: uppercase;
+  color: var(--tarifs-eyebrow-color, var(--mc-whisper));
+  margin: 0 0 var(--tarifs-eyebrow-margin-bottom, 14px);
+}
+
+.livraisons-tarifs__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--tarifs-title-size, 22px);
+  line-height: 1.25;
+  color: var(--tarifs-title-color, var(--mc-dark));
+  margin: 0 0 var(--tarifs-title-margin-bottom, 16px);
+}
+
+.livraisons-tarifs__body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--tarifs-body-size, 14px);
+  line-height: var(--tarifs-body-line-height, 1.75);
+  color: var(--tarifs-body-color, var(--mc-ink-soft));
+}
+
+.livraisons-tarifs__body > * {
+  margin: 0;
+}
+
+.livraisons-tarifs__body > * + * {
+  margin-top: 0.7em;
+}
+
+@media (max-width: 767px) {
+  .livraisons-tarifs {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+  .livraisons-tarifs__inner {
+    padding: 0 20px;
+  }
+  .livraisons-tarifs__item {
+    margin-top: calc(var(--tarifs-block-margin-bottom, 60px) * 0.75);
+    padding-top: calc(var(--tarifs-divider-margin, 28px) * 0.85);
+  }
+  .livraisons-tarifs__title {
+    font-size: calc(var(--tarifs-title-size, 22px) * 0.95);
+  }
+}
