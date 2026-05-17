@@ -310,20 +310,33 @@ h1, h2, h3, h4,
   box-shadow: none !important;
 }
 
-/* Phase 16.60 — :active dédié, strictement aligné sur :hover.
-   Sélecteurs cumulés (.mc-cta-primary:active, .button.mc-cta-primary:active,
-   .button.button--primary.mc-cta-primary:active) pour vaincre toute
-   spécificité Dawn sur le hero rendu via .button.button--primary, et
-   garantir l'inversion (fond opaque + texte sombre) au clic maintenu.
-   transform: none neutralise un éventuel translateY hérité. */
+/* Phase 16.61 — Force brute :active. Override Dawn maximal.
+   Couvre tous les pseudo-états combinés (:active, :active:hover,
+   :active:focus, :hover:active) et toutes les spécificités possibles
+   du hero (.button.button--primary.mc-cta-primary, idem scopée à
+   .banner__buttons). !important localisé, commenté car nécessaire
+   pour vaincre la cascade Dawn.
+
+   Variables : les CTA settings injectent --mc-cta-primary-hover-bg-rgb /
+   -color-rgb / -alpha sur :root (theme.liquid). On utilise rgb() pur
+   sur fond/bordure/texte (opacité pleine) et on délègue l'opacité
+   globale du bouton à la propriété opacity — ainsi le slider
+   mc_cta_primary_opacity_hover pilote visiblement le rendu au clic. */
 .mc-cta-primary:active,
+.mc-cta-primary:active:hover,
+.mc-cta-primary:active:focus,
+.mc-cta-primary:hover:active,
 .button.mc-cta-primary:active,
-.button.button--primary.mc-cta-primary:active {
-  background-color: rgba(var(--mc-cta-primary-hover-bg-rgb, 255, 255, 255), var(--mc-cta-primary-hover-alpha, 1)) !important;
-  border-color: rgba(var(--mc-cta-primary-hover-bg-rgb, 255, 255, 255), var(--mc-cta-primary-hover-alpha, 1)) !important;
-  color: rgba(var(--mc-cta-primary-hover-color-rgb, 51, 40, 33), var(--mc-cta-primary-hover-alpha, 1)) !important;
-  box-shadow: none !important;
+.button.button--primary.mc-cta-primary:active,
+.banner__buttons .mc-cta-primary:active,
+.banner__buttons .button.mc-cta-primary:active,
+.banner__buttons .button.button--primary.mc-cta-primary:active {
+  background-color: rgb(var(--mc-cta-primary-hover-bg-rgb, 255, 255, 255)) !important;
+  border-color: rgb(var(--mc-cta-primary-hover-bg-rgb, 255, 255, 255)) !important;
+  color: rgb(var(--mc-cta-primary-hover-color-rgb, 51, 40, 33)) !important;
+  opacity: var(--mc-cta-primary-hover-alpha, 1) !important;
   transform: none !important;
+  box-shadow: none !important;
 }
 
 .mc-cta-primary:focus:not(:focus-visible):not(.focused) {
