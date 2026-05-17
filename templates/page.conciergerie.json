@@ -95,5 +95,5 @@
       "settings": {}
     }
   },
-  "order": ["hero", "manifeste", "deroule", "pieces", "recherche"]
+  "order": ["hero", "manifeste", "deroule", "recherche", "pieces"]
 }

@@ -1,7 +1,7 @@
 {%- comment -%}
-  Phase 17.1 — Page Conciergerie · Hero
-  Titre Cormorant italic + baseline + intro + image éditoriale.
-  Palette : --mc-bg, --mc-dark, --mc-ink-soft, --mc-divider, --mc-cream-darker.
+  Phase 17.12 — Page Conciergerie · Hero (overlay layout)
+  Titre + baseline + intro SUPERPOSÉS au centre de l'image hero
+  (mode éditorial luxe). Image + overlay tint sous le texte via z-index.
 {%- endcomment -%}
 
 {{ 'section-conciergerie-hero.css' | asset_url | stylesheet_tag }}
@@ -19,13 +19,36 @@
     --hero-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
     --hero-intro-color: {{ section.settings.intro_color }};
     --hero-image-height: {{ section.settings.hero_image_height }}px;
-    --hero-image-margin-top: {{ section.settings.hero_image_margin_top }}px;
     --hero-image-side-padding: {{ section.settings.hero_image_side_padding }}px;
+    --hero-overlay-color: {{ section.settings.overlay_color }};
+    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     --hero-padding-top: {{ section.settings.padding_top }}px;
     --hero-padding-bottom: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="conciergerie-hero__inner">
+  <div class="conciergerie-hero__media">
+    {%- if section.settings.hero_image != blank -%}
+      <img
+        class="conciergerie-hero__image"
+        src="{{ section.settings.hero_image | image_url: width: 2320 }}"
+        srcset="{{ section.settings.hero_image | image_url: width: 800 }} 800w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w, {{ section.settings.hero_image | image_url: width: 1600 }} 1600w, {{ section.settings.hero_image | image_url: width: 2320 }} 2320w"
+        sizes="100vw"
+        alt="{{ section.settings.hero_image.alt | default: section.settings.title_text | escape }}"
+        loading="eager"
+        width="2320"
+        height="1000"
+      >
+    {%- else -%}
+      <div class="conciergerie-hero__placeholder" role="img" aria-label="Photo à venir">
+        <span class="conciergerie-hero__placeholder-label">PHOTO À VENIR</span>
+        {%- if section.settings.hero_image_caption != blank -%}
+          <span class="conciergerie-hero__placeholder-caption">{{ section.settings.hero_image_caption | escape }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="conciergerie-hero__content">
     {%- if section.settings.title_text != blank -%}
       <h1 class="conciergerie-hero__title">{{ section.settings.title_text | escape }}</h1>
     {%- endif -%}
@@ -37,28 +60,6 @@
     {%- if section.settings.intro_text != blank -%}
       <div class="conciergerie-hero__intro rte">{{ section.settings.intro_text }}</div>
     {%- endif -%}
-
-    <div class="conciergerie-hero__image-wrap">
-      {%- if section.settings.hero_image != blank -%}
-        <img
-          class="conciergerie-hero__image"
-          src="{{ section.settings.hero_image | image_url: width: 2320 }}"
-          srcset="{{ section.settings.hero_image | image_url: width: 800 }} 800w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w, {{ section.settings.hero_image | image_url: width: 1600 }} 1600w, {{ section.settings.hero_image | image_url: width: 2320 }} 2320w"
-          sizes="(min-width: 1024px) calc(100vw - 2 * {{ section.settings.hero_image_side_padding }}px), 100vw"
-          alt="{{ section.settings.hero_image.alt | default: section.settings.title_text | escape }}"
-          loading="lazy"
-          width="2320"
-          height="1000"
-        >
-      {%- else -%}
-        <div class="conciergerie-hero__placeholder" role="img" aria-label="Photo à venir">
-          <span class="conciergerie-hero__placeholder-label">PHOTO À VENIR</span>
-          {%- if section.settings.hero_image_caption != blank -%}
-            <span class="conciergerie-hero__placeholder-caption">{{ section.settings.hero_image_caption | escape }}</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    </div>
   </div>
 </section>
 
@@ -90,8 +91,12 @@
     { "type": "image_picker", "id": "hero_image", "label": "Image hero (vide = placeholder)" },
     { "type": "text", "id": "hero_image_caption", "label": "Caption placeholder (si pas d'image)", "default": "Showroom Maison Coeur · scène de curation éditoriale" },
     { "type": "range", "id": "hero_image_height", "min": 300, "max": 700, "step": 10, "unit": "px", "label": "Hauteur image", "default": 440 },
-    { "type": "range", "id": "hero_image_margin_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Marge haut image", "default": 28 },
-    { "type": "range", "id": "hero_image_side_padding", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding latéral image", "default": 140 },
+    { "type": "range", "id": "hero_image_margin_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Marge haut image (déprécié en 17.12)", "default": 28 },
+    { "type": "range", "id": "hero_image_side_padding", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding latéral contenu", "default": 140 },
+
+    { "type": "header", "content": "Overlay (lisibilité texte sur image)" },
+    { "type": "color", "id": "overlay_color", "label": "Couleur overlay (sur image)", "default": "#EFE7D5" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 80, "step": 4, "unit": "%", "label": "Opacité overlay", "default": 0 },
 
     { "type": "header", "content": "Espacement section" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 80 },
