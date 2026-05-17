@@ -1,0 +1,120 @@
+{%- comment -%}
+  Phase 17.4 — Page Conciergerie · Quelques pièces sourcées
+  Grille 2 colonnes compacte. Carte = image + titre + contexte + délai.
+  PAS de paragraphe histoire (vs section déroulé).
+{%- endcomment -%}
+
+{{ 'section-conciergerie-pieces-sourcees.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="conciergerie-pieces"
+  style="
+    --pieces-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --pieces-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --pieces-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --pieces-content-max-width: {{ section.settings.content_max_width }}px;
+    --pieces-column-gap: {{ section.settings.column_gap }}px;
+    --pieces-row-gap: {{ section.settings.row_gap }}px;
+    --pieces-image-height: {{ section.settings.image_height }}px;
+    --pieces-title-size: {{ section.settings.title_size }}px;
+    --pieces-context-size: {{ section.settings.context_size }}px;
+    --pieces-delay-size: {{ section.settings.delay_size }}px;
+    --pieces-padding-top: {{ section.settings.padding_top }}px;
+    --pieces-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="conciergerie-pieces__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="conciergerie-pieces__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    <div class="conciergerie-pieces__grid">
+      {%- for block in section.blocks -%}
+        <article class="conciergerie-pieces__card" {{ block.shopify_attributes }}>
+          <div class="conciergerie-pieces__image-wrap">
+            {%- if block.settings.piece_image != blank -%}
+              <img
+                class="conciergerie-pieces__image"
+                src="{{ block.settings.piece_image | image_url: width: 1000 }}"
+                srcset="{{ block.settings.piece_image | image_url: width: 500 }} 500w, {{ block.settings.piece_image | image_url: width: 1000 }} 1000w"
+                sizes="(min-width: 1024px) 500px, 100vw"
+                alt="{{ block.settings.piece_image.alt | default: block.settings.piece_title | escape }}"
+                loading="lazy"
+                width="500"
+                height="360"
+              >
+            {%- else -%}
+              <div class="conciergerie-pieces__placeholder" role="img" aria-label="{{ block.settings.piece_title | escape }}">
+                <span class="conciergerie-pieces__placeholder-label">PHOTO À VENIR</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.piece_title != blank -%}
+            <h3 class="conciergerie-pieces__title">{{ block.settings.piece_title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.piece_context != blank -%}
+            <p class="conciergerie-pieces__context">{{ block.settings.piece_context | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.piece_delay != blank -%}
+            <p class="conciergerie-pieces__delay">{{ block.settings.piece_delay | escape }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Conciergerie · Pièces",
+  "tag": "section",
+  "class": "shopify-section--conciergerie-pieces",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow (CAPS)", "default": "QUELQUES PIÈCES SOURCÉES" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 92 },
+
+    { "type": "header", "content": "Grille" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max contenu", "default": 1160 },
+    { "type": "range", "id": "column_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace entre colonnes", "default": 60 },
+    { "type": "range", "id": "row_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace entre rangées", "default": 80 },
+    { "type": "range", "id": "image_height", "min": 240, "max": 500, "step": 10, "unit": "px", "label": "Hauteur image carte", "default": 360 },
+
+    { "type": "header", "content": "Typographie carte" },
+    { "type": "range", "id": "title_size", "min": 18, "max": 36, "step": 1, "unit": "px", "label": "Taille titre pièce", "default": 24 },
+    { "type": "range", "id": "context_size", "min": 12, "max": 18, "step": 1, "unit": "px", "label": "Taille contexte", "default": 15 },
+    { "type": "range", "id": "delay_size", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Taille délai", "default": 13 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 140 }
+  ],
+  "blocks": [
+    {
+      "type": "piece",
+      "name": "Pièce sourcée",
+      "settings": [
+        { "type": "image_picker", "id": "piece_image", "label": "Image pièce (vide = placeholder)" },
+        { "type": "text", "id": "piece_title", "label": "Titre pièce", "default": "Console « Tulipe » de Charlotte Perriand" },
+        { "type": "text", "id": "piece_context", "label": "Contexte projet", "default": "Pour un appartement haussmannien parisien" },
+        { "type": "text", "id": "piece_delay", "label": "Délai sourcing", "default": "Sourcée en 6 semaines" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Conciergerie · Pièces",
+      "blocks": [
+        { "type": "piece", "settings": { "piece_title": "Console « Tulipe » de Charlotte Perriand", "piece_context": "Pour un appartement haussmannien parisien", "piece_delay": "Sourcée en 6 semaines" } },
+        { "type": "piece", "settings": { "piece_title": "Suspension Gino Sarfatti modèle 2097", "piece_context": "Pour le salon d'une villa méditerranéenne", "piece_delay": "Sourcée en 8 semaines" } },
+        { "type": "piece", "settings": { "piece_title": "Table basse en travertin italien des années 1970", "piece_context": "Pour un projet d'architecte d'intérieur", "piece_delay": "Sourcée en 12 semaines" } },
+        { "type": "piece", "settings": { "piece_title": "Paire de fauteuils Pierre Paulin « Mushroom »", "piece_context": "Pour une suite d'hôtel sur la Côte d'Azur", "piece_delay": "Sourcée en 4 semaines" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
