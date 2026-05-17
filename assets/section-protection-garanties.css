@@ -1,0 +1,91 @@
+/* ============================================================
+   Phase 21 — Page Protection acheteur · Garanties
+   Clone strict de section-livraisons-tarifs.css (préfixe renommé).
+   ============================================================ */
+
+.protection-garanties {
+  background-color: var(--mc-bg);
+  padding-top: var(--garanties-padding-top, 40px);
+  padding-bottom: var(--garanties-padding-bottom, 56px);
+  width: 100%;
+}
+
+.protection-garanties__inner {
+  max-width: var(--garanties-content-max-width, 720px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.protection-garanties__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.protection-garanties__item {
+  display: block;
+  padding-top: var(--garanties-divider-margin, 28px);
+  margin-top: var(--garanties-block-margin-bottom, 60px);
+  border-top: 1px solid var(--garanties-divider-color, var(--mc-divider));
+}
+
+.protection-garanties__item:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.protection-garanties__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--garanties-eyebrow-size, 11px);
+  letter-spacing: var(--garanties-eyebrow-tracking, 0.28em);
+  text-transform: uppercase;
+  color: var(--garanties-eyebrow-color, var(--mc-whisper));
+  margin: 0 0 var(--garanties-eyebrow-margin-bottom, 14px);
+}
+
+.protection-garanties__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--garanties-title-size, 22px);
+  line-height: 1.25;
+  color: var(--garanties-title-color, var(--mc-dark));
+  margin: 0 0 var(--garanties-title-margin-bottom, 16px);
+}
+
+.protection-garanties__body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--garanties-body-size, 14px);
+  line-height: var(--garanties-body-line-height, 1.75);
+  color: var(--garanties-body-color, var(--mc-ink-soft));
+}
+
+.protection-garanties__body > * {
+  margin: 0;
+}
+
+.protection-garanties__body > * + * {
+  margin-top: 0.7em;
+}
+
+@media (max-width: 767px) {
+  .protection-garanties {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+  .protection-garanties__inner {
+    padding: 0 20px;
+  }
+  .protection-garanties__item {
+    margin-top: calc(var(--garanties-block-margin-bottom, 60px) * 0.75);
+    padding-top: calc(var(--garanties-divider-margin, 28px) * 0.85);
+  }
+  .protection-garanties__title {
+    font-size: calc(var(--garanties-title-size, 22px) * 0.95);
+  }
+}
