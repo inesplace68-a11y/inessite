@@ -122,6 +122,14 @@
     assign hero_cta_tx_b = hero_cta_tx | color_extract: 'blue'
 
     assign hero_cta_hover_a = section.settings.hero_cta_opacity_hover | default: 1
+
+    # Phase 16.64 — Taille et padding du bouton hero (scopés).
+    # Restaure un rendu compact (font 12px, padding 32x14) altéré par
+    # la Phase 16.63 qui a coupé les overrides legacy. Pilotables via
+    # 3 settings dédiés.
+    assign hero_cta_font = section.settings.hero_cta_font_size | default: 12
+    assign hero_cta_padx = section.settings.hero_cta_padding_horizontal | default: 32
+    assign hero_cta_pady = section.settings.hero_cta_padding_vertical | default: 14
   -%}
 
   @media screen and (min-width: 750px) {
@@ -359,7 +367,7 @@
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
                   class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary mc-cta-primary{% endif %}"
-                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }};"
+                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }}; --mc-cta-primary-font-size: {{ hero_cta_font }}px; --mc-cta-primary-padding-horizontal: {{ hero_cta_padx }}px; --mc-cta-primary-padding-vertical: {{ hero_cta_pady }}px;"
                 >
                   {{- block.settings.button_label_1 | escape -}}
                 </a>
@@ -372,7 +380,7 @@
                     href="{{ block.settings.button_link_2 }}"
                   {% endif %}
                   class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary mc-cta-primary{% endif %}"
-                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }};"
+                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }}; --mc-cta-primary-font-size: {{ hero_cta_font }}px; --mc-cta-primary-padding-horizontal: {{ hero_cta_padx }}px; --mc-cta-primary-padding-vertical: {{ hero_cta_pady }}px;"
                 >
                   {{- block.settings.button_label_2 | escape -}}
                 </a>
@@ -530,6 +538,47 @@
       "max": 1,
       "step": 0.1,
       "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Bouton CTA du hero — taille et espacement"
+    },
+    {
+      "type": "paragraph",
+      "content": "Ces réglages pilotent la taille du texte et le padding interne du bouton hero. Permettent de retrouver un rendu compact gallery (texte qui rentre étroitement dans le bouton)."
+    },
+    {
+      "type": "range",
+      "id": "hero_cta_font_size",
+      "label": "Taille du texte du bouton",
+      "info": "Taille de la typographie Jost light CAPS dans le bouton. Default 12 = compact gallery, valeurs plus hautes = bouton plus présent.",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "hero_cta_padding_horizontal",
+      "label": "Espacement horizontal interne",
+      "info": "Espace à gauche et à droite du texte dans le bouton. Default 32 = bouton compact.",
+      "min": 16,
+      "max": 56,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "hero_cta_padding_vertical",
+      "label": "Espacement vertical interne",
+      "info": "Espace au-dessus et en dessous du texte dans le bouton. Default 14 = bouton compact.",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "header",

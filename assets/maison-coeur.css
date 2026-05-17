@@ -278,7 +278,12 @@ h1, h2, h3, h4,
   justify-content: center;
   min-width: calc(12rem + 2px);
   min-height: calc(4.5rem + 2px);
-  padding: 0 3rem;
+  /* Phase 16.64 — Taille & padding pilotables par variables CSS
+     scopées (injectées en style inline sur le bouton hero par
+     image-banner.liquid). Fallback sur les valeurs historiques
+     pour préserver le rendu des autres CTA primaires (Notre histoire). */
+  padding-block: var(--mc-cta-primary-padding-vertical, 0);
+  padding-inline: var(--mc-cta-primary-padding-horizontal, 3rem);
   background: transparent !important;
   background-color: transparent !important;
   color: rgba(var(--mc-cta-primary-rest-rgb, 255, 255, 255), var(--mc-cta-primary-rest-alpha, 1)) !important;
@@ -286,7 +291,7 @@ h1, h2, h3, h4,
   border-radius: 0 !important;
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: var(--mc-cta-primary-font-size, 1.5rem);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
@@ -358,8 +363,11 @@ h1, h2, h3, h4,
 @media (max-width: 749px) {
   .mc-cta-primary {
     min-height: calc(4.2rem + 2px);
-    padding: 0 2.4rem;
-    font-size: 1.3rem;
+    /* Phase 16.64 — Variables également propagées sur mobile. Fallbacks
+       sur les valeurs historiques mobile (Notre histoire inchangée). */
+    padding-block: var(--mc-cta-primary-padding-vertical, 0);
+    padding-inline: var(--mc-cta-primary-padding-horizontal, 2.4rem);
+    font-size: var(--mc-cta-primary-font-size, 1.3rem);
   }
 }
 
