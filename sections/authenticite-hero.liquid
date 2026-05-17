@@ -1,0 +1,61 @@
+{%- comment -%}
+  Phase 19 — Page Authenticité · Hero
+  Titre Cormorant italic centré + intro Jost Light centrée
+  (max-width ~720). Defaults alignés sur hero Presse (60/16/170/720).
+{%- endcomment -%}
+
+{{ 'section-authenticite-hero.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="authenticite-hero"
+  style="
+    --authenticite-hero-title-size: {{ section.settings.title_size }}px;
+    --authenticite-hero-title-color: {{ section.settings.title_color }};
+    --authenticite-hero-intro-size: {{ section.settings.intro_size }}px;
+    --authenticite-hero-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --authenticite-hero-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --authenticite-hero-intro-color: {{ section.settings.intro_color }};
+    --authenticite-hero-intro-margin-top: {{ section.settings.intro_margin_top }}px;
+    --authenticite-hero-padding-top: {{ section.settings.padding_top }}px;
+    --authenticite-hero-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="authenticite-hero__inner">
+    {%- if section.settings.title_text != blank -%}
+      <h1 class="authenticite-hero__title">{{ section.settings.title_text | escape }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="authenticite-hero__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Authenticité · Hero",
+  "tag": "section",
+  "class": "shopify-section--authenticite-hero",
+  "settings": [
+    { "type": "header", "content": "Titre" },
+    { "type": "text", "id": "title_text", "label": "Titre", "default": "Authenticité" },
+    { "type": "range", "id": "title_size", "min": 40, "max": 140, "step": 2, "unit": "px", "label": "Taille titre", "default": 60 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Chez Maison Coeur, chaque pièce entre dans la sélection après vérification documentée de son auteur, de son époque, et de sa provenance. C'est la fonction première d'une galerie : garantir à l'acquéreur — particulier ou professionnel — que ce qui lui est présenté correspond fidèlement à ce qu'il en est dit.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Taille intro", "default": 16 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 720 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_top", "min": 8, "max": 120, "step": 2, "unit": "px", "label": "Marge titre → intro", "default": 32 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 48 }
+  ],
+  "presets": [
+    { "name": "Authenticité · Hero" }
+  ]
+}
+{% endschema %}

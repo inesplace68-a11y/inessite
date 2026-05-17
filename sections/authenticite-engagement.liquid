@@ -1,0 +1,108 @@
+{%- comment -%}
+  Phase 19 — Page Authenticité · Notre Engagement
+  Eyebrow + statement Cormorant italic monumental centré +
+  N paragraphes Jost Light séparés par des dividers fins courts
+  centrés. Divider seulement ENTRE paragraphes (jamais après le
+  dernier ; statement → divider → para1 → divider → para2 …).
+{%- endcomment -%}
+
+{{ 'section-authenticite-engagement.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="authenticite-engagement"
+  style="
+    --engagement-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --engagement-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --engagement-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --engagement-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --engagement-statement-size: {{ section.settings.statement_size }}px;
+    --engagement-statement-max-width: {{ section.settings.statement_max_width }}px;
+    --engagement-statement-line-height: {{ section.settings.statement_line_height | divided_by: 100.0 }};
+    --engagement-statement-color: {{ section.settings.statement_color }};
+    --engagement-statement-margin-bottom: {{ section.settings.statement_margin_bottom }}px;
+    --engagement-divider-color: {{ section.settings.divider_color }};
+    --engagement-divider-width: {{ section.settings.divider_width }}px;
+    --engagement-divider-margin: {{ section.settings.divider_margin }}px;
+    --engagement-paragraph-size: {{ section.settings.paragraph_size }}px;
+    --engagement-paragraph-max-width: {{ section.settings.paragraph_max_width }}px;
+    --engagement-paragraph-line-height: {{ section.settings.paragraph_line_height | divided_by: 100.0 }};
+    --engagement-paragraph-color: {{ section.settings.paragraph_color }};
+    --engagement-padding-top: {{ section.settings.padding_top }}px;
+    --engagement-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="authenticite-engagement__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="authenticite-engagement__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.statement_text != blank -%}
+      <div class="authenticite-engagement__statement rte">{{ section.settings.statement_text }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="authenticite-engagement__paragraphs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'paragraphe' -%}
+            <hr class="authenticite-engagement__divider" aria-hidden="true">
+            <div class="authenticite-engagement__paragraph rte" {{ block.shopify_attributes }}>
+              {{ block.settings.body }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Authenticité · Engagement",
+  "tag": "section",
+  "class": "shopify-section--authenticite-engagement",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "NOTRE ENGAGEMENT" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 12 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 22 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 40 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C8882" },
+
+    { "type": "header", "content": "Statement (Cormorant italic monumental)" },
+    { "type": "richtext", "id": "statement_text", "label": "Statement", "default": "<p>En cas de défaut d'authenticité avéré sur une pièce acquise auprès de Maison Coeur, le remboursement intégral est garanti à l'acquéreur.</p>" },
+    { "type": "range", "id": "statement_size", "min": 20, "max": 56, "step": 1, "unit": "px", "label": "Taille statement", "default": 28 },
+    { "type": "range", "id": "statement_max_width", "min": 600, "max": 1300, "step": 20, "unit": "px", "label": "Largeur max statement", "default": 820 },
+    { "type": "range", "id": "statement_line_height", "min": 110, "max": 180, "step": 5, "unit": "%", "label": "Interligne statement", "default": 135 },
+    { "type": "color", "id": "statement_color", "label": "Couleur statement", "default": "#1A1614" },
+    { "type": "range", "id": "statement_margin_bottom", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Marge bas statement", "default": 48 },
+
+    { "type": "header", "content": "Dividers (entre paragraphes)" },
+    { "type": "color", "id": "divider_color", "label": "Couleur divider", "default": "#D2C8B4" },
+    { "type": "range", "id": "divider_width", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Largeur divider", "default": 60 },
+    { "type": "range", "id": "divider_margin", "min": 20, "max": 100, "step": 4, "unit": "px", "label": "Marge verticale autour divider", "default": 40 },
+
+    { "type": "header", "content": "Paragraphes" },
+    { "type": "range", "id": "paragraph_size", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Taille paragraphes", "default": 15 },
+    { "type": "range", "id": "paragraph_max_width", "min": 500, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max paragraphes", "default": 680 },
+    { "type": "range", "id": "paragraph_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne paragraphes", "default": 175 },
+    { "type": "color", "id": "paragraph_color", "label": "Couleur paragraphes", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "paragraphe",
+      "name": "Paragraphe",
+      "settings": [
+        { "type": "richtext", "id": "body", "label": "Texte paragraphe", "default": "<p>Chaque pièce vendue est photographiée en détail avant expédition — angles d'ensemble, gros plans sur les marques distinctives, vues des estampilles et de tout élément singulier.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Authenticité · Engagement" }
+  ]
+}
+{% endschema %}

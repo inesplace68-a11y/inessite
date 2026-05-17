@@ -1,0 +1,173 @@
+/* ============================================================
+   Phase 19 — Page Authenticité · Méthode
+   Clone strict de section-conciergerie-deroule.css (proportions
+   et patterns identiques, simple renaming du préfixe BEM).
+   ============================================================ */
+.authenticite-methode {
+  background-color: var(--mc-bg);
+  padding-top: var(--methode-padding-top, 20px);
+  padding-bottom: var(--methode-padding-bottom, 40px);
+  width: 100%;
+}
+
+.authenticite-methode__inner {
+  max-width: var(--methode-content-max-width, 1160px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.authenticite-methode__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--methode-eyebrow-size, 13px);
+  letter-spacing: var(--methode-eyebrow-tracking, 0.30em);
+  text-transform: uppercase;
+  color: var(--mc-whisper);
+  text-align: center;
+  margin: 0 0 var(--methode-eyebrow-margin-bottom, 100px);
+}
+
+.authenticite-methode__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--methode-row-gap, 80px);
+}
+
+.authenticite-methode__row {
+  display: grid;
+  grid-template-columns: var(--methode-image-width, 540px) 1fr;
+  gap: var(--methode-column-gap, 80px);
+  align-items: center;
+}
+
+.authenticite-methode__row--reverse {
+  grid-template-columns: 1fr var(--methode-image-width, 540px);
+}
+
+.authenticite-methode__row--reverse .authenticite-methode__image-wrap {
+  order: 2;
+}
+
+.authenticite-methode__row--reverse .authenticite-methode__text {
+  order: 1;
+}
+
+.authenticite-methode__image,
+.authenticite-methode__placeholder {
+  display: block;
+  width: 100%;
+  height: var(--methode-image-height, 380px);
+  object-fit: cover;
+}
+
+.authenticite-methode__placeholder {
+  background-color: var(--mc-cream-darker);
+  border: 1px solid var(--mc-divider);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--mc-whisper);
+  text-align: center;
+  padding: 24px;
+}
+
+.authenticite-methode__placeholder-label {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.authenticite-methode__placeholder-caption {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--mc-ink-soft);
+  max-width: 360px;
+}
+
+.authenticite-methode__text {
+  padding: 0;
+}
+
+.authenticite-methode__numeral {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--methode-numeral-size, 36px);
+  line-height: 1;
+  color: var(--methode-numeral-color, var(--mc-whisper));
+  margin: 0 0 18px;
+}
+
+.authenticite-methode__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--methode-title-size, 28px);
+  line-height: 1.2;
+  color: var(--mc-dark);
+  margin: 0 0 20px;
+}
+
+.authenticite-methode__body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--methode-body-size, 16px);
+  line-height: var(--methode-body-line-height, 1.75);
+  color: var(--mc-ink-soft);
+}
+
+.authenticite-methode__body > * {
+  margin: 0;
+}
+
+.authenticite-methode__body > * + * {
+  margin-top: 1em;
+}
+
+@media (max-width: 1023px) {
+  .authenticite-methode__row,
+  .authenticite-methode__row--reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .authenticite-methode__row--reverse .authenticite-methode__image-wrap {
+    order: 0;
+  }
+  .authenticite-methode__row--reverse .authenticite-methode__text {
+    order: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .authenticite-methode {
+    padding-bottom: 80px;
+  }
+  .authenticite-methode__inner {
+    padding: 0 20px;
+  }
+  .authenticite-methode__eyebrow {
+    margin-bottom: 56px;
+  }
+  .authenticite-methode__rows {
+    gap: 56px;
+  }
+  .authenticite-methode__image,
+  .authenticite-methode__placeholder {
+    height: calc(var(--methode-image-height, 380px) * 0.7);
+  }
+  .authenticite-methode__numeral {
+    font-size: calc(var(--methode-numeral-size, 36px) * 0.85);
+  }
+  .authenticite-methode__title {
+    font-size: calc(var(--methode-title-size, 28px) * 0.85);
+  }
+  .authenticite-methode__body {
+    font-size: 15px;
+  }
+}

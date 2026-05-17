@@ -1,23 +1,75 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
+    "hero": {
+      "type": "authenticite-hero",
+      "settings": {}
+    },
+    "methode": {
+      "type": "authenticite-methode",
+      "blocks": {
+        "e1": {
+          "type": "etape",
+          "settings": {
+            "numeral": "I",
+            "title": "Sourcing",
+            "body": "<p>Les pièces de Maison Coeur proviennent de salles des ventes publiques, de marchands professionnels établis, et de collectionneurs privés — en France comme à l'international. Pour celles acquises via des canaux moins formels, une estimation préalable est sollicitée auprès d'un commissaire-priseur, qui constitue dans le même temps une expertise tierce sur l'attribution.</p>",
+            "step_image_placeholder_caption": "Salle des ventes parisienne (Drouot, Christie's, Sotheby's)"
+          }
+        },
+        "e2": {
+          "type": "etape",
+          "settings": {
+            "numeral": "II",
+            "title": "Attribution",
+            "body": "<p>L'auteur d'une pièce est confirmé par la présence d'une estampille, d'une étiquette d'éditeur ou d'une signature, croisée avec l'expertise d'un spécialiste lorsque l'œuvre le justifie. Pour les designers édités en série limitée ou par des manufactures historiques, le numéro de série et le millésime sont vérifiés.</p>",
+            "step_image_placeholder_caption": "Estampille d'éditeur — détail (gros plan d'une marque de fabrique)"
+          }
+        },
+        "e3": {
+          "type": "etape",
+          "settings": {
+            "numeral": "III",
+            "title": "Documentation transmise",
+            "body": "<p>Lorsque l'objet s'accompagne de documents d'origine — bordereau de salle des ventes, papier d'éditeur, certificat d'expertise ancien — ces justificatifs sont transmis à l'acquéreur au moment de l'expédition, par voie numérique et, sur demande, sous forme imprimée.</p>",
+            "step_image_placeholder_caption": "Bordereau de vente posé près d'une pièce (scan stylisé ou photo nature morte)"
+          }
+        },
+        "e4": {
+          "type": "etape",
+          "settings": {
+            "numeral": "IV",
+            "title": "Restaurations",
+            "body": "<p>Toute intervention de restauration — tapisserie refaite, revernissage, remplacement d'un élément technique — est explicitement mentionnée dans la description du produit, en ligne comme à l'expédition. Les objets demeurés dans leur état d'origine sont également signalés.</p>",
+            "step_image_placeholder_caption": "Détail de restauration — tapisserie ou revernissage (avant / après ou gros plan)"
+          }
+        }
+      },
+      "block_order": ["e1", "e2", "e3", "e4"],
+      "settings": {}
+    },
+    "engagement": {
+      "type": "authenticite-engagement",
+      "blocks": {
+        "p1": {
+          "type": "paragraphe",
+          "settings": {
+            "body": "<p>Chaque pièce vendue est photographiée en détail avant expédition — angles d'ensemble, gros plans sur les marques distinctives, vues des estampilles et de tout élément singulier. Ces clichés, conservés en archive interne, permettent de confirmer que l'objet restitué lors d'un retour correspond bien à celui qui a été envoyé.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraphe",
+          "settings": {
+            "body": "<p>En cas de divergence d'appréciation, une expertise tierce peut être sollicitée d'un commun accord — auprès d'un commissaire-priseur ou d'un spécialiste reconnu. L'objectif demeure toujours un règlement juste, hors voie administrative ou judiciaire.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2"],
+      "settings": {}
+    },
+    "question": {
+      "type": "authenticite-question",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "methode", "engagement", "question"]
 }

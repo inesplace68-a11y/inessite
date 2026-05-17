@@ -1,0 +1,105 @@
+/* ============================================================
+   Phase 19 — Page Authenticité · Engagement
+   Eyebrow + statement Cormorant italic monumental + N paragraphes
+   séparés par dividers courts centrés.
+   ============================================================ */
+
+.authenticite-engagement {
+  background-color: var(--mc-bg);
+  padding-top: var(--engagement-padding-top, 64px);
+  padding-bottom: var(--engagement-padding-bottom, 64px);
+  width: 100%;
+  text-align: center;
+}
+
+.authenticite-engagement__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.authenticite-engagement__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--engagement-eyebrow-size, 12px);
+  letter-spacing: var(--engagement-eyebrow-tracking, 0.22em);
+  text-transform: uppercase;
+  color: var(--engagement-eyebrow-color, var(--mc-mid));
+  margin: 0 0 var(--engagement-eyebrow-margin-bottom, 40px);
+}
+
+.authenticite-engagement__statement {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--engagement-statement-size, 28px);
+  line-height: var(--engagement-statement-line-height, 1.35);
+  color: var(--engagement-statement-color, var(--mc-dark));
+  max-width: var(--engagement-statement-max-width, 820px);
+  margin: 0 auto var(--engagement-statement-margin-bottom, 48px);
+}
+
+.authenticite-engagement__statement > * {
+  margin: 0;
+}
+
+.authenticite-engagement__statement > * + * {
+  margin-top: 0.5em;
+}
+
+.authenticite-engagement__paragraphs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authenticite-engagement__divider {
+  border: 0;
+  height: 1px;
+  width: var(--engagement-divider-width, 60px);
+  background-color: var(--engagement-divider-color, var(--mc-divider));
+  margin: 0 auto var(--engagement-divider-margin, 40px);
+}
+
+.authenticite-engagement__paragraph {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--engagement-paragraph-size, 15px);
+  line-height: var(--engagement-paragraph-line-height, 1.75);
+  color: var(--engagement-paragraph-color, var(--mc-ink-soft));
+  max-width: var(--engagement-paragraph-max-width, 680px);
+  margin: 0 auto var(--engagement-divider-margin, 40px);
+}
+
+.authenticite-engagement__paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.authenticite-engagement__paragraph > * {
+  margin: 0;
+}
+
+.authenticite-engagement__paragraph > * + * {
+  margin-top: 0.7em;
+}
+
+@media (max-width: 767px) {
+  .authenticite-engagement {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .authenticite-engagement__inner {
+    padding: 0 20px;
+  }
+  .authenticite-engagement__statement {
+    font-size: calc(var(--engagement-statement-size, 28px) * 0.78);
+    margin-bottom: calc(var(--engagement-statement-margin-bottom, 48px) * 0.75);
+  }
+  .authenticite-engagement__divider {
+    margin-bottom: calc(var(--engagement-divider-margin, 40px) * 0.75);
+  }
+  .authenticite-engagement__paragraph {
+    font-size: calc(var(--engagement-paragraph-size, 15px) * 0.95);
+    margin-bottom: calc(var(--engagement-divider-margin, 40px) * 0.75);
+  }
+}
