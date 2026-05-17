@@ -51,7 +51,7 @@
         "hero_image_position_y": 25,
         "hero_title_size": 64,
         "hero_cta_color_rest": "#ffffff",
-        "hero_cta_opacity_rest": 1,
+        "hero_cta_opacity_rest": 0.8,
         "hero_cta_bg_hover": "#ffffff",
         "hero_cta_color_hover": "#332821",
         "hero_cta_opacity_hover": 1,
