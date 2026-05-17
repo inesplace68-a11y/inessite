@@ -1,0 +1,87 @@
+/* ============================================================
+   Phase 18 — Page Presse · Contact
+   Eyebrow + intro + mailto Cormorant italic + délai (tout centré).
+   ============================================================ */
+
+.presse-contact {
+  background-color: var(--mc-bg);
+  padding-top: var(--presse-contact-padding-top, 48px);
+  padding-bottom: var(--presse-contact-padding-bottom, 64px);
+  width: 100%;
+  text-align: center;
+}
+
+.presse-contact__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.presse-contact__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-contact-eyebrow-size, 12px);
+  letter-spacing: var(--presse-contact-eyebrow-tracking, 0.22em);
+  text-transform: uppercase;
+  color: var(--presse-contact-eyebrow-color, var(--mc-mid));
+  margin: 0 0 var(--presse-contact-eyebrow-margin-bottom, 28px);
+}
+
+.presse-contact__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-contact-intro-size, 16px);
+  line-height: var(--presse-contact-intro-line-height, 1.7);
+  color: var(--presse-contact-intro-color, var(--mc-ink-soft));
+  max-width: var(--presse-contact-intro-max-width, 720px);
+  margin: 0 auto var(--presse-contact-intro-margin-bottom, 24px);
+}
+
+.presse-contact__intro > * {
+  margin: 0;
+}
+
+.presse-contact__intro > * + * {
+  margin-top: 0.6em;
+}
+
+.presse-contact__email {
+  display: inline-block;
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--presse-contact-email-size, 18px);
+  line-height: 1.3;
+  color: var(--presse-contact-email-color, var(--mc-dark));
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  margin-bottom: var(--presse-contact-email-margin-bottom, 16px);
+  transition: opacity 0.2s ease;
+}
+
+.presse-contact__email:hover {
+  opacity: 0.6;
+}
+
+.presse-contact__delai {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-contact-delai-size, 13px);
+  color: var(--presse-contact-delai-color, var(--mc-mid));
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 749px) {
+  .presse-contact {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  .presse-contact__inner {
+    padding: 0 20px;
+  }
+  .presse-contact__email {
+    font-size: calc(var(--presse-contact-email-size, 18px) * 0.95);
+  }
+}

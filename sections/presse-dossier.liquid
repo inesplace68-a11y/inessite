@@ -1,0 +1,92 @@
+{%- comment -%}
+  Phase 18 — Page Presse · Dossier de presse
+  Eyebrow + paragraphe d'intro + CTA téléchargement centré.
+  dossier_file accepte une URL externe (asset Shopify / lien public).
+{%- endcomment -%}
+
+{{ 'section-presse-dossier.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign cta_href = section.settings.dossier_file
+  if cta_href == blank
+    assign cta_href = '#'
+  endif
+-%}
+
+<section
+  class="presse-dossier"
+  style="
+    --presse-dossier-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --presse-dossier-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --presse-dossier-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --presse-dossier-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --presse-dossier-intro-size: {{ section.settings.intro_size }}px;
+    --presse-dossier-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --presse-dossier-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --presse-dossier-intro-color: {{ section.settings.intro_color }};
+    --presse-dossier-intro-margin-bottom: {{ section.settings.intro_margin_bottom }}px;
+    --presse-dossier-cta-size: {{ section.settings.cta_size }}px;
+    --presse-dossier-cta-tracking: {{ section.settings.cta_tracking | divided_by: 100.0 }}em;
+    --presse-dossier-cta-color: {{ section.settings.cta_color }};
+    --presse-dossier-padding-top: {{ section.settings.padding_top }}px;
+    --presse-dossier-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="presse-dossier__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="presse-dossier__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="presse-dossier__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <a
+        class="presse-dossier__cta"
+        href="{{ cta_href }}"
+        {% if section.settings.dossier_file != blank %}target="_blank" rel="noopener noreferrer"{% endif %}
+      >
+        {{ section.settings.cta_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Presse · Dossier",
+  "tag": "section",
+  "class": "shopify-section--presse-dossier",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "DOSSIER DE PRESSE" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 12 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 22 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "label": "Marge bas eyebrow", "default": 28 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C8882" },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Téléchargez la brochure complète : parcours de la fondatrice, démarche éditoriale, et visuels haute définition de pièces signature.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 16 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 720 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+    { "type": "color", "id": "intro_color", "label": "Couleur intro", "default": "#5A5446" },
+    { "type": "range", "id": "intro_margin_bottom", "min": 16, "max": 80, "step": 2, "unit": "px", "label": "Marge intro → CTA", "default": 40 },
+
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "cta_label", "label": "Libellé CTA", "default": "TÉLÉCHARGER LE DOSSIER  →" },
+    { "type": "range", "id": "cta_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Taille CTA", "default": 13 },
+    { "type": "range", "id": "cta_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing CTA", "default": 28 },
+    { "type": "color", "id": "cta_color", "label": "Couleur CTA", "default": "#1A1614" },
+    { "type": "url", "id": "dossier_file", "label": "URL du dossier (PDF / asset / lien externe)", "info": "Si vide : CTA pointe vers # (placeholder). Sinon, ouvre le fichier dans un nouvel onglet." },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 56 }
+  ],
+  "presets": [
+    { "name": "Presse · Dossier" }
+  ]
+}
+{% endschema %}

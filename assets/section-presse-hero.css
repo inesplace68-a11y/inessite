@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 18 — Page Presse · Hero
+   Titre Cormorant italic centré + intro Jost Light centrée.
+   ============================================================ */
+
+.presse-hero {
+  background-color: var(--mc-bg);
+  padding-top: var(--presse-hero-padding-top, 80px);
+  padding-bottom: var(--presse-hero-padding-bottom, 48px);
+  width: 100%;
+  text-align: center;
+}
+
+.presse-hero__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.presse-hero__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--presse-hero-title-size, 60px);
+  line-height: 1.1;
+  color: var(--presse-hero-title-color, var(--mc-dark));
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.presse-hero__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-hero-intro-size, 16px);
+  line-height: var(--presse-hero-intro-line-height, 1.7);
+  color: var(--presse-hero-intro-color, var(--mc-ink-soft));
+  max-width: var(--presse-hero-intro-max-width, 720px);
+  margin: var(--presse-hero-intro-margin-top, 32px) auto 0;
+}
+
+.presse-hero__intro > * {
+  margin: 0;
+}
+
+.presse-hero__intro > * + * {
+  margin-top: 0.8em;
+}
+
+@media (max-width: 749px) {
+  .presse-hero {
+    padding-top: 56px;
+    padding-bottom: 36px;
+  }
+  .presse-hero__inner {
+    padding: 0 20px;
+  }
+  .presse-hero__title {
+    font-size: calc(var(--presse-hero-title-size, 60px) * 0.72);
+  }
+  .presse-hero__intro {
+    font-size: calc(var(--presse-hero-intro-size, 16px) * 0.95);
+    margin-top: calc(var(--presse-hero-intro-margin-top, 32px) * 0.75);
+  }
+}

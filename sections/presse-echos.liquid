@@ -1,0 +1,141 @@
+{%- comment -%}
+  Phase 18 — Page Presse · Échos
+  Eyebrow "ÉCHOS" centré + grille 2 col desktop / 1 col mobile
+  de mentions presse (blocs répétables).
+{%- endcomment -%}
+
+{{ 'section-presse-echos.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="presse-echos"
+  style="
+    --presse-echos-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --presse-echos-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --presse-echos-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --presse-echos-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --presse-echos-content-max-width: {{ section.settings.content_max_width }}px;
+    --presse-echos-columns-desktop: {{ section.settings.columns_desktop }};
+    --presse-echos-column-gap: {{ section.settings.column_gap }}px;
+    --presse-echos-row-gap: {{ section.settings.row_gap }}px;
+    --presse-echos-title-size: {{ section.settings.title_size }}px;
+    --presse-echos-title-tracking: {{ section.settings.title_tracking | divided_by: 100.0 }}em;
+    --presse-echos-title-color: {{ section.settings.title_color }};
+    --presse-echos-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --presse-echos-subtitle-color: {{ section.settings.subtitle_color }};
+    --presse-echos-subtitle-margin-top: {{ section.settings.subtitle_margin_top }}px;
+    --presse-echos-body-size: {{ section.settings.body_size }}px;
+    --presse-echos-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --presse-echos-body-color: {{ section.settings.body_color }};
+    --presse-echos-body-margin-top: {{ section.settings.body_margin_top }}px;
+    --presse-echos-cta-size: {{ section.settings.cta_size }}px;
+    --presse-echos-cta-tracking: {{ section.settings.cta_tracking | divided_by: 100.0 }}em;
+    --presse-echos-cta-color: {{ section.settings.cta_color }};
+    --presse-echos-cta-margin-top: {{ section.settings.cta_margin_top }}px;
+    --presse-echos-padding-top: {{ section.settings.padding_top }}px;
+    --presse-echos-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="presse-echos__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="presse-echos__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="presse-echos__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'mention' -%}
+            <li class="presse-echos__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="presse-echos__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.subtitle != blank -%}
+                <p class="presse-echos__subtitle">{{ block.settings.subtitle | escape }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.body != blank -%}
+                <div class="presse-echos__body rte">{{ block.settings.body }}</div>
+              {%- endif -%}
+
+              {%- if block.settings.cta_label != blank -%}
+                <a
+                  class="presse-echos__cta"
+                  href="{{ block.settings.cta_url | default: '#' }}"
+                  {% if block.settings.cta_url != blank %}target="_blank" rel="noopener noreferrer"{% endif %}
+                >
+                  {{ block.settings.cta_label | escape }}
+                  <span class="presse-echos__cta-arrow" aria-hidden="true">→</span>
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Presse · Échos",
+  "tag": "section",
+  "class": "shopify-section--presse-echos",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "ÉCHOS" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 12 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 22 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 16, "max": 120, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 48 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C8882" },
+
+    { "type": "header", "content": "Grille" },
+    { "type": "range", "id": "content_max_width", "min": 600, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max contenu", "default": 1100 },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 4, "step": 1, "label": "Colonnes desktop", "default": 2 },
+    { "type": "range", "id": "column_gap", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Gap horizontal (colonnes)", "default": 64 },
+    { "type": "range", "id": "row_gap", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Gap vertical (lignes)", "default": 48 },
+
+    { "type": "header", "content": "Titre mention" },
+    { "type": "range", "id": "title_size", "min": 14, "max": 28, "step": 1, "unit": "px", "label": "Taille titre", "default": 18 },
+    { "type": "range", "id": "title_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing titre", "default": 18 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+
+    { "type": "header", "content": "Sous-titre" },
+    { "type": "range", "id": "subtitle_size", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Taille sous-titre", "default": 13 },
+    { "type": "color", "id": "subtitle_color", "label": "Couleur sous-titre", "default": "#8C8882" },
+    { "type": "range", "id": "subtitle_margin_top", "min": 2, "max": 24, "step": 1, "unit": "px", "label": "Marge titre → sous-titre", "default": 6 },
+
+    { "type": "header", "content": "Corps (Cormorant italic)" },
+    { "type": "range", "id": "body_size", "min": 14, "max": 24, "step": 1, "unit": "px", "label": "Taille corps", "default": 17 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne corps", "default": 170 },
+    { "type": "color", "id": "body_color", "label": "Couleur corps", "default": "#5A5446" },
+    { "type": "range", "id": "body_margin_top", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Marge sous-titre → corps", "default": 20 },
+
+    { "type": "header", "content": "CTA" },
+    { "type": "range", "id": "cta_size", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Taille CTA", "default": 12 },
+    { "type": "range", "id": "cta_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing CTA", "default": 28 },
+    { "type": "color", "id": "cta_color", "label": "Couleur CTA", "default": "#1A1614" },
+    { "type": "range", "id": "cta_margin_top", "min": 8, "max": 60, "step": 2, "unit": "px", "label": "Marge corps → CTA", "default": 24 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "mention",
+      "name": "Mention presse",
+      "limit": 20,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre (CAPS)", "default": "MARIE CLAIRE MAISON" },
+        { "type": "text", "id": "subtitle", "label": "Sous-titre (date / contexte)", "default": "[ Mois  Année ]" },
+        { "type": "richtext", "id": "body", "label": "Corps (Cormorant italic)", "default": "<p>Un papier consacré à [sujet de l'article] présente une pièce de la galerie, créditée en pied de cliché.</p>" },
+        { "type": "text", "id": "cta_label", "label": "Libellé CTA", "default": "VOIR LE PAPIER" },
+        { "type": "url", "id": "cta_url", "label": "URL CTA (lien externe)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Presse · Échos" }
+  ]
+}
+{% endschema %}
