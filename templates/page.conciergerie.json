@@ -1,0 +1,99 @@
+{
+  "sections": {
+    "hero": {
+      "type": "conciergerie-hero",
+      "settings": {}
+    },
+    "manifeste": {
+      "type": "conciergerie-manifeste",
+      "settings": {}
+    },
+    "deroule": {
+      "type": "conciergerie-deroule",
+      "blocks": {
+        "e1": {
+          "type": "etape",
+          "settings": {
+            "numeral": "I",
+            "title": "Brief initial",
+            "body": "<p>Vous nous décrivez la pièce recherchée — type, époque, designer, état, dimensions, usage prévu. Un rendez-vous au showroom ou un échange à distance permet d'affiner les attentes et le contexte du projet.</p>",
+            "step_image_placeholder_caption": "Échange en showroom · prise de brief"
+          }
+        },
+        "e2": {
+          "type": "etape",
+          "settings": {
+            "numeral": "II",
+            "title": "Recherche curatoriale",
+            "body": "<p>Maison Coeur active son réseau de marchands, de salles des ventes et de collectionneurs privés pour identifier les pièces correspondant à votre brief. Chaque piste présélectionnée fait l'objet d'une vérification de provenance et d'authenticité avant d'être présentée.</p>",
+            "step_image_placeholder_caption": "Salle des ventes ou atelier de marchand"
+          }
+        },
+        "e3": {
+          "type": "etape",
+          "settings": {
+            "numeral": "III",
+            "title": "Proposition",
+            "body": "<p>Une à trois pièces vous sont présentées avec leur dossier complet : photographies haute définition, état détaillé, provenance, restaurations éventuelles, et prix. Vous retenez celle qui répond à votre attente, ou demandez à poursuivre la recherche.</p>",
+            "step_image_placeholder_caption": "Présentation de pièces sourcées"
+          }
+        },
+        "e4": {
+          "type": "etape",
+          "settings": {
+            "numeral": "IV",
+            "title": "Acquisition et livraison",
+            "body": "<p>La pièce choisie est acquise par la galerie, contrôlée à réception, photographiée pour archive, puis expédiée à l'adresse de votre choix accompagnée de son dossier de provenance.</p>",
+            "step_image_placeholder_caption": "Pièce emballée prête à l'expédition"
+          }
+        }
+      },
+      "block_order": ["e1", "e2", "e3", "e4"],
+      "settings": {}
+    },
+    "pieces": {
+      "type": "conciergerie-pieces-sourcees",
+      "blocks": {
+        "p1": {
+          "type": "piece",
+          "settings": {
+            "piece_title": "Console « Tulipe » de Charlotte Perriand",
+            "piece_context": "Pour un appartement haussmannien parisien",
+            "piece_delay": "Sourcée en 6 semaines"
+          }
+        },
+        "p2": {
+          "type": "piece",
+          "settings": {
+            "piece_title": "Suspension Gino Sarfatti modèle 2097",
+            "piece_context": "Pour le salon d'une villa méditerranéenne",
+            "piece_delay": "Sourcée en 8 semaines"
+          }
+        },
+        "p3": {
+          "type": "piece",
+          "settings": {
+            "piece_title": "Table basse en travertin italien des années 1970",
+            "piece_context": "Pour un projet d'architecte d'intérieur",
+            "piece_delay": "Sourcée en 12 semaines"
+          }
+        },
+        "p4": {
+          "type": "piece",
+          "settings": {
+            "piece_title": "Paire de fauteuils Pierre Paulin « Mushroom »",
+            "piece_context": "Pour une suite d'hôtel sur la Côte d'Azur",
+            "piece_delay": "Sourcée en 4 semaines"
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": {}
+    },
+    "recherche": {
+      "type": "conciergerie-recherche",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "manifeste", "deroule", "pieces", "recherche"]
+}
