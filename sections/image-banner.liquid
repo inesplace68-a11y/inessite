@@ -69,11 +69,17 @@
   }
 
   {%- comment -%}
-    Phase 16.58 : les styles du bouton CTA hero (couleur repos/hover,
-    opacité, contour, comportement focus-visible) sont désormais
-    portés par la classe globale .mc-cta-primary (assets/maison-coeur.css)
-    pilotée par les settings globaux mc_cta_primary_* (settings_schema.json).
-    Le markup applique .mc-cta-primary au bouton primary du hero.
+    Phase 16.58 : les styles du bouton CTA hero sont portés par la
+    classe globale .mc-cta-primary (assets/maison-coeur.css). Au
+    repos, hover, focus-visible et :active (force brute Phase 16.61),
+    les propriétés sont rendues à partir de variables CSS.
+
+    Phase 16.62 : les 5 settings dédiés (section image-banner) sont
+    injectés en style inline sur les <a> du hero, ce qui scope les
+    variables CSS UNIQUEMENT à ces éléments. Le bouton hero devient
+    indépendant des settings globaux mc_cta_primary_* (Réglages du
+    thème), qui continuent à piloter les autres CTA primaires
+    (Notre histoire, etc.).
   {%- endcomment -%}
 
   {%- liquid
@@ -94,6 +100,28 @@
     assign kb_amp = section.settings.hero_kenburns_amplitude_pct | divided_by: 100.0 | plus: 1
     assign aspect_ratio = section.settings.hero_aspect_ratio | default: '16/9'
     assign max_height_vh = section.settings.hero_max_height_vh | default: 90
+
+    # Phase 16.62 — Variables CTA hero scopées (override des :root globaux).
+    # Injectées en style inline sur les <a class="mc-cta-primary"> du hero.
+    # Mappage sur les noms de variables effectivement consommés par
+    # .mc-cta-primary dans assets/maison-coeur.css (rgb triplets + alpha).
+    assign hero_cta_rest = section.settings.hero_cta_color_rest | default: '#FFFFFF'
+    assign hero_cta_rest_r = hero_cta_rest | color_extract: 'red'
+    assign hero_cta_rest_g = hero_cta_rest | color_extract: 'green'
+    assign hero_cta_rest_b = hero_cta_rest | color_extract: 'blue'
+    assign hero_cta_rest_a = section.settings.hero_cta_opacity_rest | default: 1
+
+    assign hero_cta_bg = section.settings.hero_cta_bg_hover | default: '#FFFFFF'
+    assign hero_cta_bg_r = hero_cta_bg | color_extract: 'red'
+    assign hero_cta_bg_g = hero_cta_bg | color_extract: 'green'
+    assign hero_cta_bg_b = hero_cta_bg | color_extract: 'blue'
+
+    assign hero_cta_tx = section.settings.hero_cta_color_hover | default: '#332821'
+    assign hero_cta_tx_r = hero_cta_tx | color_extract: 'red'
+    assign hero_cta_tx_g = hero_cta_tx | color_extract: 'green'
+    assign hero_cta_tx_b = hero_cta_tx | color_extract: 'blue'
+
+    assign hero_cta_hover_a = section.settings.hero_cta_opacity_hover | default: 1
   -%}
 
   @media screen and (min-width: 750px) {
@@ -331,6 +359,7 @@
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
                   class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary mc-cta-primary{% endif %}"
+                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }};"
                 >
                   {{- block.settings.button_label_1 | escape -}}
                 </a>
@@ -343,6 +372,7 @@
                     href="{{ block.settings.button_link_2 }}"
                   {% endif %}
                   class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary mc-cta-primary{% endif %}"
+                  style="--mc-cta-primary-rest-rgb: {{ hero_cta_rest_r }}, {{ hero_cta_rest_g }}, {{ hero_cta_rest_b }}; --mc-cta-primary-rest-alpha: {{ hero_cta_rest_a }}; --mc-cta-primary-hover-bg-rgb: {{ hero_cta_bg_r }}, {{ hero_cta_bg_g }}, {{ hero_cta_bg_b }}; --mc-cta-primary-hover-color-rgb: {{ hero_cta_tx_r }}, {{ hero_cta_tx_g }}, {{ hero_cta_tx_b }}; --mc-cta-primary-hover-alpha: {{ hero_cta_hover_a }};"
                 >
                   {{- block.settings.button_label_2 | escape -}}
                 </a>
@@ -454,11 +484,52 @@
     },
     {
       "type": "header",
-      "content": "Bouton CTA du hero"
+      "content": "Bouton CTA du hero — couleurs et opacités dédiées"
     },
     {
       "type": "paragraph",
-      "content": "Couleurs et opacités du bouton CTA sont désormais pilotées globalement depuis Réglages du thème » CTA éditoriaux (home). Une seule modification met à jour ce bouton ET le bouton NOTRE HISTOIRE de la section éditoriale."
+      "content": "Ces réglages pilotent le bouton hero INDÉPENDAMMENT des autres CTA primaires du site (NOTRE HISTOIRE, etc.) qui restent pilotés globalement depuis Réglages du thème » CTA éditoriaux (home)."
+    },
+    {
+      "type": "color",
+      "id": "hero_cta_color_rest",
+      "label": "Couleur du bouton (au repos)",
+      "info": "Couleur du contour fin et du texte avant survol. Default blanc pour boutons sur image sombre.",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "hero_cta_opacity_rest",
+      "label": "Opacité du bouton (au repos)",
+      "info": "Présence du contour et du texte avant survol. 1 = pleine présence, valeurs plus basses = bouton plus discret.",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "hero_cta_bg_hover",
+      "label": "Couleur de fond au survol et au clic",
+      "info": "Couleur du fond plein qui apparaît au survol et au clic. Default blanc pour rendu gallery sur image.",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "hero_cta_color_hover",
+      "label": "Couleur du texte au survol et au clic",
+      "info": "Couleur du texte au survol et au clic. Default marron foncé pour lisibilité sur fond blanc.",
+      "default": "#332821"
+    },
+    {
+      "type": "range",
+      "id": "hero_cta_opacity_hover",
+      "label": "Opacité au survol et au clic",
+      "info": "Présence du bouton rempli au survol et au clic. 1 = pleine présence, valeurs plus basses = bouton voilé.",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.1,
+      "default": 1
     },
     {
       "type": "header",
