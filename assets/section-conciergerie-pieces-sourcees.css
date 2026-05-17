@@ -1,0 +1,127 @@
+/* ============================================================
+   Phase 17.4 — Page Conciergerie · Quelques pièces sourcées
+   Grille 2 colonnes desktop, 1 colonne mobile.
+   Format compact : image + titre + contexte + délai.
+   ============================================================ */
+.conciergerie-pieces {
+  background-color: var(--mc-bg);
+  padding-top: var(--pieces-padding-top, 0);
+  padding-bottom: var(--pieces-padding-bottom, 140px);
+  width: 100%;
+}
+
+.conciergerie-pieces__inner {
+  max-width: var(--pieces-content-max-width, 1160px);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.conciergerie-pieces__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--pieces-eyebrow-size, 13px);
+  letter-spacing: var(--pieces-eyebrow-tracking, 0.30em);
+  text-transform: uppercase;
+  color: var(--mc-whisper);
+  text-align: center;
+  margin: 0 0 var(--pieces-eyebrow-margin-bottom, 92px);
+}
+
+.conciergerie-pieces__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--pieces-column-gap, 60px);
+  row-gap: var(--pieces-row-gap, 80px);
+}
+
+.conciergerie-pieces__card {
+  display: flex;
+  flex-direction: column;
+}
+
+.conciergerie-pieces__image-wrap {
+  margin-bottom: 22px;
+}
+
+.conciergerie-pieces__image,
+.conciergerie-pieces__placeholder {
+  display: block;
+  width: 100%;
+  height: var(--pieces-image-height, 360px);
+  object-fit: cover;
+}
+
+.conciergerie-pieces__placeholder {
+  background-color: var(--mc-cream-darker);
+  border: 1px solid var(--mc-divider);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mc-whisper);
+}
+
+.conciergerie-pieces__placeholder-label {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.conciergerie-pieces__title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--pieces-title-size, 24px);
+  line-height: 1.2;
+  color: var(--mc-dark);
+  margin: 0;
+}
+
+.conciergerie-pieces__context {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pieces-context-size, 15px);
+  line-height: 1.5;
+  color: var(--mc-ink-soft);
+  margin: 6px 0 0;
+}
+
+.conciergerie-pieces__delay {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pieces-delay-size, 13px);
+  line-height: 1.5;
+  color: var(--mc-whisper);
+  margin: 4px 0 0;
+}
+
+@media (max-width: 1023px) {
+  .conciergerie-pieces__grid {
+    column-gap: 32px;
+    row-gap: 56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .conciergerie-pieces {
+    padding-bottom: 80px;
+  }
+  .conciergerie-pieces__inner {
+    padding: 0 20px;
+  }
+  .conciergerie-pieces__grid {
+    grid-template-columns: 1fr;
+    row-gap: 48px;
+  }
+  .conciergerie-pieces__eyebrow {
+    margin-bottom: 56px;
+  }
+  .conciergerie-pieces__image,
+  .conciergerie-pieces__placeholder {
+    height: calc(var(--pieces-image-height, 360px) * 0.85);
+  }
+  .conciergerie-pieces__title {
+    font-size: calc(var(--pieces-title-size, 24px) * 0.92);
+  }
+}

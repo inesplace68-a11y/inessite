@@ -1,0 +1,45 @@
+{%- comment -%}
+  Phase 17.2 — Page Conciergerie · Manifeste
+  Statement Cormorant italic monumental centré.
+{%- endcomment -%}
+
+{{ 'section-conciergerie-manifeste.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="conciergerie-manifeste"
+  style="
+    --manifeste-size: {{ section.settings.manifeste_size }}px;
+    --manifeste-max-width: {{ section.settings.manifeste_max_width }}px;
+    --manifeste-line-height: {{ section.settings.manifeste_line_height | divided_by: 100.0 }};
+    --manifeste-color: {{ section.settings.manifeste_color }};
+    --manifeste-padding-top: {{ section.settings.padding_top }}px;
+    --manifeste-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {%- if section.settings.manifeste_text != blank -%}
+    <div class="conciergerie-manifeste__text rte">{{ section.settings.manifeste_text }}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Conciergerie · Manifeste",
+  "tag": "section",
+  "class": "shopify-section--conciergerie-manifeste",
+  "settings": [
+    { "type": "header", "content": "Manifeste" },
+    { "type": "richtext", "id": "manifeste_text", "label": "Texte manifeste (Cormorant italic)", "default": "<p>Chaque sourcing est l'histoire d'une rencontre.</p>" },
+    { "type": "range", "id": "manifeste_size", "min": 32, "max": 80, "step": 2, "unit": "px", "label": "Taille manifeste", "default": 52 },
+    { "type": "range", "id": "manifeste_max_width", "min": 600, "max": 1300, "step": 20, "unit": "px", "label": "Largeur max", "default": 1100 },
+    { "type": "range", "id": "manifeste_line_height", "min": 110, "max": 180, "step": 5, "unit": "%", "label": "Interligne", "default": 130 },
+    { "type": "color", "id": "manifeste_color", "label": "Couleur", "default": "#1A1614" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 200 }
+  ],
+  "presets": [
+    { "name": "Conciergerie · Manifeste" }
+  ]
+}
+{% endschema %}

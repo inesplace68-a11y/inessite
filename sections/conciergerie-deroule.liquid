@@ -1,0 +1,141 @@
+{%- comment -%}
+  Phase 17.3 — Page Conciergerie · Le Déroulé
+  4 rangées alternées image/texte via forloop.index0 | modulo: 2.
+  Bloc index 0 (I) : image gauche, texte droite.
+  Bloc index 1 (II) : texte gauche, image droite. Etc.
+{%- endcomment -%}
+
+{{ 'section-conciergerie-deroule.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="conciergerie-deroule"
+  style="
+    --deroule-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --deroule-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --deroule-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --deroule-content-max-width: {{ section.settings.content_max_width }}px;
+    --deroule-image-width: {{ section.settings.image_width }}px;
+    --deroule-image-height: {{ section.settings.image_height }}px;
+    --deroule-column-gap: {{ section.settings.column_gap }}px;
+    --deroule-row-gap: {{ section.settings.row_gap }}px;
+    --deroule-numeral-size: {{ section.settings.numeral_size }}px;
+    --deroule-numeral-color: {{ section.settings.numeral_color }};
+    --deroule-title-size: {{ section.settings.title_size }}px;
+    --deroule-body-size: {{ section.settings.body_size }}px;
+    --deroule-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --deroule-padding-top: {{ section.settings.padding_top }}px;
+    --deroule-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="conciergerie-deroule__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="conciergerie-deroule__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    <div class="conciergerie-deroule__rows">
+      {%- for block in section.blocks -%}
+        {%- assign row_position = forloop.index0 | modulo: 2 -%}
+        <div
+          class="conciergerie-deroule__row{% if row_position == 1 %} conciergerie-deroule__row--reverse{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="conciergerie-deroule__image-wrap">
+            {%- if block.settings.step_image != blank -%}
+              <img
+                class="conciergerie-deroule__image"
+                src="{{ block.settings.step_image | image_url: width: 1080 }}"
+                srcset="{{ block.settings.step_image | image_url: width: 540 }} 540w, {{ block.settings.step_image | image_url: width: 1080 }} 1080w"
+                sizes="(min-width: 1024px) {{ section.settings.image_width }}px, 100vw"
+                alt="{{ block.settings.step_image.alt | default: block.settings.title | escape }}"
+                loading="lazy"
+                width="540"
+                height="380"
+              >
+            {%- else -%}
+              <div class="conciergerie-deroule__placeholder" role="img" aria-label="{{ block.settings.step_image_placeholder_caption | default: block.settings.title | escape }}">
+                <span class="conciergerie-deroule__placeholder-label">PHOTO À VENIR</span>
+                {%- if block.settings.step_image_placeholder_caption != blank -%}
+                  <span class="conciergerie-deroule__placeholder-caption">{{ block.settings.step_image_placeholder_caption | escape }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="conciergerie-deroule__text">
+            {%- if block.settings.numeral != blank -%}
+              <p class="conciergerie-deroule__numeral">{{ block.settings.numeral | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h2 class="conciergerie-deroule__title">{{ block.settings.title | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="conciergerie-deroule__body rte">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Conciergerie · Déroulé",
+  "tag": "section",
+  "class": "shopify-section--conciergerie-deroule",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow (CAPS)", "default": "LE DÉROULÉ" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 100 },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 800, "max": 1400, "step": 20, "unit": "px", "label": "Largeur max contenu", "default": 1160 },
+    { "type": "range", "id": "image_width", "min": 380, "max": 700, "step": 10, "unit": "px", "label": "Largeur image", "default": 540 },
+    { "type": "range", "id": "image_height", "min": 260, "max": 560, "step": 10, "unit": "px", "label": "Hauteur image", "default": 380 },
+    { "type": "range", "id": "column_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace image / texte", "default": 80 },
+    { "type": "range", "id": "row_gap", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Espace entre étapes", "default": 80 },
+
+    { "type": "header", "content": "Numéral" },
+    { "type": "range", "id": "numeral_size", "min": 24, "max": 60, "step": 1, "unit": "px", "label": "Taille numéral", "default": 36 },
+    { "type": "color", "id": "numeral_color", "label": "Couleur numéral", "default": "#8C826E" },
+
+    { "type": "header", "content": "Titre étape" },
+    { "type": "range", "id": "title_size", "min": 20, "max": 50, "step": 1, "unit": "px", "label": "Taille titre", "default": 28 },
+
+    { "type": "header", "content": "Corps de texte" },
+    { "type": "range", "id": "body_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille body", "default": 16 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne body", "default": 175 },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 140 }
+  ],
+  "blocks": [
+    {
+      "type": "etape",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "numeral", "label": "Numéral (I, II, III…)", "default": "I" },
+        { "type": "text", "id": "title", "label": "Titre étape", "default": "Brief initial" },
+        { "type": "richtext", "id": "body", "label": "Corps de texte", "default": "<p>Vous nous décrivez la pièce recherchée — type, époque, designer, état, dimensions, usage prévu. Un rendez-vous au showroom ou un échange à distance permet d'affiner les attentes et le contexte du projet.</p>" },
+        { "type": "image_picker", "id": "step_image", "label": "Image étape (vide = placeholder)" },
+        { "type": "text", "id": "step_image_placeholder_caption", "label": "Caption placeholder", "default": "Échange en showroom · prise de brief" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Conciergerie · Déroulé",
+      "blocks": [
+        { "type": "etape", "settings": { "numeral": "I", "title": "Brief initial", "body": "<p>Vous nous décrivez la pièce recherchée — type, époque, designer, état, dimensions, usage prévu. Un rendez-vous au showroom ou un échange à distance permet d'affiner les attentes et le contexte du projet.</p>", "step_image_placeholder_caption": "Échange en showroom · prise de brief" } },
+        { "type": "etape", "settings": { "numeral": "II", "title": "Recherche curatoriale", "body": "<p>Maison Coeur active son réseau de marchands, de salles des ventes et de collectionneurs privés pour identifier les pièces correspondant à votre brief. Chaque piste présélectionnée fait l'objet d'une vérification de provenance et d'authenticité avant d'être présentée.</p>", "step_image_placeholder_caption": "Salle des ventes ou atelier de marchand" } },
+        { "type": "etape", "settings": { "numeral": "III", "title": "Proposition", "body": "<p>Une à trois pièces vous sont présentées avec leur dossier complet : photographies haute définition, état détaillé, provenance, restaurations éventuelles, et prix. Vous retenez celle qui répond à votre attente, ou demandez à poursuivre la recherche.</p>", "step_image_placeholder_caption": "Présentation de pièces sourcées" } },
+        { "type": "etape", "settings": { "numeral": "IV", "title": "Acquisition et livraison", "body": "<p>La pièce choisie est acquise par la galerie, contrôlée à réception, photographiée pour archive, puis expédiée à l'adresse de votre choix accompagnée de son dossier de provenance.</p>", "step_image_placeholder_caption": "Pièce emballée prête à l'expédition" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

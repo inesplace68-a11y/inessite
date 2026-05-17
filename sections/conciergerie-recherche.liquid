@@ -1,0 +1,146 @@
+{%- comment -%}
+  Phase 17.5 — Page Conciergerie · Recherche
+  Formulaire contact natif Shopify ({% form 'contact' %}).
+  6 champs : nom, email, téléphone, description pièce (textarea = body),
+  budget (select), délai souhaité.
+  Champs custom (budget, delai) remontent automatiquement dans le mail
+  reçu sur l'email Customer contact configuré dans Shopify Admin.
+{%- endcomment -%}
+
+{{ 'section-conciergerie-recherche.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="conciergerie-recherche"
+  style="
+    --recherche-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --recherche-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --recherche-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --recherche-intro-size: {{ section.settings.intro_size }}px;
+    --recherche-intro-max-width: {{ section.settings.intro_max_width }}px;
+    --recherche-intro-line-height: {{ section.settings.intro_line_height | divided_by: 100.0 }};
+    --recherche-form-max-width: {{ section.settings.form_max_width }}px;
+    --recherche-form-margin-top: {{ section.settings.form_margin_top }}px;
+    --recherche-cta-size: {{ section.settings.cta_size }}px;
+    --recherche-cta-tracking: {{ section.settings.cta_tracking | divided_by: 100.0 }}em;
+    --recherche-padding-top: {{ section.settings.padding_top }}px;
+    --recherche-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="conciergerie-recherche__inner">
+    {%- if section.settings.eyebrow_text != blank -%}
+      <p class="conciergerie-recherche__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="conciergerie-recherche__intro rte">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+
+    <div class="conciergerie-recherche__form-wrap">
+      {%- form 'contact', class: 'conciergerie-recherche__form', id: 'conciergerie-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="conciergerie-recherche__success rte">
+            {{ section.settings.success_message }}
+          </div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="conciergerie-recherche__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="conciergerie-recherche__field">
+            <label for="conc_name">NOM COMPLET *</label>
+            <input type="text" id="conc_name" name="contact[name]" autocomplete="name" required>
+          </div>
+
+          <div class="conciergerie-recherche__field">
+            <label for="conc_email">EMAIL *</label>
+            <input type="email" id="conc_email" name="contact[email]" autocomplete="email" required>
+          </div>
+
+          <div class="conciergerie-recherche__field">
+            <label for="conc_phone">TÉLÉPHONE</label>
+            <input type="tel" id="conc_phone" name="contact[phone]" autocomplete="tel">
+          </div>
+
+          <div class="conciergerie-recherche__field conciergerie-recherche__field--textarea">
+            <label for="conc_piece">PIÈCE RECHERCHÉE — DESCRIPTION *</label>
+            <textarea
+              id="conc_piece"
+              name="contact[body]"
+              rows="3"
+              placeholder="(type, époque, designer, dimensions, usage…)"
+              required></textarea>
+          </div>
+
+          <div class="conciergerie-recherche__field">
+            <label for="conc_budget">BUDGET APPROXIMATIF</label>
+            <select id="conc_budget" name="contact[budget]">
+              <option value="">— Sélectionner —</option>
+              <option>Moins de 1 000 €</option>
+              <option>1 000 - 5 000 €</option>
+              <option>5 000 - 15 000 €</option>
+              <option>15 000 - 50 000 €</option>
+              <option>Plus de 50 000 €</option>
+              <option>À discuter</option>
+            </select>
+          </div>
+
+          <div class="conciergerie-recherche__field">
+            <label for="conc_delai">DÉLAI SOUHAITÉ</label>
+            <input type="text" id="conc_delai" name="contact[delai]" placeholder="(optionnel)">
+          </div>
+
+          <div class="conciergerie-recherche__submit">
+            <button type="submit">{{ section.settings.cta_label | escape }}</button>
+          </div>
+
+          {%- if section.settings.mandatory_note != blank -%}
+            <p class="conciergerie-recherche__mandatory">{{ section.settings.mandatory_note | escape }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Conciergerie · Recherche",
+  "tag": "section",
+  "class": "shopify-section--conciergerie-recherche",
+  "settings": [
+    { "type": "header", "content": "Eyebrow" },
+    { "type": "text", "id": "eyebrow_text", "label": "Eyebrow (CAPS)", "default": "CONFIER UNE RECHERCHE" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 24, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 13 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 30 },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge bas eyebrow", "default": 68 },
+
+    { "type": "header", "content": "Intro" },
+    { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Décrivez-nous la pièce que vous recherchez. Une première estimation de faisabilité et de délai vous est communiquée sous 48 heures.</p>" },
+    { "type": "range", "id": "intro_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille intro", "default": 17 },
+    { "type": "range", "id": "intro_max_width", "min": 400, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max intro", "default": 700 },
+    { "type": "range", "id": "intro_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne intro", "default": 170 },
+
+    { "type": "header", "content": "Formulaire" },
+    { "type": "range", "id": "form_max_width", "min": 400, "max": 800, "step": 10, "unit": "px", "label": "Largeur max formulaire", "default": 600 },
+    { "type": "range", "id": "form_margin_top", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge haut formulaire", "default": 88 },
+
+    { "type": "header", "content": "Bouton submit" },
+    { "type": "text", "id": "cta_label", "label": "Libellé bouton", "default": "CONFIER UNE RECHERCHE  →" },
+    { "type": "range", "id": "cta_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Taille bouton", "default": 13 },
+    { "type": "range", "id": "cta_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing bouton", "default": 28 },
+
+    { "type": "header", "content": "Messages" },
+    { "type": "richtext", "id": "success_message", "label": "Message de succès", "default": "<p>Votre demande a bien été reçue. Une première estimation de faisabilité vous parviendra sous 48 heures ouvrées.</p>" },
+    { "type": "text", "id": "mandatory_note", "label": "Note champs obligatoires", "default": "Les champs marqués d'un astérisque sont obligatoires." },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding haut", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bas", "default": 152 }
+  ],
+  "presets": [
+    { "name": "Conciergerie · Recherche" }
+  ]
+}
+{% endschema %}

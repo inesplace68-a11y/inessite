@@ -1,0 +1,198 @@
+/* ============================================================
+   Phase 17.5 — Page Conciergerie · Confier une recherche
+   Form contact natif Shopify. Inputs underline minimaliste,
+   bouton submit underline, hover opacité 0.7.
+   ============================================================ */
+.conciergerie-recherche {
+  background-color: var(--mc-bg);
+  padding-top: var(--recherche-padding-top, 0);
+  padding-bottom: var(--recherche-padding-bottom, 152px);
+  width: 100%;
+}
+
+.conciergerie-recherche__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.conciergerie-recherche__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--recherche-eyebrow-size, 13px);
+  letter-spacing: var(--recherche-eyebrow-tracking, 0.30em);
+  text-transform: uppercase;
+  color: var(--mc-whisper);
+  margin: 0 0 var(--recherche-eyebrow-margin-bottom, 68px);
+}
+
+.conciergerie-recherche__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--recherche-intro-size, 17px);
+  line-height: var(--recherche-intro-line-height, 1.7);
+  color: var(--mc-ink-soft);
+  max-width: var(--recherche-intro-max-width, 700px);
+  margin: 0 auto;
+}
+
+.conciergerie-recherche__intro > * {
+  margin: 0;
+}
+
+.conciergerie-recherche__intro > * + * {
+  margin-top: 1em;
+}
+
+.conciergerie-recherche__form-wrap {
+  max-width: var(--recherche-form-max-width, 600px);
+  margin: var(--recherche-form-margin-top, 88px) auto 0;
+  text-align: left;
+}
+
+.conciergerie-recherche__form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.conciergerie-recherche__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.conciergerie-recherche__field label {
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mc-whisper);
+  margin-bottom: 8px;
+}
+
+.conciergerie-recherche__field input,
+.conciergerie-recherche__field select,
+.conciergerie-recherche__field textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--mc-divider);
+  border-radius: 0;
+  padding: 12px 0;
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--mc-dark);
+  width: 100%;
+  outline: none;
+  transition: border-color 200ms ease;
+}
+
+.conciergerie-recherche__field input::placeholder,
+.conciergerie-recherche__field textarea::placeholder {
+  color: var(--mc-whisper);
+  font-style: italic;
+  opacity: 1;
+}
+
+.conciergerie-recherche__field input:focus,
+.conciergerie-recherche__field select:focus,
+.conciergerie-recherche__field textarea:focus {
+  border-bottom-color: var(--mc-dark);
+}
+
+.conciergerie-recherche__field--textarea textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.5;
+}
+
+.conciergerie-recherche__field select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--mc-whisper) 50%),
+                    linear-gradient(135deg, var(--mc-whisper) 50%, transparent 50%);
+  background-position: calc(100% - 14px) center, calc(100% - 8px) center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+
+.conciergerie-recherche__submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.conciergerie-recherche__submit button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--mc-dark);
+  border-radius: 0;
+  padding: 12px 24px 4px;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--recherche-cta-size, 13px);
+  letter-spacing: var(--recherche-cta-tracking, 0.28em);
+  text-transform: uppercase;
+  color: var(--mc-dark);
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.conciergerie-recherche__submit button:hover,
+.conciergerie-recherche__submit button:focus-visible {
+  opacity: 0.7;
+  outline: none;
+}
+
+.conciergerie-recherche__mandatory {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--mc-whisper);
+  text-align: center;
+  margin: 25px 0 0;
+}
+
+.conciergerie-recherche__success {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--mc-ink-soft);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.conciergerie-recherche__success > * {
+  margin: 0;
+}
+
+.conciergerie-recherche__errors {
+  font-family: var(--mc-font-sans);
+  font-size: 14px;
+  color: #B0463C;
+  background: rgba(176, 70, 60, 0.06);
+  border: 1px solid rgba(176, 70, 60, 0.2);
+  padding: 12px 16px;
+}
+
+@media (max-width: 767px) {
+  .conciergerie-recherche {
+    padding-bottom: 80px;
+  }
+  .conciergerie-recherche__inner {
+    padding: 0 20px;
+  }
+  .conciergerie-recherche__intro {
+    font-size: 16px;
+  }
+  .conciergerie-recherche__form-wrap {
+    margin-top: 48px;
+  }
+}

@@ -22,6 +22,14 @@
   --mc-bronze:      #8C6D3F;    /* accents éventuels (non utilisé en PDP)  */
   --mc-noir:        #1A1A1A;    /* texte / bordures noires */
 
+  /* Phase 17 — Palette éditorial étendue (page Conciergerie).
+     Ajout au global pour disponibilité cross-pages et continuité
+     chromatique stricte avec le reste du thème. */
+  --mc-ink-soft:    #5A5446;    /* texte secondaire éditorial (bodies, intro) */
+  --mc-whisper:     #8C826E;    /* numéraux, délais, labels form — beige chaud */
+  --mc-divider:     #D2C8B4;    /* hairlines, border-bottom inputs form */
+  --mc-cream-darker:#E0D5BB;    /* placeholders image (vs --mc-pierre plus clair) */
+
   --mc-font-serif: 'Cormorant Garamond', Georgia, serif;
   --mc-font-sans:  'Jost', 'Helvetica Neue', Arial, sans-serif;
 
