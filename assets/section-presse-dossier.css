@@ -1,0 +1,77 @@
+/* ============================================================
+   Phase 18 — Page Presse · Dossier
+   Eyebrow + intro Jost Light + CTA underlined centré.
+   ============================================================ */
+
+.presse-dossier {
+  background-color: var(--mc-bg);
+  padding-top: var(--presse-dossier-padding-top, 48px);
+  padding-bottom: var(--presse-dossier-padding-bottom, 56px);
+  width: 100%;
+  text-align: center;
+}
+
+.presse-dossier__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.presse-dossier__eyebrow {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-dossier-eyebrow-size, 12px);
+  letter-spacing: var(--presse-dossier-eyebrow-tracking, 0.22em);
+  text-transform: uppercase;
+  color: var(--presse-dossier-eyebrow-color, var(--mc-mid));
+  margin: 0 0 var(--presse-dossier-eyebrow-margin-bottom, 28px);
+}
+
+.presse-dossier__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--presse-dossier-intro-size, 16px);
+  line-height: var(--presse-dossier-intro-line-height, 1.7);
+  color: var(--presse-dossier-intro-color, var(--mc-ink-soft));
+  max-width: var(--presse-dossier-intro-max-width, 720px);
+  margin: 0 auto var(--presse-dossier-intro-margin-bottom, 40px);
+}
+
+.presse-dossier__intro > * {
+  margin: 0;
+}
+
+.presse-dossier__intro > * + * {
+  margin-top: 0.6em;
+}
+
+.presse-dossier__cta {
+  display: inline-block;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--presse-dossier-cta-size, 13px);
+  letter-spacing: var(--presse-dossier-cta-tracking, 0.28em);
+  text-transform: uppercase;
+  color: var(--presse-dossier-cta-color, var(--mc-dark));
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.presse-dossier__cta:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 749px) {
+  .presse-dossier {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  .presse-dossier__inner {
+    padding: 0 20px;
+  }
+  .presse-dossier__cta {
+    font-size: calc(var(--presse-dossier-cta-size, 13px) * 0.95);
+  }
+}
