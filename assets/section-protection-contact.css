@@ -1,0 +1,64 @@
+/* ============================================================
+   Phase 21 — Page Protection acheteur · Contact
+   Clone strict de section-livraisons-contact.css (préfixe renommé).
+   ============================================================ */
+
+.protection-contact {
+  background-color: var(--mc-bg);
+  padding-top: var(--protection-contact-padding-top, 48px);
+  padding-bottom: var(--protection-contact-padding-bottom, 80px);
+  width: 100%;
+  text-align: center;
+}
+
+.protection-contact__inner {
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--content-gutter-desktop, 64px);
+}
+
+.protection-contact__intro {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--protection-contact-intro-size, 14px);
+  line-height: var(--protection-contact-intro-line-height, 1.7);
+  color: var(--protection-contact-intro-color, var(--mc-ink-soft));
+  max-width: var(--protection-contact-intro-max-width, 600px);
+  margin: 0 auto var(--protection-contact-intro-margin-bottom, 24px);
+}
+
+.protection-contact__intro > * {
+  margin: 0;
+}
+
+.protection-contact__intro > * + * {
+  margin-top: 0.6em;
+}
+
+.protection-contact__email {
+  display: inline-block;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--protection-contact-email-size, 13px);
+  letter-spacing: var(--protection-contact-email-tracking, 0.18em);
+  text-transform: uppercase;
+  color: var(--protection-contact-email-color, var(--mc-dark));
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.protection-contact__email:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 749px) {
+  .protection-contact {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+  .protection-contact__inner {
+    padding: 0 20px;
+  }
+}

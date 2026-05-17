@@ -1,0 +1,104 @@
+{%- comment -%}
+  Phase 21 — Page Protection acheteur · Garanties
+  Clone structurel de livraisons-tarifs : column centrée max-w 720,
+  N blocs empilés (eyebrow CAPS + titre Cormorant italic + body
+  Jost Light), divider fin entre blocs uniquement.
+{%- endcomment -%}
+
+{{ 'section-protection-garanties.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="protection-garanties"
+  style="
+    --garanties-content-max-width: {{ section.settings.content_max_width }}px;
+    --garanties-block-margin-bottom: {{ section.settings.block_margin_bottom }}px;
+    --garanties-divider-color: {{ section.settings.divider_color }};
+    --garanties-divider-margin: {{ section.settings.divider_margin }}px;
+    --garanties-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --garanties-eyebrow-tracking: {{ section.settings.eyebrow_tracking | divided_by: 100.0 }}em;
+    --garanties-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --garanties-eyebrow-margin-bottom: {{ section.settings.eyebrow_margin_bottom }}px;
+    --garanties-title-size: {{ section.settings.title_size }}px;
+    --garanties-title-color: {{ section.settings.title_color }};
+    --garanties-title-margin-bottom: {{ section.settings.title_margin_bottom }}px;
+    --garanties-body-size: {{ section.settings.body_size }}px;
+    --garanties-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --garanties-body-color: {{ section.settings.body_color }};
+    --garanties-padding-top: {{ section.settings.padding_top }}px;
+    --garanties-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="protection-garanties__inner">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="protection-garanties__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'garantie' -%}
+            <li class="protection-garanties__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="protection-garanties__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h2 class="protection-garanties__title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="protection-garanties__body rte">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Protection · Garanties",
+  "tag": "section",
+  "class": "shopify-section--protection-garanties",
+  "max_blocks": 15,
+  "settings": [
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "content_max_width", "min": 500, "max": 1000, "step": 10, "unit": "px", "label": "Largeur max contenu", "default": 720 },
+    { "type": "range", "id": "block_margin_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Espace vertical entre blocs", "default": 60 },
+
+    { "type": "header", "content": "Divider entre blocs" },
+    { "type": "color", "id": "divider_color", "label": "Couleur divider", "default": "#D2C8B4" },
+    { "type": "range", "id": "divider_margin", "min": 16, "max": 80, "step": 4, "unit": "px", "label": "Marge top divider (à l'intérieur du bloc)", "default": 28 },
+
+    { "type": "header", "content": "Eyebrow (CAPS)" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 18, "step": 1, "unit": "px", "label": "Taille eyebrow", "default": 11 },
+    { "type": "range", "id": "eyebrow_tracking", "min": 0, "max": 50, "step": 1, "unit": "%", "label": "Letter-spacing eyebrow", "default": 28 },
+    { "type": "color", "id": "eyebrow_color", "label": "Couleur eyebrow", "default": "#8C826E" },
+    { "type": "range", "id": "eyebrow_margin_bottom", "min": 4, "max": 32, "step": 1, "unit": "px", "label": "Marge eyebrow → titre", "default": 14 },
+
+    { "type": "header", "content": "Titre (Cormorant italic)" },
+    { "type": "range", "id": "title_size", "min": 18, "max": 36, "step": 1, "unit": "px", "label": "Taille titre", "default": 22 },
+    { "type": "color", "id": "title_color", "label": "Couleur titre", "default": "#1A1614" },
+    { "type": "range", "id": "title_margin_bottom", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Marge titre → body", "default": 16 },
+
+    { "type": "header", "content": "Corps (Jost Light)" },
+    { "type": "range", "id": "body_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Taille body", "default": 14 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne body", "default": 175 },
+    { "type": "color", "id": "body_color", "label": "Couleur body", "default": "#5A5446" },
+
+    { "type": "header", "content": "Espacement section" },
+    { "type": "range", "id": "padding_top", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding haut", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 28, "max": 200, "step": 4, "unit": "px", "label": "Padding bas", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "garantie",
+      "name": "Garantie",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (CAPS)", "default": "GARANTIE D'AUTHENTICITÉ" },
+        { "type": "text", "id": "title", "label": "Titre (Cormorant italic)", "default": "Remboursement intégral en cas de défaut avéré" },
+        { "type": "richtext", "id": "body", "label": "Corps", "default": "<p>Chaque pièce vendue est garantie authentique. En cas de défaut d'authenticité avéré, le remboursement intégral est garanti à l'acquéreur. La méthode de vérification, le détail des justificatifs et la procédure complète sont décrits sur la page Authenticité.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Protection · Garanties" }
+  ]
+}
+{% endschema %}
