@@ -408,8 +408,23 @@
                       </div>
                       {{- 'icon-caret.svg' | inline_asset_content -}}
                     </summary>
+                    {%- liquid
+                      assign mc_tab_content = block.settings.content
+                      assign mc_tab_heading_norm = block.settings.heading | upcase
+                      if mc_tab_heading_norm contains 'AUTHENTICIT'
+                        assign mc_tab_mf = product.metafields.custom.authenticite_provenance.value
+                        if mc_tab_mf != blank
+                          assign mc_tab_content = mc_tab_mf | newline_to_br
+                        endif
+                      elsif mc_tab_heading_norm contains 'ÉTAT' or mc_tab_heading_norm contains 'ETAT'
+                        assign mc_tab_mf = product.metafields.custom.etat_condition.value
+                        if mc_tab_mf != blank
+                          assign mc_tab_content = mc_tab_mf | newline_to_br
+                        endif
+                      endif
+                    -%}
                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                      {{ block.settings.content }}
+                      {{ mc_tab_content }}
                       {{ block.settings.page.content }}
                     </div>
                   </details>
@@ -1038,6 +1053,7 @@
                   assign mc_h = product.metafields.custom.hauteur_cm.value
                   assign mc_l = product.metafields.custom.largeur_cm.value
                   assign mc_p = product.metafields.custom.profondeur_cm.value
+                  assign mc_ha = product.metafields.custom.hauteur_assise_cm.value
                   assign mc_mat_list = product.metafields.custom.materiaux.value
 
                   assign mc_cs_show_dims = block.settings.show_dimensions
@@ -1070,11 +1086,19 @@
                     {%- if p_diff == 0 -%}{{- p_floor -}}{%- else -%}{{- mc_p | replace: '.', ',' -}}{%- endif -%}
                   {%- endif -%}
                 {%- endcapture -%}
+                {%- capture ha_disp -%}
+                  {%- if mc_ha != blank -%}
+                    {%- assign ha_floor = mc_ha | floor -%}
+                    {%- assign ha_diff = mc_ha | minus: ha_floor -%}
+                    {%- if ha_diff == 0 -%}{{- ha_floor -}}{%- else -%}{{- mc_ha | replace: '.', ',' -}}{%- endif -%}
+                  {%- endif -%}
+                {%- endcapture -%}
 
                 {%- liquid
                   assign h_str = h_disp | strip
                   assign l_str = l_disp | strip
                   assign p_str = p_disp | strip
+                  assign ha_str = ha_disp | strip
 
                   assign dims_line = ''
                   if h_str != blank
@@ -1094,6 +1118,14 @@
                       assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_p
                     else
                       assign dims_line = part_p
+                    endif
+                  endif
+                  if ha_str != blank
+                    assign part_ha = 'ASSISE ' | append: ha_str | append: ' ' | append: mc_cs_unit
+                    if dims_line != blank
+                      assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_ha
+                    else
+                      assign dims_line = part_ha
                     endif
                   endif
 
