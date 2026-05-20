@@ -1102,10 +1102,10 @@
 
                   assign dims_line = ''
                   if h_str != blank
-                    assign dims_line = mc_prefix_h | append: ' ' | append: h_str | append: ' ' | append: mc_cs_unit
+                    assign dims_line = mc_prefix_h | append: '&nbsp;' | append: h_str | append: '&nbsp;' | append: mc_cs_unit
                   endif
                   if l_str != blank
-                    assign part_l = mc_prefix_l | append: ' ' | append: l_str | append: ' ' | append: mc_cs_unit
+                    assign part_l = mc_prefix_l | append: '&nbsp;' | append: l_str | append: '&nbsp;' | append: mc_cs_unit
                     if dims_line != blank
                       assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_l
                     else
@@ -1113,7 +1113,7 @@
                     endif
                   endif
                   if p_str != blank
-                    assign part_p = mc_prefix_p | append: ' ' | append: p_str | append: ' ' | append: mc_cs_unit
+                    assign part_p = mc_prefix_p | append: '&nbsp;' | append: p_str | append: '&nbsp;' | append: mc_cs_unit
                     if dims_line != blank
                       assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_p
                     else
@@ -1121,7 +1121,7 @@
                     endif
                   endif
                   if ha_str != blank
-                    assign part_ha = 'ASSISE ' | append: ha_str | append: ' ' | append: mc_cs_unit
+                    assign part_ha = 'ASSISE&nbsp;' | append: ha_str | append: '&nbsp;' | append: mc_cs_unit
                     if dims_line != blank
                       assign dims_line = dims_line | append: ' ' | append: mc_cs_sep | append: ' ' | append: part_ha
                     else
