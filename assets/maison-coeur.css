@@ -1447,7 +1447,7 @@ button.mc-hd-icon {
   .mc-hd-main {
     padding-left: 16px !important;
     padding-right: 16px !important;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
   }
 
@@ -1457,9 +1457,11 @@ button.mc-hd-icon {
   .mc-hd-logo,
   .mc-hd-left-stack { display: none; }
 
-  /* Wordmark central : réduit pour tenir entre burger et icônes */
+  /* Wordmark central : bridé en largeur (100% de sa colonne) ET hauteur
+     (cap 16px), ratio préservé via height:auto. Évite tout débordement
+     même sur petits écrans (image source 2134×144 ≈ 14,8:1). */
   #shopify-section-header .mc-hd-wordmark-img,
-  .mc-hd-wordmark-img { height: 16px; }
+  .mc-hd-wordmark-img { height: auto; max-height: 16px; max-width: 100%; }
 
   /* Icônes droite : resserrer le gap */
   #shopify-section-header .mc-hd-icons,

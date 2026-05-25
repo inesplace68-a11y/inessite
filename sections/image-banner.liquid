@@ -46,6 +46,16 @@
     object-position: {{ section.settings.hero_image_position_x }}% {{ section.settings.hero_image_position_y }}%;
   }
 
+  /* Mobile : recentrage horizontal forcé (50%) pour éviter une image
+     calée sur son bord gauche. Desktop conserve hero_image_position_x. */
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__media > img,
+    #Banner-{{ section.id }} .banner__media > video,
+    #Banner-{{ section.id }} .banner__media .hero-video {
+      object-position: 50% {{ section.settings.hero_image_position_y }}% !important;
+    }
+  }
+
   {%- liquid
     assign hero_title_size = section.settings.hero_title_size | default: 64
     assign hero_title_min = hero_title_size | times: 60 | divided_by: 100
