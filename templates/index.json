@@ -123,6 +123,7 @@
         "col-1": {
           "type": "collection_item",
           "settings": {
+            "image": "shopify://shop_images/99AE2BAB-63B0-4BDD-BF08-F9379DC168A5.png",
             "title": "OBJETS",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/objets"
@@ -131,6 +132,7 @@
         "col-2": {
           "type": "collection_item",
           "settings": {
+            "image": "shopify://shop_images/9CA39CF7-E03B-4CA3-847E-E1BD3091212C.png",
             "title": "MIROIRS",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/miroirs"
@@ -157,6 +159,7 @@
         "col-5": {
           "type": "collection_item",
           "settings": {
+            "image": "shopify://shop_images/A7248C5E-AFFB-4342-BC9E-EC1259AF2264.png",
             "title": "ART",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/art"
