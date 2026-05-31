@@ -1441,16 +1441,16 @@ button.mc-hd-icon {
 .mc-hd-burger svg { display: block; }
 
 /* Éléments réservés à l'affichage mobile — masqués en desktop */
+.mc-hd-mobile-sub { display: none; }
 .mc-hd-mobile-search { display: none; }
 
 /* === HEADER MOBILE (< 750px) === */
 @media (max-width: 749px) {
-  /* Bandeau : padding réduit + grid recalibré pour 3 colonnes burger / wordmark / icônes.
-     Blocs latéraux à largeur fixe identique → centrage optique exact du wordmark. */
+  /* Bandeau : grille 3 colonnes burger / wordmark / icônes. Paddings latéraux
+     pilotés par section style via mobile_side_padding (partagé avec la barre
+     de recherche → alignement gauche/droite identique). */
   #shopify-section-header .mc-hd-main,
   .mc-hd-main {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
   }
@@ -1465,12 +1465,30 @@ button.mc-hd-icon {
   .mc-hd-logo,
   .mc-hd-left-stack { display: none; }
 
-  /* Wordmark central : largeur 100% de sa colonne, hauteur auto (cap pilotée par mobile_logo_size dans la section style) */
+  /* Wordmark central + sous-titre empilés et centrés */
   .mc-hd-wordmark { width: 100%; }
+  .mc-hd-wordmark a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+  }
   #shopify-section-header .mc-hd-wordmark-img,
   .mc-hd-wordmark-img {
     height: auto;
     max-width: 100%;
+  }
+  .mc-hd-mobile-sub {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--mc-dark, #1A1814);
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
   }
 
   /* Icônes droite : 3 icônes (compte, favoris, panier) — loupe retirée du header */
@@ -1484,7 +1502,8 @@ button.mc-hd-icon {
   /* Navigation horizontale OBJETS/MIROIRS/… : tout passe par le burger */
   .mc-hd-nav { display: none; }
 
-  /* Barre de recherche pleine largeur sous le header — déclencheur overlay existant */
+  /* Barre de recherche pleine largeur sous le header — déclencheur overlay existant.
+     Bg, border-color et border-radius pilotés par section style (customizer). */
   .mc-hd-mobile-search { display: block; }
   .mc-hd-mobile-search__btn {
     display: flex;
@@ -1493,9 +1512,8 @@ button.mc-hd-icon {
     width: 100%;
     padding-left: 14px;
     padding-right: 14px;
-    background: #FBF8F2;
-    border: 0.75px solid var(--mc-divider, #D2C8B4);
-    border-radius: 4px;
+    border-style: solid;
+    border-width: 0.75px;
     color: var(--mc-ink-soft, #5A5446);
     font: inherit;
     cursor: pointer;
@@ -1505,7 +1523,6 @@ button.mc-hd-icon {
   .mc-hd-mobile-search__btn:hover,
   .mc-hd-mobile-search__btn:focus-visible {
     border-color: var(--mc-ink-soft, #5A5446);
-    background: #F7F2E9;
   }
   .mc-hd-mobile-search__icon {
     display: inline-flex;
