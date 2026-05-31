@@ -91,6 +91,15 @@
       width: {{ section.settings.mobile_icon_size | default: 21 }}px;
       height: {{ section.settings.mobile_icon_size | default: 21 }}px;
     }
+    /* Panier MOBILE uniquement : on bascule sur le sac normalisé (tracé qui remplit
+       le cadre comme compte & cœur). Le panier desktop reste masqué ici → desktop
+       (hors media query) strictement intact. Taille pilotée par mobile_icon_size. */
+    #shopify-section-{{ section.id }} .mc-hd-cart-icon--desktop {
+      display: none;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-cart-icon--mobile {
+      display: block;
+    }
     #shopify-section-{{ section.id }} .mc-hd-left,
     #shopify-section-{{ section.id }} .mc-hd-icons {
       width: {{ section.settings.mobile_side_width | default: 88 }}px;
@@ -134,6 +143,10 @@
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] svg {
     width: {{ section.settings.cart_icon_size }}px;
     height: {{ section.settings.cart_icon_size }}px;
+  }
+  /* Desktop : on affiche le panier d'origine, on masque la variante mobile. */
+  #shopify-section-{{ section.id }} .mc-hd-cart-icon--mobile {
+    display: none;
   }
   #shopify-section-{{ section.id }} .mc-hd-cart-badge {
     --mc-cart-badge-bg: {{ section.settings.badge_bg_color }};
@@ -216,9 +229,16 @@
         data-mc-cart-trigger
         aria-label="Panier"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        {%- comment -%} Panier DESKTOP — tracé d'origine, strictement inchangé (masqué ≤749px) {%- endcomment -%}
+        <svg class="mc-hd-cart-icon mc-hd-cart-icon--desktop" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
           <path d="M5.5 8h13l-1.2 12.5H6.7L5.5 8z"/>
           <path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
+        </svg>
+        {%- comment -%} Panier MOBILE — même set/épaisseur (0.85) que compte & cœur, tracé normalisé
+           qui remplit le cadre 24×24 à la même échelle optique (x[4–20] × y[2.5–20.5]) {%- endcomment -%}
+        <svg class="mc-hd-cart-icon mc-hd-cart-icon--mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M4 7h16l-1.4 13.5H5.4L4 7z"/>
+          <path d="M8.5 7V6a3.5 3.5 0 0 1 7 0V7"/>
         </svg>
         {%- if section.settings.badge_visible -%}
           <span
