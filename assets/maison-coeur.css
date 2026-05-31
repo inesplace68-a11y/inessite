@@ -1441,7 +1441,6 @@ button.mc-hd-icon {
 .mc-hd-burger svg { display: block; }
 
 /* Éléments réservés à l'affichage mobile — masqués en desktop */
-.mc-hd-mobile-sub { display: none; }
 .mc-hd-mobile-search { display: none; }
 
 /* === HEADER MOBILE (< 750px) === */
@@ -1465,30 +1464,13 @@ button.mc-hd-icon {
   .mc-hd-logo,
   .mc-hd-left-stack { display: none; }
 
-  /* Wordmark central + sous-titre empilés et centrés */
+  /* Wordmark central : largeur 100% de sa colonne, hauteur auto.
+     La baseline « COLLECTIBLE INTERIORS · PARIS » est gravée dans wordmark_image. */
   .mc-hd-wordmark { width: 100%; }
-  .mc-hd-wordmark a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    line-height: 1;
-  }
   #shopify-section-header .mc-hd-wordmark-img,
   .mc-hd-wordmark-img {
     height: auto;
     max-width: 100%;
-  }
-  .mc-hd-mobile-sub {
-    display: block;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    color: var(--mc-dark, #1A1814);
-    text-align: center;
-    text-transform: uppercase;
-    line-height: 1.1;
-    white-space: nowrap;
   }
 
   /* Icônes droite : 3 icônes (compte, favoris, panier) — loupe retirée du header */
