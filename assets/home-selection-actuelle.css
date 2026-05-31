@@ -352,6 +352,18 @@
   }
 }
 
+/* Fix doublon mobile : la carte tease desktop (.home-selection__card--tease-desktop)
+   porte aussi .home-selection__card--tease (display:flex, défini ligne ~230). À spécificité
+   égale et source plus basse, ce display:flex écrasait le `display:none` de la règle de base,
+   donc la carte s'affichait EN DOUBLE sous 1024px (variante mobile + variante desktop).
+   Ce bloc, placé après .home-selection__card--tease, masque réellement la variante desktop
+   sous 1024px. Desktop (≥1024px) intouché : réactivée en flex via @media (min-width:1024px). */
+@media (max-width: 1023px) {
+  .home-selection__card--tease-desktop {
+    display: none;
+  }
+}
+
 /* ============================================================
    Phase 16.54 — Desktop ≥ 1024px : carrousel scrollable à gauche + carte tease fixée à droite
    ============================================================ */
