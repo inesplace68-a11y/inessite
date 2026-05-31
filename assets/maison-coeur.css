@@ -1562,7 +1562,9 @@ button.mc-hd-icon {
   #shopify-section-header .mc-hd-main,
   .mc-hd-main {
     grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
+    /* AJ1 : top-alignement — le HAUT du wordmark s'aligne sur le HAUT des
+       icônes (et du burger), au lieu d'un centrage vertical du bloc. */
+    align-items: flex-start;
   }
 
   /* Bloc gauche : burger uniquement, ancré à gauche dans sa colonne fixe */

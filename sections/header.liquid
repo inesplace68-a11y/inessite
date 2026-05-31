@@ -89,10 +89,20 @@
     #shopify-section-{{ section.id }} .mc-hd-icons {
       width: {{ section.settings.mobile_side_width | default: 88 }}px;
     }
-    /* Marge latérale UNIQUE partagée header + barre recherche → alignement gauche/droite identique */
+    /* Marge latérale UNIQUE partagée header + barre recherche → alignement gauche/droite identique.
+       padding-top mobile dédié (AJ2) : réduit la bande crème au-dessus du logo SANS
+       toucher au desktop, qui reste piloté par bandeau_padding_top. */
     #shopify-section-{{ section.id }} .mc-hd-main {
+      padding-top: {{ section.settings.bandeau_padding_top_mobile | default: 16 }}px;
       padding-left: {{ section.settings.mobile_side_padding | default: 16 }}px;
       padding-right: {{ section.settings.mobile_side_padding | default: 16 }}px;
+    }
+    /* AJ1 : décalage vertical mobile du wordmark, indépendant du desktop.
+       Annule l'héritage du wordmark_offset_y desktop (margin-top négatif) qui
+       remontait le wordmark ; combiné à align-items:flex-start (maison-coeur.css),
+       le HAUT du wordmark s'aligne sur le HAUT des icônes. */
+    #shopify-section-{{ section.id }} .mc-hd-wordmark {
+      margin-top: {{ section.settings.wordmark_offset_y_mobile | default: 0 }}px;
     }
     #shopify-section-{{ section.id }} .mc-hd-mobile-search {
       margin-top: {{ section.settings.mobile_search_top | default: 14 }}px;
@@ -767,7 +777,29 @@
       "max": 28,
       "step": 0.5,
       "unit": "px",
-      "default": 17
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "bandeau_padding_top_mobile",
+      "label": "Marge crème au-dessus du logo (mobile)",
+      "info": "AJ2 — espace crème entre le haut de l'écran et le logo, en mobile uniquement. Le desktop reste piloté par bandeau_padding_top.",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "wordmark_offset_y_mobile",
+      "label": "Décalage vertical du wordmark (mobile)",
+      "info": "AJ1 — ajuste finement le haut du wordmark par rapport aux icônes en mobile. 0 = top du wordmark aligné sur le top des icônes. Négatif = remonte, positif = descend.",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
