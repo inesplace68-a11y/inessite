@@ -194,30 +194,45 @@
       </a>
     </div>
 
-    {%- comment -%} ZONE 2 : À PROPOS {%- endcomment -%}
-    <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">À PROPOS</h2>
-      <ul class="mc-fz-col__links">
+    {%- comment -%} ZONE 2 : À PROPOS — repliable en accordéon mobile uniquement {%- endcomment -%}
+    <div class="mc-fz mc-fz--col mc-fz--col-first">
+      <h2 class="mc-fz-col__heading">
+        <button type="button" class="mc-fz-col__toggle" aria-expanded="false" aria-controls="mc-fz-panel-{{ section.id }}-apropos">
+          <span class="mc-fz-col__toggle-label">À PROPOS</span>
+          <span class="mc-fz-col__chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <ul class="mc-fz-col__links" id="mc-fz-panel-{{ section.id }}-apropos">
         {%- for link in linklists['footer-a-propos'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
       </ul>
     </div>
 
-    {%- comment -%} ZONE 3 : CATÉGORIES {%- endcomment -%}
+    {%- comment -%} ZONE 3 : CATÉGORIES — repliable en accordéon mobile uniquement {%- endcomment -%}
     <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">CATÉGORIES</h2>
-      <ul class="mc-fz-col__links">
+      <h2 class="mc-fz-col__heading">
+        <button type="button" class="mc-fz-col__toggle" aria-expanded="false" aria-controls="mc-fz-panel-{{ section.id }}-categories">
+          <span class="mc-fz-col__toggle-label">CATÉGORIES</span>
+          <span class="mc-fz-col__chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <ul class="mc-fz-col__links" id="mc-fz-panel-{{ section.id }}-categories">
         {%- for link in linklists['footer-categories'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
       </ul>
     </div>
 
-    {%- comment -%} ZONE 4 : SERVICE CLIENT {%- endcomment -%}
+    {%- comment -%} ZONE 4 : SERVICE CLIENT — repliable en accordéon mobile uniquement {%- endcomment -%}
     <div class="mc-fz mc-fz--col">
-      <h2 class="mc-fz-col__heading">SERVICE CLIENT</h2>
-      <ul class="mc-fz-col__links">
+      <h2 class="mc-fz-col__heading">
+        <button type="button" class="mc-fz-col__toggle" aria-expanded="false" aria-controls="mc-fz-panel-{{ section.id }}-service">
+          <span class="mc-fz-col__toggle-label">SERVICE CLIENT</span>
+          <span class="mc-fz-col__chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <ul class="mc-fz-col__links" id="mc-fz-panel-{{ section.id }}-service">
         {%- for link in linklists['footer-service-client'].links -%}
           <li><a href="{{ link.url }}" class="mc-fz-col__link">{{ link.title | upcase }}</a></li>
         {%- endfor -%}
@@ -359,6 +374,33 @@
   </div>
 
 </footer>
+
+{%- comment -%}
+  Accordéon footer — MOBILE uniquement (le CSS de repli ne s'active que
+  sous .mc-fz-acc--on + @media max-width:767px ; desktop strictement intouché).
+  Le JS ne fait qu'ajouter la classe d'amélioration et brancher le tap.
+  Sans JS (ou réglage désactivé) → footer rendu comme aujourd'hui (listes ouvertes).
+{%- endcomment -%}
+{%- if section.settings.footer_mobile_accordion -%}
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+      var footer = root.querySelector('.mc-footer');
+      if (!footer) return;
+      footer.classList.add('mc-fz-acc--on');
+      var toggles = root.querySelectorAll('.mc-fz-col__toggle');
+      Array.prototype.forEach.call(toggles, function (btn) {
+        btn.addEventListener('click', function () {
+          var col = btn.closest('.mc-fz--col');
+          if (!col) return;
+          var open = col.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -507,6 +549,17 @@
       "label": "Masquer le sélecteur pays/devise",
       "default": false,
       "info": "Cocher pour cacher complètement le sélecteur dans le footer"
+    },
+    {
+      "type": "header",
+      "content": "Accordéon mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_mobile_accordion",
+      "label": "Replier les rubriques de liens en accordéon (mobile)",
+      "default": true,
+      "info": "Mobile ≤ 767px uniquement. Chaque rubrique (À PROPOS, CATÉGORIES, SERVICE CLIENT) devient une ligne repliée qui se déroule au tap. Desktop strictement intouché. Décocher = listes dépliées comme avant."
     }
   ]
 }

@@ -895,6 +895,34 @@ h1, h2, h3, h4,
   transform: scaleX(1);
 }
 
+/* ------- Accordéon footer : état BASE (desktop / tous viewports) -------
+   Le titre de rubrique est un vrai <button> (accessibilité), mais en desktop
+   il doit rendre EXACTEMENT comme l'ancien <h2> : bloc pleine largeur, typo
+   héritée du .mc-fz-col__heading, pas de chevron, pas d'interaction visible.
+   Le comportement accordéon ne s'active qu'en mobile (voir media query). */
+.mc-fz-col__toggle {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.mc-fz-col__toggle-label {
+  display: inline;
+}
+
+.mc-fz-col__chevron {
+  display: none; /* masqué hors mobile */
+}
+
 /* ------- ZONE 5 : Newsletter ------- */
 .mc-fz--nl {
   min-width: 220px;
@@ -1173,6 +1201,78 @@ h1, h2, h3, h4,
 
   .mc-footer-bar-legal {
     gap: 18px;
+  }
+}
+
+/* ============================================================
+   FOOTER — ACCORDÉON MOBILE (≤ 767px, façon The Oblist)
+   Ne s'active QUE sous .mc-fz-acc--on (classe ajoutée par le JS de la
+   section, lui-même conditionné au réglage footer_mobile_accordion) ET
+   uniquement dans cette media query. AUCUNE règle desktop touchée.
+   Multi-open : chaque rubrique s'ouvre/ferme indépendamment (pattern Oblist).
+   ============================================================ */
+@media (max-width: 767px) {
+  /* Rubriques de liens contiguës (annule le gap 40px entre les zones) ;
+     on restitue l'air autour du logo et de la newsletter explicitement. */
+  .mc-fz-acc--on .mc-footer-inner {
+    gap: 0;
+  }
+  .mc-fz-acc--on .mc-fz--logo {
+    margin-bottom: 24px;
+  }
+  .mc-fz-acc--on .mc-fz--nl {
+    margin-top: 32px;
+  }
+
+  /* Filet fin sous chaque ligne + au-dessus de la première (Oblist) */
+  .mc-fz-acc--on .mc-fz--col {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .mc-fz-acc--on .mc-fz--col-first {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Le titre devient une ligne repliée tappable : titre à gauche, chevron à droite */
+  .mc-fz-acc--on .mc-fz-col__heading {
+    margin: 0;
+  }
+  .mc-fz-acc--on .mc-fz-col__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    cursor: pointer;
+  }
+
+  /* Chevron ">" (replié) → "v" (déplié) */
+  .mc-fz-acc--on .mc-fz-col__chevron {
+    display: inline-block;
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    opacity: 0.75;
+    transform: rotate(-45deg);
+    transition: transform var(--mc-transition);
+  }
+  .mc-fz-acc--on .mc-fz--col.is-open .mc-fz-col__chevron {
+    transform: rotate(45deg);
+  }
+
+  /* Panneau de sous-liens : replié par défaut, déroulé en douceur au tap */
+  .mc-fz-acc--on .mc-fz-col__links {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    transition: max-height var(--mc-transition), opacity var(--mc-transition), padding var(--mc-transition);
+  }
+  .mc-fz-acc--on .mc-fz--col.is-open .mc-fz-col__links {
+    max-height: 600px;
+    opacity: 1;
+    padding-bottom: 18px;
   }
 }
 
