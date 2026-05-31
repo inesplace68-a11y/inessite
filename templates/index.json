@@ -55,9 +55,9 @@
         "hero_cta_bg_hover": "#ffffff",
         "hero_cta_color_hover": "#332821",
         "hero_cta_opacity_hover": 0.7,
-        "hero_cta_font_size": 11,
+        "hero_cta_font_size": 12,
         "hero_cta_padding_horizontal": 32,
-        "hero_cta_padding_vertical": 11,
+        "hero_cta_padding_vertical": 14,
         "hero_aspect_ratio": "3/1",
         "hero_max_height_vh": 90,
         "hero_overlay_color": "#000000",
@@ -139,6 +139,7 @@
         "col-3": {
           "type": "collection_item",
           "settings": {
+            "image": "shopify://shop_images/FF61906E-03DB-4CCE-BCC8-C9C1185CEEF2.png",
             "title": "LUMINAIRES",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/luminaires"
@@ -147,6 +148,7 @@
         "col-4": {
           "type": "collection_item",
           "settings": {
+            "image": "shopify://shop_images/52571D34-6367-4AF9-9940-28E56D29699B.png",
             "title": "MOBILIER",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/mobilier"
