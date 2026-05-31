@@ -92,13 +92,18 @@
       height: {{ section.settings.mobile_icon_size | default: 21 }}px;
     }
     /* Panier MOBILE uniquement : on bascule sur le sac normalisé (tracé qui remplit
-       le cadre comme compte & cœur). Le panier desktop reste masqué ici → desktop
-       (hors media query) strictement intact. Taille pilotée par mobile_icon_size. */
-    #shopify-section-{{ section.id }} .mc-hd-cart-icon--desktop {
+       le cadre comme compte & cœur). Sélecteurs qualifiés par le bouton panier
+       (.mc-hd-icon[data-mc-cart-trigger] …) → spécificité supérieure aux règles
+       desktop de base placées PLUS BAS dans la feuille (.mc-hd-cart-icon--mobile
+       {display:none} l.148 et …svg{cart_icon_size} l.143) : la bascule + la taille
+       mobile gagnent quel que soit l'ordre source. Desktop (hors media query) intact. */
+    #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] .mc-hd-cart-icon--desktop {
       display: none;
     }
-    #shopify-section-{{ section.id }} .mc-hd-cart-icon--mobile {
+    #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] .mc-hd-cart-icon--mobile {
       display: block;
+      width: {{ section.settings.mobile_icon_size | default: 21 }}px;
+      height: {{ section.settings.mobile_icon_size | default: 21 }}px;
     }
     #shopify-section-{{ section.id }} .mc-hd-left,
     #shopify-section-{{ section.id }} .mc-hd-icons {
