@@ -1440,9 +1440,14 @@ button.mc-hd-icon {
 .mc-hd-burger:hover { color: #8C6D3F; }
 .mc-hd-burger svg { display: block; }
 
+/* Éléments réservés à l'affichage mobile — masqués en desktop */
+.mc-hd-mobile-sub { display: none; }
+.mc-hd-mobile-search { display: none; }
+
 /* === HEADER MOBILE (< 750px) === */
 @media (max-width: 749px) {
-  /* Bandeau : padding réduit + grid recalibré pour 3 colonnes burger / wordmark / icônes */
+  /* Bandeau : padding réduit + grid recalibré pour 3 colonnes burger / wordmark / icônes.
+     Blocs latéraux à largeur fixe identique → centrage optique exact du wordmark. */
   #shopify-section-header .mc-hd-main,
   .mc-hd-main {
     padding-left: 16px !important;
@@ -1451,25 +1456,95 @@ button.mc-hd-icon {
     align-items: center;
   }
 
-  /* Bloc gauche : on n'affiche QUE le burger ; monogramme + globe + stack cachés */
-  .mc-hd-left { align-items: center; }
+  /* Bloc gauche : burger uniquement, ancré à gauche dans sa colonne fixe */
+  .mc-hd-left {
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+  }
   .mc-hd-burger { display: inline-flex; }
   .mc-hd-logo,
   .mc-hd-left-stack { display: none; }
 
-  /* Wordmark central : bridé en largeur (100% de sa colonne) ET hauteur
-     (cap 16px), ratio préservé via height:auto. Évite tout débordement
-     même sur petits écrans (image source 2134×144 ≈ 14,8:1). */
+  /* Wordmark central + sous-titre empilés et centrés */
+  .mc-hd-wordmark { width: 100%; }
+  .mc-hd-wordmark a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+  }
   #shopify-section-header .mc-hd-wordmark-img,
-  .mc-hd-wordmark-img { height: auto; max-height: 16px; max-width: 100%; }
+  .mc-hd-wordmark-img {
+    height: auto;
+    max-width: 100%;
+  }
+  .mc-hd-mobile-sub {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: #1A1814;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
 
-  /* Icônes droite : resserrer le gap */
+  /* Icônes droite : 3 icônes (compte, favoris, panier) — loupe retirée du header */
   #shopify-section-header .mc-hd-icons,
-  .mc-hd-icons { gap: 14px; }
-  .mc-hd-icon svg { width: 18px; height: 18px; }
+  .mc-hd-icons {
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  .mc-hd-icon--search { display: none; }
 
   /* Navigation horizontale OBJETS/MIROIRS/… : tout passe par le burger */
   .mc-hd-nav { display: none; }
+
+  /* Barre de recherche pleine largeur sous le header — déclencheur overlay existant */
+  .mc-hd-mobile-search { display: block; }
+  .mc-hd-mobile-search__btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+    background: #FBF8F2;
+    border: 0.75px solid var(--mc-divider, #D2C8B4);
+    border-radius: 4px;
+    color: var(--mc-ink-soft, #5A5446);
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .mc-hd-mobile-search__btn:hover,
+  .mc-hd-mobile-search__btn:focus-visible {
+    border-color: var(--mc-ink-soft, #5A5446);
+    background: #F7F2E9;
+  }
+  .mc-hd-mobile-search__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mc-ink-soft, #5A5446);
+    line-height: 0;
+    flex-shrink: 0;
+  }
+  .mc-hd-mobile-search__placeholder {
+    flex: 1;
+    min-width: 0;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--mc-ink-soft, #5A5446);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* === DRAWER MOBILE === */

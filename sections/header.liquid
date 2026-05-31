@@ -69,6 +69,39 @@
     #shopify-section-{{ section.id }} .mc-hd-nav {
       padding-bottom: {{ section.settings.header_padding_bottom_mobile | default: 12 }}px;
     }
+    /* Tailles mobile pilotées par customizer — uniquement mobile */
+    #shopify-section-{{ section.id }} .mc-hd-burger svg {
+      width: {{ section.settings.mobile_burger_size | default: 25 }}px;
+      height: {{ section.settings.mobile_burger_size | default: 25 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-wordmark-img {
+      max-height: {{ section.settings.mobile_logo_size | default: 17 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-mobile-sub {
+      font-size: {{ section.settings.mobile_sub_size | default: 7 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-icons {
+      gap: {{ section.settings.mobile_icons_gap | default: 15 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-icon svg,
+    #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] svg {
+      width: {{ section.settings.mobile_icon_size | default: 21 }}px;
+      height: {{ section.settings.mobile_icon_size | default: 21 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-left,
+    #shopify-section-{{ section.id }} .mc-hd-icons {
+      width: {{ section.settings.mobile_side_width | default: 88 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-mobile-search {
+      margin-top: {{ section.settings.mobile_search_margin | default: 16 }}px;
+      margin-right: {{ section.settings.mobile_search_margin | default: 16 }}px;
+      margin-bottom: 0;
+      margin-left: {{ section.settings.mobile_search_margin | default: 16 }}px;
+    }
+    #shopify-section-{{ section.id }} .mc-hd-mobile-search__btn {
+      padding-top: {{ section.settings.mobile_search_height | default: 14 }}px;
+      padding-bottom: {{ section.settings.mobile_search_height | default: 14 }}px;
+    }
   }
   #shopify-section-{{ section.id }} .mc-hd-icon[data-mc-cart-trigger] {
     color: {{ section.settings.cart_icon_color }};
@@ -136,10 +169,11 @@
         {% else %}
           <img src="{{ 'mc-wordmark.png' | asset_url }}" alt="MAISON COEUR" class="mc-hd-wordmark-img" loading="eager">
         {% endif %}
+        <span class="mc-hd-mobile-sub" aria-hidden="true">COLLECTIBLE INTERIORS · PARIS</span>
       </a>
     </div>
     <div class="mc-hd-icons">
-      <button type="button" class="mc-hd-icon" aria-label="Rechercher" data-mc-search-trigger>
+      <button type="button" class="mc-hd-icon mc-hd-icon--search" aria-label="Rechercher" data-mc-search-trigger>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"/>
           <line x1="21" y1="21" x2="16.5" y2="16.5"/>
@@ -177,6 +211,19 @@
         <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
       </button>
     </div>
+  </div>
+
+  <!-- Barre de recherche mobile : déclenche l'overlay existant -->
+  <div class="mc-hd-mobile-search" aria-hidden="false">
+    <button type="button" class="mc-hd-mobile-search__btn" data-mc-search-trigger aria-label="Ouvrir la recherche">
+      <span class="mc-hd-mobile-search__icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.5" y2="16.5"/>
+        </svg>
+      </span>
+      <span class="mc-hd-mobile-search__placeholder">Rechercher une pièce, une matière, une époque…</span>
+    </button>
   </div>
 
   <!-- ZONE 3 : Menu navigation -->
@@ -689,6 +736,97 @@
       "step": 1,
       "unit": "px",
       "default": -4
+    },
+    {
+      "type": "header",
+      "content": "Header mobile (proportions)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Tailles spécifiques à l'affichage mobile (<750px). Ne modifie pas le desktop."
+    },
+    {
+      "type": "range",
+      "id": "mobile_burger_size",
+      "label": "Taille burger (mobile)",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_size",
+      "label": "Taille logo (mobile)",
+      "min": 12,
+      "max": 28,
+      "step": 0.5,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "mobile_sub_size",
+      "label": "Taille sous-titre logo (mobile)",
+      "min": 5,
+      "max": 12,
+      "step": 0.5,
+      "unit": "px",
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "mobile_icon_size",
+      "label": "Taille icônes droite (mobile)",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "mobile_icons_gap",
+      "label": "Écart entre icônes droite (mobile)",
+      "min": 6,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "mobile_side_width",
+      "label": "Largeur blocs latéraux (mobile)",
+      "info": "Même largeur appliquée à gauche (burger) et à droite (icônes) pour un centrage exact du logo.",
+      "min": 60,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "mobile_search_height",
+      "label": "Hauteur barre de recherche (mobile)",
+      "info": "Padding vertical interne.",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_search_margin",
+      "label": "Marge barre de recherche (mobile)",
+      "info": "Marge latérale et haute.",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "header",
