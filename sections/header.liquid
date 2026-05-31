@@ -77,9 +77,6 @@
     #shopify-section-{{ section.id }} .mc-hd-wordmark-img {
       max-height: {{ section.settings.mobile_logo_size | default: 17 }}px;
     }
-    #shopify-section-{{ section.id }} .mc-hd-mobile-sub {
-      font-size: {{ section.settings.mobile_sub_size | default: 7 }}px;
-    }
     #shopify-section-{{ section.id }} .mc-hd-icons {
       gap: {{ section.settings.mobile_icons_gap | default: 15 }}px;
     }
@@ -169,7 +166,6 @@
         {% else %}
           <img src="{{ 'mc-wordmark.png' | asset_url }}" alt="MAISON COEUR" class="mc-hd-wordmark-img" loading="eager">
         {% endif %}
-        <span class="mc-hd-mobile-sub" aria-hidden="true">COLLECTIBLE INTERIORS · PARIS</span>
       </a>
     </div>
     <div class="mc-hd-icons">
@@ -439,7 +435,7 @@
       "max": 150,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 30
     },
     {
       "type": "range",
@@ -575,7 +571,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 24
+      "default": 14
     },
     {
       "type": "range",
@@ -618,7 +614,7 @@
       "max": 32,
       "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 15
     },
     {
       "type": "range",
@@ -763,17 +759,7 @@
       "max": 28,
       "step": 0.5,
       "unit": "px",
-      "default": 17
-    },
-    {
-      "type": "range",
-      "id": "mobile_sub_size",
-      "label": "Taille sous-titre logo (mobile)",
-      "min": 5,
-      "max": 12,
-      "step": 0.5,
-      "unit": "px",
-      "default": 7
+      "default": 22
     },
     {
       "type": "range",
@@ -793,7 +779,7 @@
       "max": 28,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 11
     },
     {
       "type": "range",
