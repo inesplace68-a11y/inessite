@@ -82,6 +82,30 @@
       padding-inline: 16px;
     }
   }
+
+  /* Phase 16.11 — MOBILE uniquement : alignement sur le hero « Reflets du temps »
+     (image-banner) pour cohérence visuelle entre les 2 bannières.
+     - Taille du titre : même clamp que .banner__heading mobile = clamp(32px, 7vw,
+       44px). (44 = hero_title_size 64 × 70%, valeur actuelle de Reflets.)
+     - Marges latérales du bloc texte : le conteneur passe pleine largeur avec un
+       retrait latéral de 1.5rem de chaque côté, identique au padding horizontal
+       de .banner__box mobile (4rem 1.5rem) → marges égales G/D, texte centré.
+     - max-width du titre levé (comme .banner__heading qui n'a aucun max-width) :
+       le titre remplit la largeur disponible et se centre comme sur Reflets.
+     Vertical (padding 40px haut/bas, centrage) inchangé. Desktop intact.
+     N'affecte QUE cette bannière. */
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mc-editorial__content {
+      width: 100%;
+      max-width: 100%;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    #shopify-section-{{ section.id }} .mc-editorial__heading {
+      font-size: clamp(32px, 7vw, 44px);
+      max-width: none;
+    }
+  }
 {%- endstyle -%}
 
 <section
