@@ -44,16 +44,57 @@
     pointer-events: none;
   }
   @media (max-width: 749px) {
-    /* Sur mobile la grille passe en 2 colonnes : la cellule n°2 devient
-       la dernière de sa rangée, son ::before doit être masqué. Pour les
-       autres, on contraint la ligne à la hauteur de la cellule pour ne
-       pas chevaucher la bordure horizontale entre les 2 rangées. */
-    #shopify-section-{{ section.id }} .mc-reassurance__item:not(:last-child)::before {
-      top: var(--mc-trust-sep-inset);
-      bottom: var(--mc-trust-sep-inset);
+    /* Phase 16.5 — grille 2×2 : 4 cases de hauteur égale, contenu centré,
+       croix de filets continue collée aux bords de la bande beige.
+       Tout est ici en override mobile ; le rendu desktop reste inchangé. */
+
+    /* Rangées de même hauteur (alignées sur la plus haute) + cases étirées.
+       grid-auto-rows:1fr égalise les 2 rangées sans hauteur fixe en dur. */
+    #shopify-section-{{ section.id }} .mc-reassurance__grid {
+      grid-auto-rows: 1fr;
+      position: relative;
     }
+
+    /* Le groupe picto + titre + texte est posé au milieu vertical de la case
+       (centrage horizontal déjà assuré par align-items:center + text-align). */
+    #shopify-section-{{ section.id }} .mc-reassurance__item {
+      justify-content: center;
+    }
+
+    /* Filet vertical central, continu du haut au bas de la bande beige :
+       prolongé dans le padding mobile de la section via offsets négatifs.
+       Case 1 (rangée haute) monte jusqu'au bord haut ; case 3 (rangée basse)
+       descend jusqu'au bord bas ; les deux se rejoignent à la ligne médiane. */
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1)::before {
+      top: calc(-1 * var(--mcr-pt-mobile));
+      bottom: 0;
+    }
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(3)::before {
+      top: 0;
+      bottom: calc(-1 * var(--mcr-pb-mobile));
+    }
+    /* Case 2 = dernière de la rangée haute : pas de filet vertical à droite. */
     #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2)::before {
       display: none;
+    }
+
+    /* Filet horizontal central, pleine largeur jusqu'aux bords de la bande :
+       remplace les border-bottom des cases (qui s'arrêtaient dans le gutter).
+       Les marges négatives, miroir du padding .mc-container mobile (20px),
+       l'étirent jusqu'aux bords gauche/droit de la bande. */
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1),
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2) {
+      border-bottom: none;
+    }
+    #shopify-section-{{ section.id }} .mc-reassurance__grid::after {
+      content: '';
+      position: absolute;
+      left: -20px;   /* miroir du padding horizontal de .mc-container (mobile) */
+      right: -20px;
+      top: 50%;
+      height: 1px;
+      background-color: var(--mc-border);
+      pointer-events: none;
     }
   }
 {%- endstyle -%}
