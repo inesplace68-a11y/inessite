@@ -6,6 +6,9 @@
     --mcr-pb-mobile: {{ section.settings.padding_bottom_mobile | default: 16 }}px;
     --mcr-icon-to-label: {{ section.settings.icon_to_label_gap | default: 10 }}px;
     --mc-trust-sep-inset: {{ section.settings.separator_vertical_inset | default: 0 }}px;
+    /* Phase 16.6 — cases carrées mobile (utilisés uniquement dans la media query ≤749px) */
+    --mcr-text-inset-mobile: {{ section.settings.text_inset_mobile | default: 12 }}px;
+    --mcr-cell-vpad-mobile: {{ section.settings.cell_vpad_mobile | default: 10 }}px;
     padding-top: var(--mcr-pt);
     padding-bottom: var(--mcr-pb);
   }
@@ -44,27 +47,29 @@
     pointer-events: none;
   }
   @media (max-width: 749px) {
-    /* Phase 16.5 — grille 2×2 : 4 cases de hauteur égale, contenu centré,
-       croix de filets continue collée aux bords de la bande beige.
-       Tout est ici en override mobile ; le rendu desktop reste inchangé. */
+    /* Phase 16.6 — grille 2×2 : 4 cases CARRÉES (aspect-ratio 1:1), contenu
+       aligné PAR LE HAUT, zone de texte élargie (retrait latéral réglable),
+       croix de filets continue collée aux bords. Override mobile uniquement ;
+       desktop strictement inchangé. */
 
-    /* Rangées de même hauteur (alignées sur la plus haute) + cases étirées.
-       grid-auto-rows:1fr égalise les 2 rangées sans hauteur fixe en dur. */
-    #shopify-section-{{ section.id }} .mc-reassurance__grid {
-      grid-auto-rows: 1fr;
-      position: relative;
-    }
-
-    /* Le groupe picto + titre + texte est posé au milieu vertical de la case
-       (centrage horizontal déjà assuré par align-items:center + text-align). */
+    /* Cases carrées : la hauteur suit la largeur de colonne. Quand la
+       description la plus longue dépasse le carré (petits écrans ≤~375px), la
+       rangée s'étire légèrement — align-self:stretch (défaut) égalise la paire —
+       au lieu de tronquer le texte ou de réduire la police. */
     #shopify-section-{{ section.id }} .mc-reassurance__item {
-      justify-content: center;
+      aspect-ratio: 1 / 1;
+      justify-content: flex-start;                 /* contenu calé en haut */
+      padding-left: var(--mcr-text-inset-mobile);  /* zone de texte élargie */
+      padding-right: var(--mcr-text-inset-mobile);
+      padding-top: var(--mcr-cell-vpad-mobile);    /* respiration interne haut/bas */
+      padding-bottom: var(--mcr-cell-vpad-mobile);
     }
 
     /* Filet vertical central, continu du haut au bas de la bande beige :
-       prolongé dans le padding mobile de la section via offsets négatifs.
-       Case 1 (rangée haute) monte jusqu'au bord haut ; case 3 (rangée basse)
-       descend jusqu'au bord bas ; les deux se rejoignent à la ligne médiane. */
+       case 1 (rangée haute) monte jusqu'au bord haut ; case 3 (rangée basse)
+       descend jusqu'au bord bas ; les deux se rejoignent à la frontière des
+       rangées. (left/right des pseudos = bord visuel de la case, non affecté
+       par le retrait de texte.) */
     #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1)::before {
       top: calc(-1 * var(--mcr-pt-mobile));
       bottom: 0;
@@ -79,22 +84,30 @@
     }
 
     /* Filet horizontal central, pleine largeur jusqu'aux bords de la bande :
-       remplace les border-bottom des cases (qui s'arrêtaient dans le gutter).
-       Les marges négatives, miroir du padding .mc-container mobile (20px),
-       l'étirent jusqu'aux bords gauche/droit de la bande. */
+       posé sur le bord bas des 2 cases de la rangée haute → il suit toujours la
+       frontière des rangées (même si une rangée s'étire), exactement là où se
+       rejoignent les deux moitiés du filet vertical. Remplace les border-bottom
+       des cases. Marges négatives = miroir du padding .mc-container mobile (20px). */
     #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1),
     #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2) {
       border-bottom: none;
     }
-    #shopify-section-{{ section.id }} .mc-reassurance__grid::after {
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1)::after,
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2)::after {
       content: '';
       position: absolute;
-      left: -20px;   /* miroir du padding horizontal de .mc-container (mobile) */
-      right: -20px;
-      top: 50%;
+      bottom: 0;
       height: 1px;
       background-color: var(--mc-border);
       pointer-events: none;
+    }
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(1)::after {
+      left: -20px;   /* du bord gauche de la bande jusqu'au filet vertical central */
+      right: 0;
+    }
+    #shopify-section-{{ section.id }} .mc-reassurance__item:nth-child(2)::after {
+      left: 0;       /* du filet vertical central jusqu'au bord droit de la bande */
+      right: -20px;
     }
   }
 {%- endstyle -%}
@@ -176,7 +189,11 @@
     { "type": "range", "id": "icon_to_label_gap", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10, "label": "Gap vertical icône → label" },
 
     { "type": "header", "content": "Séparateurs verticaux (Phase 16.4)" },
-    { "type": "range", "id": "separator_vertical_inset", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "label": "Retrait vertical des séparateurs", "info": "0 = ligne pleine touchant les bords haut/bas de la bande beige. Augmenter pour rétracter symétriquement de chaque extrémité." }
+    { "type": "range", "id": "separator_vertical_inset", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "label": "Retrait vertical des séparateurs", "info": "0 = ligne pleine touchant les bords haut/bas de la bande beige. Augmenter pour rétracter symétriquement de chaque extrémité." },
+
+    { "type": "header", "content": "Cases carrées (Phase 16.6, mobile)" },
+    { "type": "range", "id": "text_inset_mobile", "min": 0, "max": 28, "step": 1, "unit": "px", "default": 12, "label": "Retrait latéral texte", "info": "Mobile uniquement. Plus petit = zone de texte plus large (descriptions sur moins de lignes). Garder une marge avec le filet central." },
+    { "type": "range", "id": "cell_vpad_mobile", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 10, "label": "Marge interne haut/bas", "info": "Mobile uniquement. Respiration verticale interne des cases ; évite que le contenu touche les filets." }
   ],
   "blocks": [
     {
