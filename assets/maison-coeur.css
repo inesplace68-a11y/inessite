@@ -423,8 +423,12 @@ h1, h2, h3, h4,
   .mc-collection-grid__item--all { display: block; }
   /* Fond crème de la carte « Toute la collection » — MOBILE UNIQUEMENT, piloté
      par le customizer (réglage all_tile_bg_color → var --mcg-all-tile-bg). Aucun
-     fond n'est déclaré hors de cette media query → desktop strictement inchangé. */
-  .mc-cat-card__media--all { background-color: var(--mcg-all-tile-bg, #F5F0E8); }
+     fond n'est déclaré hors de cette media query → desktop strictement inchangé.
+     Double classe (.mc-cat-card__media.mc-cat-card__media--all) pour battre en
+     spécificité la règle de base .mc-cat-card__media (background var(--mc-creme))
+     définie plus bas : à spécificité égale c'était la base, plus tardive dans le
+     fichier, qui l'emportait → le réglage n'avait aucun effet visible. */
+  .mc-cat-card__media.mc-cat-card__media--all { background-color: var(--mcg-all-tile-bg, #F5F0E8); }
 }
 
 /* --- 6e tuile « Toute la collection » : fond crème uni, label + flèche -------- */
