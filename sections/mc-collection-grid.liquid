@@ -22,6 +22,7 @@
     --mcg-cols-mobile: {{ section.settings.mobile_columns | default: 2 }};
     --mcg-gap-mobile: {{ section.settings.grid_gap_mobile | default: 16 }}px;
     --mcg-all-tile-bg: {{ section.settings.all_tile_bg_color | default: '#F5F0E8' }};
+    --mcg-all-title-arrow-gap: {{ section.settings.all_tile_title_arrow_gap | default: 18 }}px;
     --mcg-image-to-label: {{ section.settings.image_to_label_gap | default: 18 }}px;
     --mcg-label-to-link: {{ section.settings.label_to_link_gap | default: 8 }}px;
     --mc-cat-text-color: {{ cat_text_color }};
@@ -109,10 +110,11 @@
             <a href="{{ all_tile_url }}" class="mc-cat-card mc-cat-card--all" aria-label="{{ section.settings.all_tile_label | default: 'Toute la collection' | escape }}">
               <div class="mc-cat-card__media mc-cat-card__media--all">
                 <span class="mc-cat-card__all-label">
-                  <span class="mc-cat-card__all-text">{{ section.settings.all_tile_label | default: 'TOUTE LA COLLECTION' | escape }}</span>
+                  <span class="mc-cat-card__all-eyebrow" aria-hidden="true">{{ section.settings.all_tile_eyebrow | default: 'DÉCOUVRIR' | escape }}</span>
+                  <span class="mc-cat-card__all-text">{{ section.settings.all_tile_label | default: 'Toute la collection' | escape }}</span>
                   <span class="mc-cat-card__all-arrow" aria-hidden="true">
-                    <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0 4H19M12 1L19 4L12 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
+                    <svg width="48" height="8" viewBox="0 0 48 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 4H47M40 1L47 4L40 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
                     </svg>
                   </span>
                 </span>
@@ -241,7 +243,26 @@
       "type": "text",
       "id": "all_tile_label",
       "label": "Texte de la tuile",
-      "default": "TOUTE LA COLLECTION"
+      "info": "Casse normale conseillée : sur desktop le texte est mis en capitales (« TOUTE LA COLLECTION ») ; sur mobile il s'affiche en italique bas-de-casse (« Toute la collection »).",
+      "default": "Toute la collection"
+    },
+    {
+      "type": "text",
+      "id": "all_tile_eyebrow",
+      "label": "Surtitre carte Toute la collection (mobile)",
+      "info": "Petit surtitre en capitales au-dessus du titre, MOBILE uniquement. Masqué sur desktop.",
+      "default": "DÉCOUVRIR"
+    },
+    {
+      "type": "range",
+      "id": "all_tile_title_arrow_gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espace titre–flèche carte Toute la collection (mobile)",
+      "info": "Espace vertical entre le titre et la flèche, MOBILE uniquement. Default 18 px = carte « Toutes les nouveautés ».",
+      "default": 18
     },
     {
       "type": "url",

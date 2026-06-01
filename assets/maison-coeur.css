@@ -429,6 +429,50 @@ h1, h2, h3, h4,
      définie plus bas : à spécificité égale c'était la base, plus tardive dans le
      fichier, qui l'emportait → le réglage n'avait aucun effet visible. */
   .mc-cat-card__media.mc-cat-card__media--all { background-color: var(--mcg-all-tile-bg, #F5F0E8); }
+
+  /* Recomposition MOBILE de la carte « Toute la collection » sur le modèle de la
+     carte tease « Toutes les nouveautés » (home-selection-actuelle.css) : pile
+     verticale centrée surtitre → titre italique → flèche dessous. Ces règles
+     vivent EXCLUSIVEMENT sous 767px → desktop strictement inchangé (la tuile y
+     est de plus masquée). Couleurs/polices = variables thème existantes. */
+  .mc-cat-card__all-label {
+    flex-direction: column;
+    gap: 0;
+    text-transform: none;
+  }
+  /* Surtitre Jost petites capitales espacées, gris doux (encre @ opacity .7),
+     calé sur .home-selection__tease-eyebrow. Espace surtitre→titre = 18px
+     (valeur de la carte de référence). */
+  .mc-cat-card__all-eyebrow {
+    display: block;
+    margin: 0 0 18px;
+    font-family: var(--mc-font-sans, 'Jost', sans-serif);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    color: var(--mc-noir, #1A1A1A);
+  }
+  /* Titre Cormorant Garamond italique, encre, bas-de-casse (transformation
+     uppercase de base annulée), calé sur .home-selection__tease-title. */
+  .mc-cat-card__all-text {
+    font-family: var(--mc-font-serif, 'Cormorant Garamond', serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2.4vw, 32px);
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--mc-noir, #1A1A1A);
+  }
+  /* Flèche centrée sous le titre, même style que .home-selection__tease-arrow-svg
+     (encre @ opacity .7). Espace titre→flèche exposé au customizer. */
+  .mc-cat-card__all-arrow {
+    margin-top: var(--mcg-all-title-arrow-gap, 18px);
+    opacity: 0.7;
+    color: var(--mc-noir, #1A1A1A);
+  }
 }
 
 /* --- 6e tuile « Toute la collection » : fond crème uni, label + flèche -------- */
@@ -463,6 +507,11 @@ h1, h2, h3, h4,
   text-transform: uppercase;
   color: var(--mc-noir, #1A1A1A);
 }
+
+/* Surtitre « DÉCOUVRIR » : masqué par défaut → invisible hors mobile (desktop
+   intouché, et la tuile elle-même est de toute façon masquée ≥768px). Révélé
+   uniquement dans la media query mobile ci-dessous. */
+.mc-cat-card__all-eyebrow { display: none; }
 
 .mc-cat-card__all-arrow {
   display: inline-flex;
