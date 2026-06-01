@@ -194,7 +194,7 @@
         "padding_top_desktop": 16,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 28,
-        "padding_bottom_mobile": 20,
+        "padding_bottom_mobile": 24,
         "title_to_grid_gap_desktop": 40,
         "title_to_grid_gap_mobile": 28,
         "image_to_label_gap": 18,
