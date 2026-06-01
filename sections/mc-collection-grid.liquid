@@ -19,6 +19,8 @@
     --mcg-pb-mobile: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
     --mcg-title-gap: {{ section.settings.title_to_grid_gap_desktop | default: 40 }}px;
     --mcg-title-gap-mobile: {{ section.settings.title_to_grid_gap_mobile | default: 28 }}px;
+    --mcg-cols-mobile: {{ section.settings.mobile_columns | default: 2 }};
+    --mcg-gap-mobile: {{ section.settings.grid_gap_mobile | default: 16 }}px;
     --mcg-image-to-label: {{ section.settings.image_to_label_gap | default: 18 }}px;
     --mcg-label-to-link: {{ section.settings.label_to_link_gap | default: 8 }}px;
     --mc-cat-text-color: {{ cat_text_color }};
@@ -94,6 +96,29 @@
             </a>
           </div>
         {%- endfor -%}
+
+        {%- comment -%}
+          6e tuile « TOUTE LA COLLECTION » — MOBILE UNIQUEMENT (masquée ≥768px via
+          .mc-collection-grid__item--all { display:none } de base → desktop intouché,
+          reste 5 tuiles). Fond crème uni #F5F0E8, pas une image-catégorie.
+        {%- endcomment -%}
+        {%- if section.settings.all_tile_enabled -%}
+          {%- assign all_tile_url = section.settings.all_collection_link | default: routes.all_products_collection_url -%}
+          <div class="mc-collection-grid__item mc-collection-grid__item--all">
+            <a href="{{ all_tile_url }}" class="mc-cat-card mc-cat-card--all" aria-label="{{ section.settings.all_tile_label | default: 'Toute la collection' | escape }}">
+              <div class="mc-cat-card__media mc-cat-card__media--all">
+                <span class="mc-cat-card__all-label">
+                  <span class="mc-cat-card__all-text">{{ section.settings.all_tile_label | default: 'TOUTE LA COLLECTION' | escape }}</span>
+                  <span class="mc-cat-card__all-arrow" aria-hidden="true">
+                    <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 4H19M12 1L19 4L12 7" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -187,6 +212,41 @@
       "label": "Distance du titre par rapport au bas de la carte",
       "info": "Espace vertical entre le bas de l'image et le titre centre. Permet d'ajuster selon vos visuels.",
       "default": 18
+    },
+
+    { "type": "header", "content": "Disposition mobile (≤767px)" },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Nombre de colonnes (mobile)",
+      "info": "Nombre de colonnes de la grille sous 767px. 2 colonnes = grille 2×3 (recommandé, lisibilité). 3 colonnes = grille 3×2 (tuiles plus compactes). Desktop inchangé.",
+      "options": [
+        { "value": "2", "label": "2 colonnes (recommandé)" },
+        { "value": "3", "label": "3 colonnes" }
+      ],
+      "default": "2"
+    },
+    { "type": "range", "id": "grid_gap_mobile", "min": 8, "max": 32, "step": 2, "unit": "px", "default": 16, "label": "Espace entre tuiles (mobile)", "info": "Gap horizontal et vertical entre les tuiles sous 767px." },
+
+    { "type": "header", "content": "6e tuile « Toute la collection » (mobile)" },
+    {
+      "type": "checkbox",
+      "id": "all_tile_enabled",
+      "label": "Afficher la tuile « Toute la collection »",
+      "info": "Ajoute une 6e tuile (fond crème) en fin de grille, MOBILE uniquement. Désactivée = 5 tuiles.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_tile_label",
+      "label": "Texte de la tuile",
+      "default": "TOUTE LA COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "all_collection_link",
+      "label": "Lien de la tuile",
+      "info": "Laisser vide = lien vers tous les produits (/collections/all)."
     },
 
     { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },

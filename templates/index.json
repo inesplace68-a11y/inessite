@@ -190,7 +190,11 @@
         "title_to_grid_gap_desktop": 40,
         "title_to_grid_gap_mobile": 28,
         "image_to_label_gap": 18,
-        "label_to_link_gap": 8
+        "label_to_link_gap": 8,
+        "mobile_columns": "2",
+        "grid_gap_mobile": 16,
+        "all_tile_enabled": true,
+        "all_tile_label": "TOUTE LA COLLECTION"
       }
     },
     "mc_editorial": {

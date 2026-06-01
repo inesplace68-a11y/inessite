@@ -407,8 +407,64 @@ h1, h2, h3, h4,
   .mc-collection-grid__grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 }
 
+/* 6e tuile « Toute la collection » : masquée par défaut (desktop ≥768px + tablette
+   ≤1023px intouchés, grille = 5 tuiles). Révélée uniquement en mobile ≤767px. */
+.mc-collection-grid__item--all { display: none; }
+
 @media (max-width: 767px) {
-  .mc-collection-grid__grid { grid-template-columns: 1fr; gap: 16px; }
+  /* Colonnes + gap pilotés par le customizer (vars posées dans le {% style %} de
+     la section) : 2 colonnes (défaut) → grille 2×3, 3 colonnes → grille 3×2.
+     Les 6 tuiles forment une grille régulière dans les deux cas. */
+  .mc-collection-grid__grid {
+    grid-template-columns: repeat(var(--mcg-cols-mobile, 2), 1fr);
+    gap: var(--mcg-gap-mobile, 16px);
+  }
+  /* Active la 6e tuile en mobile (cellule de grille identique aux 5 autres). */
+  .mc-collection-grid__item--all { display: block; }
+}
+
+/* --- 6e tuile « Toute la collection » : fond crème uni, label + flèche -------- */
+.mc-cat-card--all {
+  display: block;
+  text-decoration: none;
+  color: var(--mc-noir, #1A1A1A);
+}
+
+.mc-cat-card__media--all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  background-color: #F5F0E8; /* crème du thème (--mc-color-cream inexistant) */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  transition: background-color 300ms ease;
+}
+
+.mc-cat-card__all-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: clamp(11px, 3vw, 14px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-noir, #1A1A1A);
+}
+
+.mc-cat-card__all-arrow {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  transition: transform 300ms ease;
+}
+
+.mc-cat-card__all-arrow svg { display: block; }
+
+.mc-collection-grid--hover .mc-cat-card--all:hover .mc-cat-card__all-arrow {
+  transform: translateX(4px);
 }
 
 /* --- Carte catégorie : image conteneur + overlays ------------ */
