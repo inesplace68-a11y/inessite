@@ -127,10 +127,32 @@
       --gallery-arrows-opacity: {{ section.settings.gallery_arrows_opacity | default: 40 | divided_by: 100.0 }};
       --gallery-arrows-hover-opacity: {{ section.settings.gallery_arrows_hover_opacity | default: 85 | divided_by: 100.0 }};
       --modal-zoom-level: {{ section.settings.modal_zoom_level | default: 2.5 }};
+      /* Phase 16.10 — marge latérale de la photo principale sur MOBILE.
+         0 = plein cadre (bord à bord). Piloté par le Customizer, défaut 0. */
+      --pdp-img-side-mobile: {{ section.settings.pdp_main_side_mobile | default: 0 }}px;
     }
     #MainProduct-{{ section.id }}.section-{{ section.id }}-padding {
       padding-top: var(--pdp-hero-py);
       padding-bottom: var(--pdp-hero-py);
+    }
+    /* Phase 16.10 — MOBILE uniquement : marge latérale réglable de la photo
+       principale (du plein cadre 0 à une marge confortable). La slider-component
+       couvre déjà 100vw (margin -1.5rem chez Dawn) ; on neutralise le peek
+       (margin-left/width de la liste) et on pose une marge symétrique = le
+       réglage Customizer. L'item occupe 100% du contenu de la liste → l'image
+       est inset de la marge de chaque côté (0 = bord à bord). N'affecte QUE la
+       photo principale : vignettes, infos et reste inchangés. Desktop intact. */
+    @media screen and (max-width: 749px) {
+      #MainProduct-{{ section.id }} .product__media-list {
+        margin-left: 0;
+        width: 100%;
+        padding-left: var(--pdp-img-side-mobile);
+        padding-right: var(--pdp-img-side-mobile);
+        scroll-padding-left: var(--pdp-img-side-mobile);
+      }
+      #MainProduct-{{ section.id }} .product__media-list .product__media-item {
+        width: 100%;
+      }
     }
     @media screen and (min-width: 990px) {
       /* Hotfix Phase 15.1 — bascule en CSS grid sur le hero PDP pour gérer
@@ -3079,6 +3101,7 @@
     { "type": "range", "id": "gallery_arrows_hover_opacity", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 85, "label": "Opacité des flèches au survol (%)" },
     { "type": "range", "id": "gallery_arrows_size", "min": 16, "max": 40, "step": 2, "unit": "px", "default": 24, "label": "Taille des flèches" },
     { "type": "range", "id": "gallery_arrows_stroke", "min": 1, "max": 2, "step": 0.2, "unit": "px", "default": 1.4, "label": "Épaisseur du trait des flèches" },
+    { "type": "range", "id": "pdp_main_side_mobile", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0, "label": "Marge latérale photo principale (mobile)", "info": "Mobile uniquement (≤749px). 0 = plein cadre, bord à bord. Augmenter pour une marge gauche/droite confortable. N'affecte que la photo principale, pas les vignettes." },
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
