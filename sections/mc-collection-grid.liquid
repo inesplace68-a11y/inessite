@@ -21,6 +21,7 @@
     --mcg-title-gap-mobile: {{ section.settings.title_to_grid_gap_mobile | default: 28 }}px;
     --mcg-cols-mobile: {{ section.settings.mobile_columns | default: 2 }};
     --mcg-gap-mobile: {{ section.settings.grid_gap_mobile | default: 16 }}px;
+    --mcg-all-tile-bg: {{ section.settings.all_tile_bg_color | default: '#F5F0E8' }};
     --mcg-image-to-label: {{ section.settings.image_to_label_gap | default: 18 }}px;
     --mcg-label-to-link: {{ section.settings.label_to_link_gap | default: 8 }}px;
     --mc-cat-text-color: {{ cat_text_color }};
@@ -247,6 +248,13 @@
       "id": "all_collection_link",
       "label": "Lien de la tuile",
       "info": "Laisser vide = lien vers tous les produits (/collections/all)."
+    },
+    {
+      "type": "color",
+      "id": "all_tile_bg_color",
+      "label": "Couleur de fond carte Toute la collection (mobile)",
+      "info": "Fond de la carte « Toute la collection ». Appliqué UNIQUEMENT sur mobile (≤767px) ; le rendu desktop reste sans fond.",
+      "default": "#F5F0E8"
     },
 
     { "type": "header", "content": "Espacements section (Phase 16.1 V2)" },

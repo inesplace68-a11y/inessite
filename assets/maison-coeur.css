@@ -421,6 +421,10 @@ h1, h2, h3, h4,
   }
   /* Active la 6e tuile en mobile (cellule de grille identique aux 5 autres). */
   .mc-collection-grid__item--all { display: block; }
+  /* Fond crème de la carte « Toute la collection » — MOBILE UNIQUEMENT, piloté
+     par le customizer (réglage all_tile_bg_color → var --mcg-all-tile-bg). Aucun
+     fond n'est déclaré hors de cette media query → desktop strictement inchangé. */
+  .mc-cat-card__media--all { background-color: var(--mcg-all-tile-bg, #F5F0E8); }
 }
 
 /* --- 6e tuile « Toute la collection » : fond crème uni, label + flèche -------- */
@@ -430,13 +434,15 @@ h1, h2, h3, h4,
   color: var(--mc-noir, #1A1A1A);
 }
 
+/* Layout uniquement (pas de fond en base) : le fond crème est appliqué
+   EXCLUSIVEMENT dans la media query mobile ci-dessous via --mcg-all-tile-bg.
+   Hors mobile, la carte reste sans fond → rendu desktop inchangé. */
 .mc-cat-card__media--all {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 16px;
-  background-color: #F5F0E8; /* crème du thème (--mc-color-cream inexistant) */
   aspect-ratio: 1 / 1;
   width: 100%;
   transition: background-color 300ms ease;
