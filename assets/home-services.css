@@ -142,8 +142,13 @@
     transform-origin: top;
   }
   .home-services__title { font-size: calc(var(--hsv-title-size, 22px) * 0.9); }
-  /* Phase 10-sexies — en mobile (grille 1 colonne), retour à flex-start */
+  /* Phase 16.8 — mobile : tout centré dans les 2 blocs (surtitre + titre italique
+     + description + CTA). Le surtitre et le titre étaient collés à gauche à cause
+     d'align-items:flex-start ; on revient à center pour cohérence avec desktop.
+     (text-align:center déjà posé sur chaque élément ; le CTA reste centré comme
+     un tout via align-self:center + display:inline-block, soulignement = largeur
+     du texte.) Override mobile uniquement ; desktop inchangé. */
   .home-services__col {
-    align-items: flex-start;
+    align-items: center;
   }
 }
