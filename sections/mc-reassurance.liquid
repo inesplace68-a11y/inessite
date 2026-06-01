@@ -9,6 +9,8 @@
     /* Phase 16.6 — cases carrées mobile (utilisés uniquement dans la media query ≤749px) */
     --mcr-text-inset-mobile: {{ section.settings.text_inset_mobile | default: 12 }}px;
     --mcr-cell-vpad-mobile: {{ section.settings.cell_vpad_mobile | default: 10 }}px;
+    /* Phase 16.7 — nb de lignes réservées à la description sur mobile (sans unité) */
+    --mcr-desc-lines-mobile: {{ section.settings.desc_lines_mobile | default: 3 }};
     padding-top: var(--mcr-pt);
     padding-bottom: var(--mcr-pb);
   }
@@ -47,22 +49,35 @@
     pointer-events: none;
   }
   @media (max-width: 749px) {
-    /* Phase 16.6 — grille 2×2 : 4 cases CARRÉES (aspect-ratio 1:1), contenu
-       aligné PAR LE HAUT, zone de texte élargie (retrait latéral réglable),
-       croix de filets continue collée aux bords. Override mobile uniquement ;
+    /* Phase 16.6/16.7 — grille 2×2 : 4 cases CARRÉES (aspect-ratio 1:1), zone de
+       description de hauteur uniforme (réservée sur le nb de lignes max), bloc
+       picto+titre+description CENTRÉ verticalement → pictos à la même hauteur,
+       titres alignés, marges haut/bas identiques dans les 4 cases. Zone de texte
+       élargie + croix collée aux bords conservées. Override mobile uniquement ;
        desktop strictement inchangé. */
 
-    /* Cases carrées : la hauteur suit la largeur de colonne. Quand la
-       description la plus longue dépasse le carré (petits écrans ≤~375px), la
-       rangée s'étire légèrement — align-self:stretch (défaut) égalise la paire —
-       au lieu de tronquer le texte ou de réduire la police. */
+    /* Cases carrées : la hauteur suit la largeur de colonne. Quand le contenu
+       dépasse le carré (petits écrans ≤~375px), la rangée s'étire légèrement —
+       align-self:stretch (défaut) égalise la paire — au lieu de tronquer le
+       texte ou de réduire la police. Le contenu (de hauteur désormais identique
+       dans les 4 cases) est centré verticalement. */
     #shopify-section-{{ section.id }} .mc-reassurance__item {
       aspect-ratio: 1 / 1;
-      justify-content: flex-start;                 /* contenu calé en haut */
+      justify-content: center;                     /* bloc centré verticalement */
       padding-left: var(--mcr-text-inset-mobile);  /* zone de texte élargie */
       padding-right: var(--mcr-text-inset-mobile);
       padding-top: var(--mcr-cell-vpad-mobile);    /* respiration interne haut/bas */
       padding-bottom: var(--mcr-cell-vpad-mobile);
+    }
+
+    /* Hauteur de description uniforme : on réserve la hauteur de la description
+       la plus longue (nb de lignes max) dans les 4 cases. Les descriptions plus
+       courtes laissent un espace vide sous le texte, dans leur zone réservée →
+       le bloc picto+titre+description a la même hauteur partout. Réservation
+       d'espace uniquement, le texte n'est pas modifié. 1 ligne = 1.65em (= la
+       line-height de .mc-reassurance__text). */
+    #shopify-section-{{ section.id }} .mc-reassurance__text {
+      min-height: calc(var(--mcr-desc-lines-mobile) * 1.65em);
     }
 
     /* Filet vertical central, continu du haut au bas de la bande beige :
@@ -193,7 +208,8 @@
 
     { "type": "header", "content": "Cases carrées (Phase 16.6, mobile)" },
     { "type": "range", "id": "text_inset_mobile", "min": 0, "max": 28, "step": 1, "unit": "px", "default": 12, "label": "Retrait latéral texte", "info": "Mobile uniquement. Plus petit = zone de texte plus large (descriptions sur moins de lignes). Garder une marge avec le filet central." },
-    { "type": "range", "id": "cell_vpad_mobile", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 10, "label": "Marge interne haut/bas", "info": "Mobile uniquement. Respiration verticale interne des cases ; évite que le contenu touche les filets." }
+    { "type": "range", "id": "cell_vpad_mobile", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 10, "label": "Marge interne haut/bas", "info": "Mobile uniquement. Respiration verticale interne des cases ; évite que le contenu touche les filets." },
+    { "type": "range", "id": "desc_lines_mobile", "min": 1, "max": 6, "step": 1, "default": 3, "label": "Lignes réservées texte", "info": "Mobile uniquement. Hauteur réservée à la description (en lignes), calée sur la description la plus longue. Augmenter si une description déborde sur petit écran." }
   ],
   "blocks": [
     {
