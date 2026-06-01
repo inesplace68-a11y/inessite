@@ -17,6 +17,10 @@
   if heading_mobile < 24
     assign heading_mobile = 24
   endif
+
+  assign veil_pct = section.settings.veil_opacity_mobile | default: 25
+  assign veil_alpha = veil_pct | divided_by: 100.0
+  assign veil_alpha_mid = veil_pct | times: 0.5 | divided_by: 100.0
 -%}
 
 {%- style -%}
@@ -47,6 +51,35 @@
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .mc-editorial__heading {
       font-size: clamp(24px, 7vw, {{ heading_mobile }}px);
+    }
+  }
+
+  /* Phase 16.9 — corrections MOBILE uniquement (≤749px), scopées à cette section.
+     Desktop strictement inchangé. */
+  @media (max-width: 749px) {
+    /* VOILE : dégradé radial encre (--mc-dark = rgb 26,22,20) derrière le texte,
+       concentré au centre et estompé vers les bords. Posé sur le conteneur de
+       contenu (centré, avec padding) → détache le texte sans assombrir toute la
+       photo. Couleur encre en transparence, aucun nouvel hex. S'ajoute à
+       l'overlay plat existant. */
+    #shopify-section-{{ section.id }} .mc-editorial__content {
+      background-image: radial-gradient(
+        ellipse at center,
+        rgba(26, 22, 20, {{ veil_alpha }}) 0%,
+        rgba(26, 22, 20, {{ veil_alpha_mid }}) 45%,
+        rgba(26, 22, 20, 0) 78%
+      );
+    }
+
+    /* BOUTON : reste un bouton encadré (bordure 1px conservée), plus compact —
+       min-width/min-height retirés et padding resserré pour épouser le texte.
+       Capitales espacées inchangées. Scopé à ce CTA (jamais le .mc-cta-primary
+       global). */
+    #shopify-section-{{ section.id }} .mc-editorial__cta {
+      min-width: auto;
+      min-height: auto;
+      padding-block: 8px;
+      padding-inline: 16px;
     }
   }
 {%- endstyle -%}
@@ -105,6 +138,17 @@
       "unit": "%",
       "label": "Opacité overlay sombre",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "veil_opacity_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Intensité du voile hero (mobile)",
+      "info": "Mobile uniquement (≤749px). Dégradé radial encre derrière le texte, concentré au centre et estompé vers les bords. 0 = aucun. S'ajoute à l'overlay plat ci-dessus.",
+      "default": 25
     },
 
     { "type": "header", "content": "Contenu centré" },

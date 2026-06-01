@@ -140,6 +140,13 @@
     assign hero_cta_font = section.settings.hero_cta_font_size | default: 12
     assign hero_cta_padx = section.settings.hero_cta_padding_horizontal | default: 32
     assign hero_cta_pady = section.settings.hero_cta_padding_vertical | default: 14
+
+    # Phase 16.9 — Voile de lisibilité mobile : dégradé radial encre (--mc-dark
+    # = rgb 26,22,20) derrière le texte, concentré au centre et estompé vers les
+    # bords. Intensité pilotable (mobile uniquement).
+    assign veil_pct = section.settings.hero_veil_opacity_mobile | default: 25
+    assign veil_alpha = veil_pct | divided_by: 100.0
+    assign veil_alpha_mid = veil_pct | times: 0.5 | divided_by: 100.0
   -%}
 
   @media screen and (min-width: 750px) {
@@ -237,6 +244,39 @@
     .mc-hero-scroll-indicator::before {
       animation: none !important;
       opacity: {{ scroll_opacity }};
+    }
+  }
+
+  /* Phase 16.9 — corrections MOBILE uniquement (≤749px), scopées à ce hero.
+     Desktop strictement inchangé. */
+  @media screen and (max-width: 749px) {
+    /* VOILE : dégradé radial encre derrière le texte (la box est full-width et
+       transparente sur mobile chez Dawn) ; concentré au centre, estompé vers les
+       bords → détache le texte sans assombrir toute la photo. Couleur = encre
+       --mc-dark (rgb 26,22,20), en transparence, aucun nouvel hex. */
+    #Banner-{{ section.id }} .banner__box {
+      background-image: radial-gradient(
+        ellipse at center,
+        rgba(26, 22, 20, {{ veil_alpha }}) 0%,
+        rgba(26, 22, 20, {{ veil_alpha_mid }}) 45%,
+        rgba(26, 22, 20, 0) 78%
+      );
+    }
+
+    /* BOUTON : reste un bouton encadré (bordure 1px conservée — minimum net en
+       rendu), mais plus compact : on retire les min-width/min-height et on
+       resserre le padding pour épouser le texte. Capitales espacées inchangées. */
+    #Banner-{{ section.id }} .banner__buttons .mc-cta-primary {
+      min-width: auto;
+      min-height: auto;
+      padding-block: 8px;
+      padding-inline: 16px;
+    }
+
+    /* TRAIT VERTICAL : indicateur de défilement (scroll-to-next, fonctionnel)
+       masqué sur mobile. Le <button> + son JS restent en place pour desktop. */
+    #Banner-{{ section.id }} .mc-hero-scroll-indicator {
+      display: none !important;
     }
   }
 {%- endstyle -%}
@@ -640,6 +680,17 @@
       "label": "Intensité du voile",
       "info": "0 = aucun voile (image brute). 50 = voile très marqué. Recommandé : 5 à 15 (= 0.05–0.15) pour un effet imperceptible mais lisibilité accrue.",
       "default": 8
+    },
+    {
+      "type": "range",
+      "id": "hero_veil_opacity_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Intensité du voile hero (mobile)",
+      "info": "Mobile uniquement (≤749px). Dégradé radial encre derrière le texte, concentré au centre et estompé vers les bords. 0 = aucun. S'ajoute au voile plat ci-dessus.",
+      "default": 25
     },
     {
       "type": "header",
