@@ -112,7 +112,7 @@
         "section_padding_bottom": 24,
         "padding_top_mobile": 28,
         "padding_bottom_mobile": 16,
-        "title_to_product_gap_mobile": 20,
+        "title_to_product_gap_mobile": 24,
         "image_to_name_gap": 14,
         "name_to_price_gap": 6
       }
