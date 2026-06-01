@@ -1597,6 +1597,16 @@ button.mc-hd-icon {
   /* Navigation horizontale OBJETS/MIROIRS/… : tout passe par le burger */
   .mc-hd-nav { display: none; }
 
+  /* Fix bande blanche sous la barre de recherche (mobile) : la nav est masquée
+     ci-dessus, donc .mc-hd-mobile-search devient le DERNIER enfant en flux de
+     .mc-hd-wrap. Sa margin-bottom (slider mobile_search_bottom) se "collapse"
+     hors du wrap et l'espace tombe sur le hero (blanc), au lieu de rester dans
+     le crème #F5F0E8 du wrap. display:flow-root établit un contexte de
+     formatage de bloc sur le wrap : la margin reste DANS le crème → continuité
+     parfaite jusqu'au hero. Le slider continue de piloter la taille (margin
+     inchangée). Mobile uniquement — desktop intouché (wrap reste block par défaut). */
+  .mc-hd-wrap { display: flow-root; }
+
   /* Barre de recherche pleine largeur sous le header — déclencheur overlay existant.
      Bg, border-color et border-radius pilotés par section style (customizer). */
   .mc-hd-mobile-search { display: block; }
