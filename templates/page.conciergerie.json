@@ -136,12 +136,12 @@
     "pieces": {
       "type": "conciergerie-pieces-sourcees",
       "blocks": {
-        "p1": {
+        "p4": {
           "type": "piece",
           "settings": {
-            "piece_image": "shopify://shop_images/922110FF-B734-4C6B-8335-FBD963421064.jpg",
-            "piece_title": "Console « Tulipe » de Charlotte Perriand",
-            "piece_context": "Pour un appartement haussmannien parisien",
+            "piece_image": "shopify://shop_images/FE341750-5EFF-4349-996D-D043E5B87A95.png",
+            "piece_title": "Miroir ancien Louis-Philippe à fronton coquille",
+            "piece_context": "Aux dimensions exactes d'une cheminée d'époque",
             "piece_delay": "Sourcée en 6 semaines"
           }
         },
@@ -163,21 +163,21 @@
             "piece_delay": "Sourcée en 4 semaines"
           }
         },
-        "p4": {
+        "p1": {
           "type": "piece",
           "settings": {
-            "piece_image": "shopify://shop_images/FE341750-5EFF-4349-996D-D043E5B87A95.png",
-            "piece_title": "Miroir ancien Louis-Philippe à fronton coquille",
-            "piece_context": "Aux dimensions exactes d'une cheminée d'époque",
-            "piece_delay": "Sourcée en 6 semaines"
+            "piece_image": "shopify://shop_images/35255BFB-E46D-42A8-A155-B93258112E08.png",
+            "piece_title": "Canapé Kashima de Michel Ducaroy",
+            "piece_context": "Pour le showroom d'un architecte à Barcelone",
+            "piece_delay": "Sourcée en 8 semaines"
           }
         }
       },
       "block_order": [
-        "p1",
+        "p4",
         "p2",
         "p3",
-        "p4"
+        "p1"
       ],
       "settings": {
         "eyebrow_text": "QUELQUES PIÈCES SOURCÉES",
