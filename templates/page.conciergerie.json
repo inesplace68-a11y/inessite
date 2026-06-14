@@ -29,7 +29,7 @@
         "hero_image_height": 440,
         "hero_image_margin_top": 28,
         "hero_image_side_padding": 140,
-        "overlay_color": "#E9E7E4",
+        "overlay_color": "#e9e7e4",
         "overlay_opacity": 64,
         "padding_top": 80,
         "padding_bottom": 48
@@ -56,6 +56,7 @@
             "numeral": "I",
             "title": "Brief initial",
             "body": "<p>Vous nous décrivez la pièce recherchée — type, époque, designer, état, dimensions, usage prévu. Un rendez-vous physique ou un échange à distance permet d'affiner les attentes et le contexte du projet.</p>",
+            "step_image": "shopify://shop_images/990F377F-405B-4728-97FB-A38ED06F9A77.png",
             "step_image_placeholder_caption": "Échange en showroom · prise de brief"
           }
         },
@@ -74,6 +75,7 @@
             "numeral": "III",
             "title": "Proposition",
             "body": "<p>Une à trois pièces vous sont présentées avec informations complètes : photographies, état détaillé, provenance, restaurations éventuelles, et prix. Vous retenez celle qui répond à votre attente, ou demandez à poursuivre la recherche.</p>",
+            "step_image": "shopify://shop_images/F0728B5B-6D8A-4452-8CAB-F057646453EF.png",
             "step_image_placeholder_caption": "Présentation de pièces sourcées"
           }
         },
