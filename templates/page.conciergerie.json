@@ -24,12 +24,13 @@
         "intro_max_width": 700,
         "intro_line_height": 170,
         "intro_color": "#5a5446",
+        "hero_image": "shopify://shop_images/870472C1-6AFB-4D46-80EC-165A1E0EE856.png",
         "hero_image_caption": "Showroom Maison Coeur · scène de curation éditoriale",
         "hero_image_height": 440,
         "hero_image_margin_top": 28,
         "hero_image_side_padding": 140,
-        "overlay_color": "#efe7d5",
-        "overlay_opacity": 0,
+        "overlay_color": "#E9E7E4",
+        "overlay_opacity": 64,
         "padding_top": 80,
         "padding_bottom": 48
       }
