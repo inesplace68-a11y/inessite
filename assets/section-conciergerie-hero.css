@@ -121,6 +121,21 @@
   margin-top: 1em;
 }
 
+/* Desktop : bloc texte centré pile sur l'image (vertical + horizontal).
+   Le contenu recouvre exactement la boîte de l'image (même origine, même
+   hauteur) ; le centrage flex hérité de la règle de base place alors le
+   texte au centre des deux axes, stable quelle que soit sa hauteur. */
+@media (min-width: 1024px) {
+  .conciergerie-hero {
+    min-height: var(--hero-image-height, 440px);
+  }
+  .conciergerie-hero__content {
+    position: absolute;
+    inset: 0;
+    height: var(--hero-image-height, 440px);
+  }
+}
+
 @media (max-width: 1023px) {
   .conciergerie-hero__content {
     padding-left: 32px;
