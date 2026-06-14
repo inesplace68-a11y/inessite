@@ -75,7 +75,7 @@
             "numeral": "III",
             "title": "Proposition",
             "body": "<p>Une à trois pièces vous sont présentées avec informations complètes : photographies, état détaillé, provenance, restaurations éventuelles, et prix. Vous retenez celle qui répond à votre attente, ou demandez à poursuivre la recherche.</p>",
-            "step_image": "shopify://shop_images/F0728B5B-6D8A-4452-8CAB-F057646453EF.png",
+            "step_image": "shopify://shop_images/E841A8C2-F800-46E6-ADD4-9DB23E7EBC40.png",
             "step_image_placeholder_caption": "Présentation de pièces sourcées"
           }
         },
@@ -85,6 +85,7 @@
             "numeral": "IV",
             "title": "Acquisition et livraison",
             "body": "<p>La pièce choisie est acquise par Maison Maison, contrôlée à réception, photographiée pour archive, puis expédiée à l'adresse de votre choix accompagnée de son dossier de provenance.</p>",
+            "step_image": "shopify://shop_images/E841A8C2-F800-46E6-ADD4-9DB23E7EBC40.png",
             "step_image_placeholder_caption": "Pièce emballée prête à l'expédition"
           }
         }
