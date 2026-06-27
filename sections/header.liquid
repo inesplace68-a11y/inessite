@@ -35,7 +35,10 @@
     gap: {{ section.settings.mono_globe_gap }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-left-stack {
-    height: {{ section.settings.monogram_height }}px;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    gap: {{ section.settings.icons_gap }}px;
   }
   #shopify-section-{{ section.id }} .mc-hd-globe {
     transform: translateX({{ section.settings.globe_offset_x }}px);
