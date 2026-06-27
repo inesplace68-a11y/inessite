@@ -1,6 +1,6 @@
 {{ 'section-programme-pro-hero.css' | asset_url | stylesheet_tag }}
 
-<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px; --manifeste-size: {{ section.settings.manifeste_size }}px; --manifeste-margin-top: {{ section.settings.manifeste_margin_top }}px;">
+<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --hero-min-height: {{ section.settings.hero_min_height }}px; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px; --manifeste-size: {{ section.settings.manifeste_size }}px; --manifeste-margin-top: {{ section.settings.manifeste_margin_top }}px;">
   <div class="programme-pro-hero__media">
     {%- if section.settings.hero_image != blank -%}
       <img
@@ -32,7 +32,8 @@
   "settings": [
     { "type": "header", "content": "Image hero" },
     { "type": "image_picker", "id": "hero_image", "label": "Image hero (vide = placeholder)" },
-    { "type": "range", "id": "hero_height", "min": 50, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 55 },
+    { "type": "range", "id": "hero_height", "min": 30, "max": 100, "step": 5, "unit": "vh", "label": "Hauteur du hero", "default": 35 },
+    { "type": "range", "id": "hero_min_height", "min": 280, "max": 700, "step": 10, "unit": "px", "label": "Hauteur minimale du hero", "default": 360 },
     { "type": "range", "id": "overlay_opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Opacité du voile sombre", "default": 25 },
 
     { "type": "header", "content": "Titre" },

@@ -13,7 +13,8 @@
       "type": "programme-pro-hero",
       "settings": {
         "hero_image": "shopify://shop_images/2.jpg",
-        "hero_height": 55,
+        "hero_height": 35,
+        "hero_min_height": 360,
         "overlay_opacity": 80,
         "title_text": "Programme Pro",
         "title_size": 64,
