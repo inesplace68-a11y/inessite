@@ -24,6 +24,34 @@
         "manifeste_margin_top": 32
       }
     },
+    "projets": {
+      "type": "programme-pro-projets",
+      "settings": {
+        "eyebrow_text": "PROJETS ACCOMPAGNÉS",
+        "eyebrow_size": 13,
+        "eyebrow_tracking": 30,
+        "eyebrow_margin_bottom": 64,
+        "content_max_width": 1200,
+        "column_gap": 40,
+        "v1_image": "shopify://shop_images/14BBDBD9-7577-48EC-B172-A0F59D1A98B5.jpg",
+        "v1_secteur": "ESPACE CRÉATIF",
+        "v1_titre": "Appartement-Galerie, Paris",
+        "v1_lieu": "Paris, France © @34ruelouiseemilie",
+        "v2_image": "shopify://shop_images/f4341568-ed3b-4871-9ccb-fb38fb0e8e39.jpg",
+        "v2_secteur": "SET DESIGN",
+        "v2_titre": "Shooting Bonsoirs × Pangea",
+        "v2_lieu": "Paris, France",
+        "v3_image": "shopify://shop_images/IMG_B88644FD0142-1.jpg",
+        "v3_secteur": "Architecture intérieure",
+        "v3_titre": "Appartement haussmannien",
+        "v3_lieu": "Paris, France - Projet : Natalia Wrońska — © Kevin Pauchet / AD Pologne",
+        "cta_text": "VOIR TOUS LES PROJETS",
+        "cta_link": "/pages/projets-accompagnes",
+        "cta_margin_top": 64,
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
     "privileges": {
       "type": "programme-pro-privileges",
       "blocks": {
@@ -115,34 +143,6 @@
         "padding_bottom": 60
       }
     },
-    "projets": {
-      "type": "programme-pro-projets",
-      "settings": {
-        "eyebrow_text": "PROJETS ACCOMPAGNÉS",
-        "eyebrow_size": 13,
-        "eyebrow_tracking": 30,
-        "eyebrow_margin_bottom": 64,
-        "content_max_width": 1200,
-        "column_gap": 40,
-        "v1_image": "shopify://shop_images/14BBDBD9-7577-48EC-B172-A0F59D1A98B5.jpg",
-        "v1_secteur": "ESPACE CRÉATIF",
-        "v1_titre": "Appartement-Galerie, Paris",
-        "v1_lieu": "Paris, France © @34ruelouiseemilie",
-        "v2_image": "shopify://shop_images/f4341568-ed3b-4871-9ccb-fb38fb0e8e39.jpg",
-        "v2_secteur": "SET DESIGN",
-        "v2_titre": "Shooting Bonsoirs × Pangea",
-        "v2_lieu": "Paris, France",
-        "v3_image": "shopify://shop_images/IMG_B88644FD0142-1.jpg",
-        "v3_secteur": "Architecture intérieure",
-        "v3_titre": "Appartement haussmannien",
-        "v3_lieu": "Paris, France - Projet : Natalia Wrońska — © Kevin Pauchet / AD Pologne",
-        "cta_text": "VOIR TOUS LES PROJETS",
-        "cta_link": "/pages/projets-accompagnes",
-        "cta_margin_top": 64,
-        "padding_top": 40,
-        "padding_bottom": 60
-      }
-    },
     "rejoindre": {
       "type": "programme-pro-rejoindre",
       "settings": {
@@ -168,9 +168,9 @@
   },
   "order": [
     "hero",
+    "projets",
     "privileges",
     "lettre",
-    "projets",
     "rejoindre"
   ]
 }
