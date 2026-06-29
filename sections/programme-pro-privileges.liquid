@@ -11,11 +11,9 @@
     --pp-priv-numeral-color: {{ section.settings.numeral_color }};
     --pp-priv-title-size: {{ section.settings.title_size }}px;
     --pp-priv-body-size: {{ section.settings.body_size }}px;
-    --pp-priv-body-max-width: {{ section.settings.body_max_width }}px;
     --pp-priv-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
-    --pp-priv-grid-gap-h: {{ section.settings.grid_gap_horizontal }}px;
-    --pp-priv-grid-gap-v: {{ section.settings.grid_gap_vertical }}px;
-    --pp-priv-couronnement-margin-top: {{ section.settings.couronnement_margin_top }}px;
+    --pp-priv-cell-pad-h: {{ section.settings.grid_gap_horizontal }}px;
+    --pp-priv-cell-pad-v: {{ section.settings.grid_gap_vertical }}px;
   }
 {%- endstyle -%}
 
@@ -26,45 +24,27 @@
       <p class="programme-pro-privileges__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <ul class="programme-pro-privileges__grid" role="list">
-        {%- for block in section.blocks limit: 4 -%}
-          {%- if block.type == 'privilege' -%}
-            <li class="programme-pro-privileges__item" {{ block.shopify_attributes }}>
-              {%- if block.settings.numeral != blank -%}
-                <p class="programme-pro-privileges__numeral">{{ block.settings.numeral | escape }}</p>
-              {%- endif -%}
-              {%- if block.settings.title != blank -%}
-                <h2 class="programme-pro-privileges__title">{{ block.settings.title | escape }}</h2>
-              {%- endif -%}
-              {%- if block.settings.body != blank -%}
-                <div class="programme-pro-privileges__body">{{ block.settings.body }}</div>
-              {%- endif -%}
-            </li>
+    <div class="programme-pro-privileges__grid">
+      {%- for n in (1..6) -%}
+        {%- assign num_key = 'priv' | append: n | append: '_numeral' -%}
+        {%- assign title_key = 'priv' | append: n | append: '_title' -%}
+        {%- assign body_key = 'priv' | append: n | append: '_body' -%}
+        {%- assign num = section.settings[num_key] -%}
+        {%- assign title = section.settings[title_key] -%}
+        {%- assign body = section.settings[body_key] -%}
+        <div class="programme-pro-privileges__cell">
+          {%- if num != blank -%}
+            <p class="programme-pro-privileges__numeral">{{ num | escape }}</p>
           {%- endif -%}
-        {%- endfor -%}
-      </ul>
-
-      {%- if section.blocks.size > 4 -%}
-        <div class="programme-pro-privileges__couronnement">
-          {%- for block in section.blocks offset: 4 limit: 1 -%}
-            {%- if block.type == 'privilege' -%}
-              <article class="programme-pro-privileges__item programme-pro-privileges__item--couronnement" {{ block.shopify_attributes }}>
-                {%- if block.settings.numeral != blank -%}
-                  <p class="programme-pro-privileges__numeral">{{ block.settings.numeral | escape }}</p>
-                {%- endif -%}
-                {%- if block.settings.title != blank -%}
-                  <h2 class="programme-pro-privileges__title">{{ block.settings.title | escape }}</h2>
-                {%- endif -%}
-                {%- if block.settings.body != blank -%}
-                  <div class="programme-pro-privileges__body">{{ block.settings.body }}</div>
-                {%- endif -%}
-              </article>
-            {%- endif -%}
-          {%- endfor -%}
+          {%- if title != blank -%}
+            <h2 class="programme-pro-privileges__title">{{ title | escape }}</h2>
+          {%- endif -%}
+          {%- if body != blank -%}
+            <p class="programme-pro-privileges__body">{{ body | escape }}</p>
+          {%- endif -%}
         </div>
-      {%- endif -%}
-    {%- endif -%}
+      {%- endfor -%}
+    </div>
 
   </div>
 </section>
@@ -80,47 +60,54 @@
     { "type": "range", "id": "eyebrow_margin_bottom", "min": 20, "max": 200, "step": 4, "unit": "px", "label": "Marge sous l'eyebrow", "default": 60 },
 
     { "type": "header", "content": "Numéral I / II / III…" },
-    { "type": "range", "id": "numeral_size", "min": 24, "max": 80, "step": 1, "unit": "px", "label": "Taille du numéral", "default": 32 },
-    { "type": "color", "id": "numeral_color", "label": "Couleur du numéral", "default": "#8C826E" },
+    { "type": "range", "id": "numeral_size", "min": 24, "max": 80, "step": 1, "unit": "px", "label": "Taille du numéral", "default": 30 },
+    { "type": "color", "id": "numeral_color", "label": "Couleur du numéral (pierre)", "default": "#8C826E" },
 
-    { "type": "header", "content": "Titre & body de chaque privilège" },
-    { "type": "range", "id": "title_size", "min": 20, "max": 60, "step": 1, "unit": "px", "label": "Taille du titre", "default": 20 },
-    { "type": "range", "id": "body_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Taille du body", "default": 14 },
-    { "type": "range", "id": "body_max_width", "min": 500, "max": 900, "step": 10, "unit": "px", "label": "Largeur max du body", "default": 720 },
-    { "type": "range", "id": "body_line_height", "min": 120, "max": 250, "step": 5, "unit": "%", "label": "Interligne body", "default": 170 },
+    { "type": "header", "content": "Titre & description" },
+    { "type": "range", "id": "title_size", "min": 16, "max": 40, "step": 1, "unit": "px", "label": "Taille du titre", "default": 22 },
+    { "type": "range", "id": "body_size", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Taille de la description", "default": 13 },
+    { "type": "range", "id": "body_line_height", "min": 120, "max": 220, "step": 5, "unit": "%", "label": "Interligne description", "default": 165 },
 
-    { "type": "header", "content": "Grille (4 premiers items + V couronnement)" },
-    { "type": "range", "id": "grid_gap_horizontal", "min": 24, "max": 96, "step": 4, "unit": "px", "label": "Gap horizontal entre colonnes", "default": 64 },
-    { "type": "range", "id": "grid_gap_vertical", "min": 24, "max": 96, "step": 4, "unit": "px", "label": "Gap vertical entre lignes", "default": 48 },
-    { "type": "range", "id": "couronnement_margin_top", "min": 48, "max": 160, "step": 8, "unit": "px", "label": "Marge au-dessus du V couronnement", "default": 96 },
+    { "type": "header", "content": "Grille (espacement interne des cellules)" },
+    { "type": "range", "id": "grid_gap_horizontal", "min": 16, "max": 80, "step": 2, "unit": "px", "label": "Padding horizontal des cellules", "default": 40 },
+    { "type": "range", "id": "grid_gap_vertical", "min": 16, "max": 80, "step": 2, "unit": "px", "label": "Padding vertical des cellules", "default": 40 },
 
     { "type": "header", "content": "Espacements section" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding top", "default": 28 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 40 }
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 300, "step": 4, "unit": "px", "label": "Padding bottom", "default": 40 },
+
+    { "type": "header", "content": "Privilège I" },
+    { "type": "text", "id": "priv1_numeral", "label": "Numéral", "default": "I" },
+    { "type": "text", "id": "priv1_title", "label": "Titre", "default": "Sourcing curatorial prioritaire" },
+    { "type": "textarea", "id": "priv1_body", "label": "Description", "default": "Identification sous 48h, partout dans le monde." },
+
+    { "type": "header", "content": "Privilège II" },
+    { "type": "text", "id": "priv2_numeral", "label": "Numéral", "default": "II" },
+    { "type": "text", "id": "priv2_title", "label": "Titre", "default": "Tarification professionnelle" },
+    { "type": "textarea", "id": "priv2_body", "label": "Description", "default": "Sur le catalogue et les pièces sourcées." },
+
+    { "type": "header", "content": "Privilège III" },
+    { "type": "text", "id": "priv3_numeral", "label": "Numéral", "default": "III" },
+    { "type": "text", "id": "priv3_title", "label": "Titre", "default": "Réservation avant publication" },
+    { "type": "textarea", "id": "priv3_body", "label": "Description", "default": "Accès prioritaire aux nouvelles acquisitions." },
+
+    { "type": "header", "content": "Privilège IV" },
+    { "type": "text", "id": "priv4_numeral", "label": "Numéral", "default": "IV" },
+    { "type": "text", "id": "priv4_title", "label": "Titre", "default": "Conseil curatorial en amont" },
+    { "type": "textarea", "id": "priv4_body", "label": "Description", "default": "Échange préalable sur chaque projet d'ensemble." },
+
+    { "type": "header", "content": "Privilège V" },
+    { "type": "text", "id": "priv5_numeral", "label": "Numéral", "default": "V" },
+    { "type": "text", "id": "priv5_title", "label": "Titre", "default": "Documentation enrichie" },
+    { "type": "textarea", "id": "priv5_body", "label": "Description", "default": "Justificatifs et note de présentation pour votre client final." },
+
+    { "type": "header", "content": "Privilège VI" },
+    { "type": "text", "id": "priv6_numeral", "label": "Numéral", "default": "VI" },
+    { "type": "text", "id": "priv6_title", "label": "Titre", "default": "Mise en lumière de vos projets" },
+    { "type": "textarea", "id": "priv6_body", "label": "Description", "default": "Relais éditorial sur nos réseaux et supports." }
   ],
-  "blocks": [
-    {
-      "type": "privilege",
-      "name": "Privilège",
-      "settings": [
-        { "type": "text", "id": "numeral", "label": "Numéral (I, II, III…)", "default": "I" },
-        { "type": "text", "id": "title", "label": "Titre du privilège", "default": "Sourcing curatorial prioritaire" },
-        { "type": "richtext", "id": "body", "label": "Description", "default": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>" }
-      ]
-    }
-  ],
-  "max_blocks": 12,
   "presets": [
-    {
-      "name": "Programme Pro – Privilèges",
-      "blocks": [
-        { "type": "privilege", "settings": { "numeral": "I", "title": "Sourcing curatorial prioritaire", "body": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>" } },
-        { "type": "privilege", "settings": { "numeral": "II", "title": "Tarification professionnelle", "body": "<p>Une tarification professionnelle s'applique à l'ensemble du catalogue ainsi qu'aux pièces sourcées via la Conciergerie, calibrée selon la pièce et le projet. Les conditions précises sont communiquées à la suite de l'inscription au programme.</p>" } },
-        { "type": "privilege", "settings": { "numeral": "III", "title": "Réservation sur les nouvelles acquisitions", "body": "<p>Les pièces fraîchement entrées dans la sélection sont signalées en avant-première aux membres du programme, qui peuvent les réserver avant publication sur le site.</p>" } },
-        { "type": "privilege", "settings": { "numeral": "IV", "title": "Conseil curatorial en amont de projet", "body": "<p>Pour les projets d'ensemble — agencement complet d'un espace, d'un restaurant ou d'un appartement — la galerie propose un échange curatorial préalable, destiné à calibrer l'esthétique et la cohérence des pièces choisies.</p>" } },
-        { "type": "privilege", "settings": { "numeral": "V", "title": "Documentation enrichie pour le client final", "body": "<p>Chaque pièce livrée est accompagnée de ses justificatifs de provenance, de ses certificats d'expertise tiers lorsqu'ils existent, et d'une note de présentation rédigée à l'attention de votre client final.</p>" } }
-      ]
-    }
+    { "name": "Programme Pro – Privilèges" }
   ]
 }
 {% endschema %}

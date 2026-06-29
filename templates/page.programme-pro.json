@@ -55,71 +55,38 @@
     },
     "privileges": {
       "type": "programme-pro-privileges",
-      "blocks": {
-        "p1": {
-          "type": "privilege",
-          "settings": {
-            "numeral": "I",
-            "title": "Sourcing curatorial prioritaire",
-            "body": "<p>La Conciergerie de Maison Coeur est mise à votre disposition, sans frais, pour identifier les pièces qui correspondent à votre projet — partout dans le monde. Traitement prioritaire sous 48 heures ouvrées, avec un interlocuteur curatorial dédié.</p>"
-          }
-        },
-        "p2": {
-          "type": "privilege",
-          "settings": {
-            "numeral": "II",
-            "title": "Tarification professionnelle",
-            "body": "<p>Une tarification professionnelle s'applique à l'ensemble du catalogue ainsi qu'aux pièces sourcées via la Conciergerie, calibrée selon la pièce et le projet. Les conditions précises sont communiquées à la suite de l'inscription au programme.</p>"
-          }
-        },
-        "p3": {
-          "type": "privilege",
-          "settings": {
-            "numeral": "III",
-            "title": "Réservation sur les nouvelles acquisitions",
-            "body": "<p>Les pièces fraîchement entrées dans la sélection sont signalées en avant-première aux membres du programme, qui peuvent les réserver avant publication sur le site.</p>"
-          }
-        },
-        "p4": {
-          "type": "privilege",
-          "settings": {
-            "numeral": "IV",
-            "title": "Conseil curatorial en amont de projet",
-            "body": "<p>Pour les projets d'ensemble — agencement complet d'un espace, d'un restaurant ou d'un appartement — la galerie propose un échange curatorial préalable, destiné à calibrer l'esthétique et la cohérence des pièces choisies.</p>"
-          }
-        },
-        "p5": {
-          "type": "privilege",
-          "settings": {
-            "numeral": "V",
-            "title": "Documentation enrichie pour le client final",
-            "body": "<p>Chaque pièce livrée est accompagnée de ses justificatifs de provenance, de ses certificats d'expertise tiers lorsqu'ils existent, et d'une note de présentation rédigée à l'attention de votre client final.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4",
-        "p5"
-      ],
       "settings": {
         "eyebrow_text": "LES PRIVILÈGES",
         "eyebrow_size": 13,
         "eyebrow_tracking": 30,
         "eyebrow_margin_bottom": 60,
-        "numeral_size": 32,
+        "numeral_size": 30,
         "numeral_color": "#8c826e",
-        "title_size": 20,
-        "body_size": 14,
-        "body_max_width": 720,
-        "body_line_height": 170,
-        "grid_gap_horizontal": 64,
-        "grid_gap_vertical": 48,
-        "couronnement_margin_top": 96,
+        "title_size": 22,
+        "body_size": 13,
+        "body_line_height": 165,
+        "grid_gap_horizontal": 40,
+        "grid_gap_vertical": 40,
         "padding_top": 28,
-        "padding_bottom": 40
+        "padding_bottom": 40,
+        "priv1_numeral": "I",
+        "priv1_title": "Sourcing curatorial prioritaire",
+        "priv1_body": "Identification sous 48h, partout dans le monde.",
+        "priv2_numeral": "II",
+        "priv2_title": "Tarification professionnelle",
+        "priv2_body": "Sur le catalogue et les pièces sourcées.",
+        "priv3_numeral": "III",
+        "priv3_title": "Réservation avant publication",
+        "priv3_body": "Accès prioritaire aux nouvelles acquisitions.",
+        "priv4_numeral": "IV",
+        "priv4_title": "Conseil curatorial en amont",
+        "priv4_body": "Échange préalable sur chaque projet d'ensemble.",
+        "priv5_numeral": "V",
+        "priv5_title": "Documentation enrichie",
+        "priv5_body": "Justificatifs et note de présentation pour votre client final.",
+        "priv6_numeral": "VI",
+        "priv6_title": "Mise en lumière de vos projets",
+        "priv6_body": "Relais éditorial sur nos réseaux et supports."
       }
     },
     "lettre": {

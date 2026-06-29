@@ -98,6 +98,26 @@
   margin: 0;
 }
 
+/* CTA — lien souligné fin, Jost caps, crème sur fond sombre, ancre vers le formulaire */
+.programme-pro-hero__cta {
+  display: inline-block;
+  margin-top: 32px;
+  font-family: var(--mc-font-sans, 'Jost', sans-serif);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mc-creme, #F7F5F1);
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 6px;
+  transition: opacity var(--mc-transition, 0.25s ease);
+}
+
+.programme-pro-hero__cta:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 767px) {
   .programme-pro-hero--overlay {
     height: 70vh;

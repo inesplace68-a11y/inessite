@@ -1,6 +1,7 @@
 /* ============================================================
    PROGRAMME PRO — Section PRIVILÈGES
-   Grille 2×2 (I, II, III, IV) + V couronnement centré
+   Grille 3×2 (deux rangées de 3 colonnes), filets internes.
+   Desktop only — aucune media query.
    ============================================================ */
 
 .programme-pro-privileges {
@@ -22,111 +23,64 @@
   font-size: var(--pp-priv-eyebrow-size, 13px);
   letter-spacing: var(--pp-priv-eyebrow-tracking, 0.3em);
   text-transform: uppercase;
-  color: #1A1A1A;
+  color: var(--mc-noir, #1A1A1A);
   margin: 0 0 var(--pp-priv-eyebrow-margin-bottom, 60px);
 }
 
+/* Grille 3 colonnes × 2 rangées. gap:0 pour des filets continus,
+   l'air est créé par le padding interne des cellules. */
 .programme-pro-privileges__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--pp-priv-grid-gap-h, 64px);
-  row-gap: var(--pp-priv-grid-gap-v, 48px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
 }
 
-.programme-pro-privileges__item {
+.programme-pro-privileges__cell {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: var(--pp-priv-cell-pad-v, 40px) var(--pp-priv-cell-pad-h, 40px);
+  border-left: 0.5px solid var(--mc-divider);
+  border-top: 0.5px solid var(--mc-divider);
 }
 
-.programme-pro-privileges__item--couronnement {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+/* Pas de filet vertical sur la 1re colonne → filets uniquement entre colonnes */
+.programme-pro-privileges__cell:nth-child(3n + 1) {
+  border-left: 0;
 }
 
-.programme-pro-privileges__couronnement {
-  margin-top: var(--pp-priv-couronnement-margin-top, 96px);
-  display: flex;
-  justify-content: center;
+/* Pas de filet horizontal sur la 1re rangée → un seul filet entre les deux rangées */
+.programme-pro-privileges__cell:nth-child(-n + 3) {
+  border-top: 0;
 }
 
 .programme-pro-privileges__numeral {
   font-family: var(--mc-font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: var(--pp-priv-numeral-size, 32px);
+  font-size: var(--pp-priv-numeral-size, 30px);
   line-height: 1;
   color: var(--pp-priv-numeral-color, #8C826E);
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 }
 
 .programme-pro-privileges__title {
   font-family: var(--mc-font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: var(--pp-priv-title-size, 20px);
+  font-size: var(--pp-priv-title-size, 22px);
   line-height: 1.25;
-  color: #1A1A1A;
-  margin: 0 0 16px;
+  color: var(--mc-noir, #1A1A1A);
+  margin: 0 0 14px;
   letter-spacing: 0.005em;
-  max-width: 480px;
 }
 
 .programme-pro-privileges__body {
   font-family: var(--mc-font-sans);
   font-weight: 300;
-  font-size: var(--pp-priv-body-size, 14px);
-  line-height: var(--pp-priv-body-line-height, 1.70);
-  color: #5A5446;
-  max-width: var(--pp-priv-body-max-width, 720px);
-  margin: 0 auto;
-}
-
-.programme-pro-privileges__body p {
-  margin: 0 0 1em;
-}
-
-.programme-pro-privileges__body p:last-child {
-  margin-bottom: 0;
-}
-
-/* ------- RESPONSIVE < 768px ------- */
-@media (max-width: 767px) {
-  .programme-pro-privileges {
-    padding-bottom: calc(var(--pp-priv-padding-bottom, 40px) * 0.7);
-  }
-
-  .programme-pro-privileges__eyebrow {
-    margin-bottom: calc(var(--pp-priv-eyebrow-margin-bottom, 60px) * 0.6);
-  }
-
-  .programme-pro-privileges__grid {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: calc(var(--pp-priv-grid-gap-v, 48px) * 0.9);
-  }
-
-  .programme-pro-privileges__couronnement {
-    margin-top: calc(var(--pp-priv-couronnement-margin-top, 96px) * 0.6);
-  }
-
-  .programme-pro-privileges__numeral {
-    font-size: clamp(24px, 7vw, var(--pp-priv-numeral-size, 32px));
-    margin-bottom: 14px;
-  }
-
-  .programme-pro-privileges__title {
-    font-size: clamp(18px, 5vw, var(--pp-priv-title-size, 20px));
-    margin-bottom: 12px;
-  }
-
-  .programme-pro-privileges__body {
-    font-size: clamp(13px, 4vw, var(--pp-priv-body-size, 14px));
-  }
+  font-size: var(--pp-priv-body-size, 13px);
+  line-height: var(--pp-priv-body-line-height, 1.65);
+  color: var(--mc-whisper, #8C826E);
+  margin: 0;
 }
