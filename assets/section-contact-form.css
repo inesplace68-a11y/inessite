@@ -20,7 +20,7 @@
   line-height: 1.1;
   letter-spacing: 0.01em;
   color: var(--mc-noir);
-  margin: 0 0 2.4rem;
+  margin: 0 0 4.4rem;
 }
 
 /* ----- Messages d'état (succès / erreur) ----- */
@@ -81,6 +81,7 @@
 
 .contact textarea.field__input {
   resize: vertical;
+  height: 12rem;
   min-height: 12rem;
   line-height: 1.55;
 }
