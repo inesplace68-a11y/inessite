@@ -14,12 +14,13 @@
       "settings": {
         "hero_image": "shopify://shop_images/2.jpg",
         "hero_height": 35,
-        "hero_min_height": 360,
+        "hero_min_height": 420,
         "overlay_opacity": 80,
         "title_text": "Programme Pro",
         "title_size": 64,
         "intro_text": "<p>Maison Coeur accompagne architectes d'intérieur, décorateurs, hôteliers et restaurateurs dans la recherche et l'acquisition de pièces vintage, de design de collection et d'art singulier. Le Programme Pro offre un accès privilégié à la sélection, à la Conciergerie, et au conseil curatorial en amont des projets.</p>",
         "intro_size": 17,
+        "intro_max_width": 820,
         "manifeste_text": "<p>Travailler avec celles et ceux qui composent les lieux.</p>",
         "manifeste_size": 24,
         "manifeste_margin_top": 32

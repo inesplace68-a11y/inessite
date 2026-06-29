@@ -83,6 +83,15 @@
   margin-bottom: 0;
 }
 
+/* Desktop uniquement (> 767px) : largeur du bloc de texte pilotée par le customizer
+   (intro_max_width), élargie pour éviter le mot orphelin en fin de paragraphe.
+   Mobile strictement inchangé : il conserve le max-width de base (720px) ci-dessus. */
+@media (min-width: 768px) {
+  .programme-pro-hero__intro {
+    max-width: var(--intro-max-width, 820px);
+  }
+}
+
 .programme-pro-hero__manifeste {
   color: #FFFFFF;
   font-family: var(--mc-font-serif, 'Cormorant', serif);

@@ -1,6 +1,6 @@
 {{ 'section-programme-pro-hero.css' | asset_url | stylesheet_tag }}
 
-<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --hero-min-height: {{ section.settings.hero_min_height }}px; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px; --manifeste-size: {{ section.settings.manifeste_size }}px; --manifeste-margin-top: {{ section.settings.manifeste_margin_top }}px;">
+<section class="programme-pro-hero programme-pro-hero--overlay" style="--hero-height: {{ section.settings.hero_height }}vh; --hero-min-height: {{ section.settings.hero_min_height }}px; --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --title-size: {{ section.settings.title_size }}px; --intro-size: {{ section.settings.intro_size }}px; --intro-max-width: {{ section.settings.intro_max_width }}px; --manifeste-size: {{ section.settings.manifeste_size }}px; --manifeste-margin-top: {{ section.settings.manifeste_margin_top }}px;">
   <div class="programme-pro-hero__media">
     {%- if section.settings.hero_image != blank -%}
       <img
@@ -46,6 +46,7 @@
     { "type": "header", "content": "Intro" },
     { "type": "richtext", "id": "intro_text", "label": "Texte d'intro", "default": "<p>Maison Coeur accompagne architectes d'intérieur, décorateurs, hôteliers et restaurateurs dans la recherche et l'acquisition de pièces vintage, de design de collection et d'art singulier. Le Programme Pro offre un accès privilégié à la sélection, à la Conciergerie, et au conseil curatorial en amont des projets.</p>" },
     { "type": "range", "id": "intro_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Taille du texte d'intro", "default": 17 },
+    { "type": "range", "id": "intro_max_width", "min": 600, "max": 900, "step": 10, "unit": "px", "label": "Largeur du bloc de texte (desktop)", "default": 820 },
 
     { "type": "header", "content": "Manifeste" },
     { "type": "richtext", "id": "manifeste_text", "label": "Texte du manifeste (Cormorant italic)", "default": "<p>Travailler avec celles et ceux qui composent les lieux.</p>" },
