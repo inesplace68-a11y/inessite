@@ -43,7 +43,9 @@
   align-items: center;
   justify-content: center;
   gap: 28px;
-  padding: 0 40px;
+  /* Padding vertical symétrique : espace haut (bande→titre) = espace bas (CTA→bande).
+     Le centrage flex garantit l'égalité, le padding égal donne l'air équilibré. */
+  padding: 24px 40px;
   text-align: center;
 }
 
