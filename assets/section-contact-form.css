@@ -1,7 +1,29 @@
+/* ============================================================
+   PAGE CONTACT — Formulaire (cohérence thème Maison Coeur)
+   Tout est scopé à .contact (page Contact uniquement).
+   Variables thème : --mc-font-serif/-sans, --mc-whisper (pierre),
+   --mc-divider (filet), --mc-noir.
+   ============================================================ */
+
 .contact img {
   max-width: 100%;
 }
 
+/* ----- Titre « Contact » : Cormorant italic, centré, espace réduit ----- */
+.contact .contact__title {
+  text-align: center;
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 4.2rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--mc-noir);
+  margin: 0 0 2.4rem;
+}
+
+/* ----- Messages d'état (succès / erreur) ----- */
 .contact .form__message {
   align-items: flex-start;
 }
@@ -10,30 +32,144 @@
   margin-top: 0.2rem;
 }
 
-.contact .field {
-  margin-bottom: 1.5rem;
-}
-
-@media screen and (min-width: 750px) {
-  .contact .field {
-    margin-bottom: 2rem;
-  }
-}
-
-.contact__button {
-  margin-top: 3rem;
-}
-
-@media screen and (min-width: 750px) {
-  .contact__button {
-    margin-top: 4rem;
-  }
-}
-
+/* ----- Disposition : Nom + E-mail sur une ligne (2 colonnes) ----- */
 @media screen and (min-width: 750px) {
   .contact__fields {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 2rem;
+    grid-column-gap: 2.4rem;
   }
+}
+
+/* ----- Champs : filet inférieur seul, fond transparent ----- */
+.contact .field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Neutralise les bordures / ombres décoratives de Dawn */
+.contact .field::before,
+.contact .field::after {
+  display: none;
+}
+
+.contact .field__input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0.8rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.5px solid var(--mc-divider);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  color: var(--mc-noir);
+  transition: border-color 0.2s ease;
+}
+
+.contact textarea.field__input {
+  resize: vertical;
+  min-height: 12rem;
+  line-height: 1.55;
+}
+
+.contact .field__input:focus,
+.contact .field__input:focus-visible {
+  border-bottom-color: var(--mc-noir);
+  box-shadow: none;
+  outline: 0;
+}
+
+/* Placeholder visible, ton pierre */
+.contact .field__input::placeholder {
+  color: var(--mc-whisper);
+  opacity: 0.7;
+}
+
+/* ----- Labels : Jost caps, pierre, statiques au-dessus du champ ----- */
+.contact .field__label {
+  position: static;
+  order: -1;
+  pointer-events: auto;
+  transform: none;
+  top: auto;
+  left: auto;
+  margin: 0 0 0.4rem;
+  padding: 0;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--mc-whisper);
+}
+
+/* Empêche le label flottant de Dawn de reprendre une autre taille
+   quand le champ est rempli / focus (on garde un label statique constant). */
+.contact .field__input:focus ~ .field__label,
+.contact .field__input:not(:placeholder-shown) ~ .field__label,
+.contact .field__input:-webkit-autofill ~ .field__label {
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  top: auto;
+  left: auto;
+}
+
+/* Mention « — optionnel » (téléphone) */
+.contact__optional {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 0.9em;
+  font-weight: 300;
+  color: var(--mc-whisper);
+  opacity: 0.85;
+}
+
+/* Erreur de champ */
+.contact .contact__field-error {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+}
+
+/* ----- Bouton ENVOYER : lien texte souligné fin, centré ----- */
+.contact__button {
+  margin-top: 3.2rem;
+  text-align: center;
+}
+
+.contact__submit {
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.5px solid var(--mc-noir);
+  border-radius: 0;
+  padding: 1rem 0.4rem 0.4rem;
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mc-noir);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.contact__submit:hover,
+.contact__submit:focus-visible {
+  opacity: 0.7;
 }
