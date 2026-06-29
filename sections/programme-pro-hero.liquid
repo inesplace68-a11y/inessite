@@ -17,11 +17,11 @@
   <div class="programme-pro-hero__overlay" aria-hidden="true"></div>
   <div class="programme-pro-hero__content">
     <h1 class="programme-pro-hero__title">{{ section.settings.title_text | escape }}</h1>
-    {%- if section.settings.intro_text != blank -%}
-      <div class="programme-pro-hero__intro">{{ section.settings.intro_text }}</div>
-    {%- endif -%}
     {%- if section.settings.manifeste_text != blank -%}
       <div class="programme-pro-hero__manifeste">{{ section.settings.manifeste_text }}</div>
+    {%- endif -%}
+    {%- if section.settings.intro_text != blank -%}
+      <div class="programme-pro-hero__intro">{{ section.settings.intro_text }}</div>
     {%- endif -%}
     {%- if section.settings.cta_text != blank -%}
       <a class="programme-pro-hero__cta" href="{{ section.settings.cta_anchor | default: '#programme-pro-form' }}">{{ section.settings.cta_text | escape }}</a>

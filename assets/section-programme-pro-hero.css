@@ -42,7 +42,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 28px;
   padding: 0 40px;
   text-align: center;
 }
@@ -54,7 +54,7 @@
   font-weight: 400;
   font-size: var(--title-size, 64px);
   line-height: 1.1;
-  margin: 0 0 24px 0;
+  margin: 0;
   letter-spacing: 0.005em;
 }
 
@@ -90,7 +90,7 @@
   line-height: 1.3;
   letter-spacing: 0.01em;
   max-width: 720px;
-  margin-top: var(--manifeste-margin-top, 32px);
+  margin-top: 0;
   opacity: 0.92;
 }
 
@@ -101,7 +101,7 @@
 /* CTA — lien souligné fin, Jost caps, crème sur fond sombre, ancre vers le formulaire */
 .programme-pro-hero__cta {
   display: inline-block;
-  margin-top: 32px;
+  margin-top: 0;
   font-family: var(--mc-font-sans, 'Jost', sans-serif);
   font-weight: 300;
   font-size: 13px;
