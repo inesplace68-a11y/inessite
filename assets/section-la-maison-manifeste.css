@@ -39,3 +39,15 @@
     padding: 0 20px;
   }
 }
+
+/* Desktop uniquement (> 767px) — mobile ci-dessus inchangé.
+   1) Citation moins dominante : 42px -> 28px (~-1/3), reste Cormorant italic.
+   2) Espace bloc 1 (hero) <-> citation resserré : padding-top 64px -> 32px. */
+@media (min-width: 768px) {
+  .la-maison-manifeste {
+    padding-top: 32px;
+  }
+  .la-maison-manifeste__text {
+    font-size: 28px;
+  }
+}
