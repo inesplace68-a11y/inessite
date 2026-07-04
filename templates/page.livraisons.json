@@ -10,25 +10,25 @@
         "t1": {
           "type": "tarif",
           "settings": {
-            "eyebrow": "PETITS OBJETS",
-            "title": "Moins de 2 kg",
-            "body": "<p>Pour les pièces légères et peu fragiles — bougies, accessoires, petites céramiques, livres — expédition Colissimo suivi en France métropolitaine (3 à 5 jours ouvrés) et Colissimo International pour le reste du monde (7 à 14 jours selon destination).</p>"
+            "eyebrow": "COURSIER À PARIS",
+            "title": "Livraison le jour même",
+            "body": "<p>Pour Paris et la proche banlieue, remise rapide par coursier — idéale pour les objets et les pièces qui voyagent sans contrainte particulière. Créneau convenu ensemble, souvent sous 24 à 48 heures.</p>"
           }
         },
         "t2": {
           "type": "tarif",
           "settings": {
-            "eyebrow": "PIÈCES STANDARDS",
-            "title": "De 2 à 30 kg",
-            "body": "<p>Pour les luminaires, miroirs moyens, objets d'art décoratif et mobilier léger : Chronopost en France (livraison J+1 ouvré) et UPS Express pour l'Europe et l'international (3 à 7 jours selon destination). Toutes les pièces sont assurées contre le bris et la perte pour leur valeur déclarée.</p>"
+            "eyebrow": "ENVOI EN COLIS SUIVI",
+            "title": "France et international",
+            "body": "<p>Pour les objets, luminaires et pièces de format courant, expédition sous protection renforcée avec suivi — en France métropolitaine (3 à 5 jours ouvrés) comme à l'international (7 à 14 jours selon destination). Chaque pièce est assurée pour sa valeur déclarée.</p>"
           }
         },
         "t3": {
           "type": "tarif",
           "settings": {
-            "eyebrow": "GRAND FORMAT ET PIÈCES FRAGILES",
-            "title": "Mobilier, miroirs grand format, sculptures",
-            "body": "<p>Transport spécialisé via Convelio, partenaire des galeries de design de collection. Délais variables selon destination, généralement 5 à 15 jours ouvrés. Option white-glove disponible : manutentionnaires spécialisés, déballage et installation chez vous.</p>"
+            "eyebrow": "TRANSPORTEUR SPÉCIALISÉ",
+            "title": "Mobilier et grands formats, sur rendez-vous",
+            "body": "<p>Pour le mobilier, les miroirs monumentaux et les pièces les plus fragiles, transport dédié organisé sur rendez-vous. Option remise soignée à domicile, avec déballage et mise en place selon la pièce. Délais variables selon la destination.</p>"
           }
         },
         "t4": {
@@ -36,15 +36,15 @@
           "settings": {
             "eyebrow": "FRAIS DE PORT",
             "title": "Calcul au panier",
-            "body": "<p>Les frais sont calculés en temps réel au moment de la commande, selon le poids, les dimensions et la destination de la pièce. Pour les acquisitions importantes ou les projets multi-pièces, un devis sur mesure peut être établi — contactez la galerie.</p>"
+            "body": "<p>Les frais sont calculés en temps réel au moment de la commande, selon les caractéristiques et la destination de la pièce. Pour les acquisitions importantes ou les projets multi-pièces, un devis sur mesure peut être établi — contactez la galerie.</p>"
           }
         },
         "t5": {
           "type": "tarif",
           "settings": {
-            "eyebrow": "RETRAIT AU SHOWROOM",
-            "title": "Région parisienne",
-            "body": "<p>Pour les particuliers et les professionnels situés en région parisienne, une remise en main propre peut être organisée sur rendez-vous au showroom.</p>"
+            "eyebrow": "REMISE EN MAIN PROPRE",
+            "title": "Paris et région parisienne",
+            "body": "<p>Pour les particuliers et les professionnels situés en région parisienne, une remise en main propre peut être organisée sur rendez-vous.</p>"
           }
         }
       },
