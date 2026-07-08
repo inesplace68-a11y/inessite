@@ -154,7 +154,7 @@
         "unit_price": "Prix unitaire"
       },
       "share": "Partager ce produit",
-      "sold_out": "Épuisé",
+      "sold_out": "Vendu",
       "unavailable": "Non disponible(s)",
       "vendor": "Fournisseur",
       "video_exit_message": "{{ title }} ouvre la vidéo en plein écran dans la même fenêtre.",
