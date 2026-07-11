@@ -954,7 +954,18 @@
                   </div>
                 {%- endif -%}
               {%- when 'mc_availability' -%}
-                {%- if section.settings.pdp_show_availability and block.settings.visible -%}
+                {%- if section.settings.pdp_show_availability and block.settings.visible and product.selected_or_first_available_variant.available -%}
+                  {%- liquid
+                    assign mc_av_var = product.selected_or_first_available_variant
+                    assign mc_av_weight_g = mc_av_var.weight | default: 0
+                    assign mc_av_threshold_kg = block.settings.heavy_threshold_kg | default: 10
+                    assign mc_av_threshold_g = mc_av_threshold_kg | times: 1000
+                  -%}
+                  {%- if mc_av_weight_g > mc_av_threshold_g -%}
+                    {%- comment -%} CAS B — mobilier / grand format : devis (poids > seuil) {%- endcomment -%}
+                    {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var -%}
+                  {%- else -%}
+                  {%- comment -%} CAS A — comportement actuel inchangé (poids ≤ seuil) {%- endcomment -%}
                   {%- if block.settings.app_active -%}
                     <p
                       class="delivery-estimate mc-availability mc-availability--app"
@@ -998,6 +1009,7 @@
                         {{ mc_av_phrase }}
                       </span>
                     </p>
+                  {%- endif -%}
                   {%- endif -%}
                 {%- endif -%}
               {%- when 'mc_wishlist_link' -%}
@@ -1815,6 +1827,22 @@
         { "type": "range", "id": "min_ship_days", "min": 1, "max": 15, "step": 1, "unit": "j", "default": 3, "label": "Transport min" },
         { "type": "range", "id": "max_ship_days", "min": 2, "max": 20, "step": 1, "unit": "j", "default": 7, "label": "Transport max" },
         { "type": "checkbox", "id": "app_active", "default": false, "label": "App OneStock active", "info": "Masque le calcul Liquid pour laisser OneStock injecter la date." },
+        { "type": "header", "content": "Pièces lourdes — seuil & devis (CAS B)" },
+        { "type": "range", "id": "heavy_threshold_kg", "min": 1, "max": 40, "step": 0.5, "unit": "kg", "default": 10, "label": "Seuil de poids", "info": "Au-dessus de ce poids, le module affiche le devis au lieu de la date estimée." },
+        { "type": "text", "id": "heavy_line_1", "default": "France : tarif calculé au panier", "label": "Ligne 1 (module devis)" },
+        { "type": "text", "id": "heavy_line_2", "default": "Autres destinations : sur devis", "label": "Ligne 2 (module devis)" },
+        { "type": "text", "id": "heavy_cta_label", "default": "Demander un devis de livraison", "label": "Libellé du lien devis" },
+        { "type": "header", "content": "Modale de demande de devis" },
+        { "type": "text", "id": "quote_modal_title", "default": "Demander un devis de livraison", "label": "Titre de la modale" },
+        { "type": "text", "id": "field_name_label", "default": "Nom", "label": "Champ — Nom" },
+        { "type": "text", "id": "field_email_label", "default": "E-mail", "label": "Champ — E-mail" },
+        { "type": "text", "id": "field_phone_label", "default": "Téléphone", "label": "Champ — Téléphone" },
+        { "type": "text", "id": "field_address_label", "default": "Adresse (rue et numéro)", "label": "Champ — Adresse" },
+        { "type": "text", "id": "field_city_label", "default": "Ville", "label": "Champ — Ville" },
+        { "type": "text", "id": "field_zip_label", "default": "Code postal", "label": "Champ — Code postal" },
+        { "type": "text", "id": "field_country_label", "default": "Pays", "label": "Champ — Pays" },
+        { "type": "text", "id": "quote_submit_label", "default": "Envoyer ma demande", "label": "Libellé bouton d'envoi" },
+        { "type": "richtext", "id": "quote_confirm_message", "default": "<p>Votre demande a bien été transmise. Nous revenons vers vous sous 48h avec une proposition de livraison.</p>", "label": "Message de confirmation" },
         { "type": "header", "content": "Espacements" },
         { "type": "range", "id": "margin_top", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 22, "label": "Marge haute" },
         { "type": "range", "id": "margin_bottom", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 30, "label": "Marge basse" }

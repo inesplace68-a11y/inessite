@@ -1,0 +1,222 @@
+{%- comment -%}
+  MC — Module « devis livraison » pour pièces lourdes (CAS B) + modale de demande.
+  Rendu depuis le bloc mc_availability de sections/main-product.liquid quand
+  le poids du variant dépasse le seuil réglable (heavy_threshold_kg).
+
+  Params : section, block, product, variant
+  Palette : variables existantes du thème uniquement
+    (--mc-creme, --mc-noir, --mc-ink-soft, --mc-pierre, --mc-bronze, --mc-divider,
+     --mc-font-serif, --mc-font-sans). Aucun texte codé en dur : tout vient de block.settings.
+{%- endcomment -%}
+
+{%- assign mc_q_id = 'mc-quote-modal-' | append: section.id -%}
+{%- assign mc_q_form = 'mc-quote-form-' | append: section.id -%}
+{%- assign mc_q_title_id = 'mc-quote-title-' | append: section.id -%}
+
+<div
+  class="mc-availability mc-availability--heavy"
+  style="margin-top: {{ block.settings.margin_top | default: 22 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 30 }}px;"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.heavy_line_1 != blank -%}
+    <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_1 | escape }}</p>
+  {%- endif -%}
+  {%- if block.settings.heavy_line_2 != blank -%}
+    <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_2 | escape }}</p>
+  {%- endif -%}
+  {%- if block.settings.heavy_cta_label != blank -%}
+    <button type="button" class="mc-availability__quote-cta" data-mc-quote-trigger="{{ mc_q_id }}" aria-haspopup="dialog">
+      {{ block.settings.heavy_cta_label | escape }} <span aria-hidden="true">&rarr;</span>
+    </button>
+  {%- endif -%}
+</div>
+
+<div class="mc-quote-modal" id="{{ mc_q_id }}" hidden role="dialog" aria-modal="true" aria-labelledby="{{ mc_q_title_id }}">
+  <div class="mc-quote-overlay" data-mc-quote-close></div>
+  <div class="mc-quote-content">
+    <button type="button" class="mc-quote-close" data-mc-quote-close aria-label="Fermer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+
+    <h2 id="{{ mc_q_title_id }}" class="mc-quote-title">
+      {{ block.settings.quote_modal_title | default: 'Demander un devis de livraison' | escape }}
+    </h2>
+
+    {%- form 'contact', id: mc_q_form, class: 'mc-quote-form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="mc-quote-success">{{ block.settings.quote_confirm_message }}</div>
+        <script>(function(){var m=document.getElementById('{{ mc_q_id }}');if(m){m.hidden=false;document.body.style.overflow='hidden';}})();</script>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="mc-quote-errors" role="alert">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+
+        {%- comment -%} Champs cachés : rattachent la demande au produit consulté {%- endcomment -%}
+        <input type="hidden" name="contact[Type de demande]" value="Devis de livraison">
+        <input type="hidden" name="contact[Produit]" value="{{ product.title | escape }}">
+        <input type="hidden" name="contact[Référence]" value="{{ variant.sku | escape }}">
+
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-name">{{ block.settings.field_name_label | default: 'Nom' | escape }} *</label>
+          <input type="text" id="{{ mc_q_form }}-name" name="contact[Nom]" autocomplete="name" required>
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-email">{{ block.settings.field_email_label | default: 'E-mail' | escape }} *</label>
+          <input type="email" id="{{ mc_q_form }}-email" name="contact[email]" autocomplete="email" required>
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-phone">{{ block.settings.field_phone_label | default: 'Téléphone' | escape }} <span class="mc-quote-optional">&mdash; optionnel</span></label>
+          <input type="tel" id="{{ mc_q_form }}-phone" name="contact[Téléphone]" autocomplete="tel">
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-address">{{ block.settings.field_address_label | default: 'Adresse (rue et numéro)' | escape }} *</label>
+          <input type="text" id="{{ mc_q_form }}-address" name="contact[Adresse]" autocomplete="address-line1" required>
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-city">{{ block.settings.field_city_label | default: 'Ville' | escape }} *</label>
+          <input type="text" id="{{ mc_q_form }}-city" name="contact[Ville]" autocomplete="address-level2" required>
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-zip">{{ block.settings.field_zip_label | default: 'Code postal' | escape }} *</label>
+          <input type="text" id="{{ mc_q_form }}-zip" name="contact[Code postal]" autocomplete="postal-code" required>
+        </div>
+        <div class="mc-quote-field">
+          <label for="{{ mc_q_form }}-country">{{ block.settings.field_country_label | default: 'Pays' | escape }} *</label>
+          <input type="text" id="{{ mc_q_form }}-country" name="contact[Pays]" autocomplete="country-name" required>
+        </div>
+
+        <button type="submit" class="mc-quote-submit">{{ block.settings.quote_submit_label | default: 'Envoyer ma demande' | escape }}</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+
+{%- style -%}
+  .mc-availability--heavy { }
+  .mc-availability__heavy-line {
+    font-family: var(--mc-font-sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--mc-ink-soft);
+    margin: 0 0 4px;
+  }
+  .mc-availability__heavy-line:last-of-type { margin-bottom: 0; }
+  .mc-availability__quote-cta {
+    display: inline-block;
+    margin-top: 14px;
+    background: none;
+    border: 0;
+    padding: 0 0 3px;
+    cursor: pointer;
+    font-family: var(--mc-font-sans);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mc-noir);
+    border-bottom: 0.5px solid var(--mc-noir);
+    transition: opacity 0.2s ease;
+  }
+  .mc-availability__quote-cta:hover { opacity: 0.7; }
+
+  /* Modale — même registre visuel que mc-globe-modal (fond crème, typo thème) */
+  .mc-quote-modal[hidden] { display: none; }
+  .mc-quote-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mc-quote-overlay {
+    position: absolute; inset: 0;
+    background: rgba(26, 24, 20, 0.40);
+    cursor: pointer;
+  }
+  .mc-quote-content {
+    position: relative;
+    background: var(--mc-creme);
+    padding: 52px 40px 40px;
+    width: 100%; max-width: 460px; margin: 24px;
+    max-height: 88vh; overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(26, 24, 20, 0.18);
+    animation: mc-quote-fade 0.25s ease-out;
+  }
+  @keyframes mc-quote-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .mc-quote-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; padding: 8px;
+    cursor: pointer; color: var(--mc-noir); display: flex;
+  }
+  .mc-quote-close:hover { opacity: 0.6; }
+  .mc-quote-title {
+    font-family: var(--mc-font-serif);
+    font-style: italic; font-weight: 400;
+    font-size: 26px; letter-spacing: 0.01em;
+    color: var(--mc-noir); margin: 0 0 24px; text-align: center;
+  }
+  .mc-quote-form { display: flex; flex-direction: column; gap: 15px; }
+  .mc-quote-field { display: flex; flex-direction: column; gap: 5px; }
+  .mc-quote-field label {
+    font-family: var(--mc-font-sans);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-ink-soft);
+  }
+  .mc-quote-optional {
+    text-transform: none; letter-spacing: 0.02em;
+    font-size: 0.92em; color: var(--mc-ink-soft); opacity: 0.8;
+  }
+  .mc-quote-field input {
+    font-family: var(--mc-font-sans);
+    font-size: 14px; font-weight: 300;
+    color: var(--mc-noir); background: transparent;
+    border: none; border-bottom: 1px solid var(--mc-divider);
+    border-radius: 0; padding: 8px 0; width: 100%;
+    -webkit-appearance: none; appearance: none;
+  }
+  .mc-quote-field input:focus { outline: none; border-bottom-color: var(--mc-bronze); }
+  .mc-quote-field input::placeholder { color: var(--mc-ink-soft); opacity: 0.6; }
+  .mc-quote-submit {
+    align-self: center; margin-top: 10px;
+    background: transparent; border: 0;
+    border-bottom: 0.5px solid var(--mc-noir); border-radius: 0;
+    padding: 10px 6px 4px;
+    font-family: var(--mc-font-sans);
+    font-weight: 400; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--mc-noir); cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .mc-quote-submit:hover { opacity: 0.7; }
+  .mc-quote-success {
+    font-family: var(--mc-font-sans);
+    font-weight: 300; font-size: 15px; line-height: 1.6;
+    color: var(--mc-ink-soft); text-align: center; margin: 0;
+  }
+  .mc-quote-success p { margin: 0; }
+  .mc-quote-errors {
+    font-family: var(--mc-font-sans);
+    font-weight: 300; font-size: 13px;
+    color: #B23A2C; margin: 0 0 12px; text-align: center;
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var modal = document.getElementById('{{ mc_q_id }}');
+    if (!modal) return;
+    var triggers = document.querySelectorAll('[data-mc-quote-trigger="{{ mc_q_id }}"]');
+    var closes = modal.querySelectorAll('[data-mc-quote-close]');
+    function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
+    triggers.forEach(function (t) { t.addEventListener('click', openModal); });
+    closes.forEach(function (c) { c.addEventListener('click', closeModal); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  })();
+</script>
