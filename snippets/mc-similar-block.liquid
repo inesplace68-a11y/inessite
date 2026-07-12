@@ -1,0 +1,160 @@
+{%- comment -%}
+  MC — Produit vendu : bouton "alerte pièce similaire" (remplace le bouton d'achat)
+  + modale minimaliste (un seul champ e-mail). Rendu depuis le bloc buy_buttons de
+  sections/main-product.liquid quand le variant n'est pas disponible.
+
+  Params : section, block, product
+  Palette : variables existantes du thème uniquement
+    (--mc-creme, --mc-noir, --mc-ink-soft, --mc-bronze, --mc-divider, --mc-font-serif, --mc-font-sans).
+  Le bouton reprend les classes du bouton d'achat (button button--full-width button--primary)
+  → pilule pleine largeur, fond noir, style identique. Aucun texte codé en dur.
+{%- endcomment -%}
+
+{%- assign mc_s_id = 'mc-similar-modal-' | append: section.id -%}
+{%- assign mc_s_form = 'mc-similar-form-' | append: section.id -%}
+{%- assign mc_s_title_id = 'mc-similar-title-' | append: section.id -%}
+
+<div class="mc-similar-wrap">
+  <button
+    type="button"
+    class="product-form__submit button button--full-width button--primary mc-similar-cta"
+    data-mc-similar-trigger="{{ mc_s_id }}"
+    aria-haspopup="dialog"
+  >
+    {{ block.settings.similar_button_label | default: "VENDU — M'AVERTIR D'UNE PIÈCE SIMILAIRE" | escape }}
+  </button>
+</div>
+
+<div class="mc-similar-modal" id="{{ mc_s_id }}" hidden role="dialog" aria-modal="true" {% if block.settings.similar_modal_title != blank %}aria-labelledby="{{ mc_s_title_id }}"{% endif %}>
+  <div class="mc-similar-overlay" data-mc-similar-close></div>
+  <div class="mc-similar-content">
+    <button type="button" class="mc-similar-close" data-mc-similar-close aria-label="Fermer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+
+    {%- if block.settings.similar_modal_title != blank -%}
+      <h2 id="{{ mc_s_title_id }}" class="mc-similar-title">{{ block.settings.similar_modal_title | escape }}</h2>
+    {%- endif -%}
+
+    {%- form 'contact', id: mc_s_form, class: 'mc-similar-form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="mc-similar-success">{{ block.settings.similar_confirm_message }}</div>
+        <script>(function(){var m=document.getElementById('{{ mc_s_id }}');if(m){m.hidden=false;document.body.style.overflow='hidden';}})();</script>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="mc-similar-errors" role="alert">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+
+        {%- comment -%} Produit consulté transmis en arrière-plan (non affiché) {%- endcomment -%}
+        <input type="hidden" name="contact[Type de demande]" value="Alerte pièce similaire">
+        <input type="hidden" name="contact[Produit]" value="{{ product.title | escape }}">
+        <input type="hidden" name="contact[Référence]" value="{{ product.selected_or_first_available_variant.sku | escape }}">
+
+        <div class="mc-similar-field">
+          <label for="{{ mc_s_form }}-email">{{ block.settings.similar_email_label | default: 'E-mail' | escape }} *</label>
+          <input type="email" id="{{ mc_s_form }}-email" name="contact[email]" autocomplete="email" required>
+        </div>
+
+        <button type="submit" class="mc-similar-submit">{{ block.settings.similar_submit_label | default: 'ÊTRE INFORMÉ' | escape }}</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+
+{%- style -%}
+  .mc-similar-wrap { width: 100%; }
+
+  /* Modale — même registre visuel que mc-globe-modal / mc-quote-modal */
+  .mc-similar-modal[hidden] { display: none; }
+  .mc-similar-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mc-similar-overlay {
+    position: absolute; inset: 0;
+    background: rgba(26, 24, 20, 0.40);
+    cursor: pointer;
+  }
+  .mc-similar-content {
+    position: relative;
+    background: var(--mc-creme);
+    padding: 52px 40px 40px;
+    width: 100%; max-width: 420px; margin: 24px;
+    box-shadow: 0 24px 64px rgba(26, 24, 20, 0.18);
+    animation: mc-similar-fade 0.25s ease-out;
+  }
+  @keyframes mc-similar-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .mc-similar-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; padding: 8px;
+    cursor: pointer; color: var(--mc-noir); display: flex;
+  }
+  .mc-similar-close:hover { opacity: 0.6; }
+  .mc-similar-title {
+    font-family: var(--mc-font-serif);
+    font-style: italic; font-weight: 400;
+    font-size: 24px; letter-spacing: 0.01em;
+    color: var(--mc-noir); margin: 0 0 24px; text-align: center;
+  }
+  .mc-similar-form { display: flex; flex-direction: column; gap: 16px; }
+  .mc-similar-field { display: flex; flex-direction: column; gap: 5px; }
+  .mc-similar-field label {
+    font-family: var(--mc-font-sans);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-ink-soft);
+  }
+  .mc-similar-field input {
+    font-family: var(--mc-font-sans);
+    font-size: 14px; font-weight: 300;
+    color: var(--mc-noir); background: transparent;
+    border: none; border-bottom: 1px solid var(--mc-divider);
+    border-radius: 0; padding: 8px 0; width: 100%;
+    -webkit-appearance: none; appearance: none;
+  }
+  .mc-similar-field input:focus { outline: none; border-bottom-color: var(--mc-bronze); }
+  .mc-similar-submit {
+    align-self: center; margin-top: 6px;
+    background: transparent; border: 0;
+    border-bottom: 0.5px solid var(--mc-noir); border-radius: 0;
+    padding: 10px 6px 4px;
+    font-family: var(--mc-font-sans);
+    font-weight: 400; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--mc-noir); cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .mc-similar-submit:hover { opacity: 0.7; }
+  .mc-similar-success {
+    font-family: var(--mc-font-sans);
+    font-weight: 300; font-size: 15px; line-height: 1.6;
+    color: var(--mc-ink-soft); text-align: center; margin: 0;
+  }
+  .mc-similar-success p { margin: 0; }
+  .mc-similar-errors {
+    font-family: var(--mc-font-sans);
+    font-weight: 300; font-size: 13px;
+    color: #B23A2C; margin: 0 0 12px; text-align: center;
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var modal = document.getElementById('{{ mc_s_id }}');
+    if (!modal) return;
+    var triggers = document.querySelectorAll('[data-mc-similar-trigger="{{ mc_s_id }}"]');
+    var closes = modal.querySelectorAll('[data-mc-similar-close]');
+    function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
+    triggers.forEach(function (t) { t.addEventListener('click', openModal); });
+    closes.forEach(function (c) { c.addEventListener('click', closeModal); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  })();
+</script>

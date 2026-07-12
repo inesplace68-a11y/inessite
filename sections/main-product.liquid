@@ -728,6 +728,7 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
+                {%- if product.selected_or_first_available_variant.available -%}
                 {%- render 'buy-buttons',
                   block: block,
                   product: product,
@@ -735,6 +736,10 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {%- else -%}
+                {%- comment -%} OBJ4 — pièce vendue : bouton alerte pièce similaire + modale {%- endcomment -%}
+                {%- render 'mc-similar-block', section: section, block: block, product: product -%}
+                {%- endif -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -1493,7 +1498,13 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
-        }
+        },
+        { "type": "header", "content": "MC — Produit vendu : alerte pièce similaire" },
+        { "type": "text", "id": "similar_button_label", "default": "VENDU — M'AVERTIR D'UNE PIÈCE SIMILAIRE", "label": "Libellé du bouton (vendu)" },
+        { "type": "text", "id": "similar_modal_title", "default": "M'avertir d'une pièce similaire", "label": "Titre de la modale", "info": "Laisser vide pour masquer le titre." },
+        { "type": "text", "id": "similar_email_label", "default": "E-mail", "label": "Libellé champ E-mail" },
+        { "type": "text", "id": "similar_submit_label", "default": "ÊTRE INFORMÉ", "label": "Libellé bouton d'envoi" },
+        { "type": "richtext", "id": "similar_confirm_message", "default": "<p>Votre demande a bien été prise en compte.</p>", "label": "Message de confirmation" }
       ]
     },
     {
