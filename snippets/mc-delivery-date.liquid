@@ -1,0 +1,56 @@
+{%- comment -%}
+  MC — Estimation de livraison datée, ZONÉE (CAS A léger, et CAS B France).
+  Délais de transport min/max spécifiques à la zone (réglages customizer),
+  + jours de préparation (réglage unique). Ligne "Livraison en : [pays]" en dessous.
+  Params : section, block, zone (FR|UE|UK|INT), country_name
+  Palette : variables existantes du thème.
+{%- endcomment -%}
+{%- liquid
+  assign prep_days = block.settings.prep_days | default: 2
+  case zone
+    when 'UE'
+      assign zmin = block.settings.ue_min_days | default: 5
+      assign zmax = block.settings.ue_max_days | default: 8
+    when 'UK'
+      assign zmin = block.settings.uk_min_days | default: 5
+      assign zmax = block.settings.uk_max_days | default: 8
+    when 'INT'
+      assign zmin = block.settings.int_min_days | default: 8
+      assign zmax = block.settings.int_max_days | default: 15
+    else
+      assign zmin = block.settings.fr_min_days | default: 3
+      assign zmax = block.settings.fr_max_days | default: 5
+  endcase
+  assign min_total_days = prep_days | plus: zmin
+  assign max_total_days = prep_days | plus: zmax
+  assign min_seconds = min_total_days | times: 86400
+  assign max_seconds = max_total_days | times: 86400
+  assign now_seconds = 'now' | date: '%s' | times: 1
+  assign min_epoch = now_seconds | plus: min_seconds
+  assign max_epoch = now_seconds | plus: max_seconds
+  assign min_day = min_epoch | date: '%-d'
+  assign min_month_num = min_epoch | date: '%-m' | plus: 0
+  assign max_day = max_epoch | date: '%-d'
+  assign max_month_num = max_epoch | date: '%-m' | plus: 0
+  assign fr_months = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
+  assign min_month_idx = min_month_num | minus: 1
+  assign max_month_idx = max_month_num | minus: 1
+  assign d1 = min_day | append: ' ' | append: fr_months[min_month_idx]
+  assign d2 = max_day | append: ' ' | append: fr_months[max_month_idx]
+  assign phrase_tpl = block.settings.delivery_phrase | default: 'Recevez-le entre le {date_min} et le {date_max}'
+  assign mc_date_phrase = phrase_tpl | replace: '{date_min}', d1 | replace: '{date_max}', d2 | replace: '[date1]', d1 | replace: '[date2]', d2
+  assign mc_date_label = section.settings.pdp_avail_label_prefix | default: 'Disponible immédiatement'
+-%}
+<div
+  class="delivery-estimate mc-availability mc-delivery"
+  style="margin-top: {{ block.settings.margin_top | default: 22 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 30 }}px;"
+  {{ block.shopify_attributes }}
+>
+  <p class="mc-availability__line">
+    {%- if block.settings.show_prefix and mc_date_label != blank -%}
+      {{ mc_date_label }} {{ block.settings.separator | default: '·' }}
+    {% endif -%}
+    {{ mc_date_phrase }}
+  </p>
+  {%- render 'mc-delivery-country', block: block, country_name: country_name -%}
+</div>

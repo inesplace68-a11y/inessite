@@ -965,12 +965,18 @@
                     assign mc_av_weight_g = mc_av_var.weight | default: 0
                     assign mc_av_threshold_kg = block.settings.heavy_threshold_kg | default: 10
                     assign mc_av_threshold_g = mc_av_threshold_kg | times: 1000
+                    assign mc_av_cc = localization.country.iso_code | default: 'FR'
+                    capture mc_av_zone
+                      render 'mc-delivery-zone', code: mc_av_cc
+                    endcapture
+                    assign mc_av_zone = mc_av_zone | strip
+                    assign mc_av_country = localization.country.name | default: 'France'
                   -%}
-                  {%- if mc_av_weight_g > mc_av_threshold_g -%}
-                    {%- comment -%} CAS B — mobilier / grand format : devis (poids > seuil) {%- endcomment -%}
-                    {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var -%}
+                  {%- if mc_av_weight_g > mc_av_threshold_g and mc_av_zone != 'FR' -%}
+                    {%- comment -%} CAS B hors France : sur devis {%- endcomment -%}
+                    {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var, country_name: mc_av_country -%}
                   {%- else -%}
-                  {%- comment -%} CAS A — comportement actuel inchangé (poids ≤ seuil) {%- endcomment -%}
+                  {%- comment -%} CAS A (léger) ou CAS B France : date zonée (OneStock si app active) {%- endcomment -%}
                   {%- if block.settings.app_active -%}
                     <p
                       class="delivery-estimate mc-availability mc-availability--app"
@@ -979,41 +985,7 @@
                       {{ block.shopify_attributes }}
                     ></p>
                   {%- else -%}
-                    {%- liquid
-                      assign prep_days = block.settings.prep_days | default: 2
-                      assign min_ship = block.settings.min_ship_days | default: 3
-                      assign max_ship = block.settings.max_ship_days | default: 7
-                      assign min_total_days = prep_days | plus: min_ship
-                      assign max_total_days = prep_days | plus: max_ship
-                      assign min_seconds = min_total_days | times: 86400
-                      assign max_seconds = max_total_days | times: 86400
-                      assign now_seconds = 'now' | date: '%s' | times: 1
-                      assign min_epoch = now_seconds | plus: min_seconds
-                      assign max_epoch = now_seconds | plus: max_seconds
-                      assign min_day = min_epoch | date: '%-d'
-                      assign min_month_num = min_epoch | date: '%-m' | plus: 0
-                      assign max_day = max_epoch | date: '%-d'
-                      assign max_month_num = max_epoch | date: '%-m' | plus: 0
-                      assign fr_months = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ','
-                      assign min_month_idx = min_month_num | minus: 1
-                      assign max_month_idx = max_month_num | minus: 1
-                      assign d1 = min_day | append: ' ' | append: fr_months[min_month_idx]
-                      assign d2 = max_day | append: ' ' | append: fr_months[max_month_idx]
-                      assign phrase_template = section.settings.pdp_delivery_phrase | default: 'Chez vous entre le {date_min} et le {date_max}'
-                      assign mc_av_phrase = phrase_template | replace: '{date_min}', d1 | replace: '{date_max}', d2 | replace: '[date1]', d1 | replace: '[date2]', d2
-                      assign mc_av_label = section.settings.pdp_avail_label_prefix | default: 'Disponible immédiatement'
-                    -%}
-                    <p
-                      class="delivery-estimate mc-availability"
-                      {{ block.shopify_attributes }}
-                    >
-                      <span class="mc-availability__line">
-                        {%- if block.settings.show_prefix and mc_av_label != blank -%}
-                          {{ mc_av_label }} {{ block.settings.separator | default: '·' }}
-                        {% endif -%}
-                        {{ mc_av_phrase }}
-                      </span>
-                    </p>
+                    {%- render 'mc-delivery-date', section: section, block: block, zone: mc_av_zone, country_name: mc_av_country -%}
                   {%- endif -%}
                   {%- endif -%}
                 {%- endif -%}
@@ -1835,10 +1807,21 @@
         { "type": "text", "id": "label_avail", "default": "Disponible", "label": "Préfixe" },
         { "type": "text", "id": "separator", "default": "·", "label": "Séparateur" },
         { "type": "text", "id": "wrapper_text", "default": "Livraison estimée entre [date1] et [date2]", "label": "Phrase", "info": "Utiliser [date1] et [date2] comme placeholders." },
-        { "type": "header", "content": "Délais (jours)" },
+        { "type": "header", "content": "Délais — préparation (jours)" },
         { "type": "range", "id": "prep_days", "min": 0, "max": 7, "step": 1, "unit": "j", "default": 2, "label": "Préparation" },
-        { "type": "range", "id": "min_ship_days", "min": 1, "max": 15, "step": 1, "unit": "j", "default": 3, "label": "Transport min" },
-        { "type": "range", "id": "max_ship_days", "min": 2, "max": 20, "step": 1, "unit": "j", "default": 7, "label": "Transport max" },
+        { "type": "header", "content": "Délais transport par zone (jours)" },
+        { "type": "range", "id": "fr_min_days", "min": 1, "max": 20, "step": 1, "unit": "j", "default": 3, "label": "France — min" },
+        { "type": "range", "id": "fr_max_days", "min": 1, "max": 30, "step": 1, "unit": "j", "default": 5, "label": "France — max" },
+        { "type": "range", "id": "ue_min_days", "min": 1, "max": 20, "step": 1, "unit": "j", "default": 5, "label": "UE — min" },
+        { "type": "range", "id": "ue_max_days", "min": 1, "max": 30, "step": 1, "unit": "j", "default": 8, "label": "UE — max" },
+        { "type": "range", "id": "uk_min_days", "min": 1, "max": 20, "step": 1, "unit": "j", "default": 5, "label": "UK — min" },
+        { "type": "range", "id": "uk_max_days", "min": 1, "max": 30, "step": 1, "unit": "j", "default": 8, "label": "UK — max" },
+        { "type": "range", "id": "int_min_days", "min": 1, "max": 30, "step": 1, "unit": "j", "default": 8, "label": "International — min" },
+        { "type": "range", "id": "int_max_days", "min": 1, "max": 40, "step": 1, "unit": "j", "default": 15, "label": "International — max" },
+        { "type": "text", "id": "delivery_phrase", "default": "Recevez-le entre le {date_min} et le {date_max}", "label": "Phrase date livraison", "info": "Placeholders : {date_min} et {date_max}." },
+        { "type": "text", "id": "delivery_country_prefix", "default": "Livraison en :", "label": "Préfixe « Livraison en »" },
+        { "type": "range", "id": "min_ship_days", "min": 1, "max": 15, "step": 1, "unit": "j", "default": 3, "label": "Transport min (obsolète)" },
+        { "type": "range", "id": "max_ship_days", "min": 2, "max": 20, "step": 1, "unit": "j", "default": 7, "label": "Transport max (obsolète)" },
         { "type": "checkbox", "id": "app_active", "default": false, "label": "App OneStock active", "info": "Masque le calcul Liquid pour laisser OneStock injecter la date." },
         { "type": "header", "content": "Pièces lourdes — seuil & devis (CAS B)" },
         { "type": "range", "id": "heavy_threshold_kg", "min": 1, "max": 40, "step": 0.5, "unit": "kg", "default": 10, "label": "Seuil de poids", "info": "Au-dessus de ce poids, le module affiche le devis au lieu de la date estimée." },

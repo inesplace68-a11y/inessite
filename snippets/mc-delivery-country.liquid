@@ -1,0 +1,32 @@
+{%- comment -%}
+  MC — Ligne "Livraison en : [pays]" — le nom du pays est un lien fin qui ouvre
+  le modal pays EXISTANT (mc-globe-modal, via data-mc-globe-trigger). Aucun nouveau composant.
+  Params : block, country_name
+{%- endcomment -%}
+{%- assign mc_dc_prefix = block.settings.delivery_country_prefix | default: 'Livraison en :' -%}
+<p class="mc-delivery-country">
+  {{ mc_dc_prefix | escape }}
+  <button type="button" class="mc-delivery-country__link" data-mc-globe-trigger>{{ country_name | escape }}</button>
+</p>
+
+{%- style -%}
+  .mc-delivery-country {
+    font-family: var(--mc-font-sans);
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mc-ink-soft);
+    margin: 8px 0 0;
+  }
+  .mc-delivery-country__link {
+    background: none;
+    border: 0;
+    padding: 0 0 1px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--mc-noir);
+    border-bottom: 0.5px solid var(--mc-noir);
+    transition: opacity 0.2s ease;
+  }
+  .mc-delivery-country__link:hover { opacity: 0.7; }
+{%- endstyle -%}

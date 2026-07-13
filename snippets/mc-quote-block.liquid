@@ -29,6 +29,7 @@
       {{ block.settings.heavy_cta_label | escape }} <span aria-hidden="true">&rarr;</span>
     </button>
   {%- endif -%}
+  {%- render 'mc-delivery-country', block: block, country_name: country_name -%}
 </div>
 
 <div class="mc-quote-modal" id="{{ mc_q_id }}" hidden role="dialog" aria-modal="true" aria-labelledby="{{ mc_q_title_id }}">

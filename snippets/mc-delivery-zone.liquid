@@ -1,0 +1,12 @@
+{%- comment -%}
+  MC — Mapping ISO pays -> zone de livraison (objet réutilisable, non dupliqué).
+  Param : code = code ISO 2 lettres du pays (ex. localization.country.iso_code)
+  Sortie (à capturer puis | strip) : FR | UE | UK | INT
+    - FR  : France
+    - UK  : Royaume-Uni (GB)
+    - UE  : États membres de l'Union européenne (hors France)
+    - INT : tout le reste
+{%- endcomment -%}
+{%- assign mc_z_c = code | upcase -%}
+{%- assign mc_z_ue = 'AT,BE,BG,HR,CY,CZ,DK,EE,FI,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE' | split: ',' -%}
+{%- if mc_z_c == 'FR' -%}FR{%- elsif mc_z_c == 'GB' -%}UK{%- elsif mc_z_ue contains mc_z_c -%}UE{%- else -%}INT{%- endif -%}
