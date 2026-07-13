@@ -66,6 +66,15 @@
 {%- style -%}
   .mc-similar-wrap { width: 100%; }
 
+  /* 5.1 — bouton sur une seule ligne (réglages dédiés, distincts des autres CTA) */
+  .mc-similar-cta.button {
+    font-size: {{ block.settings.similar_button_font_size | default: 11 }}px;
+    letter-spacing: {{ block.settings.similar_button_tracking | default: 6 | divided_by: 100.0 }}em;
+    white-space: nowrap;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   /* Modale — même registre visuel que mc-globe-modal / mc-quote-modal */
   .mc-similar-modal[hidden] { display: none; }
   .mc-similar-modal {
@@ -147,6 +156,8 @@
   (function () {
     var modal = document.getElementById('{{ mc_s_id }}');
     if (!modal) return;
+    // 5.2 — extraire la modale de tout ancêtre transformé (position:fixed relatif au viewport) → centrage fiable
+    if (modal.parentNode !== document.body) document.body.appendChild(modal);
     var triggers = document.querySelectorAll('[data-mc-similar-trigger="{{ mc_s_id }}"]');
     var closes = modal.querySelectorAll('[data-mc-similar-close]');
     function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }

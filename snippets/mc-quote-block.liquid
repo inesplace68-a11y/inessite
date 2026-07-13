@@ -209,6 +209,8 @@
   (function () {
     var modal = document.getElementById('{{ mc_q_id }}');
     if (!modal) return;
+    // Extraire la modale de tout ancêtre transformé (position:fixed relatif au viewport) → centrage fiable
+    if (modal.parentNode !== document.body) document.body.appendChild(modal);
     var triggers = document.querySelectorAll('[data-mc-quote-trigger="{{ mc_q_id }}"]');
     var closes = modal.querySelectorAll('[data-mc-quote-close]');
     function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
