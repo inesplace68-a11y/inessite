@@ -737,8 +737,19 @@
                   show_pickup_availability: true
                 -%}
                 {%- else -%}
-                {%- comment -%} OBJ4 — pièce vendue : bouton alerte pièce similaire + modale {%- endcomment -%}
+                {%- liquid
+                  assign mc_bb_var = product.selected_or_first_available_variant
+                  assign mc_bb_qty = mc_bb_var.inventory_quantity | default: 0
+                  assign mc_bb_sold = false
+                  if mc_bb_qty <= 0 and mc_bb_var.inventory_policy != 'continue'
+                    assign mc_bb_sold = true
+                  endif
+                -%}
+                {%- if mc_bb_sold -%}
+                {%- comment -%} CAS 1 — vraiment vendu (stock réel épuisé) : bouton alerte pièce similaire {%- endcomment -%}
                 {%- render 'mc-similar-block', section: section, block: block, product: product -%}
+                {%- endif -%}
+                {%- comment -%} CAS 2 (en stock, pays non desservi) : rien ici — devis affiché dans le bloc Disponibilité {%- endcomment -%}
                 {%- endif -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -959,9 +970,14 @@
                   </div>
                 {%- endif -%}
               {%- when 'mc_availability' -%}
-                {%- if section.settings.pdp_show_availability and block.settings.visible and product.selected_or_first_available_variant.available -%}
+                {%- if section.settings.pdp_show_availability and block.settings.visible -%}
                   {%- liquid
                     assign mc_av_var = product.selected_or_first_available_variant
+                    assign mc_av_qty = mc_av_var.inventory_quantity | default: 0
+                    assign mc_av_sold = false
+                    if mc_av_qty <= 0 and mc_av_var.inventory_policy != 'continue'
+                      assign mc_av_sold = true
+                    endif
                     assign mc_av_weight_g = mc_av_var.weight | default: 0
                     assign mc_av_threshold_kg = block.settings.heavy_threshold_kg | default: 10
                     assign mc_av_threshold_g = mc_av_threshold_kg | times: 1000
@@ -972,22 +988,28 @@
                     assign mc_av_zone = mc_av_zone | strip
                     assign mc_av_country = localization.country.name | default: 'France'
                   -%}
-                  {%- if mc_av_weight_g > mc_av_threshold_g and mc_av_zone != 'FR' -%}
-                    {%- comment -%} CAS B hors France : sur devis {%- endcomment -%}
-                    {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var, country_name: mc_av_country -%}
-                  {%- else -%}
-                  {%- comment -%} CAS A (léger) ou CAS B France : date zonée (OneStock si app active) {%- endcomment -%}
-                  {%- if block.settings.app_active -%}
-                    <p
-                      class="delivery-estimate mc-availability mc-availability--app"
-                      data-mc-onestock
-                      data-product-id="{{ product.id }}"
-                      {{ block.shopify_attributes }}
-                    ></p>
-                  {%- else -%}
-                    {%- render 'mc-delivery-date', section: section, block: block, zone: mc_av_zone, country_name: mc_av_country -%}
+                  {%- if mc_av_var.available -%}
+                    {%- comment -%} CAS 3 — stock + tarif pays : date zonée ou devis selon poids (inchangé) {%- endcomment -%}
+                    {%- if mc_av_weight_g > mc_av_threshold_g and mc_av_zone != 'FR' -%}
+                      {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var, country_name: mc_av_country -%}
+                    {%- else -%}
+                      {%- if block.settings.app_active -%}
+                        <p
+                          class="delivery-estimate mc-availability mc-availability--app"
+                          data-mc-onestock
+                          data-product-id="{{ product.id }}"
+                          {{ block.shopify_attributes }}
+                        ></p>
+                      {%- else -%}
+                        {%- render 'mc-delivery-date', section: section, block: block, zone: mc_av_zone, country_name: mc_av_country -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- elsif mc_av_sold == false -%}
+                    {%- comment -%} CAS 2 — en stock mais pas de tarif pour ce pays : devis (tout poids) {%- endcomment -%}
+                    {%- assign mc_av_intro = block.settings.country_unavailable_intro | default: "Cette pièce n'est pas encore expédiée vers {pays}. Faites-nous part de votre demande, nous reviendrons vers vous avec une solution de livraison." | replace: '{pays}', mc_av_country -%}
+                    {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var, country_name: mc_av_country, intro_override: mc_av_intro -%}
                   {%- endif -%}
-                  {%- endif -%}
+                  {%- comment -%} CAS 1 (vraiment vendu) : rien ici — bouton alerte dans buy_buttons {%- endcomment -%}
                 {%- endif -%}
               {%- when 'mc_wishlist_link' -%}
                 {%- if block.settings.visible -%}
@@ -1828,6 +1850,7 @@
         { "type": "text", "id": "heavy_line_1", "default": "France : tarif calculé au panier", "label": "Ligne 1 (module devis)" },
         { "type": "text", "id": "heavy_line_2", "default": "Autres destinations : sur devis", "label": "Ligne 2 (module devis)" },
         { "type": "text", "id": "heavy_cta_label", "default": "Demander un devis de livraison", "label": "Libellé du lien devis" },
+        { "type": "textarea", "id": "country_unavailable_intro", "default": "Cette pièce n'est pas encore expédiée vers {pays}. Faites-nous part de votre demande, nous reviendrons vers vous avec une solution de livraison.", "label": "Intro devis — pays non desservi", "info": "Affiché quand la pièce est en stock mais sans tarif de livraison pour le pays sélectionné. Placeholder {pays} = pays sélectionné." },
         { "type": "header", "content": "Modale de demande de devis" },
         { "type": "text", "id": "quote_modal_title", "default": "Demander un devis de livraison", "label": "Titre de la modale" },
         { "type": "text", "id": "field_name_label", "default": "Nom", "label": "Champ — Nom" },

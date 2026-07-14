@@ -18,11 +18,16 @@
   style="margin-top: {{ block.settings.margin_top | default: 22 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 30 }}px;"
   {{ block.shopify_attributes }}
 >
-  {%- if block.settings.heavy_line_1 != blank -%}
-    <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_1 | escape }}</p>
-  {%- endif -%}
-  {%- if block.settings.heavy_line_2 != blank -%}
-    <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_2 | escape }}</p>
+  {%- if intro_override != blank -%}
+    {%- comment -%} CAS 2 — intro adaptée « pays non desservi » (remplace les 2 lignes par défaut) {%- endcomment -%}
+    <p class="mc-availability__heavy-line">{{ intro_override | escape }}</p>
+  {%- else -%}
+    {%- if block.settings.heavy_line_1 != blank -%}
+      <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_1 | escape }}</p>
+    {%- endif -%}
+    {%- if block.settings.heavy_line_2 != blank -%}
+      <p class="mc-availability__heavy-line">{{ block.settings.heavy_line_2 | escape }}</p>
+    {%- endif -%}
   {%- endif -%}
   {%- if block.settings.heavy_cta_label != blank -%}
     <button type="button" class="mc-availability__quote-cta" data-mc-quote-trigger="{{ mc_q_id }}" aria-haspopup="dialog">
