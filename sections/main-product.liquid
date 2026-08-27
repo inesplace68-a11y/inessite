@@ -739,9 +739,11 @@
                 {%- else -%}
                 {%- liquid
                   assign mc_bb_var = product.selected_or_first_available_variant
-                  assign mc_bb_qty = mc_bb_var.inventory_quantity | default: 0
+                  assign mc_bb_qty = mc_bb_var.inventory_quantity
                   assign mc_bb_sold = false
-                  if mc_bb_qty <= 0 and mc_bb_var.inventory_policy != 'continue'
+                  # « Vraiment vendu » seulement si stock réel connu <= 0. En sous-marché non
+                  # desservi, inventory_quantity = nil (blank) : ne pas afficher « VENDU ».
+                  if mc_bb_qty != blank and mc_bb_qty <= 0 and mc_bb_var.inventory_policy != 'continue'
                     assign mc_bb_sold = true
                   endif
                 -%}
@@ -973,9 +975,12 @@
                 {%- if section.settings.pdp_show_availability and block.settings.visible -%}
                   {%- liquid
                     assign mc_av_var = product.selected_or_first_available_variant
-                    assign mc_av_qty = mc_av_var.inventory_quantity | default: 0
+                    assign mc_av_qty = mc_av_var.inventory_quantity
                     assign mc_av_sold = false
-                    if mc_av_qty <= 0 and mc_av_var.inventory_policy != 'continue'
+                    # « Vraiment vendu » seulement si un stock réel <= 0 est connu. En sous-marché
+                    # non desservi, inventory_quantity = nil (blank) : ne pas conclure « vendu »
+                    # (sinon faux positif) -> retombe en Cas 2 (devis pays).
+                    if mc_av_qty != blank and mc_av_qty <= 0 and mc_av_var.inventory_policy != 'continue'
                       assign mc_av_sold = true
                     endif
                     assign mc_av_weight_g = mc_av_var.weight | default: 0
