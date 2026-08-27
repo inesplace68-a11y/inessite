@@ -1011,7 +1011,7 @@
                     {%- endif -%}
                   {%- elsif mc_av_sold == false -%}
                     {%- comment -%} CAS 2 — en stock mais pas de tarif pour ce pays : devis (tout poids) {%- endcomment -%}
-                    {%- assign mc_av_intro = block.settings.country_unavailable_intro | default: "Cette pièce n'est pas encore expédiée vers {pays}. Faites-nous part de votre demande, nous reviendrons vers vous avec une solution de livraison." | replace: '{pays}', mc_av_country -%}
+                    {%- assign mc_av_intro = block.settings.country_unavailable_intro | default: "Livraison vers {pays} sur devis. Faites-nous part de votre demande, nous revenons vers vous avec une proposition d'expédition." | replace: '{pays}', mc_av_country -%}
                     {%- render 'mc-quote-block', section: section, block: block, product: product, variant: mc_av_var, country_name: mc_av_country, intro_override: mc_av_intro -%}
                   {%- endif -%}
                   {%- comment -%} CAS 1 (vraiment vendu) : rien ici — bouton alerte dans buy_buttons {%- endcomment -%}
@@ -1855,7 +1855,7 @@
         { "type": "text", "id": "heavy_line_1", "default": "France : tarif calculé au panier", "label": "Ligne 1 (module devis)" },
         { "type": "text", "id": "heavy_line_2", "default": "Autres destinations : sur devis", "label": "Ligne 2 (module devis)" },
         { "type": "text", "id": "heavy_cta_label", "default": "Demander un devis de livraison", "label": "Libellé du lien devis" },
-        { "type": "textarea", "id": "country_unavailable_intro", "default": "Cette pièce n'est pas encore expédiée vers {pays}. Faites-nous part de votre demande, nous reviendrons vers vous avec une solution de livraison.", "label": "Intro devis — pays non desservi", "info": "Affiché quand la pièce est en stock mais sans tarif de livraison pour le pays sélectionné. Placeholder {pays} = pays sélectionné." },
+        { "type": "textarea", "id": "country_unavailable_intro", "default": "Livraison vers {pays} sur devis. Faites-nous part de votre demande, nous revenons vers vous avec une proposition d'expédition.", "label": "Intro devis (livraison internationale)", "info": "Formulation positive uniquement (jamais « non livré / indisponible »). Placeholder {pays} = pays sélectionné." },
         { "type": "header", "content": "Modale de demande de devis" },
         { "type": "text", "id": "quote_modal_title", "default": "Demander un devis de livraison", "label": "Titre de la modale" },
         { "type": "text", "id": "field_name_label", "default": "Nom", "label": "Champ — Nom" },

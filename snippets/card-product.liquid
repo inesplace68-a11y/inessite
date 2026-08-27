@@ -39,6 +39,14 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+    # MC — « vraiment vendu » : badge Vendu seulement si stock réel connu <= 0.
+    # Sous-marché non desservi (inventory_quantity nil) : pas de badge négatif.
+    assign mc_card_variant = card_product.selected_or_first_available_variant
+    assign mc_card_inv = mc_card_variant.inventory_quantity
+    assign mc_card_really_sold = false
+    if card_product.available == false and mc_card_inv != blank and mc_card_inv <= 0 and mc_card_variant.inventory_policy != 'continue'
+      assign mc_card_really_sold = true
+    endif
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover" data-product-id="{{ card_product.id }}">
     {%- render 'heart-button', product: card_product, context: 'card' -%}
@@ -126,7 +134,7 @@
             </h3>
           </div>
           <div class="card__badge {{ settings.badge_position }}">
-            {%- if card_product.available == false -%}
+            {%- if mc_card_really_sold -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
@@ -552,7 +560,7 @@
           {% endif %}
         {% endif %}
         <div class="card__badge {{ settings.badge_position }}">
-          {%- if card_product.available == false -%}
+          {%- if mc_card_really_sold -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"

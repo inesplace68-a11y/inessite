@@ -26,6 +26,14 @@
   assign price_min = product.price_min
   assign price_max = product.price_max
   assign available = target.available | default: false
+  # MC — « vraiment vendu » : badge Vendu seulement si stock réel connu <= 0.
+  # En sous-marché non desservi, inventory_quantity = nil (blank) : pas de badge (option devis côté fiche).
+  assign mc_sold_variant = product.selected_or_first_available_variant
+  assign mc_sold_inv = mc_sold_variant.inventory_quantity
+  assign mc_really_sold = false
+  if available == false and mc_sold_inv != blank and mc_sold_inv <= 0 and mc_sold_variant.inventory_policy != 'continue'
+    assign mc_really_sold = true
+  endif
   assign money_price = price | money
   assign money_price_min = price_min | money
   assign money_price_max = price_max | money
@@ -49,7 +57,7 @@
     class="
       price
       {%- if price_class %} {{ price_class }}{% endif -%}
-      {%- if available == false %} price--sold-out{% endif -%}
+      {%- if mc_really_sold %} price--sold-out{% endif -%}
       {%- if compare_at_price > price and product.quantity_price_breaks_configured? != true %} price--on-sale{% endif -%}
       {%- if compare_at_price > price and product.quantity_price_breaks_configured? %} volume-pricing--sale-badge{% endif -%}
       {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
