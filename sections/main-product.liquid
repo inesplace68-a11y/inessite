@@ -741,9 +741,11 @@
                   assign mc_bb_var = product.selected_or_first_available_variant
                   assign mc_bb_qty = mc_bb_var.inventory_quantity
                   assign mc_bb_sold = false
-                  # « Vraiment vendu » seulement si stock réel connu <= 0. En sous-marché non
-                  # desservi, inventory_quantity = nil (blank) : ne pas afficher « VENDU ».
-                  if mc_bb_qty != blank and mc_bb_qty <= 0 and mc_bb_var.inventory_policy != 'continue'
+                  # « Vraiment vendu » PRIORITAIRE & indépendant du pays : drapeau metafield
+                  # custom.vraiment_vendu, sinon stock réel connu <= 0 (marché principal).
+                  if product.metafields.custom.vraiment_vendu.value
+                    assign mc_bb_sold = true
+                  elsif mc_bb_qty != blank and mc_bb_qty <= 0 and mc_bb_var.inventory_policy != 'continue'
                     assign mc_bb_sold = true
                   endif
                 -%}
@@ -977,10 +979,14 @@
                     assign mc_av_var = product.selected_or_first_available_variant
                     assign mc_av_qty = mc_av_var.inventory_quantity
                     assign mc_av_sold = false
-                    # « Vraiment vendu » seulement si un stock réel <= 0 est connu. En sous-marché
-                    # non desservi, inventory_quantity = nil (blank) : ne pas conclure « vendu »
-                    # (sinon faux positif) -> retombe en Cas 2 (devis pays).
-                    if mc_av_qty != blank and mc_av_qty <= 0 and mc_av_var.inventory_policy != 'continue'
+                    # « Vraiment vendu » — PRIORITAIRE & indépendant du pays :
+                    #  1) drapeau metafield custom.vraiment_vendu (fiable même en sous-marché où
+                    #     Shopify masque le stock : inventory_quantity y est nil),
+                    #  2) sinon, stock réel connu <= 0 (marché principal).
+                    # Le Cas 2 (devis pays non desservi) ne s'applique que si le produit n'est PAS vendu.
+                    if product.metafields.custom.vraiment_vendu.value
+                      assign mc_av_sold = true
+                    elsif mc_av_qty != blank and mc_av_qty <= 0 and mc_av_var.inventory_policy != 'continue'
                       assign mc_av_sold = true
                     endif
                     assign mc_av_weight_g = mc_av_var.weight | default: 0

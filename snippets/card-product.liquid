@@ -44,7 +44,9 @@
     assign mc_card_variant = card_product.selected_or_first_available_variant
     assign mc_card_inv = mc_card_variant.inventory_quantity
     assign mc_card_really_sold = false
-    if card_product.available == false and mc_card_inv != blank and mc_card_inv <= 0 and mc_card_variant.inventory_policy != 'continue'
+    if card_product.metafields.custom.vraiment_vendu.value
+      assign mc_card_really_sold = true
+    elsif card_product.available == false and mc_card_inv != blank and mc_card_inv <= 0 and mc_card_variant.inventory_policy != 'continue'
       assign mc_card_really_sold = true
     endif
   -%}

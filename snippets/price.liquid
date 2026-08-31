@@ -31,7 +31,9 @@
   assign mc_sold_variant = product.selected_or_first_available_variant
   assign mc_sold_inv = mc_sold_variant.inventory_quantity
   assign mc_really_sold = false
-  if available == false and mc_sold_inv != blank and mc_sold_inv <= 0 and mc_sold_variant.inventory_policy != 'continue'
+  if product.metafields.custom.vraiment_vendu.value
+    assign mc_really_sold = true
+  elsif available == false and mc_sold_inv != blank and mc_sold_inv <= 0 and mc_sold_variant.inventory_policy != 'continue'
     assign mc_really_sold = true
   endif
   assign money_price = price | money
