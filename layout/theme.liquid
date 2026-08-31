@@ -296,6 +296,33 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'maison-coeur.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      MC — Grille produit : copie inline des règles critiques de base.css
+      (bloc « component-grid »). Garantit l'affichage multi-colonnes — 2 col.
+      sur mobile en particulier — même si base.css est bloqué par un bloqueur
+      de contenu ou échoue au chargement. Redondant quand base.css est présent
+      (règles identiques), salvateur sinon. Impossible à bloquer car inline.
+    {%- endcomment -%}
+    <style>
+      .grid { display: flex; flex-wrap: wrap; padding: 0; list-style: none; column-gap: var(--grid-mobile-horizontal-spacing); row-gap: var(--grid-mobile-vertical-spacing); }
+      @media screen and (max-width: 749px) {
+        .grid--2-col-tablet-down .grid__item { width: calc(50% - var(--grid-mobile-horizontal-spacing) / 2); }
+        .grid--1-col-tablet-down .grid__item { width: 100%; }
+      }
+      @media screen and (min-width: 750px) {
+        .grid { column-gap: var(--grid-desktop-horizontal-spacing); row-gap: var(--grid-desktop-vertical-spacing); }
+      }
+      @media screen and (min-width: 750px) and (max-width: 989px) {
+        .grid--2-col-tablet-down .grid__item { width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2); }
+      }
+      @media screen and (min-width: 990px) {
+        .grid--2-col-desktop .grid__item { width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2); max-width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2); }
+        .grid--3-col-desktop .grid__item { width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3); max-width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3); }
+        .grid--4-col-desktop .grid__item { width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4); max-width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4); }
+        .grid--5-col-desktop .grid__item { width: calc(20% - var(--grid-desktop-horizontal-spacing) * 4 / 5); max-width: calc(20% - var(--grid-desktop-horizontal-spacing) * 4 / 5); }
+        .grid--6-col-desktop .grid__item { width: calc(16.66% - var(--grid-desktop-horizontal-spacing) * 5 / 6); max-width: calc(16.66% - var(--grid-desktop-horizontal-spacing) * 5 / 6); }
+      }
+    </style>
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
