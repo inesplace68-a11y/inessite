@@ -1763,6 +1763,56 @@ button.mc-hd-icon {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  /* Recherche mobile inline : la barre crème EST le champ ; suggestions en menu déroulant */
+  .mc-msearch { position: relative; }
+  .mc-msearch:focus-within { border-color: var(--mc-ink-soft, #5A5446); }
+  .mc-msearch__input {
+    background: transparent;
+    border: 0;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    color: var(--mc-ink, #1A1814);
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1.4;
+    white-space: normal;
+  }
+  .mc-msearch__input::placeholder { color: var(--mc-ink-soft, #5A5446); opacity: 1; }
+  .mc-msearch__input::-webkit-search-cancel-button,
+  .mc-msearch__input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+  .mc-msearch__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--mc-ink-soft, #5A5446);
+    cursor: pointer;
+    line-height: 0;
+  }
+  .mc-msearch__results {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    background: #F5F0E8;
+    border: 0.75px solid #E8E4DD;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(26, 24, 20, 0.14);
+    padding: 6px 0;
+    max-height: 70vh;
+    overflow-y: auto;
+    text-align: left;
+    cursor: default;
+  }
+  .mc-msearch__results .mc-search-block { padding: 10px 14px; }
+  .mc-msearch__results .mc-search-block + .mc-search-block { border-top: 0.75px solid rgba(26, 24, 20, 0.08); }
 }
 
 /* === DRAWER MOBILE === */
