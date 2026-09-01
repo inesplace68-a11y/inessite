@@ -50,7 +50,7 @@
         "image_overlay_opacity": 0,
         "nav_hero_gap": 0,
         "hero_image_position_x": 0,
-        "hero_image_position_y": 100,
+        "hero_image_position_y": 25,
         "hero_title_size": 64,
         "hero_cta_color_rest": "#ffffff",
         "hero_cta_opacity_rest": 1,
