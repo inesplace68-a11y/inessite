@@ -14,13 +14,15 @@
       "blocks": {
         "heading": {
           "type": "heading",
+          "disabled": true,
           "settings": {
-            "heading": "Reflets du temps",
+            "heading": "New Edit",
             "heading_size": "hxl"
           }
         },
         "text": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "Miroirs anciens pour demeures intemporelles",
             "text_style": "subtitle"
@@ -29,8 +31,8 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Découvrir la sélection",
-            "button_link_1": "shopify://collections/miroirs",
+            "button_label_1": "NEW EDIT",
+            "button_link_1": "shopify://collections/all",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
