@@ -669,11 +669,14 @@ h1, h2, h3, h4,
 
 .mc-reassurance__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, 1fr) : les colonnes peuvent descendre sous leur min-content
+     (sinon 1fr = minmax(auto,1fr) fige la colonne à la largeur du contenu et
+     déborde du viewport sur mobile — cause de la bande blanche à droite). */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 @media (max-width: 749px) {
-  .mc-reassurance__grid { grid-template-columns: repeat(2, 1fr); }
+  .mc-reassurance__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .mc-reassurance__item {
