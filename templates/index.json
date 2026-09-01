@@ -45,6 +45,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/188188F6-5F76-4B13-B3A5-AD6E09CA91B8.png",
+        "hero_image_mobile": "shopify://shop_images/BEE5F5E2-3AC1-4E28-81EA-A87B2AB236B5.png",
         "image_overlay_opacity": 0,
         "nav_hero_gap": 0,
         "hero_image_position_x": 0,
@@ -62,6 +63,7 @@
         "hero_max_height_vh": 90,
         "hero_overlay_color": "#000000",
         "hero_overlay_opacity_pct": 17,
+        "hero_veil_opacity_mobile": 25,
         "hero_spacing_title_to_subtitle": 8,
         "hero_spacing_subtitle_to_cta": 14,
         "hero_scroll_indicator_enabled": true,
@@ -206,6 +208,7 @@
       "settings": {
         "image": "shopify://shop_images/IMG_6240.jpg",
         "overlay_opacity": 35,
+        "veil_opacity_mobile": 25,
         "eyebrow": "",
         "heading": "<p>Où chaque pièce raconte une histoire.</p>",
         "heading_size": 52,
@@ -323,7 +326,10 @@
         "padding_top_mobile": 28,
         "padding_bottom_mobile": 28,
         "icon_to_label_gap": 14,
-        "separator_vertical_inset": 0
+        "separator_vertical_inset": 0,
+        "text_inset_mobile": 12,
+        "cell_vpad_mobile": 10,
+        "desc_lines_mobile": 3
       }
     }
   },
