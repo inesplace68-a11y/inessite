@@ -32,46 +32,18 @@
       <p class="conciergerie-deroule__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
     {%- endif -%}
 
-    <div class="conciergerie-deroule__rows">
+    <div class="conciergerie-deroule__grid">
       {%- for block in section.blocks -%}
-        {%- assign row_position = forloop.index0 | modulo: 2 -%}
-        <div
-          class="conciergerie-deroule__row{% if row_position == 1 %} conciergerie-deroule__row--reverse{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          <div class="conciergerie-deroule__image-wrap">
-            {%- if block.settings.step_image != blank -%}
-              <img
-                class="conciergerie-deroule__image"
-                src="{{ block.settings.step_image | image_url: width: 1080 }}"
-                srcset="{{ block.settings.step_image | image_url: width: 540 }} 540w, {{ block.settings.step_image | image_url: width: 1080 }} 1080w"
-                sizes="(min-width: 1024px) {{ section.settings.image_width }}px, 100vw"
-                alt="{{ block.settings.step_image.alt | default: block.settings.title | escape }}"
-                loading="lazy"
-                width="540"
-                height="380"
-              >
-            {%- else -%}
-              <div class="conciergerie-deroule__placeholder" role="img" aria-label="{{ block.settings.step_image_placeholder_caption | default: block.settings.title | escape }}">
-                <span class="conciergerie-deroule__placeholder-label">PHOTO À VENIR</span>
-                {%- if block.settings.step_image_placeholder_caption != blank -%}
-                  <span class="conciergerie-deroule__placeholder-caption">{{ block.settings.step_image_placeholder_caption | escape }}</span>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-
-          <div class="conciergerie-deroule__text">
-            {%- if block.settings.numeral != blank -%}
-              <p class="conciergerie-deroule__numeral">{{ block.settings.numeral | escape }}</p>
-            {%- endif -%}
-            {%- if block.settings.title != blank -%}
-              <h2 class="conciergerie-deroule__title">{{ block.settings.title | escape }}</h2>
-            {%- endif -%}
-            {%- if block.settings.body != blank -%}
-              <div class="conciergerie-deroule__body rte">{{ block.settings.body }}</div>
-            {%- endif -%}
-          </div>
+        <div class="conciergerie-deroule__col" {{ block.shopify_attributes }}>
+          {%- if block.settings.numeral != blank -%}
+            <p class="conciergerie-deroule__numeral">{{ block.settings.numeral | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h2 class="conciergerie-deroule__title">{{ block.settings.title | escape }}</h2>
+          {%- endif -%}
+          {%- if block.settings.body != blank -%}
+            <div class="conciergerie-deroule__body rte">{{ block.settings.body }}</div>
+          {%- endif -%}
         </div>
       {%- endfor -%}
     </div>
