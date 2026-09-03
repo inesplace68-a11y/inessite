@@ -126,7 +126,7 @@
         "col-1": {
           "type": "collection_item",
           "settings": {
-            "image": "shopify://shop_images/99AE2BAB-63B0-4BDD-BF08-F9379DC168A5.png",
+            "image": "shopify://shop_images/ChatGPT_Image_2_sept._2026_a_20_29_57.png",
             "title": "OBJETS",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/objets"
@@ -135,7 +135,7 @@
         "col-2": {
           "type": "collection_item",
           "settings": {
-            "image": "shopify://shop_images/9CA39CF7-E03B-4CA3-847E-E1BD3091212C.png",
+            "image": "shopify://shop_images/miroir_fond_exact_lampe.png",
             "title": "MIROIRS",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/miroirs"
@@ -144,7 +144,7 @@
         "col-3": {
           "type": "collection_item",
           "settings": {
-            "image": "shopify://shop_images/FF61906E-03DB-4CCE-BCC8-C9C1185CEEF2_b3cbd280-5222-4ad8-803b-6ddb8e4a6367.png",
+            "image": "shopify://shop_images/ChatGPT_Image_2_sept._2026_a_19_51_51.png",
             "title": "LUMINAIRES",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/luminaires"
@@ -153,7 +153,7 @@
         "col-4": {
           "type": "collection_item",
           "settings": {
-            "image": "shopify://shop_images/52571D34-6367-4AF9-9940-28E56D29699B.png",
+            "image": "shopify://shop_images/ChatGPT_Image_2_sept._2026_a_20_22_55.png",
             "title": "MOBILIER",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/mobilier"
@@ -162,7 +162,7 @@
         "col-5": {
           "type": "collection_item",
           "settings": {
-            "image": "shopify://shop_images/A7248C5E-AFFB-4342-BC9E-EC1259AF2264.png",
+            "image": "shopify://shop_images/tableau_fond_exact_lampe-2.png",
             "title": "ART",
             "discover_label": "Découvrir",
             "collection_link": "shopify://collections/art"
@@ -237,6 +237,7 @@
         "logo_3_image": "shopify://shop_images/madame-figaro-seeklogo.png",
         "logo_3_alt": "",
         "logo_3_url": "",
+        "logo_4_image": "shopify://shop_images/Architectural-Digest-Logo-PNG-Images-HD.png",
         "logo_4_alt": "",
         "logo_4_url": "",
         "logo_5_alt": "",
