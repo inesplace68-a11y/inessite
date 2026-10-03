@@ -1,0 +1,167 @@
+/* ============================================================
+   Page Protection acheteur — axe unique à gauche, colonne de
+   texte limitée, aucun visuel. Palette : variables globales --mc-*.
+   Desktop par défaut ; ajustements mobile en media queries.
+   ============================================================ */
+.pa {
+  background-color: var(--mc-bg);
+  padding-top: var(--pa-padding-top, 96px);
+  padding-bottom: var(--pa-padding-bottom, 120px);
+}
+
+.pa__inner {
+  max-width: var(--pa-container-max, 960px);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Colonne de texte : largeur limitée, décalée à gauche (axe unique) */
+.pa__col {
+  max-width: var(--pa-col-width, 660px);
+  margin-left: var(--pa-left-margin, 80px);
+  text-align: left;
+}
+
+/* ---- H1 ---- */
+.pa__h1 {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--pa-h1-size, 64px);
+  line-height: var(--pa-h1-line-height, 1.05);
+  color: var(--mc-dark);
+  margin: 0 0 var(--pa-h1-mb, 48px);
+}
+
+/* ---- Filets (largeur de la colonne, encre très atténuée) ---- */
+.pa__rule {
+  border: 0;
+  border-top: 1px solid var(--mc-border);
+  height: 0;
+  width: 100%;
+  margin: 0 0 var(--pa-block-gap, 64px);
+}
+
+/* ---- Blocs ---- */
+.pa__block {
+  margin: 0 0 var(--pa-block-gap, 64px);
+}
+
+.pa__block-title {
+  font-family: var(--mc-font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--pa-title-size, 30px);
+  line-height: 1.2;
+  color: var(--mc-dark);
+  margin: 0 0 var(--pa-title-mb, 18px);
+}
+
+.pa__block-body {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pa-body-size, 16px);
+  line-height: var(--pa-body-line-height, 1.8);
+  color: var(--mc-ink-soft);
+}
+
+.pa__block-body > * {
+  margin: 0;
+}
+.pa__block-body > * + * {
+  margin-top: 1em;
+}
+
+/* ---- Liens secondaires (Jost caps, bronze, soulignement fin + flèche) ---- */
+.pa__link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  margin-top: var(--pa-link-mt, 20px);
+  font-family: var(--mc-font-sans);
+  font-weight: 400;
+  font-size: var(--pa-link-size, 12px);
+  letter-spacing: var(--pa-link-tracking, 0.18em);
+  text-transform: uppercase;
+  color: var(--mc-bronze);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.pa__link:hover {
+  opacity: 0.7;
+}
+
+.pa__link-label {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.pa__arrow {
+  text-decoration: none;
+}
+
+/* ---- Clôture ---- */
+.pa__closing {
+  margin: var(--pa-closing-mt, 112px) 0 0;
+}
+
+.pa__closing-text {
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pa-closing-size, 18px);
+  line-height: 1.6;
+  color: var(--mc-ink-soft);
+  margin: 0;
+}
+
+.pa__closing-link {
+  margin-top: var(--pa-closing-link-mt, 18px);
+}
+
+/* ---- Ligne légale de pied ---- */
+.pa__legal {
+  margin: var(--pa-legal-mt, 48px) 0 0;
+  max-width: var(--pa-legal-max-width, 520px);
+  font-family: var(--mc-font-sans);
+  font-weight: 300;
+  font-size: var(--pa-legal-size, 11px);
+  line-height: 1.6;
+  color: var(--mc-whisper);
+}
+
+.pa__legal > * {
+  margin: 0;
+}
+
+.pa__legal a {
+  color: var(--mc-whisper);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.pa__legal a:hover {
+  color: var(--mc-ink-soft);
+}
+
+/* ============================================================
+   Mobile — même axe à gauche, marges latérales réduites.
+   Les filets gardent la largeur de la colonne.
+   ============================================================ */
+@media (max-width: 749px) {
+  .pa__inner {
+    padding: 0 22px;
+  }
+  .pa__col {
+    margin-left: 0;
+    max-width: 100%;
+  }
+  .pa__h1 {
+    font-size: calc(var(--pa-h1-size, 64px) * 0.68);
+  }
+  .pa__block-title {
+    font-size: calc(var(--pa-title-size, 30px) * 0.85);
+  }
+}

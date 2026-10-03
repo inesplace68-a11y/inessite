@@ -1,0 +1,153 @@
+{%- comment -%}
+  Page Protection acheteur — refonte éditoriale (desktop + mobile).
+  Axe unique à gauche, colonne de texte limitée, aucun visuel.
+  Tout le contenu et les espacements sont exposés au customizer.
+  Palette : variables globales --mc-* du thème uniquement.
+{%- endcomment -%}
+
+{{ 'section-protection-acheteur.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="pa"
+  style="
+    --pa-container-max: {{ section.settings.container_max_width }}px;
+    --pa-col-width: {{ section.settings.column_width }}px;
+    --pa-left-margin: {{ section.settings.left_margin }}px;
+    --pa-padding-top: {{ section.settings.padding_top }}px;
+    --pa-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pa-h1-size: {{ section.settings.h1_size }}px;
+    --pa-h1-line-height: {{ section.settings.h1_line_height | divided_by: 100.0 }};
+    --pa-h1-mb: {{ section.settings.h1_margin_bottom }}px;
+    --pa-title-size: {{ section.settings.block_title_size }}px;
+    --pa-title-mb: {{ section.settings.block_title_margin_bottom }}px;
+    --pa-body-size: {{ section.settings.body_size }}px;
+    --pa-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --pa-block-gap: {{ section.settings.block_gap }}px;
+    --pa-link-size: {{ section.settings.link_size }}px;
+    --pa-link-tracking: {{ section.settings.link_tracking | divided_by: 100.0 }}em;
+    --pa-link-mt: {{ section.settings.link_margin_top }}px;
+    --pa-closing-size: {{ section.settings.closing_size }}px;
+    --pa-closing-mt: {{ section.settings.closing_margin_top }}px;
+    --pa-closing-link-mt: {{ section.settings.closing_link_margin_top }}px;
+    --pa-legal-size: {{ section.settings.legal_size }}px;
+    --pa-legal-max-width: {{ section.settings.legal_max_width }}px;
+    --pa-legal-mt: {{ section.settings.legal_margin_top }}px;
+  "
+>
+  <div class="pa__inner">
+    <div class="pa__col">
+
+      {%- if section.settings.h1_text != blank -%}
+        <h1 class="pa__h1">{{ section.settings.h1_text }}</h1>
+      {%- endif -%}
+
+      <hr class="pa__rule">
+
+      {%- for block in section.blocks -%}
+        <div class="pa__block" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h2 class="pa__block-title">{{ block.settings.title }}</h2>
+          {%- endif -%}
+          {%- if block.settings.body != blank -%}
+            <div class="pa__block-body rte">{{ block.settings.body }}</div>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+            <a class="pa__link" href="{{ block.settings.link_url }}">
+              <span class="pa__link-label">{{ block.settings.link_label }}</span>
+              <span class="pa__arrow" aria-hidden="true">→</span>
+            </a>
+          {%- endif -%}
+        </div>
+        {%- unless forloop.last -%}
+          <hr class="pa__rule">
+        {%- endunless -%}
+      {%- endfor -%}
+
+      {%- if section.settings.closing_text != blank or section.settings.closing_email_label != blank -%}
+        <div class="pa__closing">
+          {%- if section.settings.closing_text != blank -%}
+            <p class="pa__closing-text">{{ section.settings.closing_text }}</p>
+          {%- endif -%}
+          {%- if section.settings.closing_email_label != blank and section.settings.closing_email_address != blank -%}
+            <a class="pa__link pa__closing-link" href="mailto:{{ section.settings.closing_email_address }}">
+              <span class="pa__link-label">{{ section.settings.closing_email_label }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.legal_text != blank -%}
+        <div class="pa__legal rte">{{ section.settings.legal_text }}</div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Protection acheteur",
+  "tag": "section",
+  "class": "shopify-section--protection-acheteur",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "header", "content": "Titre (H1)" },
+    { "type": "text", "id": "h1_text", "label": "Titre H1", "default": "Protection acheteur" },
+    { "type": "range", "id": "h1_size", "min": 36, "max": 96, "step": 2, "unit": "px", "label": "Taille H1", "default": 64 },
+    { "type": "range", "id": "h1_line_height", "min": 90, "max": 140, "step": 5, "unit": "%", "label": "Interligne H1", "default": 105 },
+    { "type": "range", "id": "h1_margin_bottom", "min": 8, "max": 120, "step": 4, "unit": "px", "label": "Espace sous le H1", "default": 48 },
+
+    { "type": "header", "content": "Mise en page" },
+    { "type": "range", "id": "container_max_width", "min": 700, "max": 1200, "step": 20, "unit": "px", "label": "Largeur du conteneur (centré)", "default": 960 },
+    { "type": "range", "id": "column_width", "min": 440, "max": 820, "step": 10, "unit": "px", "label": "Largeur de la colonne de texte", "default": 660 },
+    { "type": "range", "id": "left_margin", "min": 0, "max": 240, "step": 10, "unit": "px", "label": "Marge gauche (desktop)", "default": 80 },
+    { "type": "range", "id": "padding_top", "min": 20, "max": 220, "step": 4, "unit": "px", "label": "Padding haut", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 20, "max": 240, "step": 4, "unit": "px", "label": "Padding bas", "default": 120 },
+
+    { "type": "header", "content": "Titres de blocs" },
+    { "type": "range", "id": "block_title_size", "min": 18, "max": 44, "step": 1, "unit": "px", "label": "Taille titre de bloc", "default": 30 },
+    { "type": "range", "id": "block_title_margin_bottom", "min": 4, "max": 48, "step": 2, "unit": "px", "label": "Espace sous le titre de bloc", "default": 18 },
+
+    { "type": "header", "content": "Corps de texte" },
+    { "type": "range", "id": "body_size", "min": 13, "max": 22, "step": 1, "unit": "px", "label": "Taille corps", "default": 16 },
+    { "type": "range", "id": "body_line_height", "min": 140, "max": 220, "step": 5, "unit": "%", "label": "Interligne corps", "default": 180 },
+
+    { "type": "header", "content": "Espacement entre blocs / filets" },
+    { "type": "range", "id": "block_gap", "min": 24, "max": 160, "step": 4, "unit": "px", "label": "Respiration autour des filets", "default": 64 },
+
+    { "type": "header", "content": "Liens secondaires" },
+    { "type": "range", "id": "link_size", "min": 9, "max": 16, "step": 1, "unit": "px", "label": "Taille lien", "default": 12 },
+    { "type": "range", "id": "link_tracking", "min": 0, "max": 40, "step": 1, "unit": "%", "label": "Interlettrage lien", "default": 18 },
+    { "type": "range", "id": "link_margin_top", "min": 6, "max": 48, "step": 2, "unit": "px", "label": "Espace au-dessus du lien", "default": 20 },
+
+    { "type": "header", "content": "Clôture" },
+    { "type": "text", "id": "closing_text", "label": "Phrase de clôture", "default": "Un doute, une question sur une pièce : écrivez-nous." },
+    { "type": "range", "id": "closing_size", "min": 14, "max": 30, "step": 1, "unit": "px", "label": "Taille phrase de clôture", "default": 18 },
+    { "type": "text", "id": "closing_email_label", "label": "Libellé du lien e-mail", "default": "HELLO@MAISONCOEUR.FR" },
+    { "type": "text", "id": "closing_email_address", "label": "Adresse e-mail (mailto)", "default": "hello@maisoncoeur.fr" },
+    { "type": "range", "id": "closing_margin_top", "min": 40, "max": 240, "step": 4, "unit": "px", "label": "Espace au-dessus de la clôture", "default": 112 },
+    { "type": "range", "id": "closing_link_margin_top", "min": 6, "max": 40, "step": 2, "unit": "px", "label": "Espace au-dessus du lien e-mail", "default": 18 },
+
+    { "type": "header", "content": "Ligne légale de pied" },
+    { "type": "richtext", "id": "legal_text", "label": "Ligne légale (inclut le lien « nos CGV »)", "default": "<p>Ces engagements s’ajoutent aux garanties légales de conformité et contre les vices cachés, détaillées dans <a href=\"/pages/cgv\">nos CGV</a>.</p>" },
+    { "type": "range", "id": "legal_size", "min": 9, "max": 15, "step": 1, "unit": "px", "label": "Taille ligne légale", "default": 11 },
+    { "type": "range", "id": "legal_max_width", "min": 300, "max": 660, "step": 10, "unit": "px", "label": "Largeur ligne légale", "default": 520 },
+    { "type": "range", "id": "legal_margin_top", "min": 20, "max": 140, "step": 4, "unit": "px", "label": "Espace au-dessus de la ligne légale", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "bloc",
+      "name": "Bloc",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre du bloc", "default": "Titre du bloc" },
+        { "type": "richtext", "id": "body", "label": "Corps du bloc", "default": "<p>Texte du bloc.</p>" },
+        { "type": "text", "id": "link_label", "label": "Libellé du lien secondaire (optionnel — la flèche est ajoutée automatiquement)" },
+        { "type": "url", "id": "link_url", "label": "Destination du lien secondaire" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Protection acheteur" }
+  ]
+}
+{% endschema %}
