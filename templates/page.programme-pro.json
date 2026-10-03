@@ -59,7 +59,7 @@
     "privileges": {
       "type": "programme-pro-privileges",
       "settings": {
-        "eyebrow_text": "LES PRIVILÈGES",
+        "eyebrow_text": "PRIVILÈGES",
         "eyebrow_size": 13,
         "eyebrow_tracking": 30,
         "eyebrow_margin_bottom": 60,
