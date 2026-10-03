@@ -12,7 +12,7 @@
     "hero": {
       "type": "programme-pro-hero",
       "settings": {
-        "hero_image": "shopify://shop_images/2.jpg",
+        "hero_image": "shopify://shop_images/4.jpg",
         "hero_height": 35,
         "hero_min_height": 420,
         "overlay_opacity": 80,
@@ -23,7 +23,9 @@
         "intro_max_width": 820,
         "manifeste_text": "<p>Travailler avec celles et ceux qui composent les lieux.</p>",
         "manifeste_size": 24,
-        "manifeste_margin_top": 32
+        "manifeste_margin_top": 32,
+        "cta_text": "REJOINDRE LE PROGRAMME PRO →",
+        "cta_anchor": "#programme-pro-form"
       }
     },
     "projets": {
