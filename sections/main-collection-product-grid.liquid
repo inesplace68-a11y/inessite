@@ -76,6 +76,15 @@
   #shopify-section-{{ section.id }} .product-grid {
     gap: var(--mcg-card-gap-desktop, 20px);
   }
+  /* Fix desktop : largeur des vignettes alignée sur le gap réel des cartes.
+     Sans ça, les colonnes sont calculées pour --grid-desktop-horizontal-spacing (8px)
+     mais le gap appliqué est de 20px → 4 colonnes débordent et la 4e passe à la ligne
+     (colonne vide à droite). Desktop uniquement ; le mobile utilise une autre variable. */
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .product-grid {
+      --grid-desktop-horizontal-spacing: var(--mcg-card-gap-desktop, 20px);
+    }
+  }
   /* Format image 4:5 portrait (override Dawn ratio) */
   #shopify-section-{{ section.id }} .card .card__inner.ratio,
   #shopify-section-{{ section.id }} .card-wrapper .card__inner.ratio {
