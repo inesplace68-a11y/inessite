@@ -945,33 +945,37 @@
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
               {%- when 'mc_tags' -%}
-                {%- liquid
-                  assign mc_tags_show_1 = block.settings.tag_1_visible
-                  assign mc_tags_show_2 = block.settings.tag_2_visible
-                  assign mc_tags_section_visible = section.settings.pdp_tag_show
-                -%}
-                {%- if mc_tags_section_visible and mc_tags_show_1 or mc_tags_section_visible and mc_tags_show_2 -%}
-                  <div
-                    class="mc-pdp-tags-row"
-                    {{ block.shopify_attributes }}
-                  >
-                    {%- if mc_tags_show_1 and block.settings.tag_1_label != blank -%}
-                      {%- assign mc_tag_1_label = block.settings.tag_1_label | upcase -%}
-                      {%- if block.settings.tag_1_link != blank -%}
-                        <a class="mc-pdp-tag" href="{{ block.settings.tag_1_link }}">{{ mc_tag_1_label }}</a>
-                      {%- else -%}
-                        <span class="mc-pdp-tag">{{ mc_tag_1_label }}</span>
-                      {%- endif -%}
-                    {%- endif -%}
-                    {%- if mc_tags_show_2 and block.settings.tag_2_label != blank -%}
-                      {%- assign mc_tag_2_label = block.settings.tag_2_label | upcase -%}
-                      {%- if block.settings.tag_2_link != blank -%}
-                        <a class="mc-pdp-tag" href="{{ block.settings.tag_2_link }}">{{ mc_tag_2_label }}</a>
-                      {%- else -%}
-                        <span class="mc-pdp-tag">{{ mc_tag_2_label }}</span>
-                      {%- endif -%}
-                    {%- endif -%}
-                  </div>
+                {%- comment -%}
+                  MC — Badges PDP pilotés par les tags produit.
+                  Un badge s'affiche UNIQUEMENT si la fiche porte le tag correspondant
+                  (insensible à la casse). On ajoute/retire un badge en ajoutant/retirant
+                  le tag sur la fiche, dans l'admin Shopify — gestion par fiche.
+                  Tags reconnus → libellé : vintage → VINTAGE, contemporain → CONTEMPORAIN,
+                  fait main → FAIT MAIN, pièce unique → PIÈCE UNIQUE. Ordre d'affichage fixe.
+                  Interrupteur global : réglage de section « Afficher les tags ».
+                {%- endcomment -%}
+                {%- if section.settings.pdp_tag_show -%}
+                  {%- liquid
+                    assign mc_badge_defs = 'vintage::VINTAGE,contemporain::CONTEMPORAIN,fait main::FAIT MAIN,pièce unique::PIÈCE UNIQUE' | split: ','
+                    assign mc_tags_norm = '|'
+                    for mc_t in product.tags
+                      assign mc_tags_norm = mc_tags_norm | append: mc_t | append: '|'
+                    endfor
+                    assign mc_tags_norm = mc_tags_norm | downcase
+                  -%}
+                  {%- capture mc_badges -%}
+                    {%- for mc_def in mc_badge_defs -%}
+                      {%- assign mc_parts = mc_def | split: '::' -%}
+                      {%- assign mc_needle = '|' | append: mc_parts[0] | append: '|' -%}
+                      {%- if mc_tags_norm contains mc_needle -%}<span class="mc-pdp-tag">{{ mc_parts[1] }}</span>{%- endif -%}
+                    {%- endfor -%}
+                  {%- endcapture -%}
+                  {%- assign mc_badges_stripped = mc_badges | strip -%}
+                  {%- if mc_badges_stripped != blank -%}
+                    <div class="mc-pdp-tags-row" {{ block.shopify_attributes }}>
+                      {{ mc_badges }}
+                    </div>
+                  {%- endif -%}
                 {%- endif -%}
               {%- when 'mc_availability' -%}
                 {%- if section.settings.pdp_show_availability and block.settings.visible -%}
