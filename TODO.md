@@ -40,3 +40,17 @@ ont aussi été revertées par `c451bbd`. Si on veut remettre ces valeurs à 0
 dans `templates/collection.json` (ou laisser le customizer Shopify les
 mettre à 0), il faudra **re-baisser les mins du schema** sans réintroduire
 la règle CSS agressive.
+
+## Vérifier l'affichage des dimensions (lampe Murano MC-2026-0014)
+
+**Statut** : à vérifier (fiche en brouillon).
+
+**Contexte** : dimensions ajoutées le 2026-10-18 — `custom.hauteur_cm = 38`,
+`custom.largeur_cm = 31` (le Ø 31). Le cartel PDP affiche « H 38 CM · L 31 CM » :
+le thème n'a pas de symbole Ø, le diamètre est donc porté par `largeur_cm`
+(même convention que le vase Mdina Ø 9).
+
+**À faire** : une fois la fiche passée en « Actif », vérifier sur la page produit
+que le cartel dimensions s'affiche correctement (H 38 · L 31) et que « L 31 »
+pour un diamètre convient. Sinon, prévoir une évolution thème pour gérer un vrai
+« Ø » (hors périmètre actuel).
