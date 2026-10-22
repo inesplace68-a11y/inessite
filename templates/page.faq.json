@@ -18,14 +18,14 @@
           "type": "qa",
           "settings": {
             "question": "Quels sont les délais d'expédition ?",
-            "answer": "<p>Variables selon le format de la pièce et la destination — de 3 jours ouvrés pour les petits objets envoyés en France, à 15 jours ouvrés pour le mobilier grand format expédié à l'international. Voir le détail sur la page Livraisons.</p>"
+            "answer": "<p>Variables selon le format de la pièce et la destination : de 3 à 5 jours ouvrés pour les objets envoyés en France, de 7 à 14 jours pour les objets à l'international, et jusqu'à plusieurs semaines pour le mobilier expédié à l'international. Voir le détail sur la page Livraisons.</p>"
           }
         },
         "q3": {
           "type": "qa",
           "settings": {
             "question": "Comment se passe la livraison d'une grande pièce ?",
-            "answer": "<p>Le mobilier et les pièces fragiles sont expédiés via Convelio, transporteur spécialisé. Une option white-glove est disponible : manutentionnaires professionnels, déballage et installation chez vous.</p>"
+            "answer": "<p>Le mobilier et les pièces fragiles sont expédiés via Convelio, transporteur spécialisé.</p>"
           }
         },
         "q4": {
@@ -56,13 +56,6 @@
             "answer": "<p>Pour les acquisitions importantes, le paiement fractionné — virement bancaire ou Stripe en plusieurs fois — peut être organisé sur demande. Écrivez à hello@maisoncoeur.fr.</p>"
           }
         },
-        "q8": {
-          "type": "qa",
-          "settings": {
-            "question": "Puis-je venir voir une pièce au showroom ?",
-            "answer": "<p>Oui, sur rendez-vous. Les modalités et le lieu de la rencontre vous sont communiqués à la prise de contact via hello@maisoncoeur.fr.</p>"
-          }
-        },
         "q9": {
           "type": "qa",
           "settings": {
@@ -78,7 +71,7 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"],
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q9", "q10"],
       "settings": {}
     },
     "contact": {
