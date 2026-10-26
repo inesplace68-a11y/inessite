@@ -127,7 +127,7 @@
           "settings": {
             "heading": "AUTHENTICITÉ & PROVENANCE",
             "icon": "clipboard",
-            "content": "<p>Origine : France. Époque : XIXe siècle, second Empire. Pièce sélectionnée et authentifiée par Maison Coeur. Une attestation de provenance vous est délivrée à l'acquisition.</p>",
+            "content": "",
             "page": ""
           }
         },
@@ -136,7 +136,7 @@
           "settings": {
             "heading": "ÉTAT & CONDITION",
             "icon": "leaf",
-            "content": "<p>Pièce vintage authentique. Patine, oxydation et marques d'usage témoignent de son âge et participent à son caractère. Toute restauration ou intervention est mentionnée si applicable.</p>",
+            "content": "",
             "page": ""
           }
         },

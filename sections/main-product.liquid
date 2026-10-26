@@ -419,6 +419,27 @@
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
               {%- when 'collapsible_tab' -%}
+                {%- liquid
+                  assign mc_tab_content = block.settings.content
+                  assign mc_tab_heading_norm = block.settings.heading | upcase
+                  assign mc_tab_hide = false
+                  if mc_tab_heading_norm contains 'AUTHENTICIT'
+                    assign mc_tab_mf = product.metafields.custom.authenticite_provenance.value
+                    if mc_tab_mf != blank
+                      assign mc_tab_content = mc_tab_mf | newline_to_br
+                    else
+                      assign mc_tab_hide = true
+                    endif
+                  elsif mc_tab_heading_norm contains 'ÉTAT' or mc_tab_heading_norm contains 'ETAT'
+                    assign mc_tab_mf = product.metafields.custom.etat_condition.value
+                    if mc_tab_mf != blank
+                      assign mc_tab_content = mc_tab_mf | newline_to_br
+                    else
+                      assign mc_tab_hide = true
+                    endif
+                  endif
+                -%}
+                {%- unless mc_tab_hide -%}
                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
                   <details id="Details-{{ block.id }}-{{ section.id }}">
                     <summary>
@@ -430,27 +451,13 @@
                       </div>
                       {{- 'icon-caret.svg' | inline_asset_content -}}
                     </summary>
-                    {%- liquid
-                      assign mc_tab_content = block.settings.content
-                      assign mc_tab_heading_norm = block.settings.heading | upcase
-                      if mc_tab_heading_norm contains 'AUTHENTICIT'
-                        assign mc_tab_mf = product.metafields.custom.authenticite_provenance.value
-                        if mc_tab_mf != blank
-                          assign mc_tab_content = mc_tab_mf | newline_to_br
-                        endif
-                      elsif mc_tab_heading_norm contains 'ÉTAT' or mc_tab_heading_norm contains 'ETAT'
-                        assign mc_tab_mf = product.metafields.custom.etat_condition.value
-                        if mc_tab_mf != blank
-                          assign mc_tab_content = mc_tab_mf | newline_to_br
-                        endif
-                      endif
-                    -%}
                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
                       {{ mc_tab_content }}
                       {{ block.settings.page.content }}
                     </div>
                   </details>
                 </div>
+                {%- endunless -%}
               {%- when 'mc_questions' -%}
                 {%- assign mc_q_intro = section.settings.pdp_questions_intro | default: 'Notre équipe est à votre disposition pour toute information.' -%}
                 {%- assign mc_q_wa = section.settings.pdp_questions_whatsapp_label | default: 'Échanger sur WhatsApp' -%}
